@@ -1,8 +1,14 @@
 {
-  "name":"sideline-sports-intelligence",
-  "private":true,
-  "version":"1.0.0",
-  "description":"A sports news intelligence dashboard with cross-source coverage and live scores.",
-  "scripts":{"dev":"node server.js","start":"node server.js","test":"node --test tests/*.test.js"},
-  "engines":{"node":">=20"}
+  "name": "sideline-sports-intelligence",
+  "private": true,
+  "version": "3.0.0",
+  "description": "A personalized sports newsroom with live news, scores, league standings, club directory, match stats and read-only public prediction markets.",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

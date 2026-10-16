@@ -6,7 +6,7 @@ const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=
 const port=Number(process.env.PORT||3000);
 http.createServer((req,res)=>{
  const parsed=new URL(req.url,`http://localhost:${port}`);
- if(parsed.pathname==='/api/news'||parsed.pathname==='/api/scores'||parsed.pathname==='/api/markets'){
+ if(parsed.pathname==='/api/news'||parsed.pathname==='/api/scores'||parsed.pathname==='/api/markets'||parsed.pathname==='/api/teams'||parsed.pathname==='/api/standings'||parsed.pathname==='/api/match'||parsed.pathname==='/api/translate'){
   req.query=Object.fromEntries(parsed.searchParams.entries());return require('.'+parsed.pathname+'.js')(req,res);
  }
  const file=path.resolve(root,'.'+(parsed.pathname==='/'?'/index.html':parsed.pathname));

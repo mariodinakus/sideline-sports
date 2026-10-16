@@ -1,4 +1,4 @@
-# SIDELINE — Sports Intelligence
+# SIDELINE — Sports Intelligence v3
 
 **News is not just a feed. It's a network of sources.**
 
@@ -81,3 +81,18 @@ The **EuroLeague** source is an optional best-effort adapter. If its rate limite
 
 A licensed multi-source data agreement; deeper entity resolution for identical stories; proper live EuroLeague scores with longer-lived distributed caching; optional user profiles/sync; native-language translation with explicit machine-translation attribution; user-configured push alerts; audited topic clustering and cross-source corrections timeline.
 
+
+
+## SIDELINE v3 — October 2026
+
+- New live team-directory endpoint `/api/teams` loads ESPN clubs from multiple soccer/basketball leagues; the client falls back to a large curated **selection list** when no directory response is available. The fallback is not a current squad/league roster assertion.
+- `api/standings?league=epl` returns league standings, wins, points, team metadata and subgroups. Data comes from public, **unofficial** ESPN endpoints. Competitions unsupported by ESPN return explicit unavailable states.
+- `api/match?league=nba&event=...` provides match box statistics for available ESPN fixtures. Unsupported events return empty without invented values.
+- Expanded scoreboard covers 21 competitions with provider errors surfaced transparently.
+- Improved sports market discovery: Polymarket Gamma sports tagged events; Kalshi live sports series/events via the external public Trade API; only real market prices are shown and read-only. Provider data may still be unreachable, restricted, missing or sparse.
+- `api/translate?from=en&to=el&text=...` supports **on-demand**, explicitly machine-labeled title + short preview translation via MyMemory. It is subject to third-party rate limits; original headlines are preserved. Full licensed article bodies are not redistributed.
+- Responsive visual redesign, search for teams, independent leagues section, standings previews, more news RSS inputs and localized controls.
+- Run `npm test` for local unit tests. Interactive visual QA performed with mocked upstream API responses, not a substitute for production feed checks.
+
+### Limitations
+All external feeds (ESPN, EuroLeague, BBC, Google News RSS, Polymarket, Kalshi, MyMemory) are third-party interfaces and may restrict use, change fields or throttle requests. No sports, markets, scores or other data are invented when a provider does not respond. Prices of prediction contracts are not statistical forecasts. Original article links remain credited to publishers and require navigating to their source to read full text.

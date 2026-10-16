@@ -1,8 +1,42 @@
 {
   "version": 2,
   "framework": null,
-  "functions": {"api/news.js": {"maxDuration": 30}, "api/scores.js": {"maxDuration": 30}, "api/markets.js": {"maxDuration": 30}},
+  "functions": {
+    "api/news.js": {
+      "maxDuration": 30
+    },
+    "api/scores.js": {
+      "maxDuration": 30
+    },
+    "api/markets.js": {
+      "maxDuration": 30
+    },
+    "api/teams.js": {
+      "maxDuration": 30
+    },
+    "api/standings.js": {
+      "maxDuration": 30
+    },
+    "api/match.js": {
+      "maxDuration": 30
+    },
+    "api/translate.js": {
+      "maxDuration": 30
+    }
+  },
   "headers": [
-    {"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}]}
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
   ]
 }

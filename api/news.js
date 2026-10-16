@@ -8,14 +8,27 @@ const FEEDS = [
  {name:'Τένις',kind:'rss',sport:'tennis',locale:'el',url:google('(τένις OR ATP OR WTA) when:3d')},
  {name:'Gazzetta',kind:'rss',sport:'football',locale:'el',url:'https://www.gazzetta.gr/rssfeeds/allnewsfeed'},
  {name:'SPORT24',kind:'rss',sport:'football',locale:'el',url:'https://www.sport24.gr/rss.ashx'},
+ {name:'Champions & Europa',kind:'rss',sport:'football',locale:'el',url:google('(Champions League OR Europa League OR Conference League) when:2d')},
+ {name:'Ελληνικές ομάδες',kind:'rss',sport:'football',locale:'el',url:google('(Ολυμπιακός OR Παναθηναϊκός OR ΠΑΟΚ OR ΑΕΚ OR Άρης Θεσσαλονίκης) when:2d')},
+ {name:'Ευρωπαϊκά πρωταθλήματα',kind:'rss',sport:'football',locale:'el',url:google('(Premier League OR La Liga OR Serie A OR Bundesliga OR Ligue 1) when:2d')},
+ {name:'EuroLeague & GBL',kind:'rss',sport:'basketball',locale:'el',url:google('(EuroLeague OR Basket League OR Παναθηναϊκός μπάσκετ OR Ολυμπιακός μπάσκετ) when:2d')},
+ {name:'NBA / Greek',kind:'rss',sport:'basketball',locale:'el',url:google('(NBA OR Γιάννης Αντετοκούνμπο OR WNBA) when:2d')},
+ {name:'Ελλάδα αθλητικά',kind:'rss',sport:'other',locale:'el',url:google('(αθλητικά OR στίβος OR βόλεϊ OR πόλο OR κολύμβηση) when:2d')},
+ {name:'Football global',kind:'rss',sport:'football',locale:'en',url:google('(Premier League OR Champions League OR World Cup) when:2d','en')},
+ {name:'NBA global',kind:'rss',sport:'basketball',locale:'en',url:google('(NBA OR WNBA OR Euroleague) when:2d','en')},
+ {name:'Formula 1 global',kind:'rss',sport:'motorsport',locale:'en',url:google('(Formula 1 OR Grand Prix OR F1) when:3d','en')},
+ {name:'Tennis global',kind:'rss',sport:'tennis',locale:'en',url:google('(ATP OR WTA OR tennis) when:3d','en')},
+ {name:'UFC / NFL / NHL',kind:'rss',sport:'other',locale:'en',url:google('(UFC OR NFL OR NHL OR MLB) when:3d','en')},
  {name:'BBC Football',kind:'rss',sport:'football',locale:'en',url:'https://feeds.bbci.co.uk/sport/football/rss.xml'},
  {name:'BBC Sport',kind:'rss',sport:'other',locale:'en',url:'https://feeds.bbci.co.uk/sport/rss.xml'},
  {name:'ESPN NBA',kind:'espn',sport:'basketball',locale:'en',url:'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=35'},
+ {name:'ESPN NFL',kind:'espn',sport:'other',locale:'en',url:'https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=30'},
+ {name:'ESPN F1',kind:'espn',sport:'motorsport',locale:'en',url:'https://site.api.espn.com/apis/site/v2/sports/racing/f1/news?limit=30'},
  {name:'ESPN Football',kind:'espn',sport:'football',locale:'en',url:'https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/news?limit=35'},
 ];
 function detectSport(text,hint){const s=normalize(text);if(/tennis|τενις|wimbledon|atp|wta|sinner|alcaraz/.test(s))return 'tennis';if(/formula 1|formula one|f1|verstappen|norris|leclerc|ferrari|mercedes f1|φορμουλα/.test(s))return 'motorsport';if(/basketball|μπασκετ|euroleague|ευρωλιγκα|nba|wnba|νβα/.test(s))return 'basketball';if(/football|ποδοσφαιρο|soccer|premier league|champions league|super league|οσφπ|παναθηναικος|παοκ|αεκ|ολυμπιακος/.test(s))return 'football';return hint;}
 function parseRss(raw, f){
- const matches=[...raw.matchAll(/<item(?:\s[^>]*)?>([\s\S]*?)<\/item>/gi)].slice(0,26);
+ const matches=[...raw.matchAll(/<item(?:\s[^>]*)?>([\s\S]*?)<\/item>/gi)].slice(0,38);
  return matches.map(m=>{
    const item=m[1];let title=tag(item,'title');const sourceTag=item.match(/<source(?:\s[^>]*)?>([\s\S]*?)<\/source>/i);
    const source=sourceTag?clean(sourceTag[1]):f.name;
@@ -71,14 +84,14 @@ function groupArticles(articles){
    primaryLink:a.link};
  }).sort((a,b)=>Date.parse(b.publishedAt||0)-Date.parse(a.publishedAt||0));
 }
-function targetedFeeds(topics){return topics.slice(0,4).map((topic,i)=>({name:'My Feed '+(i+1),kind:'rss',sport:'other',locale:'el',url:google('\"'+topic.replace(/[\"']/g,'')+'\" sports OR ποδόσφαιρο OR μπάσκετ when:3d')}));}
+function targetedFeeds(topics){return topics.slice(0,6).map((topic,i)=>({name:'My Feed '+(i+1),kind:'rss',sport:'other',locale:'el',url:google('\"'+topic.replace(/[\"']/g,'')+'\" sports OR ποδόσφαιρο OR μπάσκετ when:3d')}));}
 async function load(topics=[]){
  const feeds=[...FEEDS,...targetedFeeds(topics)];
  const runs=await Promise.allSettled(feeds.map(async f=>({name:f.name,items:f.kind==='rss'?parseRss(await xml(f.url),f):parseEspn(await json(f.url),f)})));
  const live=runs.filter(x=>x.status==='fulfilled');let articles=live.flatMap(x=>x.value.items);
  const dedup=new Set();articles=articles.filter(a=>{const key=normalize(a.title).slice(0,150);if(dedup.has(key))return false;dedup.add(key);return true;});
  articles.sort((a,b)=>Date.parse(b.publishedAt||0)-Date.parse(a.publishedAt||0));
- const stories=groupArticles(articles.slice(0,185));
+ const stories=groupArticles(articles.slice(0,340));
  return {stories,meta:{asOf:new Date().toISOString(),fetchedArticles:articles.length,stories:stories.length,
  sourcesOnline:live.length,sourcesConfigured:feeds.length,onlineNames:live.map(x=>x.value.name),
  feedErrors:runs.flatMap((x,i)=>x.status==='rejected'?[feeds[i].name]:[]),
@@ -87,6 +100,6 @@ async function load(topics=[]){
 }
 module.exports=async function handler(req,res){
  if(req.method!=='GET')return send(res,405,{error:'Method not allowed'});
- try{const raw=String(req.query?.topics||new URL(req.url||'/', 'https://sideline.local').searchParams.get('topics')||'');const topics=raw.split('|').map(x=>x.trim().slice(0,60)).filter(x=>/^[\p{L}\p{N} .'-]{2,60}$/u.test(x)).slice(0,4);const result=await cached('news-v4-'+topics.join('|'),180000,()=>load(topics));send(res,200,result);}catch(e){send(res,503,{stories:[],meta:{asOf:new Date().toISOString(),sourcesOnline:0,sourcesConfigured:FEEDS.length,feedErrors:FEEDS.map(x=>x.name),error:'Οι πηγές ειδήσεων δεν είναι προσωρινά διαθέσιμες.'}});}
+ try{const raw=String(req.query?.topics||new URL(req.url||'/', 'https://sideline.local').searchParams.get('topics')||'');const topics=raw.split('|').map(x=>x.trim().slice(0,60)).filter(x=>/^[\p{L}\p{N} .'-]{2,60}$/u.test(x)).slice(0,6);const result=await cached('news-v5-'+topics.join('|'),180000,()=>load(topics));send(res,200,result);}catch(e){send(res,503,{stories:[],meta:{asOf:new Date().toISOString(),sourcesOnline:0,sourcesConfigured:FEEDS.length,feedErrors:FEEDS.map(x=>x.name),error:'Οι πηγές ειδήσεων δεν είναι προσωρινά διαθέσιμες.'}});}
 };
 module.exports._test={parseRss,parseEspn,groupArticles,similarity,detectSport,classify};

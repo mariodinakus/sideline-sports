@@ -1,21 +1,13 @@
 'use strict';
 const {send,json,cached,firstHttpLink}=require('../lib/shared');
-const LEAGUES=[
- {id:'euro',title:'EuroLeague',sport:'euroleague',slug:'E',accent:'#c4ff78'},
- {id:'gre',title:'Super League',sport:'soccer',slug:'gre.1',accent:'#73b4fa'},
- {id:'ucl',title:'Champions League',sport:'soccer',slug:'uefa.champions',accent:'#87aaff'},
- {id:'epl',title:'Premier League',sport:'soccer',slug:'eng.1',accent:'#bc93fb'},
- {id:'laliga',title:'La Liga',sport:'soccer',slug:'esp.1',accent:'#f3ae80'},
- {id:'nba',title:'NBA',sport:'basketball',slug:'nba',accent:'#caff80'},
- {id:'f1',title:'Formula 1',sport:'racing',slug:'f1',accent:'#ff9d85'},
-];
+const {LEAGUES}=require('../lib/leagues');
 function mappedEvent(event,league){
  const comp=event.competitions?.[0]||{};
  const teams=comp.competitors||[];
  const home=teams.find(t=>t.homeAway==='home')||teams[0];
  const away=teams.find(t=>t.homeAway==='away')||teams[1];
  const status=event.status?.type||{};
- return {id:String(event.id),league:league.id,leagueName:league.title,sport:league.sport,name:event.name||'',date:event.date||'',
+ return {id:String(event.id),league:league.id,leagueName:league.title,sport:league.sport==='soccer'?'football':league.sport==='racing'?'motorsport':league.sport,name:event.name||'',date:event.date||'',
   state:status.state||'pre',status:status.shortDetail||status.detail||'',clock:event.status?.displayClock||'',
   home:{name:home?.team?.shortDisplayName||home?.team?.displayName||'—',fullName:home?.team?.displayName||'',logo:firstHttpLink(home?.team?.logo),score:home?.score??null},
   away:{name:away?.team?.shortDisplayName||away?.team?.displayName||'—',fullName:away?.team?.displayName||'',logo:firstHttpLink(away?.team?.logo),score:away?.score??null},
@@ -51,7 +43,7 @@ async function load(date){
   if(league.id==='euro')return {league,events:await euroleagueByDate(date)};
   // NBA's ESPN scoreboard day is America-local; include yesterday to capture games
   // played after midnight in Athens. Never show a different Greek calendar day.
-  const dates=league.id==='nba'?[date,new Date(Date.UTC(+date.slice(0,4),+date.slice(4,6)-1,+date.slice(6,8))-86400000).toISOString().slice(0,10).replaceAll('-','')]:[date];
+  const dates=['nba','wnba','nfl','nhl','mlb'].includes(league.id)?[date,new Date(Date.UTC(+date.slice(0,4),+date.slice(4,6)-1,+date.slice(6,8))-86400000).toISOString().slice(0,10).replaceAll('-','')]:[date];
   const payloads=await Promise.all(dates.map(d=>json(`https://site.api.espn.com/apis/site/v2/sports/${league.sport}/${league.slug}/scoreboard?dates=${d}`,6500)));
   const ids=new Set();
   const events=payloads.flatMap(data=>data.events||[]).filter(ev=>{
@@ -63,13 +55,13 @@ async function load(date){
  const fixtures=runs.filter(x=>x.status==='fulfilled').flatMap(x=>x.value.events);
  fixtures.sort((a,b)=> (a.state==='in'?-1:b.state==='in'?1:0) || Date.parse(a.date)-Date.parse(b.date));
  return {date,matches:fixtures,meta:{asOf:new Date().toISOString(),leaguesOnline:runs.filter(x=>x.status==='fulfilled').length,
-  leaguesConfigured:LEAGUES.length,leagues:LEAGUES.map(({id,title,accent})=>({id,title,accent})),
+  leaguesConfigured:LEAGUES.length,leagues:LEAGUES.map(({id,title,region,sport})=>({id,title,region,sport})),
   source:'ESPN public site API + EuroLeague public v2 (ανεπίσημα endpoints· μπορεί να αλλάξουν)',failed:runs.flatMap((x,i)=>x.status==='rejected'?[LEAGUES[i].title]:[])}};
 }
 module.exports=async function(req,res){
  if(req.method!=='GET')return send(res,405,{error:'Method not allowed'});
  const d=typeof req.query?.date==='string'?req.query.date:typeof new URL(req.url,'http://localhost').searchParams.get('date')==='string'?new URL(req.url,'http://localhost').searchParams.get('date'):'';
  const date=/^\d{8}$/.test(d)?d:new Date().toISOString().slice(0,10).replaceAll('-','');
- try{send(res,200,await cached('score-'+date,90000,()=>load(date)));}catch(e){send(res,503,{date,matches:[],meta:{asOf:new Date().toISOString(),leaguesOnline:0,source:'ESPN',error:'Αδυναμία λήψης αποτελεσμάτων'}});}
+ try{send(res,200,await cached('score-v3-'+date,90000,()=>load(date)));}catch(e){send(res,503,{date,matches:[],meta:{asOf:new Date().toISOString(),leaguesOnline:0,source:'ESPN',error:'Αδυναμία λήψης αποτελεσμάτων'}});}
 };
 module.exports._test={mappedEvent,euroleagueEvent,athensDay};
