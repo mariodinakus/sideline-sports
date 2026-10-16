@@ -1,0 +1,8 @@
+{
+  "name":"sideline-sports-intelligence",
+  "private":true,
+  "version":"1.0.0",
+  "description":"A sports news intelligence dashboard with cross-source coverage and live scores.",
+  "scripts":{"dev":"node server.js","start":"node server.js","test":"node --test tests/*.test.js"},
+  "engines":{"node":">=20"}
+}

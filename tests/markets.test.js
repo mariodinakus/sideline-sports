@@ -1,0 +1,6 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const m=require('../api/markets')._test;
+test('market decimal prices are bounded and absent quotes are not zero',()=>{assert.equal(m.price('0.5632'),56.3);assert.equal(m.price(undefined),null);assert.equal(m.price(null),null);assert.equal(m.price(''),null);assert.equal(m.price(2),null);});
+test('Polymarket uses published event outcomes, no synthetic odds',()=>{const x=m.polyEvent({title:'NBA Finals winner',slug:'nba-finals',id:'123',markets:[{question:'Will X win?',outcomes:'["Yes","No"]',outcomePrices:'["0.65","0.35"]',active:true}]});assert.equal(x.provider,'Polymarket');assert.deepEqual(x.outcomes.map(y=>y.value),[65,35]);assert.equal(x.url,'https://polymarket.com/event/nba-finals');assert.equal(m.polyEvent({title:'NHL',slug:'nhl',markets:[]}),null);});
+test('Kalshi uses valid public quotes and filters unknown odds',()=>{assert.equal(m.kalshiProbability({yes_bid_dollars:'0.40',yes_ask_dollars:'0.46'}),43);assert.equal(m.kalshiProbability({last_price_dollars:'0.55'}),55);assert.equal(m.kalshiProbability({}),null);const a=m.kalshiEvent({title:'NBA Finals',event_ticker:'KXNBA',markets:[{title:'Lakers',yes_bid_dollars:'0.2',yes_ask_dollars:'0.3'}]});assert.equal(a.outcomes[0].value,25);});

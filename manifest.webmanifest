@@ -1,0 +1,11 @@
+{
+  "name":"SIDELINE — Sports Intelligence",
+  "short_name":"SIDELINE",
+  "description":"Sports reporting, source comparisons, live match center.",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#0d110d",
+  "theme_color":"#0d110d",
+  "lang":"el",
+  "icons":[{"src":"/assets/mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#111510" />
+  <meta name="description" content="SIDELINE — αθλητική ενημέρωση πέρα από τους τίτλους. Real-time αγώνες, χαρτογράφηση κάλυψης, story radar, ελληνικά και διεθνή feeds." />
+  <link rel="icon" type="image/svg+xml" href="/assets/mark.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>SIDELINE — Beyond the score.</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell" id="app">
+    <aside class="sidebar">
+      <a class="brand" href="#home" id="brand-link" aria-label="SIDELINE Home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><path d="m8 28 13-20h11L19 28H8Zm20 0 6-9h5l-6 9h-5Z" fill="currentColor"/></svg></span>
+        <span class="brand-word">SIDE<span>LINE</span><small>SPORTS INTELLIGENCE</small></span>
+      </a>
+      <div class="sidebar-caption" data-i18n="navigate">ΠΛΟΗΓΗΣΗ</div>
+      <nav class="main-nav" aria-label="Navigation">
+        <button class="nav-button selected" data-section="home"><span class="nav-icon">◫</span><span data-i18n="navHome">Επισκόπηση</span><span class="nav-dot"></span></button>
+        <button class="nav-button" data-section="radar"><span class="nav-icon">⌁</span><span data-i18n="navRadar">Story Radar</span><span class="nav-tiny" id="radar-count">—</span></button>
+        <button class="nav-button" data-section="matches"><span class="nav-icon">◷</span><span data-i18n="navScores">Αγώνες & σκορ</span></button>
+        <button class="nav-button" data-section="markets"><span class="nav-icon">◈</span><span data-i18n="navMarkets">Πιθανότητες αγορών</span></button>
+        <button class="nav-button" data-section="preferences"><span class="nav-icon">⚙</span><span data-i18n="navPreferences">Το δικό μου feed</span></button>
+        <button class="nav-button" data-section="saved"><span class="nav-icon">♡</span><span data-i18n="navSaved">Αποθηκευμένα</span><span class="nav-tiny" id="saved-count">0</span></button>
+      </nav>
+      <div class="sidebar-caption second" data-i18n="myZone">Η ΖΩΝΗ ΜΟΥ</div>
+      <div class="clubs" id="club-list"></div>
+      <button class="add-club" data-section="preferences"><span>＋</span><span data-i18n="editClubs">Επεξεργασία ομάδων</span></button>
+      <div class="sidebar-bottom"><div class="sidebar-bubble">↗</div><strong data-i18n="sideLabel">Όχι άλλος θόρυβος.</strong><p data-i18n="sideBody">Τα γεγονότα, οι πηγές, η πραγματική εικόνα. Στον ίδιο χώρο.</p><div class="small-divider"></div><div class="product-v">SIDELINE / V2.0 <span>●</span> <span data-i18n="versionLive">LIVE SOURCES</span></div></div>
+    </aside>
+
+    <main class="content">
+      <header class="topbar"><div class="mobile-brand"><span class="mini-mark">/</span><strong>SIDELINE</strong></div>
+        <div class="breadcrumbs"><span data-i18n="workspace">THE NEWSROOM</span><span class="crumb-sep">/</span><span id="page-crumb" data-i18n="navHome">Επισκόπηση</span></div>
+        <div class="top-actions">
+          <span class="last-sync"><span class="green-pip"></span><span id="live-indicator" data-i18n="loading">Σύνδεση...</span></span>
+          <button class="icon-btn" id="refresh-btn" title="Refresh" aria-label="Refresh">↻</button>
+          <button class="pill-toggle" id="lang-btn" aria-label="Language">EL <span>↔</span> EN</button>
+          <button class="icon-btn theme-btn" id="theme-btn" title="Dark / Light" aria-label="Toggle theme">☀</button>
+        </div>
+      </header>
+
+      <div class="page-scroll">
+        <div class="alert-banner hidden" id="alert-banner" role="status"></div>
+        <section class="intro" id="intro">
+          <div class="eyebrow"><span class="eyebrow-rule"></span><span data-i18n="dailyEdition">THE DAILY EDITION</span><span class="intro-date" id="intro-date"></span></div>
+          <div class="intro-heading"><div><h1 id="page-title">Η είδηση.<br /><em>Χωρίς τον θόρυβο.</em></h1><p id="page-subtitle">Ένας άλλος τρόπος να διαβάζεις τα αθλητικά: τι συνέβη, ποιοι το λένε και τι αξίζει την προσοχή σου.</p></div><div class="intro-symbol" aria-hidden="true"><span>↗</span><div class="orb orb-a"></div><div class="orb orb-b"></div></div></div>
+        </section>
+
+        <section class="quick-stats" id="quick-stats" aria-label="Feed statistics">
+          <div class="stat-tile"><span data-i18n="stStories">ΙΣΤΟΡΙΕΣ ΣΗΜΕΡΑ</span><strong id="stat-stories">—</strong><small data-i18n="stStoriesHint">Ομαδοποιημένες ειδήσεις</small></div>
+          <div class="stat-tile"><span data-i18n="stSources">ΕΝΕΡΓΕΣ ΡΟΕΣ</span><strong id="stat-sources">—</strong><small id="stat-sources-small">—</small></div>
+          <div class="stat-tile"><span data-i18n="stBlind">ΣΤΟ ΡΑΝΤΑΡ</span><strong id="stat-blind">—</strong><small data-i18n="stBlindHint">Θέματα με μία πηγή*</small></div>
+          <div class="stat-tile"><span data-i18n="stMatches">ΑΓΩΝΕΣ ΗΜΕΡΑΣ</span><strong id="stat-matches">—</strong><small data-i18n="stMatchesHint">Από διαθέσιμες διοργανώσεις</small></div>
+        </section>
+
+        <section id="home-section" class="section-page">
+          <div class="home-grid">
+            <div class="feature-card" id="featured">
+              <div class="feature-art"><div class="art-circles" aria-hidden="true"><span></span><span></span><span></span></div><div class="feature-topline"><span class="hero-number">01 / COVER STORY</span><span class="hero-star">✳</span></div></div>
+              <div class="feature-copy"><div class="story-tags"><span class="tag-green" data-i18n="leadingStory">ΚΕΝΤΡΙΚΗ ΙΣΤΟΡΙΑ</span><span id="hero-category">SPORT</span></div>
+              <h2 id="hero-title" class="skeleton-text">Φόρτωση ειδήσεων...</h2><p id="hero-description" class="hero-description">Ανάκτηση τρέχουσας ενημέρωσης από τις συνδεδεμένες πηγές.</p>
+              <div class="hero-footer"><div class="hero-credits"><span id="hero-source">SIDELINE FEED</span><span class="dot">·</span><span id="hero-time">—</span></div><button id="hero-open" class="round-arrow" aria-label="Read story">↗</button></div></div>
+            </div>
+            <div class="side-stack">
+              <div class="panel-heading"><div><span class="micro-label">LIVE <span class="pulse-dot"></span></span><h3 data-i18n="matchCenter">Match center</h3></div><button class="text-link" data-jump="matches" data-i18n="allMatches">Όλοι οι αγώνες ↗</button></div>
+              <div class="score-card" id="score-home"><div class="empty-placeholder" data-i18n="loadingScores">Ανάκτηση αποτελεσμάτων…</div></div>
+              <div class="discovery-card"><div class="discovery-top"><span>INSIDE THE STORY</span><span>↗</span></div><div class="discover-ring">↗</div><h3 data-i18n="differentHeader">Κάθε είδηση έχει περισσότερες από μία πλευρές.</h3><p data-i18n="differentSub">Δες διαφορετικά δημοσιεύματα για την ίδια εξέλιξη, όχι απλώς περισσότερους τίτλους.</p><button data-jump="radar" data-i18n="goRadar">Εξερεύνησε το Radar →</button></div>
+            </div>
+          </div>
+
+          <div class="content-columns">
+            <div class="left-news-col">
+              <div class="section-title-row"><div><span class="small-overline" data-i18n="theFeed">THE FEED</span><h2 data-i18n="newsNow">Οι ειδήσεις τώρα<span class="mint-dot">.</span></h2></div><div class="live-mark">● <span data-i18n="updating">ΑΝΑΝΕΩΝΕΤΑΙ</span></div></div>
+              <div class="feed-mode-line"><button id="feed-mode" class="feed-mode">✳ <span data-i18n="forYou">Για εσένα</span></button><button class="feed-setup" data-section="preferences" data-i18n="editFeed">Ρύθμισε το feed ↗</button><span id="feed-summary"></span></div><div class="controls-bar"><div class="sport-filters" id="sport-filters"></div><div class="control-right"><label class="search-wrapper"><span>⌕</span><input id="news-search" type="search" placeholder="Αναζήτηση ειδήσεων" aria-label="Search stories" /></label><select id="feed-sort" aria-label="Sort stories"><option value="new">Πιο πρόσφατα</option><option value="coverage">Περισσότερη κάλυψη</option><option value="signal">Σήμα / κάλυψη</option></select></div></div>
+              <div id="feed-list" class="feed-list"><div class="loading-lines"><div></div><div></div><div></div></div></div>
+              <button class="load-more hidden" id="load-more" data-i18n="loadMore">Περισσότερες ιστορίες ↓</button>
+            </div>
+            <aside class="right-insights">
+              <div class="right-panel"><div class="right-panel-title"><span class="small-overline">INTELLIGENCE / 01</span><h3 data-i18n="attentionMap">Χάρτης προσοχής</h3><p data-i18n="attentionExplain">Πόσες ιστορίες κατέγραψαν οι ροές ανά άθλημα.</p></div><div class="attention-bars" id="attention-bars"></div><div class="footnote" data-i18n="attentionNote">Καταμέτρηση στο δείγμα μας, όχι συνολική απήχηση ΜΜΕ.</div></div>
+              <div class="right-panel quiet-panel"><div class="right-panel-title"><span class="small-overline">INTELLIGENCE / 02</span><h3 data-i18n="watchList">Κάτω από το ραντάρ</h3><p data-i18n="watchExplain">Σημαντικές ως προς το θέμα τους εξελίξεις με περιορισμένη κάλυψη στις διαθέσιμες ροές.</p></div><div id="watchlist"></div><button class="text-link bottom-link" data-jump="radar" data-i18n="analyzeAll">Προβολή του Radar ↗</button></div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="radar-section" class="section-page hidden"><div class="section-title-row huge-row"><div><span class="small-overline">THE STORY ENGINE / 02</span><h2 data-i18n="radarHeading">Πίσω από τον τίτλο<span class="mint-dot">.</span></h2><p data-i18n="radarIntro">Δες πώς διαμορφώνεται η ενημέρωση, ποια θέματα συγκεντρώνουν πολλές πηγές και ποια έχουν μικρό αποτύπωμα.</p></div></div>
+          <div class="radar-explainer"><div class="explainer-icon">⌁</div><div><strong data-i18n="radarHowTitle">Πώς λειτουργεί;</strong><p data-i18n="radarHowBody">Το app αναγνωρίζει παρόμοιους τίτλους με απλό αλγόριθμο και μετρά διαφορετικούς εκδότες. Δεν επαληθεύει γεγονότα, δεν βαθμολογεί μεροληψία και δεν διαβάζει το σύνολο του διαδικτύου.</p></div><button id="method-btn" class="method-btn" data-i18n="method">Μεθοδολογία ↗</button></div>
+          <div class="radar-tabs"><button data-radar="all" class="radar-tab active" data-i18n="radarAll">Όλα τα θέματα</button><button data-radar="multi" class="radar-tab" data-i18n="radarMulti">Πολλαπλές πηγές</button><button data-radar="under" class="radar-tab" data-i18n="radarUnder">Περιορισμένη κάλυψη</button></div>
+          <div id="radar-list" class="radar-list"></div></section>
+
+        <section id="matches-section" class="section-page hidden"><div class="section-title-row huge-row"><div><span class="small-overline">SCOREBOARD / 03</span><h2 data-i18n="scoresHeading">Το παιχνίδι σε εξέλιξη<span class="mint-dot">.</span></h2><p data-i18n="scoresIntro">Αποτελέσματα και πρόγραμμα από ESPN και EuroLeague, με σαφή ένδειξη όταν μια διοργάνωση δεν είναι διαθέσιμη.</p></div></div>
+          <div class="match-controls"><div class="date-switch"><button id="prev-day" aria-label="Previous day">←</button><span id="score-date"></span><button id="next-day" aria-label="Next day">→</button></div><div class="match-leagues" id="match-leagues"></div></div><div class="matches-board" id="matches-board"></div><p class="data-credit" id="match-credit">Data: ESPN public endpoints — not an official integration.</p></section>
+
+
+        <section id="markets-section" class="section-page hidden">
+          <div class="section-title-row huge-row"><div><span class="small-overline">MARKET SIGNAL / 04</span><h2 data-i18n="marketsHeading">Τι αποτιμούν οι αγορές<span class="mint-dot">.</span></h2><p data-i18n="marketsIntro">Polymarket και Kalshi — πραγματικές ενδεικτικές τιμές συμβολαίων, όχι διαβεβαιωμένες πιθανότητες αποτελεσμάτων.</p></div></div>
+          <div class="market-disclaimer" data-i18n="marketWarning">Οι τιμές προέρχονται από αγορές πρόβλεψης. Δεν είναι αθλητικές αποδόσεις, προσωπικές προβλέψεις ή συμβουλές στοιχηματισμού. Δεν γίνονται συναλλαγές μέσα στην εφαρμογή.</div>
+          <div class="market-toolbar"><div class="market-pills" id="market-providers"></div><select id="market-sport" aria-label="Filter market sports"></select><button id="markets-refresh" class="method-btn" data-i18n="refresh">Ανανέωση ↻</button></div>
+          <div class="market-meta" id="market-meta"></div><div id="market-list" class="market-list"><div class="empty-placeholder">Loading market feeds…</div></div>
+        </section>
+        <section id="preferences-section" class="section-page hidden">
+          <div class="section-title-row huge-row"><div><span class="small-overline">PERSONAL SPORTS DESK / 05</span><h2 data-i18n="prefsHeading">Τα αθλητικά, όπως τα θέλεις<span class="mint-dot">.</span></h2><p data-i18n="prefsIntro">Διάλεξε αθλήματα, διοργανώσεις και ομάδες. Οι επιλογές αποθηκεύονται στη συσκευή σου και επηρεάζουν ειδήσεις, αγώνες και αγορές.</p></div></div>
+          <div class="pref-card"><div class="pref-head"><h3 data-i18n="prefsSports">01 — Αθλήματα</h3><button id="clear-prefs" data-i18n="clearPrefs">Καθαρισμός επιλογών</button></div><div class="pref-chips" id="pref-sports"></div></div>
+          <div class="pref-card"><div class="pref-head"><h3 data-i18n="prefsCompetitions">02 — Διοργανώσεις</h3><span data-i18n="multiSelect">Πολλαπλή επιλογή</span></div><div class="pref-chips" id="pref-competitions"></div></div>
+          <div class="pref-card"><div class="pref-head"><h3 data-i18n="prefsTeams">03 — Ομάδες</h3><span data-i18n="multiSelect">Πολλαπλή επιλογή</span></div><div class="pref-chips" id="pref-teams"></div></div>
+          <div class="pref-footer"><div><strong id="pref-count">0 επιλογές</strong><p data-i18n="prefsStorage">Οι επιλογές αποθηκεύονται τοπικά, χωρίς λογαριασμό.</p></div><button class="drawer-save" id="open-personal-feed" data-i18n="applyPrefs">Δες το προσωπικό σου feed →</button></div>
+        </section>
+
+        <section id="saved-section" class="section-page hidden"><div class="section-title-row huge-row"><div><span class="small-overline">YOUR ARCHIVE / 04</span><h2 data-i18n="savedHeading">Η δική σου συλλογή<span class="mint-dot">.</span></h2><p data-i18n="savedIntro">Αποθήκευσε ιστορίες για να τις βρεις ξανά. Τα δεδομένα μένουν στη συσκευή σου.</p></div></div><div id="saved-list" class="feed-list"></div></section>
+
+        <footer class="site-footer"><div><strong>SIDELINE<span class="mint-dot">.</span></strong><span data-i18n="footTag">READ THE GAME DIFFERENTLY.</span></div><div class="footer-links"><button id="sources-btn" data-i18n="sources">Πηγές & διαφάνεια</button><span>© 2026 SIDELINE</span></div></footer>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-tabs" aria-label="Mobile navigation"><button class="selected" data-section="home"><span>◫</span><small data-i18n="mobileHome">Αρχική</small></button><button data-section="radar"><span>⌁</span><small>Radar</small></button><button data-section="matches"><span>◷</span><small data-i18n="mobileScores">Αγώνες</small></button><button data-section="markets"><span>◈</span><small>Markets</small></button><button data-section="preferences"><span>⚙</span><small data-i18n="mobilePrefs">My feed</small></button><button data-section="saved"><span>♡</span><small data-i18n="mobileSaved">Saved</small></button></nav>
+  <div class="overlay hidden" id="overlay"><button class="scrim" id="drawer-scrim" aria-label="Close panel"></button><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title"><div class="drawer-header"><span id="drawer-kicker">THE STORY / SIDELINE</span><button class="drawer-close" id="drawer-close" aria-label="Close panel">×</button></div><div id="drawer-body"></div></aside></div>
+  <div class="toast hidden" id="toast" role="status"></div>
+</body>
+</html>
