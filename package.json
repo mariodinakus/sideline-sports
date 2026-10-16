@@ -1,8 +1,8 @@
 {
   "name": "sideline-sports-intelligence",
   "private": true,
-  "version": "3.0.0",
-  "description": "A personalized sports newsroom with live news, scores, league standings, club directory, match stats and read-only public prediction markets.",
+  "version": "4.0.0",
+  "description": "Sports news and advanced basketball intelligence with real NBA/EuroLeague standings, team analytics, player box scores and quarters.",
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",

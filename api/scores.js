@@ -1,6 +1,7 @@
 'use strict';
 const {send,json,cached,firstHttpLink}=require('../lib/shared');
 const {LEAGUES}=require('../lib/leagues');
+const {euroSeason,euroBase}=require('../lib/basketball');
 function mappedEvent(event,league){
  const comp=event.competitions?.[0]||{};
  const teams=comp.competitors||[];
@@ -11,7 +12,7 @@ function mappedEvent(event,league){
   state:status.state||'pre',status:status.shortDetail||status.detail||'',clock:event.status?.displayClock||'',
   home:{name:home?.team?.shortDisplayName||home?.team?.displayName||'—',fullName:home?.team?.displayName||'',logo:firstHttpLink(home?.team?.logo),score:home?.score??null},
   away:{name:away?.team?.shortDisplayName||away?.team?.displayName||'—',fullName:away?.team?.displayName||'',logo:firstHttpLink(away?.team?.logo),score:away?.score??null},
-  url:firstHttpLink(event.links?.[0]?.href||comp?.links?.[0]?.href)};
+  quarters:league.sport==='basketball'?teams.map(t=>({team:t.team?.displayName||'',homeAway:t.homeAway||'',periods:(t.linescores||[]).map((p,i)=>({label:'Q'+(i+1),score:p.value??p.displayValue??null}))})):[],url:firstHttpLink(event.links?.[0]?.href||comp?.links?.[0]?.href)};
 }
 function athensDay(iso){
  const d=new Date(iso);if(!Number.isFinite(d.getTime()))return '';
@@ -19,28 +20,29 @@ function athensDay(iso){
  const get=n=>parts.find(p=>p.type===n)?.value;
  return `${get('year')}${get('month')}${get('day')}`;
 }
-function euroleagueEvent(g){
+function euroleagueEvent(g,leagueId='euro'){
  const local=g.local||g.home||{},road=g.road||g.away||{};
+ const season=String(g.seasonCode||g.season?.code||euroSeason(leagueId,new Date(g.utcDate||g.date||Date.now())));
  const getName=obj=>obj.club?.abbreviatedName||obj.club?.name||obj.club?.editorialName||obj.clubName||obj.name||'—';
  const date=g.utcDate||g.date||g.localDate||'';
  const status=String(g.gameStatus||g.status||'').toLowerCase();
  const state=status.includes('live')||status.includes('progress')?'in':g.played||status.includes('result')||status.includes('finish')?'post':'pre';
- return {id:String(g.gameCode||g.id||''),league:'euro',leagueName:'EuroLeague',sport:'basketball',
+ return {id:String(g.gameCode||g.id||''),season,league:leagueId,leagueName:leagueId==='eurocup'?'EuroCup':'EuroLeague',sport:'basketball',
  name:`${getName(local)} - ${getName(road)}`,date,state,status:state==='in'?'LIVE':state==='post'?'FT':'',
  home:{name:getName(local),fullName:local.club?.name||'',logo:firstHttpLink(local.club?.images?.crest||local.club?.crest),score:local.score??null},
- away:{name:getName(road),fullName:road.club?.name||'',logo:firstHttpLink(road.club?.images?.crest||road.club?.crest),score:road.score??null},url:''};
+ away:{name:getName(road),fullName:road.club?.name||'',logo:firstHttpLink(road.club?.images?.crest||road.club?.crest),score:road.score??null},quarters:[],url:''};
 }
-async function euroleagueByDate(date){
+async function euroleagueByDate(date,leagueId='euro'){
  // One season snapshot, cached more aggressively because this upstream has strict anti-abuse limits.
  const year=Number(date.slice(0,4))-(Number(date.slice(4,6))<=7?1:0);
- const season=`E${year}`;
- const data=await cached('euroseason-'+season,600000,()=>json(`https://api-live.euroleague.net/v2/competitions/E/seasons/${season}/games`,7500));
+ const season=`${leagueId==='eurocup'?'U':'E'}${year}`;
+ const data=await cached('euroseason-'+season,600000,()=>json(`${euroBase(leagueId,season)}/games?limit=600`,9500));
  const games=Array.isArray(data.data)?data.data:[];
- return games.filter(g=>athensDay(g.utcDate||g.date||g.localDate)===date).slice(0,22).map(euroleagueEvent);
+ return games.filter(g=>athensDay(g.utcDate||g.date||g.localDate)===date).slice(0,22).map(g=>euroleagueEvent(g,leagueId));
 }
 async function load(date){
  const runs=await Promise.allSettled(LEAGUES.map(async league=>{
-  if(league.id==='euro')return {league,events:await euroleagueByDate(date)};
+  if(league.id==='euro'||league.id==='eurocup')return {league,events:await euroleagueByDate(date,league.id)};
   // NBA's ESPN scoreboard day is America-local; include yesterday to capture games
   // played after midnight in Athens. Never show a different Greek calendar day.
   const dates=['nba','wnba','nfl','nhl','mlb'].includes(league.id)?[date,new Date(Date.UTC(+date.slice(0,4),+date.slice(4,6)-1,+date.slice(6,8))-86400000).toISOString().slice(0,10).replaceAll('-','')]:[date];

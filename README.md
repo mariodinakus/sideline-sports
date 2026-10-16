@@ -1,6 +1,17 @@
-# SIDELINE — Sports Intelligence v3
+# SIDELINE — Sports Intelligence v4
 
 **News is not just a feed. It's a network of sources.**
+
+## v4: BASKETBALL DATA LAB
+
+- **NBA / WNBA:** every team in each available ESPN standings group, win-loss records, points scored and conceded, point differential, winning percentage, and sourced points per game when supplied. Select any club to inspect its metrics.
+- **EuroLeague / EuroCup:** public EuroLeague competition data — **season and round-correct standings** from `v3/basicstandings` (with documented v2 fallback), wins, losses, total points for and against, and full tables by group.
+- **Season-level basketball analytics:** official public EuroLeague v3 traditional and advanced per-game team statistics including PPG, rebounds, assists, eFG%, TS%, 3-point accuracy and assist/turnover ratio. Player leaders show PTS, REB, AST and PIR when available.
+- **Per-game box score:** all available player lines on game reports (not just the first 6–8), structured columns such as MIN/PTS/REB/AST, team aggregate stats, and period-by-period scoring. ESPN NBA box scores additionally show *calculated* eFG%, TS% and AST/TO **only when all raw inputs exist**.
+- **Data honesty:** no mocked values are shipped. A missing upstream metric appears as `—`. Standings and game data are subject to upstream API coverage, stale caches and undocumented schema changes. The Greek GBL does not have a verified standings feed in this version and is not falsely presented as supported.
+- **Sources:** ESPN public site API; EuroLeague public live v2/v3 endpoints. These are public but unofficial/uncontracted integrations.
+
+**Season scope:** EuroLeague start-year code (`E2026` for 2026/27), EuroCup code `U2026`; a new season can have empty standings until a round is played. The NBA and WNBA use ESPN's season availability.
 
 ## v2: YOUR FEED + MARKET SIGNALS
 
@@ -27,7 +38,7 @@ Responsive Greek/English sports news PWA designed for GitHub → Vercel deployme
 2. In GitHub, create an **empty repository**. Upload *the contents of the folder* to the repository root, not the enclosing folder.
 3. Go to **Vercel → Add New → Project → Import Git Repository** and choose that repository.
 4. In Vercel, choose **Framework Preset: Other** (or allow automatic detection), **Root Directory: `./`**. The project has **no build command** and **no output directory**. Deploy.
-5. The site is served from `/` and the Node.js serverless endpoints are `/api/news`, `/api/scores?date=YYYYMMDD`, and `/api/markets`.
+5. The site is served from `/` and the Node.js serverless endpoints are `/api/news`, `/api/scores?date=YYYYMMDD`, and `/api/markets`, `/api/standings?league=euro`, `/api/basketball?league=euro`, and `/api/match?league=euro&event=CODE&season=E2026`.
 
 No `npm install`, token, API key, or `.env` variables are necessary. `vercel.json` configures Node functions.
 

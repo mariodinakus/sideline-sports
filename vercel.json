@@ -22,6 +22,9 @@
     },
     "api/translate.js": {
       "maxDuration": 30
+    },
+    "api/basketball.js": {
+      "maxDuration": 30
     }
   },
   "headers": [
