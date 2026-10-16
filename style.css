@@ -120,3 +120,16 @@ body{background:var(--bg);font-synthesis:none}
 @media(max-width:760px){.basketball-grid,.basket-extra-grid{grid-template-columns:minmax(0,1fr)}.basketball-totals>div{padding:16px}.basketball-totals b{font-size:27px}.basketball-headline{gap:13px}.basketball-source-chip{max-width:100%}.basketball-headline:after{font-size:95px;top:16px}.basket-table-panel .table-scroller{max-width:calc(100vw - 40px)}.boxscore-table{font-size:10px}.basket-team-profile{padding:18px}.basketball-totals small{font-size:9px}}
 
 .basket-ranking-line{background:transparent;border-left:0;border-right:0;border-bottom:0;cursor:pointer}.basket-ranking-line:hover{background:color-mix(in srgb,var(--acid) 7%,var(--paper))}.game-advanced{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px 0}.game-advanced>div{background:var(--raised);border:1px solid var(--line);border-radius:9px;padding:12px}.game-advanced small{font-size:9px;color:var(--muted);display:block}.game-advanced b{font-size:18px;color:var(--acid);display:block;margin-top:5px;font-variant-numeric:tabular-nums}
+
+/* v5 – source-transparent recovery UI */
+.source-issue{padding:20px 22px;border:1px solid rgba(188,239,124,.24);background:linear-gradient(130deg,rgba(185,242,133,.08),rgba(74,112,104,.025));border-radius:14px;color:var(--text,#e5eee9);margin:8px 0}
+.source-issue.big{padding:28px;margin-top:10px}
+.source-issue strong{display:block;font-size:1.03rem;letter-spacing:-.01em}
+.source-issue p{font-size:.84rem;line-height:1.6;color:var(--muted,#9da9ae);max-width:730px;margin:10px 0}
+.fallback-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.fallback-buttons button,.source-issue>button{border-radius:8px;border:1px solid rgba(179,224,137,.4);background:rgba(179,224,137,.12);color:inherit;padding:10px 14px;font-weight:700;cursor:pointer;font-size:.8rem}
+.fallback-buttons button:hover,.source-issue>button:hover{background:rgba(179,224,137,.24)}
+.mini-score-fallback{display:flex;justify-content:space-between;gap:12px;padding:12px;border-bottom:1px solid rgba(140,160,150,.15);font-size:.83rem}
+.mini-score-fallback span{color:var(--muted,#9ca8a5)}
+.stats-only{margin-top:20px}
+@media(max-width:680px){.source-issue.big{padding:18px}.mini-score-fallback{flex-direction:column;gap:4px}}
