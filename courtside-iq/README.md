@@ -1,7 +1,3 @@
-# Deploy from SIDELINE monorepo
-
-Vercel root directory: `courtside-iq` (Framework: Other). All files below are the real, unpacked application sources. Existing SIDELINE application at the repository root remains untouched.
-
 # COURTSIDE IQ — Basketball Intelligence Platform
 
 A deployable, bilingual **NBA + EuroLeague** analytics web app. Vanilla JavaScript/HTML/CSS front end, zero runtime npm dependencies, and a Vercel serverless data proxy.
@@ -94,3 +90,26 @@ lib/models.js          Four Factors, probability and Monte Carlo baseline
 tests/models.test.js   Unit tests
 vercel.json            Vercel settings and response headers
 ```
+
+## v2 — HISTORICAL INTELLIGENCE STUDIO (17 October 2026)
+
+The home screen and navigation are now **English-only**. New editorial dashboard (ivory/lavender/acid-green) replaces the previous dark analytics terminal. Pages: Overview, History Atlas, MVP & Awards, Advanced Stats, GOAT Lab, Career Twins, Future Forecasts and Rookie Radar.
+
+**Historical coverage:**
+- NBA champions 1947–2026 and regular-season MVP winners 1956–2026, curated from official NBA.com historical indices.
+- EuroLeague modern-era champions 2000–2026, EuroLeague season MVP 2005–2026 (no award in canceled 2020 season). Earlier 1958–1999 predecessor champions are intentionally not included in the new History Atlas, despite the broader European competition history.
+- Additional 2026 NBA awards, select previous-year honors, NBA Draft 2026 top 10 sourced from the NBA official awards and draft posts.
+- Historical player impact is fetched separately using the public FiveThirtyEight historical RAPTOR CSV (1977–2023 era); this source is not continuously updated and its data availability varies. **Not all modern advanced stats can be reconstructed back to 1947.** Values and similarity scores must not be interpreted as a cross-era objective truth.
+
+**Forecast method:** indicative *scenario* simulations that perturb available prior-season team strength (5,000 deterministic draws). The displayed shares are NOT calibrated title probabilities or betting odds. The MVP list is a descriptive prior-season production index, not a model of 2027 voting. The 2027 Rookie of the Year class is a draft watchlist without fictional season stats or odds.
+
+**Data dependencies:** `api/legacy.js` connects to GitHub raw FiveThirtyEight CSV and can fail from Vercel network; `api/data.js` still connects to public NBA / EuroLeague endpoints which may be unreliable. The UI degrades explicitly to empty states. Historical award and championship indices remain accessible offline without those APIs.
+
+**Sources:**
+- https://www.nba.com/news/history-nba-champions
+- https://www.nba.com/news/history-mvp-award-winners
+- https://www.nba.com/news/2026-nba-draft-order
+- https://pr.nba.com/voting-results-2025-26-nba-regular-season-awards/
+- https://f4athens.org/en/final-four
+- https://mediacentre.euroleague.net/mediacentre/en/press_releases
+- https://github.com/fivethirtyeight/data/tree/master/nba-raptor
