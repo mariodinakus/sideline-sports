@@ -1,0 +1,11 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {fourFactors,normalCdf,expectedMargin,simulateMatch} from '../lib/models.js';
+import {nbaGames,nbaTeams,euroPlayers,euroTeams,euroGames} from '../lib/normalize.js';
+test('normal probability symmetry',()=>{assert.ok(Math.abs(normalCdf(0)-.5)<1e-6);assert.ok(normalCdf(1)>normalCdf(0));});
+test('four factors formulas',()=>{const a=fourFactors({fgm:40,fga:80,threeMade:10,fta:20,points:105,oreb:8,tov:10});assert.equal(a.efg,56.25);assert.ok(a.ts>59&&a.ts<60);});
+test('balanced teams with home advantage',()=>{const t={pointsFor:108,pointsAgainst:108,pace:98};const p=expectedMargin(t,t,{league:'nba'});assert.ok(Math.abs(p.margin-2.3)<.0001);});
+test('Monte Carlo deterministic and sensible',()=>{const a=simulateMatch({meanMargin:5,draws:2500});const b=simulateMatch({meanMargin:5,draws:2500});assert.deepEqual(a,b);assert.ok(a.winProbability>.58&&a.winProbability<.75);});
+test('ESPN games adapters',()=>{const rows=nbaGames({events:[{id:'x',date:'2026-10-17',competitions:[{competitors:[{homeAway:'home',team:{displayName:'Team A',abbreviation:'A'},score:'121'},{homeAway:'away',team:{displayName:'Team B',abbreviation:'B'},score:'112'}]}]}]});assert.equal(rows[0].homeScore,121);});
+test('Euro season stats adapter',()=>{const p=euroPlayers({players:[{personCode:'7',player:'Player Name',team:'ABC',pointsScored:12,assists:5}]},{players:[]});assert.equal(p[0].pts,12);const t=euroTeams({teams:[{teamCode:'ABC',teamName:'Team Name',pointsScored:85}]},{teams:[]});assert.equal(t[0].pointsFor,85);});
+test('Euro games adapter',()=>{const g=euroGames({data:[{gameCode:12,home:{name:'Olympiacos'},away:{name:'Barcelona'},homeScore:85,awayScore:82}]});assert.equal(g[0].id,'12');});
+test('NBA free advanced stats join',async()=>{const {nbaPublicPlayers}=await import('../lib/normalize.js');const b={data:[{playerId:'x',playerName:'Test Player',team:'LAL',points:23,games:40,minutesPg:31,effectFgPercent:.55}]};const a={data:[{playerId:'x',team:'LAL',tsPercent:.63,usagePercent:29.1,box:4.4,vorp:3.1}]};const x=nbaPublicPlayers(b,a);assert.equal(x[0].pts,23);assert.equal(x[0].ts,63);assert.equal(x[0].bpm,4.4);});

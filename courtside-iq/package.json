@@ -1,8 +1,9 @@
 {
-  "name":"courtside-iq",
-  "version":"1.0.0",
-  "private":true,
-  "type":"module",
-  "engines":{"node":">=20"},
-  "scripts":{"build":"node unpack.cjs","test":"npm run build && node --test tests/*.test.js"}
+  "name": "courtside-iq",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Real-data basketball intelligence terminal for NBA and EuroLeague",
+  "scripts": {"dev": "vercel dev", "test": "node --test tests/*.test.js", "check": "node --check app.js && node --check api/data.js && node --check lib/normalize.js && node --check lib/models.js"},
+  "engines": {"node": ">=20"}
 }

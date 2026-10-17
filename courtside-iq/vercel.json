@@ -1,10 +1,7 @@
 {
   "version": 2,
-  "framework": null,
-  "buildCommand": "npm run build",
-  "outputDirectory": ".",
   "headers": [
-    {"source": "/api/(.*)", "headers": [{"key": "Cache-Control", "value": "public, s-maxage=600, stale-while-revalidate=1800"}]},
-    {"source": "/(.*)", "headers": [{"key": "X-Content-Type-Options", "value": "nosniff"}, {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"}]}
+    {"source": "/api/(.*)", "headers": [{"key":"Cache-Control", "value":"public, s-maxage=600, stale-while-revalidate=1800"}]},
+    {"source": "/(.*)", "headers": [{"key":"X-Content-Type-Options", "value":"nosniff"}, {"key":"Referrer-Policy", "value":"strict-origin-when-cross-origin"}]}
   ]
 }
