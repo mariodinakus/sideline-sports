@@ -195,3 +195,20 @@ This upgrade adds **six new research workspaces** alongside the original history
 ### Content and redistribution
 
 External news articles remain on their publishers' sites; the interface shows headlines, attribution, dates and links, not copied full stories. A public sports image CDN is not necessarily licensed for reuse in a commercial product. Check provider licenses and usage terms before monetization or large-scale traffic. News feeds, NBA/EuroLeague unofficial endpoints, ESPN identity search, and external headshots may change or stop responding.
+
+## v5 — Clean Information Architecture (October 2026)
+
+The previous flat left navigation with twenty equal-priority choices is now **six collapsible workspaces** plus a persistent **Overview**. No feature or deep link was removed. The visible English labels and their route IDs are:
+
+| Workspace | Subpages |
+| --- | --- |
+| **Live & Season** | Scores & Standings (`#livecenter`), Season Hub (`#season`), News & Transfers (`#news`), Rookie Radar (`#rookies`) |
+| **Players & Teams** | Player Profiles (`#players`), Team DNA (`#teamlab`), Advanced Stats (`#analytics`), Chart Playground (`#visuals`) |
+| **History & Evolution** | Championship History (`#archive`), MVPs & Awards (`#awards`), National Teams (`#nations`), Evolution of Basketball (`#evolution`) |
+| **GOAT & Comparison** | GOAT Head-to-Head (`#goat`), Global GOAT Equation (`#globalgoat`), Career Twins (`#twins`) |
+| **Predictions** | Match Prediction Lab (`#matchlab`), Future Champions & MVPs (`#future`) |
+| **Learn & Sources** | Stats Dictionary (`#academy`), Sources & Methods (`#methodology`) |
+
+The selected workspace automatically expands, other workspaces stay collapsed, and opening another group collapses the previous group. A navigation search supports both names and synonyms such as `RAPTOR`, `spider`, `World Cup`, and `standings`. Inside each screen a contextual subnavigation lets users move laterally to related features. The Overview features six launch cards matching the new taxonomy. English language is preserved throughout. The app's data sources, forecasting models, and existing URLs are unchanged in this release.
+
+**Quality:** `npm run check && npm test` includes six-workspace coverage and deep-link preservation assertions. Browser automation may require an unrestricted environment; unit and smoke tests are not a guarantee of live external API availability.

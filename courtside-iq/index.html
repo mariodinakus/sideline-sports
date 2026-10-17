@@ -7,29 +7,63 @@
 <link rel="stylesheet" href="/studio.css"><script type="module" defer src="/studio.js"></script>
 </head><body>
 <div class="shell">
-<aside class="rail"><div class="rail-top"><a href="#dashboard" class="wordmark"><span class="logo-ball">◉</span><span>COURTSIDE<span class="logo-dot">.</span><b>IQ</b><small>INTELLIGENCE STUDIO</small></span></a><div class="edition">THE BASKETBALL DATA STUDIO <span> / 02</span></div></div>
+<aside class="rail"><div class="rail-top"><a href="#dashboard" class="wordmark"><span class="logo-ball">◉</span><span>COURTSIDE<span class="logo-dot">.</span><b>IQ</b><small>INTELLIGENCE STUDIO</small></span></a><div class="edition">CLEARER WORKSPACE <span> / 05</span></div></div>
 <nav id="nav" aria-label="Main navigation">
-<div class="rail-section">THE WORKSPACE</div>
-<button class="nav-link active" data-tab="dashboard"><span class="nav-glyph">◫</span> Overview <span class="nav-id">01</span></button>
-<button class="nav-link" data-tab="livecenter"><span class="nav-glyph">◉</span> Live Scores & Standings <span class="nav-id">LIVE</span></button>
-<button class="nav-link" data-tab="teamlab"><span class="nav-glyph">▤</span> Team DNA Lab <span class="nav-id">NEW</span></button>
-<button class="nav-link" data-tab="evolution"><span class="nav-glyph">↗</span> Basketball Evolution <span class="nav-id">1980+</span></button>
-<button class="nav-link" data-tab="academy"><span class="nav-glyph">?</span> Stats Academy <span class="nav-id">GUIDE</span></button>
-<button class="nav-link" data-tab="season"><span class="nav-glyph">◉</span> Season 2026–27 <span class="nav-id">LIVE</span></button>
-<button class="nav-link" data-tab="news"><span class="nav-glyph">↗</span> News & Transfers <span class="nav-id">FEED</span></button>
-<button class="nav-link" data-tab="players"><span class="nav-glyph">◉</span> Player Atlas <span class="nav-id">NEW</span></button>
-<button class="nav-link" data-tab="visuals"><span class="nav-glyph">◈</span> Visual Playground <span class="nav-id">NEW</span></button>
-<button class="nav-link" data-tab="nations"><span class="nav-glyph">◫</span> National Teams <span class="nav-id">1950+</span></button>
-<button class="nav-link" data-tab="globalgoat"><span class="nav-glyph">♛</span> Global GOAT Equation <span class="nav-id">Σ</span></button>
-<button class="nav-link" data-tab="matchlab"><span class="nav-glyph">▤</span> Match ML Arena <span class="nav-id">ML</span></button>
-<button class="nav-link" data-tab="archive"><span class="nav-glyph">◷</span> History Atlas <span class="nav-id">02</span></button>
-<button class="nav-link" data-tab="awards"><span class="nav-glyph">✦</span> MVP & Awards <span class="nav-id">03</span></button>
-<button class="nav-link" data-tab="analytics"><span class="nav-glyph">▥</span> Advanced Stats <span class="nav-id">04</span></button>
-<button class="nav-link" data-tab="goat"><span class="nav-glyph">♛</span> GOAT Lab <span class="nav-id">05</span></button>
-<button class="nav-link" data-tab="twins"><span class="nav-glyph">◎</span> Career Twins <span class="nav-id">06</span></button>
-<button class="nav-link" data-tab="future"><span class="nav-glyph">◈</span> Future Forecasts <span class="nav-id">07</span></button>
-<button class="nav-link" data-tab="rookies"><span class="nav-glyph">↗</span> Rookie Radar <span class="nav-id">08</span></button>
+<div class="rail-section">YOUR WORKSPACE · 6 SECTIONS</div>
+<a href="#dashboard" class="nav-link nav-home active" data-tab="dashboard"><span class="nav-glyph">◫</span><span>Overview</span><span class="nav-id">HOME</span></a>
+<label class="nav-search-label" for="nav-search">FIND A SECTION</label><div class="nav-search-wrap"><span aria-hidden="true">⌕</span><input id="nav-search" type="search" autocomplete="off" placeholder="Search metrics, GOAT, live…" aria-label="Search navigation"/></div>
+<div class="nav-collections">
+<section class="nav-group" data-group="live" aria-label="Live &amp; Season">
+<button type="button" class="nav-group-toggle" data-group-toggle="live" aria-expanded="false" aria-controls="group-live" title="Scores, standings, news and rookies"><span class="group-glyph" aria-hidden="true">◉</span><span class="group-label">Live &amp; Season<small>Scores, standings, news and rookies</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-live" hidden>
+<button type="button" class="nav-link nav-child" data-tab="livecenter"><span class="nav-dot" aria-hidden="true"></span><span>Scores &amp; Standings</span></button>
+<button type="button" class="nav-link nav-child" data-tab="season"><span class="nav-dot" aria-hidden="true"></span><span>Season Hub</span></button>
+<button type="button" class="nav-link nav-child" data-tab="news"><span class="nav-dot" aria-hidden="true"></span><span>News &amp; Transfers</span></button>
+<button type="button" class="nav-link nav-child" data-tab="rookies"><span class="nav-dot" aria-hidden="true"></span><span>Rookie Radar</span></button>
+</div>
+</section>
+<section class="nav-group" data-group="analysis" aria-label="Players &amp; Teams">
+<button type="button" class="nav-group-toggle" data-group-toggle="analysis" aria-expanded="false" aria-controls="group-analysis" title="Profiles, advanced metrics and charts"><span class="group-glyph" aria-hidden="true">▥</span><span class="group-label">Players &amp; Teams<small>Profiles, advanced metrics and charts</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-analysis" hidden>
+<button type="button" class="nav-link nav-child" data-tab="players"><span class="nav-dot" aria-hidden="true"></span><span>Player Profiles</span></button>
+<button type="button" class="nav-link nav-child" data-tab="teamlab"><span class="nav-dot" aria-hidden="true"></span><span>Team DNA</span></button>
+<button type="button" class="nav-link nav-child" data-tab="analytics"><span class="nav-dot" aria-hidden="true"></span><span>Advanced Stats</span></button>
+<button type="button" class="nav-link nav-child" data-tab="visuals"><span class="nav-dot" aria-hidden="true"></span><span>Chart Playground</span></button>
+</div>
+</section>
+<section class="nav-group" data-group="history" aria-label="History &amp; Evolution">
+<button type="button" class="nav-group-toggle" data-group-toggle="history" aria-expanded="false" aria-controls="group-history" title="Champions, awards and playing styles"><span class="group-glyph" aria-hidden="true">◷</span><span class="group-label">History &amp; Evolution<small>Champions, awards and playing styles</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-history" hidden>
+<button type="button" class="nav-link nav-child" data-tab="archive"><span class="nav-dot" aria-hidden="true"></span><span>Championship History</span></button>
+<button type="button" class="nav-link nav-child" data-tab="awards"><span class="nav-dot" aria-hidden="true"></span><span>MVPs &amp; Awards</span></button>
+<button type="button" class="nav-link nav-child" data-tab="nations"><span class="nav-dot" aria-hidden="true"></span><span>National Teams</span></button>
+<button type="button" class="nav-link nav-child" data-tab="evolution"><span class="nav-dot" aria-hidden="true"></span><span>Evolution of Basketball</span></button>
+</div>
+</section>
+<section class="nav-group" data-group="compare" aria-label="GOAT &amp; Comparison">
+<button type="button" class="nav-group-toggle" data-group-toggle="compare" aria-expanded="false" aria-controls="group-compare" title="Compare greats across eras"><span class="group-glyph" aria-hidden="true">♛</span><span class="group-label">GOAT &amp; Comparison<small>Compare greats across eras</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-compare" hidden>
+<button type="button" class="nav-link nav-child" data-tab="goat"><span class="nav-dot" aria-hidden="true"></span><span>GOAT Head-to-Head</span></button>
+<button type="button" class="nav-link nav-child" data-tab="globalgoat"><span class="nav-dot" aria-hidden="true"></span><span>Global GOAT Equation</span></button>
+<button type="button" class="nav-link nav-child" data-tab="twins"><span class="nav-dot" aria-hidden="true"></span><span>Career Twins</span></button>
+</div>
+</section>
+<section class="nav-group" data-group="predict" aria-label="Predictions">
+<button type="button" class="nav-group-toggle" data-group-toggle="predict" aria-expanded="false" aria-controls="group-predict" title="Match models and future scenarios"><span class="group-glyph" aria-hidden="true">◈</span><span class="group-label">Predictions<small>Match models and future scenarios</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-predict" hidden>
+<button type="button" class="nav-link nav-child" data-tab="matchlab"><span class="nav-dot" aria-hidden="true"></span><span>Match Prediction Lab</span></button>
+<button type="button" class="nav-link nav-child" data-tab="future"><span class="nav-dot" aria-hidden="true"></span><span>Future Champions &amp; MVPs</span></button>
+</div>
+</section>
+<section class="nav-group" data-group="learn" aria-label="Learn &amp; Sources">
+<button type="button" class="nav-group-toggle" data-group-toggle="learn" aria-expanded="false" aria-controls="group-learn" title="Stat explanations and methodology"><span class="group-glyph" aria-hidden="true">?</span><span class="group-label">Learn &amp; Sources<small>Stat explanations and methodology</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-learn" hidden>
+<button type="button" class="nav-link nav-child" data-tab="academy"><span class="nav-dot" aria-hidden="true"></span><span>Stats Dictionary</span></button>
+<button type="button" class="nav-link nav-child" data-tab="methodology"><span class="nav-dot" aria-hidden="true"></span><span>Sources &amp; Methods</span></button>
+</div>
+</section>
+</div>
 </nav>
 <div class="rail-bottom"><span class="live-orb"></span><span>DATA TRANSPARENCY FIRST</span><p>1947–2026 NBA titles<br>1958–2026 European champions<br>FIBA World Cup 1950–2023<br>EuroBasket 1951–2025<br>Historic RAPTOR: 1977–2023</p><a href="#methodology" class="method-link" id="method-link">Sources & methodology ↗</a></div></aside>
-<main class="workspace"><header class="topbar"><div class="breadcrumb"><span>CS / INTELLIGENCE</span><span class="chevron">/</span><strong id="crumb">OVERVIEW</strong></div><div class="bar-actions"><span id="feed-status"><span class="signal"></span> Historical records loaded</span><button id="reload" class="top-btn" title="Refresh available live data">↻ Refresh feeds</button><button class="top-btn mobile-nav" id="menu-btn" aria-label="Open menu">☰ Menu</button><span class="profile">IQ</span></div></header><div id="content" aria-live="polite"></div><footer>COURTSIDE IQ / A research-grade interface with explicit source coverage and model limitations. <a href="https://www.nba.com/news/history-nba-champions" target="_blank" rel="noopener">NBA.com</a> · <a href="https://mediacentre.euroleague.net/mediacentre/en/press_releases" target="_blank" rel="noopener">EuroLeague</a> · <a href="https://github.com/fivethirtyeight/data/tree/master/nba-raptor" target="_blank" rel="noopener">FiveThirtyEight</a></footer></main></div>
+<main class="workspace"><header class="topbar"><div class="breadcrumb"><span id="crumb-group">HOME</span><span class="chevron">/</span><strong id="crumb">OVERVIEW</strong></div><div class="bar-actions"><span id="feed-status"><span class="signal"></span> Historical records loaded</span><button id="reload" class="top-btn" title="Refresh available live data">↻ Refresh feeds</button><button class="top-btn mobile-nav" id="menu-btn" aria-label="Open menu">☰ Menu</button><span class="profile">IQ</span></div></header><div id="content" aria-live="polite"></div><footer>COURTSIDE IQ / A research-grade interface with explicit source coverage and model limitations. <a href="https://www.nba.com/news/history-nba-champions" target="_blank" rel="noopener">NBA.com</a> · <a href="https://mediacentre.euroleague.net/mediacentre/en/press_releases" target="_blank" rel="noopener">EuroLeague</a> · <a href="https://github.com/fivethirtyeight/data/tree/master/nba-raptor" target="_blank" rel="noopener">FiveThirtyEight</a></footer></main></div>
 </body></html>

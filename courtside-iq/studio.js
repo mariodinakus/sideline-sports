@@ -1,4 +1,5 @@
 import {createStudioFeatures} from './lib/studio-features.js';
+import {NAV_GROUPS,groupFor,pageFor,navigationMatches} from './lib/navigation.js';
 import {createNextLabs} from './lib/next-labs.js';
 import {radarChart,trendChart,scatterChart} from './lib/visuals.js';
 import {NBA_CHAMPIONS,NBA_MVPS,EURO_CHAMPIONS,EURO_MVPS,NBA_AWARDS,NBA_DRAFT_2026,SOURCES} from './history-data.js';
@@ -22,7 +23,49 @@ const topPlayers=()=>ST.legacy?.players||[];
 const selectedPlayers=()=>topPlayers().filter(p=>p.peak!==null);
 const mvpTotals=()=>{const a=new Map();for(const x of M())if(x.winner!=='NO AWARD')a.set(x.winner,(a.get(x.winner)||0)+1);return [...a].sort((x,y)=>y[1]-x[1]||x[0].localeCompare(y[0]));};
 const championTotals=()=>{const a=new Map();for(const x of H())if(x.winner!=='NO CHAMPION')a.set(x.winner,(a.get(x.winner)||0)+1);return [...a].sort((x,y)=>y[1]-x[1]);};
-function shell(name,body){$('#crumb').textContent=name.toUpperCase();$$('.nav-link').forEach(n=>n.classList.toggle('active',n.dataset.tab===ST.tab));$('#content').innerHTML=`<div class="page">${body}</div>`;document.documentElement.lang='en';}
+let expandedGroup=null;
+let previousRoute=null;
+function updateNavigation(){
+ const query=String($('#nav-search')?.value||'').trim().toLowerCase();
+ $$('.nav-link[data-tab]').forEach(node=>{
+   const active=node.dataset.tab===ST.tab;
+   node.classList.toggle('active',active);
+   if(active)node.setAttribute?.('aria-current','page');else node.removeAttribute?.('aria-current');
+ });
+ $$('.nav-group').forEach(node=>{
+   const section=NAV_GROUPS.find(item=>item.id===node.dataset.group);
+   if(!section)return;
+   const groupMatch=section.label.toLowerCase().includes(query);
+   let matches=0;
+   node.querySelectorAll('.nav-child').forEach(link=>{
+     const matched=!query||groupMatch||navigationMatches(link.dataset.tab,query);
+     link.hidden=!matched;
+     matches+=matched?1:0;
+   });
+   node.hidden=Boolean(query)&&matches===0;
+   const open=Boolean(query)?matches>0:expandedGroup===section.id;
+   node.classList.toggle('is-open',open);
+   const toggle=node.querySelector('.nav-group-toggle');
+   const list=node.querySelector('.nav-subpages');
+   if(toggle)toggle.setAttribute('aria-expanded',String(open));
+   if(list)list.hidden=!open;
+   node.classList.toggle('has-active-page',section.pages.some(p=>p.route===ST.tab));
+ });
+}
+function sectionTabs(){
+ const group=groupFor(ST.tab);
+ if(!group)return '';
+ return `<div class="section-context" aria-label="Current workspace"><div class="section-summary"><span class="section-kicker">${esc(group.label)} <span class="section-count">${group.pages.length} tools</span></span><span class="section-description">${esc(group.description)}</span></div><nav class="section-tabs" aria-label="${esc(group.label)} pages">${group.pages.map(page=>`<button class="section-tab ${page.route===ST.tab?'selected':''}" ${page.route===ST.tab?'aria-current="page"':''} data-jump="${page.route}">${esc(page.label)}</button>`).join('')}</nav></div>`;
+}
+function shell(name,body){
+ const group=groupFor(ST.tab);
+ if(previousRoute!==ST.tab){expandedGroup=group?.id||null;previousRoute=ST.tab;}
+ $('#crumb').textContent=(pageFor(ST.tab)?.label||name).toUpperCase();
+ const crumbGroup=$('#crumb-group');if(crumbGroup)crumbGroup.textContent=(group?.label||'Home').toUpperCase();
+ $('#content').innerHTML=`${sectionTabs()}<div class="page">${body}</div>`;
+ updateNavigation();
+ document.documentElement.lang='en';
+}
 function optionize(a,chosen,fmtName=x=>x){return a.map(x=>{const v=typeof x==='string'?x:x.name;return `<option value="${esc(v)}" ${v===chosen?'selected':''}>${esc(fmtName(x))}</option>`}).join('')}
 function barList(items,max=7){const a=items.slice(0,max),mx=Math.max(1,...a.map(x=>x[1]));return `<div class="bars">${a.map(x=>`<div><div class="bar-label"><span>${esc(x[0])}</span><strong>${x[1]}</strong></div><div class="bar-track"><div class="bar-fill" style="width:${(100*x[1]/mx).toFixed(1)}%"></div></div></div>`).join('')}</div>`}
 function dashboard(){const latest=H()[0],mvp=M()[0],champCount=H().filter(x=>x.winner!=='NO CHAMPION').length;const players=topPlayers(),r=players[0];shell('Overview',`
@@ -36,8 +79,8 @@ ${block('Championship dynasties',barList(championTotals()))}</div>
 ${head('NOW / THIS SEASON','The current basketball pulse','Verified feeds only · open each lab for full history')}
 <div class="two-col">${block('2026–27 season intelligence',`<div class="data-line"><span>League</span><strong>${ST.league==='nba'?'NBA':'EuroLeague'}</strong></div><div class="data-line"><span>Connected player records</span><strong>${ST.live?.players?.length??'Awaiting feed'}</strong></div><div class="data-line"><span>Matches returned</span><strong>${ST.live?.games?.length??'Awaiting feed'}</strong></div><button class="action" data-jump="season" style="margin-top:14px">Open Season Command Center ↗</button>`)}
 ${block('Basketball headlines & transfer reports',ST.extra?.news?.items?.length?`<div class="leader-list">${ST.extra.news.items.slice(0,5).map(n=>`<div class="leader-row"><span class="leader-name">${esc(n.title)}<small style="display:block;margin-top:5px;color:#8d8d9b">${esc(n.source)}</small></span><a href="${esc(n.url)}" target="_blank" rel="noopener" class="panel-link">Read ↗</a></div>`).join('')}</div><button class="chip" data-jump="news" style="margin-top:15px">Open News & Transfers</button>`:`<div class="blank">No verified news stories loaded yet. Feed is optional and may be offline.</div><button class="action" data-jump="news" style="margin-top:14px">Open News & Transfers ↗</button>`)}</div>
-${head('OPEN LABS','Research workspaces','Choose a question to explore')}
-<div class="cards-3"><div class="panel"><span class="pill">05 / GOAT</span><h3 style="margin:19px 0 9px">Who actually led their era?</h3><p class="subtle">Compare MVP counts with historical on-court impact. Adjust the weighting.</p><button class="panel-link" data-jump="goat">Launch comparison →</button></div><div class="panel"><span class="pill">06 / ANALOGUES</span><h3 style="margin:19px 0 9px">Careers with the same DNA</h3><p class="subtle">Search similar career shapes by RAPTOR, longevity and contribution.</p><button class="panel-link" data-jump="twins">Find Career Twins →</button></div><div class="panel"><span class="pill">07 / FORECAST</span><h3 style="margin:19px 0 9px">Who could win next?</h3><p class="subtle">Explore evidence-limited, scenario-based title and MVP forecasts.</p><button class="panel-link" data-jump="future">Open Forecast Lab →</button></div></div>
+${head('FIND YOUR WAY','Six focused workspaces','Everything in the right place — choose a topic')}
+<div class="workspace-directory">${NAV_GROUPS.map((group,i)=>`<button type="button" class="directory-card" data-jump="${group.pages[0].route}"><span class="directory-top"><span class="directory-icon">${group.icon}</span><span class="directory-index">0${i+1} / ${group.pages.length} tools</span></span><strong>${esc(group.label)}</strong><span class="directory-description">${esc(group.description)}</span><span class="directory-open">Start with ${esc(group.pages[0].label)} →</span></button>`).join('')}</div>
 <div class="callout warn">Historical trophies are official records. Historical RAPTOR metrics are a retrospective third-party model (not measured uniformly across all eras). Predictions are exploratory and must not be treated as calibrated odds.</div>`);}
 function archive(){const totals=championTotals();let rows=H().filter(x=>ST.yearGroup==='all'||Math.floor(x.year/10)*10===Number(ST.yearGroup));if(ST.search){const s=ST.search.toLowerCase();rows=rows.filter(x=>`${x.year} ${x.winner} ${M().find(y=>y.year===x.year)?.winner||''}`.toLowerCase().includes(s))}const cur=H().find(x=>x.year===ST.year),m=M().find(x=>x.year===ST.year);shell('History Atlas',`${title('02 / THE HISTORY ATLAS','Every era.<br><em>Every champion.</em>','A searchable timeline of NBA title holders since 1947 and European top-tier champions since 1958. Historical European Champions Cup and modern EuroLeague are included, with competition-era distinctions explained.')}
 <div class="toolbar"><button class="chip ${ST.league==='nba'?'on':''}" data-league="nba">NBA · 1947–2026</button><button class="chip ${ST.league==='euro'?'on':''}" data-league="euro">EUROLEAGUE · 1958–2026</button><input class="field" type="search" id="history-search" value="${esc(ST.search)}" placeholder="Search seasons, champions, MVPs…"><select id="decade-select" class="field"><option value="all">All decades</option>${Array.from({length:ST.league==='nba'?9:8},(_,i)=>ST.league==='nba'?2020-i*10:2020-i*10).map(d=>`<option value="${d}" ${ST.yearGroup==d?'selected':''}>${d}s</option>`).join('')}</select></div>
@@ -122,11 +165,11 @@ const routes={dashboard,archive,awards,analytics,goat,twins,future:forecast,rook
 function render(){(routes[ST.tab]||dashboard)();if(ST.extra?.selected)$('#content').innerHTML+=extensions.profileHTML();$('#feed-status').innerHTML=`<span class="signal"></span> ${ST.legacy?'Historical RAPTOR online':ST.loadingLegacy?'Connecting to RAPTOR…':'Historical records loaded'}`;}
 async function loadLegacy(force=false){if(ST.loadingLegacy||ST.legacy&&!force)return;ST.loadingLegacy=true;ST.historyError=null;render();try{let r=await fetch('/api/legacy'+(force?'?refresh=1':''));if(!r.ok)throw Error('Historical data provider unavailable (HTTP '+r.status+')');let data=await r.json();if(!Array.isArray(data.players))throw Error('Malformed historical dataset');ST.legacy=data;}catch(e){ST.historyError=e.message;}ST.loadingLegacy=false;render()}
 async function loadLive(year=2025,force=false){let key=`${ST.league}:${year}`;if(ST.loadingLive)return;if(ST.liveKey===key&&ST.live&&!force)return;ST.liveKey=key;ST.loadingLive=true;ST.live=null;render();try{const target=ST.league==='nba'?'nba':'euroleague';const r=await fetch(`/api/data?league=${target}&season=${year}`);if(!r.ok)throw Error(`Upstream HTTP ${r.status}`);let d=await r.json();if(!Array.isArray(d.players)||!Array.isArray(d.teams))throw Error('Provider output invalid');ST.live=d;}catch(e){ST.live={players:[],teams:[],sources:[{name:'provider',ok:false,error:e.message}]}}ST.loadingLive=false;render()}
-function goto(tab){ST.tab=routes[tab]?tab:'dashboard';if(ST.tab==='future')ST.liveKey='';history.replaceState(null,'','#'+ST.tab);render();window.scrollTo({top:0,behavior:'smooth'});if(['goat','twins'].includes(ST.tab)&&!ST.legacy)loadLegacy();if(['analytics','future'].includes(ST.tab))loadLive(2025);extensions.whenOpened(ST.tab);nextLabs.whenOpened(ST.tab)}
+function goto(tab){const search=$('#nav-search');if(search)search.value='';ST.tab=routes[tab]?tab:'dashboard';if(ST.tab==='future')ST.liveKey='';history.replaceState(null,'','#'+ST.tab);render();window.scrollTo({top:0,behavior:'smooth'});if(['goat','twins'].includes(ST.tab)&&!ST.legacy)loadLegacy();if(['analytics','future'].includes(ST.tab))loadLive(2025);extensions.whenOpened(ST.tab);nextLabs.whenOpened(ST.tab)}
 function switchLeague(league){ST.league=league;ST.year=2026;ST.yearGroup='all';ST.search='';ST.live=null;ST.liveKey='';render();if(['analytics','future'].includes(ST.tab))loadLive(2025);extensions.whenOpened(ST.tab);nextLabs.whenOpened(ST.tab)}
-document.addEventListener('click',e=>{if(nextLabs.onClick(e)||extensions.onClick(e))return;let nav=e.target.closest('[data-tab]');if(nav){goto(nav.dataset.tab);$('.rail').classList.remove('open');return}let jump=e.target.closest('[data-jump]');if(jump){e.preventDefault();goto(jump.dataset.jump);return}let league=e.target.closest('[data-league]');if(league){switchLeague(league.dataset.league);return}if(e.target.id==='menu-btn'){$('.rail').classList.toggle('open');return}if(e.target.id==='reload'){loadLegacy(true);if(['analytics','future','visuals','teamlab'].includes(ST.tab))loadLive(ST.tab==='teamlab'?2025:2025,true);if(ST.tab==='news')extensions.loadNews(true);return}if(e.target.id==='live-refresh')loadLive(+(($('#live-season')?.value)||2025),true);if(e.target.id==='forecast-retry')loadLive(2025,true);if(e.target.id==='method-link'){e.preventDefault();goto('methodology')}});
+document.addEventListener('click',e=>{const toggle=e.target.closest('[data-group-toggle]');if(toggle){const name=toggle.dataset.groupToggle;expandedGroup=expandedGroup===name?null:name;updateNavigation();return}if(e.target.id==='nav-scrim'){e.preventDefault();$('.rail').classList.remove('open');return}if(nextLabs.onClick(e)||extensions.onClick(e))return;let nav=e.target.closest('[data-tab]');if(nav){e.preventDefault();goto(nav.dataset.tab);$('.rail').classList.remove('open');return}let jump=e.target.closest('[data-jump]');if(jump){e.preventDefault();goto(jump.dataset.jump);return}let league=e.target.closest('[data-league]');if(league){switchLeague(league.dataset.league);return}if(e.target.id==='menu-btn'){$('.rail').classList.toggle('open');return}if(e.target.id==='reload'){loadLegacy(true);if(['analytics','future','visuals','teamlab'].includes(ST.tab))loadLive(ST.tab==='teamlab'?2025:2025,true);if(ST.tab==='news')extensions.loadNews(true);return}if(e.target.id==='live-refresh')loadLive(+(($('#live-season')?.value)||2025),true);if(e.target.id==='forecast-retry')loadLive(2025,true);if(e.target.id==='method-link'){e.preventDefault();goto('methodology')}});
 document.addEventListener('change',e=>{if(nextLabs.onChange(e)||extensions.onChange(e))return;if(e.target.id==='year-select'){ST.year=Number(e.target.value);render()}if(e.target.id==='decade-select'){ST.yearGroup=e.target.value;render()}if(e.target.id==='goat-a'){ST.goatA=e.target.value;render()}if(e.target.id==='goat-b'){ST.goatB=e.target.value;render()}if(e.target.id==='twin-player'){ST.twin=e.target.value;render()}if(e.target.id==='live-season')loadLive(Number(e.target.value),true)});
-document.addEventListener('input',e=>{if(nextLabs.onInput(e)||extensions.onInput(e))return;if(e.target.id==='history-search'){ST.search=e.target.value;const cursor=e.target.selectionStart;render();const field=$('#history-search');field?.focus();field?.setSelectionRange(cursor,cursor)}if(e.target.id==='weight-award'){ST.weightAward=Number(e.target.value);render()}if(e.target.id==='weight-impact'){ST.weightImpact=Number(e.target.value);render()}if(e.target.id==='weight-longevity'){ST.weightLongevity=Number(e.target.value);render()}if(e.target.id==='forecast-noise'){ST.forecastNoise=Number(e.target.value);render()}});
+document.addEventListener('input',e=>{if(e.target.id==='nav-search'){updateNavigation();return}if(nextLabs.onInput(e)||extensions.onInput(e))return;if(e.target.id==='history-search'){ST.search=e.target.value;const cursor=e.target.selectionStart;render();const field=$('#history-search');field?.focus();field?.setSelectionRange(cursor,cursor)}if(e.target.id==='weight-award'){ST.weightAward=Number(e.target.value);render()}if(e.target.id==='weight-impact'){ST.weightImpact=Number(e.target.value);render()}if(e.target.id==='weight-longevity'){ST.weightLongevity=Number(e.target.value);render()}if(e.target.id==='forecast-noise'){ST.forecastNoise=Number(e.target.value);render()}});
 window.addEventListener('hashchange',()=>{const t=location.hash.replace('#','');if(routes[t]&&t!==ST.tab)goto(t)});
 ST.tab=routes[location.hash.slice(1)]?location.hash.slice(1):'dashboard';render();if(['goat','twins'].includes(ST.tab))loadLegacy();if(['analytics','future'].includes(ST.tab))loadLive(2025);extensions.whenOpened(ST.tab);nextLabs.whenOpened(ST.tab);
 
