@@ -153,6 +153,8 @@ export const NBA_MVPS = `
 1958|Bill Russell
 1957|Bob Cousy
 1956|Bob Pettit`.trim().split('\n').map(s=>{let [year,winner]=s.split('|');return {year:+year,winner}});
+// European top-tier champions since the 1958 European Champions Cup (including predecessor competitions).
+// 2000–01 had rival competitions; this championship index follows the EuroLeague title (Virtus Bologna).
 export const EURO_CHAMPIONS = `
 2026|Olympiacos
 2025|Fenerbahce
@@ -180,7 +182,49 @@ export const EURO_CHAMPIONS = `
 2003|Barcelona
 2002|Panathinaikos
 2001|Virtus Bologna
-2000|Panathinaikos`.trim().split('\n').map(s=>{let [year,winner]=s.split('|');return {year:+year,winner,winnerKnown:winner!=='NO CHAMPION'}});
+2000|Panathinaikos
+1999|Zalgiris Kaunas
+1998|Virtus Bologna
+1997|Olympiacos
+1996|Panathinaikos
+1995|Real Madrid
+1994|Joventut Badalona
+1993|Limoges CSP
+1992|Partizan Belgrade
+1991|KK Split
+1990|KK Split
+1989|KK Split
+1988|Olimpia Milano
+1987|Olimpia Milano
+1986|Cibona Zagreb
+1985|Cibona Zagreb
+1984|Virtus Roma
+1983|Pallacanestro Cantu
+1982|Pallacanestro Cantu
+1981|Maccabi Tel Aviv
+1980|Real Madrid
+1979|Bosna Sarajevo
+1978|Real Madrid
+1977|Maccabi Tel Aviv
+1976|Pallacanestro Varese
+1975|Pallacanestro Varese
+1974|Real Madrid
+1973|Pallacanestro Varese
+1972|Pallacanestro Varese
+1971|CSKA Moscow
+1970|Pallacanestro Varese
+1969|CSKA Moscow
+1968|Real Madrid
+1967|Real Madrid
+1966|Olimpia Milano
+1965|Real Madrid
+1964|Real Madrid
+1963|CSKA Moscow
+1962|Dinamo Tbilisi
+1961|CSKA Moscow
+1960|ASK Riga
+1959|ASK Riga
+1958|ASK Riga`.trim().split('\n').map(s=>{let [year,winner]=s.split('|');return {year:+year,winner,winnerKnown:winner!=='NO CHAMPION'}});
 // Season-long EuroLeague MVP award, not Final Four MVP; first introduced in 2004–05.
 export const EURO_MVPS = `
 2026|Sasha Vezenkov
@@ -230,4 +274,4 @@ export const NBA_DRAFT_2026 = [
  {pick:9,name:'Morez Johnson Jr.',team:'Dallas Mavericks',school:''},
  {pick:10,name:'Brayden Burries',team:'Milwaukee Bucks',school:''},
 ];
-export const SOURCES={nbaChamp:'https://www.nba.com/news/history-nba-champions',nbaMvp:'https://www.nba.com/news/history-mvp-award-winners',nbaAwards:'https://pr.nba.com/voting-results-2025-26-nba-regular-season-awards/',nbaDraft:'https://www.nba.com/news/2026-nba-draft-order',euro:'https://f4athens.org/en/final-four',euro2026:'https://mediacentre.euroleague.net/mediacentre/en/press_releases',historicalRaptor:'https://github.com/fivethirtyeight/data/tree/master/nba-raptor'};
+export const SOURCES={nbaChamp:'https://www.nba.com/news/history-nba-champions',nbaMvp:'https://www.nba.com/news/history-mvp-award-winners',nbaAwards:'https://pr.nba.com/voting-results-2025-26-nba-regular-season-awards/',nbaDraft:'https://www.nba.com/news/2026-nba-draft-order',euro:'https://mediacentre.euroleague.net/en/app/2/communication/communication/preview/523',euro2026:'https://mediacentre.euroleague.net/mediacentre/en/press_releases',historicalRaptor:'https://github.com/fivethirtyeight/data/tree/master/nba-raptor'};
