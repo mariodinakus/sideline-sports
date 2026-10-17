@@ -125,3 +125,7 @@ The home screen and navigation are now **English-only**. New editorial dashboard
 - All visualizations adapt to mobile screens without any third-party chart dependency.
 - The historical RAPTOR adapter now includes a `timeline` field for each player. Source and coverage remain unchanged.
 - Run `npm test`: includes radar normalization, missing-data safeguards, accessible SVG and chart-output tests.
+
+### Historical coverage extension
+
+The History Atlas now includes **European top-tier champions from the 1958 European Champions Cup through 2026**, in addition to NBA title history since 1947. European competition identity and governance changed over time; this is a cross-era winners index, not a claim that the pre-2000 tournament used the same regulations as today's EuroLeague. In 2000–01 two top-tier competitions ran in parallel: Virtus Bologna won the EuroLeague, while Maccabi Tel Aviv won the separate SuproLeague. For the full year-by-year European winners index see EuroLeague's official historical record: https://mediacentre.euroleague.net/en/app/2/communication/communication/preview/523 . Season-long MVPs are only shown for years when that award existed (from 2005).
