@@ -1,0 +1,21 @@
+// NBA / EuroLeague reporting and transactions. Claims inherit source status; rumors remain rumors.
+const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
+let cache=null,at=0;
+const timeout=ms=>AbortSignal.timeout(ms);
+function decode(s=''){return String(s).replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/<[^>]*>/g,'').replace(/&(#x[\da-f]+|#\d+|amp|lt|gt|quot|apos|nbsp);/gi,(_,a)=>a==='amp'?'&':a==='lt'?'<':a==='gt'?'>':a==='quot'? '"':a==='apos'?"'":a==='nbsp'?' ':a.startsWith('#')?String.fromCodePoint(a[1].toLowerCase()==='x'?parseInt(a.slice(2),16):parseInt(a.slice(1),10)):_).trim()}
+const textIn=(xml,tag)=>decode(xml.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`,'i'))?.[1]||'');
+function rss(xml,category){return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0,22).map(m=>{const s=m[1],headline=textIn(s,'title'),link=textIn(s,'link'),date=textIn(s,'pubDate');return {id:link,title:headline,url:/^https:\/\//.test(link)?link:null,published:date&&Number.isFinite(Date.parse(date))?new Date(date).toISOString():null,type:category,source:'Google News / linked publisher',verification:'Published report · not an official transaction',image:null}}).filter(x=>x.title&&x.url)}
+async function read(u,as='json'){const r=await fetch(u,{signal:timeout(7000),headers:{accept:'application/json, application/rss+xml'}});if(!r.ok)throw Error('HTTP '+r.status);return as==='rss'?await r.text():await r.json()}
+async function adapter(name,callback){try{return {name,ok:true,items:await callback()}}catch(e){return {name,ok:false,items:[],error:String(e.message).slice(0,110)}}}
+function espnArticles(data){const a=Array.isArray(data?.articles)?data.articles:[];return a.slice(0,36).map(r=>({id:String(r.id??r.links?.web?.href??r.headline),title:String(r.headline??''),url:r.links?.web?.href||null,published:r.published||r.lastModified||null,type:/trade|sign|waiv|acquir|contract|transfer|deal/i.test(r.headline||'')?'transactions':'news',source:'ESPN',verification:'ESPN reporting · not automatically an official transaction',image:(r.images||[])[0]?.url||null})).filter(x=>x.title&&typeof x.url==='string'&&/^https:\/\//.test(x.url))}
+function transactionItems(data){let rows=Array.isArray(data?.transactions)?data.transactions:Array.isArray(data?.items)?data.items:[];return rows.slice(0,35).map((r,i)=>({id:'txn-'+(r.id??i),title:String(r.description??r.text??r.headline??'').slice(0,240),url:typeof r.link==='string'&&/^https:\/\//.test(r.link)?r.link:'https://www.espn.com/nba/transactions',published:r.date||r.timestamp||null,type:'transactions',source:'ESPN transactions listing',verification:'Transaction listing (verify with team/NBA announcement)',image:null})).filter(x=>x.title)}
+export default async function handler(req,res){if(req.method!=='GET')return res.status(405).json({error:'GET only'});try{
+ if(!cache||Date.now()-at>300000){const providers=await Promise.all([
+ adapter('ESPN NBA news',async()=>espnArticles(await read(ESPN+'/news?limit=35'))),
+ adapter('ESPN NBA transactions',async()=>transactionItems(await read(ESPN+'/transactions'))),
+ adapter('NBA trades / rumors',async()=>rss(await read('https://news.google.com/rss/search?q='+encodeURIComponent('NBA trade signings rumors when:7d')+'&hl=en-US&gl=US&ceid=US:en','rss'),'rumors')),
+ adapter('EuroLeague transfers',async()=>rss(await read('https://news.google.com/rss/search?q='+encodeURIComponent('EuroLeague transfer basketball signings when:7d')+'&hl=en-US&gl=US&ceid=US:en','rss'),'euroleague'))]);
+ const seen=new Set();let items=providers.flatMap(p=>p.items).filter(x=>{const key=x.title.toLowerCase().replace(/[^a-z\d]/g,'').slice(0,75);if(seen.has(key))return false;seen.add(key);return true}).sort((a,b)=>Date.parse(b.published||0)-Date.parse(a.published||0)).slice(0,72);
+ cache={items,sources:providers.map(({name,ok,error,items})=>({name,ok,error,count:items.length})),updatedAt:new Date().toISOString()};at=Date.now();}
+ res.setHeader('Cache-Control','s-maxage=300, stale-while-revalidate=900');return res.status(200).json(cache);
+}catch(e){return res.status(503).json({items:[],error:String(e.message).slice(0,120)})}}

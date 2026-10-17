@@ -129,3 +129,31 @@ The home screen and navigation are now **English-only**. New editorial dashboard
 ### Historical coverage extension
 
 The History Atlas now includes **European top-tier champions from the 1958 European Champions Cup through 2026**, in addition to NBA title history since 1947. European competition identity and governance changed over time; this is a cross-era winners index, not a claim that the pre-2000 tournament used the same regulations as today's EuroLeague. In 2000–01 two top-tier competitions ran in parallel: Virtus Bologna won the EuroLeague, while Maccabi Tel Aviv won the separate SuproLeague. For the full year-by-year European winners index see EuroLeague's official historical record: https://mediacentre.euroleague.net/en/app/2/communication/communication/preview/523 . Season-long MVPs are only shown for years when that award existed (from 2005).
+
+## Version 3.0 — October 2026: Season / People / Nations / Model Arena
+
+This upgrade adds **six new research workspaces** alongside the original history, advanced-statistics and GOAT labs:
+
+1. **Season 2026–27:** live provider-backed NBA / EuroLeague current-season players, team records and fixtures, with season selection. NBA's 2026–27 regular season begins October 20, 2026: never infer regular-season data from preseason fixtures.
+2. **News & Transfers:** `api/news.js` queries ESPN news and its transactions feed, plus Google News RSS queries for recent NBA trade reporting and EuroLeague signings. Provider status, article date, publisher, original link and `rumor/report` labeling are explicit. Google News indexes third-party stories; it is not confirmation of a transaction.
+3. **Player Atlas & career dossier:** click an athlete in the season leaders, current-player table, or history index. View a drawer with season-by-season RAPTOR rating, RAPTOR WAR, minutes, radar comparisons, verified season line and optional ESPN profile or NBA CDN image. Photographs only display when an official numeric ID or verified ESPN match exists. Unavailable images show an initials fallback. Retrospective FiveThirtyEight historical RAPTOR and official current metrics are different data products. Not every career is covered completely.
+4. **Visual Playground:** change scatter axes, histogram metric, ranked leaderboard and number of athletes. Never replaces absent observations with estimated stats.
+5. **National Teams:** 19 men’s FIBA World Cups since 1950 and men’s EuroBasket medal tables since 1951, filtered by country, gold/silver/bronze counts, explicit medal-point equation and MVP names where available. Historical Soviet Union/Yugoslavia and current successor nations are **not merged**. Primary records: [FIBA World Cup historical medals](https://www.fiba.basketball/en/events/fiba-basketball-world-cup-2027/all-time-medalists), [FIBA EuroBasket historical medals](https://www.fiba.basketball/en/events/fiba-eurobasket-2025/all-time-medalists), [2025 EuroBasket MVP](https://www.fiba.basketball/en/events/fiba-eurobasket-2025/news/dennis-schroder-named-tissot-mvp-of-fiba-eurobasket-2025).
+6. **Match ML Arena:** builds a real **logistic regression** from observed final scores using a sequential, pregame Elo predictor and an 80/20 chronological train/test split. Shows holdout accuracy, Brier score and a constant-home-win baseline. Model probabilities are withheld for fewer than 65 dated final games. Use a custom CSV (`date,home,away,homeScore,awayScore`) if the currently available NBA data feed lacks enough complete historical matches. The model does not account for injuries, home-court specifics or rosters; prediction output is not a betting edge.
+7. **Global GOAT Equation:** experimental index combining historical NBA RAPTOR WAR, NBA regular-season MVP awards, modern EuroLeague MVP awards, and FIBA World Cup/EuroBasket MVP counts, with adjustable user weights and disclosed denominators. An NBA retrospective index cannot fairly measure EuroLeague-only or 1950–1976 legends; those candidates are visibly unranked, rather than being assigned fictitious ratings. **Not an objective all-era player ranking.**
+
+### New API routes
+
+- `/api/news` — server-normalized latest articles, provider statuses, trade reporting.
+- `/api/player?name=LeBron%20James&season=2026` — ESPN identity search plus optional profile/stat data (may be unavailable for historic players or due to an upstream change).
+- The existing `/api/data?league=nba|euroleague&season=2026` remains the source for current-season statistics. This is an **unofficial public-data adapter**, not a contracted or guaranteed source; it might fail or be rate limited.
+
+### Run / validation
+
+- `npm run check` — JavaScript syntax validation.
+- `npm test` — automated factual-record and model tests, and hash-route entrypoint smoke tests.
+- Automated Playwright/Chromium visual smoke tests exercised the navigation, graphs, model training, and player profile on desktop and 390px mobile **with explicitly mocked provider responses only**. The live external API responses must still be verified after production deployment; build success is not a substitute for that.
+
+### Content and redistribution
+
+External news articles remain on their publishers' sites; the interface shows headlines, attribution, dates and links, not copied full stories. A public sports image CDN is not necessarily licensed for reuse in a commercial product. Check provider licenses and usage terms before monetization or large-scale traffic. News feeds, NBA/EuroLeague unofficial endpoints, ESPN identity search, and external headshots may change or stop responding.
