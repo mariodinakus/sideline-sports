@@ -1,0 +1,14 @@
+{
+  "schema": "nexus.v1",
+  "appId": "sidelinesports",
+  "name": "SIDELINE",
+  "url": "https://sideline-sports-gilt.vercel.app",
+  "capabilities": [
+    "sports-news",
+    "basketball-scores",
+    "standings"
+  ],
+  "notifications": [],
+  "connection": "read-only",
+  "notice": "Public integration handshake only. No score or match alert is emitted without an approved feed."
+}
