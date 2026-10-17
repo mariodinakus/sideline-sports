@@ -113,3 +113,15 @@ The home screen and navigation are now **English-only**. New editorial dashboard
 - https://f4athens.org/en/final-four
 - https://mediacentre.euroleague.net/mediacentre/en/press_releases
 - https://github.com/fivethirtyeight/data/tree/master/nba-raptor
+
+
+## Visual Intelligence Studio (v2.1)
+
+- GOAT Lab now features **interactive two-player spider/radar comparisons** built in dependency-free accessible SVG. Six evidence dimensions: regular-season MVP awards, Offensive RAPTOR, Defensive RAPTOR, overall RAPTOR, peak RAPTOR, and career RAPTOR WAR.
+- Radar normalization uses disclosed, fixed illustrative reference bands and truncates values outside the bands. It is **not a league percentile, cross-era adjustment, or objective GOAT score**.
+- GOAT Lab and Career Twins feature actual historical **season-by-season RAPTOR trajectories** (career-season index, not calendar-year alignment). This uses available season-level values from FiveThirtyEight's historical RAPTOR dataset.
+- Advanced Stats now includes a **True Shooting vs points-per-game scatter plot** for players with both underlying values from the live provider. There is no fake data fallback.
+- Career Twins adds a radar profile overlay against the nearest historical analog.
+- All visualizations adapt to mobile screens without any third-party chart dependency.
+- The historical RAPTOR adapter now includes a `timeline` field for each player. Source and coverage remain unchanged.
+- Run `npm test`: includes radar normalization, missing-data safeguards, accessible SVG and chart-output tests.
