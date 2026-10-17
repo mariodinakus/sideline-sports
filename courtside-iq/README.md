@@ -1,3 +1,41 @@
+# COURTSIDE IQ v4 — Live Center / Basketball Evolution / Stats Academy
+
+## New in v4
+- **Live Scores & Standings**: ESPN NBA scoreboard and conference standings, public EuroLeague fixtures and round-specific standings, manually refreshable plus visible-tab refresh. All games display their actual source status; unavailable data is never fabricated.
+- **Team DNA Lab**: 12 available team metrics, ranking bars, side-by-side player/team style comparison, team radar when at least three observed comparable axes are present; metric-dependent analysis where sufficient inputs exist.
+- **Basketball Evolution**: verified NBA league-average observations (not interpolated), interactive three-point attempt / scoring / pace / eFG% / offensive-rating charts, era descriptions, champions-by-decade visualization, possessions-based explanations.
+- **Stats Academy**: 28 glossary entries with formulas and cautions: RAPTOR, RAPTOR WAR, BPM, VORP, WS, usage, PER, 4 Factors and more. Search by abbreviation or meaning.
+- **Visual Playground repair**: defaults to completed NBA 2025–26 data instead of 2026–27 pre-regular-season player stats. A sourced historical NBA shot-profile SVG always renders, even when third-party player APIs are unavailable. Fixed asynchronous event handling that could swallow season/select changes.
+- **Portraits & team logos**: show known NBA/ESPN player headshots and ESPN team logos with placeholders on missing images; never assign unknown people a guessed photo.
+
+## How the basketball evolved
+The 3PA-per-team snapshot series is sourced from Basketball-Reference NBA league averages (`https://www.basketball-reference.com/leagues/NBA_stats_per_game.html`) and historical league-average tables. 1989–90: 6.6 attempts/team/game, 2025–26: 37.0. Any missing numbers in the source snapshots are null, not extrapolated. Cross-era offense comparisons should use per-100-possessions metrics and account for changing 3-point and substitution rules.
+
+## Live feeds and restrictions
+`/api/live?league=nba&date=20261017&season=2026`
+`/api/live?league=euro&date=20261017&season=2026`
+
+- ESPN and EuroLeague public endpoints are uncontracted, unofficial, and can change schema, throttle, or restrict connections.
+- ESPN scoreboard / standings use different API paths. EuroLeague standings require the season code and a completed regular-season round. A malformed or unavailable table displays no rankings.
+- Refresh is limited to when the live page is visible; edge caching helps avoid needless repeated external fetches.
+- NBA/EURO league team data differs in possession stats availability. No free feed can guarantee a complete historic tracking dataset 1947 onward. Fields without a source show a dash.
+- Model accuracy, historical RAPTOR and odds should not be equated to certainty or official NBA statistics.
+
+## Sources
+- NBA league averages: https://www.basketball-reference.com/leagues/NBA_stats_per_game.html
+- Basketball-Reference stats glossary: https://www.basketball-reference.com/about/glossary.html
+- BPM and VORP methodology: https://www.basketball-reference.com/about/bpm2.html
+- RAPTOR data definitions: https://github.com/fivethirtyeight/data/blob/master/nba-raptor/README.md
+- EuroLeague endpoint structure: https://sportsdataverse-py.sportsdataverse.org/docs/euroleague/reference/euroleague/other
+
+## Deployment
+Project root is the `courtside-iq/` folder in the `sideline-sports` GitHub repository. Vercel deploys on main. Static pages load via `/index.html`, ES modules from `/studio.js` and `/lib/`, serverless handlers from `/api/`. No API key required; do not interpret this as a production SLA.
+
+## Tests
+`npm test` (52 tests including model and live mappers). `npm run check` for all JavaScript syntax. An attempted headless-browser render could not connect from the isolated build environment, so tests are not a substitute for checking the live Vercel site.
+
+---
+
 # COURTSIDE IQ — Basketball Intelligence Platform
 
 A deployable, bilingual **NBA + EuroLeague** analytics web app. Vanilla JavaScript/HTML/CSS front end, zero runtime npm dependencies, and a Vercel serverless data proxy.

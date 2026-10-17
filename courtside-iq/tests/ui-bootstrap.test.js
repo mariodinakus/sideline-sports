@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 // The static JavaScript entrypoint must boot on every hash route. Syntax checks
 // alone cannot catch a missing variable in the route registry at module load.
-const routes = ['dashboard','archive','awards','analytics','goat','twins','future','rookies','methodology','season','news','nations','globalgoat','visuals','players','matchlab'];
+const routes = ['dashboard','archive','awards','analytics','goat','twins','future','rookies','methodology','season','news','nations','globalgoat','visuals','players','matchlab','livecenter','teamlab','evolution','academy'];
 const nodes = new Map();
 const element = selector => {
   if (!nodes.has(selector)) nodes.set(selector, {
