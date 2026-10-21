@@ -5,6 +5,14 @@
  */
 export const NAV_GROUPS = [
   {
+    id:'lab', label:'Data Lab', icon:'⌬', caption:'Query, run and export',
+    description:'A notebook-style workspace: sortable datasets, CSV/JSON export and reproducible live analysis cells.',
+    pages:[
+      {route:'labexplorer', label:'Dataset Explorer'},
+      {route:'labnotebook', label:'Live Notebook'}
+    ]
+  },
+  {
     id:'live', label:'Live & Season', icon:'◉', caption:'What is happening now',
     description:'Scores, tables, the current season and the latest basketball stories.',
     pages:[
@@ -49,14 +57,6 @@ export const NAV_GROUPS = [
     pages:[
       {route:'matchlab', label:'Match Prediction Lab'},
       {route:'future', label:'Future Champions & MVPs'}
-    ]
-  },
-  {
-    id:'lab', label:'Data Lab', icon:'⌬', caption:'Query, run and export',
-    description:'A notebook-style workspace: sortable datasets, CSV/JSON export and reproducible live analysis cells.',
-    pages:[
-      {route:'labexplorer', label:'Dataset Explorer'},
-      {route:'labnotebook', label:'Live Notebook'}
     ]
   },
   {

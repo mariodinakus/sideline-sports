@@ -144,6 +144,49 @@ export function createDataLab({ST,shell,title,head,block,esc,render}){
   </div>`);
  }
 
+ /* ---------- Home: the lab control room ---------- */
+ const HOME={loading:false,error:null,data:null,ms:null,at:null};
+ const seasonNow=()=>{const d=new Date();return d.getUTCMonth()>=8?d.getUTCFullYear():d.getUTCFullYear()-1};
+ async function loadHome(force=false){
+  if(HOME.loading||(HOME.data&&!force))return;
+  HOME.loading=true;HOME.error=null;render();
+  const t0=performance.now();
+  try{
+   const r=await fetch(`/api/live?league=nba&season=${seasonNow()}`);
+   if(!r.ok)throw Error(`HTTP ${r.status}`);
+   HOME.data=await r.json();HOME.ms=Math.round(performance.now()-t0);HOME.at=new Date();
+  }catch(e){HOME.error=String(e.message||e);HOME.data=null}
+  HOME.loading=false;render();
+ }
+ const gameTime=g=>g.date?new Date(g.date).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Athens'}):'—';
+ function homeHTML(){
+  const d=HOME.data,games=d?.games||[],rows=flattenStandings(d?.groups),played=rows.filter(r=>r.games>0);
+  const feed=HOME.loading?'<span class="lab-state run">● connecting to feed…</span>':HOME.error?`<span class="lab-state err">✕ feed unavailable (${esc(HOME.error)}) — nothing is shown instead of invented values</span>`:d?`<span class="lab-state ok">● LIVE · ESPN · ${HOME.ms} ms · ${esc(HOME.at.toLocaleTimeString('en-GB'))}</span>`:'<span class="lab-state idle">○ not connected</span>';
+  const best=[...played].sort((a,b)=>(b.diff??-1e9)-(a.diff??-1e9))[0];
+  const tile=(k,v,sub)=>`<div class="lab-stat"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`;
+  const live=games.filter(g=>g.state==='in').length;
+  const cat=[['nbaChamps','NBA champions'],['nbaMvps','NBA MVPs'],['euroChamps','EuroLeague champions'],['euroMvps','EuroLeague MVPs']];
+  return `<section class="lab lab-home">
+  <div class="eyebrow">COURTSIDE IQ / BASKETBALL DATA LAB</div>
+  <h1>Basketball,<br><em>as a dataset.</em></h1>
+  <p class="lead">Live standings and scores, 80 seasons of champions and MVPs, and reproducible analysis cells — every number with its source, timestamp and limits. Query it, chart it, export it.</p>
+  <div class="lab-cta"><button class="lab-btn" data-jump="labexplorer">▶ Open Dataset Explorer</button><button class="lab-btn ghost" data-jump="labnotebook">Run Live Notebook</button><button class="lab-btn ghost" data-jump="evolution">Evolution of the game</button></div>
+  <div class="lab-strip">${feed}<span>NBA ${seasonLabel(seasonNow())}</span><button class="lab-link" id="lab-home-refresh">↻ refresh</button></div>
+  <div class="lab-stats">
+   ${tile('GAMES ON THE FEED',d?games.length:'—',d?`${live} live now · date ${esc(d.date||'')}`:'awaiting feed')}
+   ${tile('TEAMS WITH A RECORD',d?played.length+' / '+rows.length:'—',d&&played.length&&Math.max(...played.map(r=>r.games))<20?'early season — small samples':'regular season table')}
+   ${tile('BEST POINT DIFFERENTIAL',best?esc(best.abbr||best.team):'—',best?`${cellFmt.diff(best.diff)} per game · ${best.games} GP`:'no games played yet')}
+   ${tile('HISTORICAL DATASETS',cat.length,`${Object.values(STATIC).reduce((n,x)=>n+x.rows.length,0)} verified rows`)}
+  </div>
+  <div class="lab-two">
+   <div class="lab-card"><div class="lab-card-h">TODAY'S GAMES · live feed</div>${games.length?`<div class="lab-games">${games.slice(0,10).map(g=>`<div class="lab-game ${g.state==='in'?'is-live':''}"><span class="t">${esc(g.awayCode||g.away)}</span><b>${g.awayScore??'–'}</b><i>@</i><b>${g.homeScore??'–'}</b><span class="t">${esc(g.homeCode||g.home)}</span><small>${esc(g.state==='in'?'LIVE '+g.status:g.state==='post'?'FINAL':gameTime(g)+' Athens')}</small></div>`).join('')}</div>`:`<div class="lab-empty-card">${HOME.loading?'Loading games…':d?'No games on the feed for this date.':'Feed not connected.'}</div>`}</div>
+   <div class="lab-card"><div class="lab-card-h">DATASET CATALOGUE</div><table class="lab-mini"><thead><tr><th>Dataset</th><th>Rows</th><th></th></tr></thead><tbody>
+    <tr><td>Live standings (API)</td><td>${rows.length||'—'}</td><td><button class="lab-link" data-lab-open="live">open ↗</button></td></tr>
+    ${cat.map(([k,n])=>`<tr><td>${n}</td><td>${STATIC[k].rows.length}</td><td><button class="lab-link" data-lab-open="${k}">open ↗</button></td></tr>`).join('')}
+   </tbody></table></div>
+  </div></section>`;
+ }
+
  function download(name,mime,text){
   const url=URL.createObjectURL(new Blob([text],{type:mime}));
   const a=Object.assign(document.createElement('a'),{href:url,download:name});
@@ -159,6 +202,9 @@ export function createDataLab({ST,shell,title,head,block,esc,render}){
    if(ex.dataset.labExport==='csv')download(name+'.csv','text/csv;charset=utf-8','﻿'+toCSV(d.rows,d.cols));
    else download(name+'.json','application/json',JSON.stringify({dataset:d.label,exportedAt:new Date().toISOString(),source:d.source,rows:d.rows},null,2));
    return true}
+  const open=t.closest?.('[data-lab-open]');
+  if(open){L.dataset=open.dataset.labOpen;L.query='';L.sortKey=L.dataset==='live'?'winPct':'year';L.sortDir=-1;location.hash='#labexplorer';if(ST.tab==='labexplorer')render();return true}
+  if(t.closest?.('#lab-home-refresh')){loadHome(true);return true}
   if(t.closest?.('#lab-run')){load(true);return true}
   return false;
  }
@@ -175,8 +221,9 @@ export function createDataLab({ST,shell,title,head,block,esc,render}){
   const f=document.querySelector('#lab-query');f?.focus();f?.setSelectionRange(pos,pos);return true;
  }
  function whenOpened(tab){
+  if(tab==='dashboard')loadHome();
   if(tab==='labexplorer'){if(L.dataset==='live')load();}
   if(tab==='labnotebook')load();
  }
- return {routes:{labexplorer:explorer,labnotebook:notebook},onClick,onChange,onInput,whenOpened};
+ return {routes:{labexplorer:explorer,labnotebook:notebook},onClick,onChange,onInput,whenOpened,homeHTML};
 }
