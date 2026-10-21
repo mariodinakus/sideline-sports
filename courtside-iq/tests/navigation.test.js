@@ -6,9 +6,9 @@ import {NAV_GROUPS,NAV_ROUTES,groupFor,pageFor,navigationMatches} from '../lib/n
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const studio=readFileSync(new URL('../studio.js',import.meta.url),'utf8');
 
-test('six user-oriented categories cover 19 tools without duplicates',()=>{
- assert.equal(NAV_GROUPS.length,6);
- assert.equal(NAV_ROUTES.length,20); // Overview + 19 tools
+test('seven user-oriented categories cover 21 tools without duplicates',()=>{
+ assert.equal(NAV_GROUPS.length,7);
+ assert.equal(NAV_ROUTES.length,22); // Overview + 21 tools
  assert.equal(new Set(NAV_ROUTES).size,NAV_ROUTES.length);
  for (const group of NAV_GROUPS){
   assert.ok(group.label && group.description);
@@ -20,7 +20,7 @@ test('six user-oriented categories cover 19 tools without duplicates',()=>{
  }
 });
 
-test('all twenty screens have an accessible deep-linked navigation item',()=>{
+test('all twenty-two screens have an accessible deep-linked navigation item',()=>{
  for (const route of NAV_ROUTES){
   assert.ok(html.includes(`data-tab="${route}"`),`missing ${route}`);
   assert.ok(NAV_ROUTES.includes(route),`unregistered route ${route}`);
