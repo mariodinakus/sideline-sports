@@ -1,0 +1,115 @@
+/* COURTSIDE IQ — global dark lab theme (derived from studio.css by luminance mapping, then hand-tuned) */
+:root{color:#ced1df;background:#0f0f0d}
+.logo-ball{color:#d1d9eb}
+.nav-link.active{color:#d4d9e8}
+.topbar{border-bottom:1px solid #302e27;background:rgba(15,15,13,0.90)}
+.breadcrumb strong{color:#c2c4d6}
+.bar-actions>span{color:#a6abb3}
+.top-btn{background:#181713;border:1px solid #302e27;color:#c0c4d6}
+.eyebrow:before{background:#2d2a4a}
+.lead{color:#aaaeb7}
+.hero-main{background:#161524;border:1px solid #302e27}
+.kpi{background:#181713;border:1px solid #302e27}
+.panel{background:#181713;border:1px solid #302e27}
+.pill{background:#171424}
+.pill.yellow{background:#262817;color:#b5cd6c}
+.pill.rose{background:#241414}
+.chip{background:#181713;border:1px solid #302e27;color:#b1b4c0}
+.field,select,input[type=search],input[type=number]{background:#181713;border:1px solid #302e27;color:#c3c9db}
+.data-table th{border-bottom:1px solid #302e27}
+.data-table td{border-bottom:1px solid #302e27}
+.data-table tr:hover td{background:#161322}
+.data-table td:first-child{color:#8b8cbe}
+.winner{color:#bab1e1}
+.medal{background:#141624}
+.leader-row{border-bottom:1px solid #302e27}
+.bar-track{background:#171525}
+.award-tile{background:#181713;border:1px solid #302e27}
+.award-tile .award-label{color:#a0a4af}
+.time-card{border:1px solid #302e27;background:#181713}
+.time-card:hover{border-color:#302e27}
+.time-card .mvp{color:#9c9fad}
+.data-line{border-bottom:1px solid #302e27}
+.callout{border:1px solid #302e27;background:#171424;color:#a39bc5}
+.callout.warn{background:#251f15;border-color:#302e27;color:#ceb577}
+.alert{color:#d3a894}
+.compare-card{border:1px solid #302e27;background:#181713}
+.compare-progress{background:#0d0d0f}
+.compare-progress>i{background:#404829}
+.twins-item{border-bottom:1px solid #302e27}
+.blank{border:1px dashed #302e27}
+.method-section{border-bottom:1px solid #302e27}
+.visual-legend-item{color:#b1b3c4}
+.radar-score-table{border-top:1px solid #302e27}
+.radar-table-row,.radar-table-head{border-bottom:1px solid #302e27}
+.radar-table-row strong{color:#aaa4cd}
+.radar-table-row>span{color:#aaaab5}
+.fixture{border:1px solid #302e27;background:#161322}
+.click-player{border:1px solid #302e27;background:#181713;color:#c4c7db}
+.inline-player{color:#b4ace1}
+.inline-player:hover{color:#8279d2}
+.metric-controls label{color:#9e9dae}
+.metric-controls select{border:1px solid #302e27;background:#181713;color:#c4c7dc}
+.histogram{border-bottom:1px solid #302e27}
+.story-card{background:#181713;border:1px solid #302e27}
+.player-tile{background:#181713;border:1px solid #302e27}
+.player-avatar{background:#171525;color:#b2abe3}
+.profile-drawer{background:#0f0f0d}
+.profile-toolbar{border-bottom:1px solid #302e27;color:#a09cb1}
+.profile-toolbar button{border:1px solid #302e27;background:#181713}
+.profile-metric-list>span{border:1px solid #302e27;background:#161322}
+.upload-btn{background:#181526;border:1px solid #302e27;color:#a49add}
+.model-track{background:#1e1b25}
+.math-formula{background:#171525;color:#8676d2}
+.metric-controls label strong{color:#b1abe3}
+.player-avatar img{background:#1a1728}
+.live-match{background:linear-gradient(145deg,#181713,#151322);border:1px solid #302e27}
+.live-match-head{border-bottom:1px solid #302e27;color:#a3a8b5}
+.score-state{color:#aaaabc}
+.score-state.is-live{color:#d686a5}
+.evo-bar-line{color:#b0b4c3}
+.evo-bar-line strong{color:#d3d8e5}
+.evo-bar-track{background:#1b1825}
+.evo-explainer,.glossary-card{border:1px solid #302e27;background:#181713}
+.evo-explainer p,.glossary-card p{color:#a8abb7}
+.glossary-card h3 span{color:#c2c7d4}
+.glossary-equation{background:#181624;color:#bdbdcc}
+.team-identity{background:#0d0d0f}
+.team-identity p{color:#b5b5b5}
+.metric-tile{background:#181622}
+.metric-tile small{color:#a1a4ad}
+.nav-search-wrap:focus-within{border-color:#302e27}
+.nav-group-toggle:hover,.nav-group-toggle:focus-visible{outline-color:#302e27}
+.nav-child.active{color:#d9e2e2}
+.nav-home:focus-visible,.nav-child:focus-visible,.section-tab:focus-visible,.directory-card:focus-visible{outline:2px solid #302e27}
+.section-context{border:1px solid #302e27;background:#181713}
+.section-count{background:#171424}
+.section-tab{border:1px solid #302e27;background:#0e0d0f;color:#a9adb9}
+.section-tab:hover{background:#171423}
+.directory-card{border:1px solid #302e27;background:#181713;color:#c9cbda}
+.directory-icon{background:#161424}
+.directory-description{color:#a5a8b3}
+:root{color:#ece7da;background:#0c0c11;color-scheme:dark}body{background:#0c0c11}
+.workspace{background:radial-gradient(1100px 520px at 12% -8%,#1b1810 0,transparent 62%),#0c0c11}
+.topbar{background:rgba(12,12,17,.88);border-bottom:1px solid #262633;backdrop-filter:blur(8px)}
+h1,h2,h3{color:#ece7da}h1 em{color:#f0cf84}
+.page h1,.page .stat-number{font-family:'Playfair Display',serif}
+.page .eyebrow,.page .micro,.page .tiny,.page .panel-title{font-family:'DM Mono',monospace;letter-spacing:.12em}
+.page .eyebrow,.page .micro{color:#d4a84b}
+.page .data-table,.page .tiny,.page .small,.page .field,.page .chip{font-family:'DM Mono',monospace}
+.chip.on,.section-tab.selected{background:#d4a84b!important;color:#14110a!important;border-color:#d4a84b!important}
+.action,.top-btn:hover{border-color:#d4a84b}
+.action{background:#d4a84b;color:#14110a}
+a.panel-link,.panel-link{color:#d4a84b}
+footer{color:#6f6c7c;border-top:1px solid #262633}
+.data-table th{background:#0f0f15}
+.rail{background:#08080c;border-right:1px solid #262633}
+.nav-link.active,.nav-child.active{background:#d4a84b!important;color:#14110a!important}
+.nav-link.active *,.nav-child.active *{color:#14110a!important}
+select,input,textarea{color-scheme:dark}
+.logo-ball{background:#d4a84b;color:#14110a}.logo-dot,.wordmark b{color:#f0cf84}
+.bar-fill,.mini-track i,.evo-bar-track i{background:linear-gradient(90deg,#b8892f,#f0cf84)}
+.hero-main{background:#14130d;border-color:#2c2818}.hero-main:after{color:#1d1b12}
+.kpi,.panel,.directory-card,.player-tile,.award-tile,.metric-tile,.glossary-card,.story-card,.compare-card,.time-card,.fixture,.live-match{background:#12121a;border-color:#262633}
+.nav-group{background:#0e0e14;border-color:#262633}
+.nav-child.active,.nav-child.active *{color:#14110a!important}

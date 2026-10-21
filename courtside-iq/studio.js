@@ -60,7 +60,7 @@ function sectionTabs(){
 }
 function shell(name,body){
  const group=groupFor(ST.tab);
- if(previousRoute!==ST.tab){expandedGroup=group?.id||null;previousRoute=ST.tab;}
+ if(previousRoute!==ST.tab){expandedGroup=group?.id||(ST.tab==='dashboard'?'lab':null);previousRoute=ST.tab;}
  $('#crumb').textContent=(pageFor(ST.tab)?.label||name).toUpperCase();
  const crumbGroup=$('#crumb-group');if(crumbGroup)crumbGroup.textContent=(group?.label||'Home').toUpperCase();
  $('#content').innerHTML=`${sectionTabs()}<div class="page">${body}</div>`;
@@ -70,9 +70,7 @@ function shell(name,body){
 function optionize(a,chosen,fmtName=x=>x){return a.map(x=>{const v=typeof x==='string'?x:x.name;return `<option value="${esc(v)}" ${v===chosen?'selected':''}>${esc(fmtName(x))}</option>`}).join('')}
 function barList(items,max=7){const a=items.slice(0,max),mx=Math.max(1,...a.map(x=>x[1]));return `<div class="bars">${a.map(x=>`<div><div class="bar-label"><span>${esc(x[0])}</span><strong>${x[1]}</strong></div><div class="bar-track"><div class="bar-fill" style="width:${(100*x[1]/mx).toFixed(1)}%"></div></div></div>`).join('')}</div>`}
 function dashboard(){const latest=H()[0],mvp=M()[0],champCount=H().filter(x=>x.winner!=='NO CHAMPION').length;const players=topPlayers(),r=players[0];shell('Overview',`
-<div class="hero"><div class="hero-main">${title('THE BASKETBALL INTELLIGENCE TERMINAL', 'The game.<br><em>Decoded.</em>','Explore 80 NBA championship seasons, European champions since 1958, the awards that shaped history and advanced player metrics. Then examine today’s season, national-team medal histories, player dossiers, live reporting and the predictive Model Arena.')}
-<div class="selector"><button class="chip ${ST.league==='nba'?'on':''}" data-league="nba">NBA</button><button class="chip ${ST.league==='euro'?'on':''}" data-league="euro">EUROLEAGUE</button><button class="chip" data-jump="archive">Explore History →</button></div></div>
-<div class="hero-feature"><div class="over">THE RESEARCH FEATURE / 01</div><div><h2>The greatest.<br>By the numbers.</h2><p>Put eras side by side, control your GOAT criteria, challenge your assumptions and find statistically similar careers.</p></div><a href="#goat" data-jump="goat">ENTER GOAT LAB →</a></div></div>
+${dataLab.homeHTML()}
 <div class="kpi-grid"><div class="kpi"><div class="tiny">CHAMPIONSHIP SEASONS</div><div class="stat-number">${champCount}</div><div class="small">${ST.league==='nba'?'1947–2026':'1958–2026 · 2020 cancelled'}</div></div><div class="kpi"><div class="tiny">CURRENT TITLE HOLDER</div><div class="stat-number" style="font-size:clamp(20px,2vw,30px)">${esc(latest.winner)}</div><div class="small">${yearTxt(latest.year)}</div></div><div class="kpi"><div class="tiny">LATEST REGULAR-SEASON MVP</div><div class="stat-number" style="font-size:clamp(19px,2vw,29px)">${esc(mvp.winner)}</div><div class="small">${yearTxt(mvp.year)}</div></div><div class="kpi"><div class="tiny">${ST.league==='nba'?'HISTORICAL IMPACT ERA':'MODERN STATS ERA'}</div><div class="stat-number">${ST.league==='nba'?'1977':'2000+'}</div><div class="small">${ST.league==='nba'?'RAPTOR coverage through 2023':'Modern EuroLeague data varies by season'}</div></div></div>
 ${head('THE HISTORY DESK','History in a glance','Verified historical winners')}
 <div class="two-col">${block('Recent championship eras',`<div class="table-wrap"><table class="data-table"><thead><tr><th>Season</th><th>Champions</th><th>Season MVP</th></tr></thead><tbody>${H().filter(x=>x.winner!=='NO CHAMPION').slice(0,7).map(x=>`<tr><td>${yearTxt(x.year)}</td><td class="winner">${esc(x.winner)}</td><td>${esc(M().find(z=>z.year===x.year)?.winner||'—')}</td></tr>`).join('')}</tbody></table></div><div class="tiny-source">Official NBA records / EuroLeague historical archive</div>`)}

@@ -4,7 +4,7 @@
 <title>COURTSIDE IQ — The Basketball Intelligence Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/studio.css"><link rel="stylesheet" href="/lab.css"><script type="module" defer src="/studio.js"></script>
+<link rel="stylesheet" href="/studio.css"><link rel="stylesheet" href="/theme-dark.css"><link rel="stylesheet" href="/lab.css"><script type="module" defer src="/studio.js"></script>
 </head><body>
 <div class="shell">
 <aside class="rail"><div class="rail-top"><a href="#dashboard" class="wordmark"><span class="logo-ball">◉</span><span>COURTSIDE<span class="logo-dot">.</span><b>IQ</b><small>INTELLIGENCE STUDIO</small></span></a><div class="edition">CLEARER WORKSPACE <span> / 06</span></div></div>
@@ -13,6 +13,13 @@
 <a href="#dashboard" class="nav-link nav-home active" data-tab="dashboard"><span class="nav-glyph">◫</span><span>Overview</span><span class="nav-id">HOME</span></a>
 <label class="nav-search-label" for="nav-search">FIND A SECTION</label><div class="nav-search-wrap"><span aria-hidden="true">⌕</span><input id="nav-search" type="search" autocomplete="off" placeholder="Search metrics, GOAT, live…" aria-label="Search navigation"/></div>
 <div class="nav-collections">
+<section class="nav-group" data-group="lab" aria-label="Data Lab">
+<button type="button" class="nav-group-toggle" data-group-toggle="lab" aria-expanded="false" aria-controls="group-lab" title="Query, run and export"><span class="group-glyph" aria-hidden="true">⌬</span><span class="group-label">Data Lab<small>Query, run and export</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
+<div class="nav-subpages" id="group-lab" hidden>
+<button type="button" class="nav-link nav-child" data-tab="labexplorer"><span class="nav-dot" aria-hidden="true"></span><span>Dataset Explorer</span></button>
+<button type="button" class="nav-link nav-child" data-tab="labnotebook"><span class="nav-dot" aria-hidden="true"></span><span>Live Notebook</span></button>
+</div>
+</section>
 <section class="nav-group" data-group="live" aria-label="Live &amp; Season">
 <button type="button" class="nav-group-toggle" data-group-toggle="live" aria-expanded="false" aria-controls="group-live" title="Scores, standings, news and rookies"><span class="group-glyph" aria-hidden="true">◉</span><span class="group-label">Live &amp; Season<small>Scores, standings, news and rookies</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
 <div class="nav-subpages" id="group-live" hidden>
@@ -53,13 +60,6 @@
 <div class="nav-subpages" id="group-predict" hidden>
 <button type="button" class="nav-link nav-child" data-tab="matchlab"><span class="nav-dot" aria-hidden="true"></span><span>Match Prediction Lab</span></button>
 <button type="button" class="nav-link nav-child" data-tab="future"><span class="nav-dot" aria-hidden="true"></span><span>Future Champions &amp; MVPs</span></button>
-</div>
-</section>
-<section class="nav-group" data-group="lab" aria-label="Data Lab">
-<button type="button" class="nav-group-toggle" data-group-toggle="lab" aria-expanded="false" aria-controls="group-lab" title="Query, run and export"><span class="group-glyph" aria-hidden="true">⌬</span><span class="group-label">Data Lab<small>Query, run and export</small></span><span class="group-caret" aria-hidden="true">⌄</span></button>
-<div class="nav-subpages" id="group-lab" hidden>
-<button type="button" class="nav-link nav-child" data-tab="labexplorer"><span class="nav-dot" aria-hidden="true"></span><span>Dataset Explorer</span></button>
-<button type="button" class="nav-link nav-child" data-tab="labnotebook"><span class="nav-dot" aria-hidden="true"></span><span>Live Notebook</span></button>
 </div>
 </section>
 <section class="nav-group" data-group="learn" aria-label="Learn &amp; Sources">
