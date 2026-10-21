@@ -52,6 +52,14 @@ export const NAV_GROUPS = [
     ]
   },
   {
+    id:'lab', label:'Data Lab', icon:'⌬', caption:'Query, run and export',
+    description:'A notebook-style workspace: sortable datasets, CSV/JSON export and reproducible live analysis cells.',
+    pages:[
+      {route:'labexplorer', label:'Dataset Explorer'},
+      {route:'labnotebook', label:'Live Notebook'}
+    ]
+  },
+  {
     id:'learn', label:'Learn & Sources', icon:'?', caption:'Understand every metric',
     description:'Plain-English stat definitions, methods and verifiable data sources.',
     pages:[
@@ -86,6 +94,8 @@ const SEARCH_ALIASES={
   matchlab:'ml machine learning predictions games betting model',
   future:'future predictions championships mvp scenarios',
   academy:'what is raptor war bpm vorp per ws plus minus ts efg dictionary glossary definitions',
+  labexplorer:'data lab dataset table csv json export download query filter sort standings records',
+  labnotebook:'data lab notebook cells analysis pythagorean expectation descriptive statistics scatter reproducible',
   methodology:'sources methodology provenance model limitations data quality'
 };
 export function navigationMatches(route, query){
