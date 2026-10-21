@@ -6,10 +6,15 @@
 export const NAV_GROUPS = [
   {
     id:'lab', label:'Data Lab', icon:'⌬', caption:'Query, run and export',
-    description:'A notebook-style workspace: sortable datasets, CSV/JSON export and reproducible live analysis cells.',
+    description:'Charts, equations, score predictions and season outlooks on live data — with CSV/JSON export and a reproducible notebook.',
     pages:[
       {route:'labexplorer', label:'Dataset Explorer'},
-      {route:'labnotebook', label:'Live Notebook'}
+      {route:'labnotebook', label:'Live Notebook'},
+      {route:'labcharts', label:'Chart Studio'},
+      {route:'labequations', label:'Equation Lab'},
+      {route:'labpredict', label:'Score Predictor'},
+      {route:'laboutlook', label:'Season Outlook'},
+      {route:'labmodern', label:'Modern Game'}
     ]
   },
   {
@@ -96,6 +101,11 @@ const SEARCH_ALIASES={
   academy:'what is raptor war bpm vorp per ws plus minus ts efg dictionary glossary definitions',
   labexplorer:'data lab dataset table csv json export download query filter sort standings records',
   labnotebook:'data lab notebook cells analysis pythagorean expectation descriptive statistics scatter reproducible',
+  labcharts:'data lab charts graphs scatter regression histogram heatmap correlation leaderboard players teams visualise',
+  labequations:'data lab equations formulas pythagorean elo log5 four factors efg ts ortg calculator maths',
+  labpredict:'data lab predictions score predictor spread total win probability games today forecast',
+  laboutlook:'data lab season outlook projection projected wins playoff odds forecast next season regression',
+  labmodern:'data lab modern game trends league scoring pace three point era parity today',
   methodology:'sources methodology provenance model limitations data quality'
 };
 export function navigationMatches(route, query){
