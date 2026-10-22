@@ -3,6 +3,7 @@
  * Season Outlook and Modern Game. Live data only; models are transparent baselines.
  */
 import {flattenStandings} from './data-lab.js';
+import {renderForecastLedger,renderModelVotes} from './forecast-ui.js';
 import {NBA_ERA} from './evolution.js';
 import {mulberry32} from './models.js';
 import {ols,corrMatrix,histogram,pythagorean,fitPythagoreanExponent,eFG,trueShooting,possessions,fourFactorScore,eloUpdate,eloExpected,log5,normalCdf,mean,sd,blendRating,leagueAverage,predictMatchup,winPctMAE,NBA_SIGMA_MARGIN,NBA_SIGMA_TOTAL,HOME_EDGE} from './lab-math.js';
@@ -31,6 +32,7 @@ export function createLabPro({shell,title,esc,render}){
  /* ---------- data layer (cached, de-duplicated) ---------- */
  const json=async url=>{const r=await fetch(url);if(!r.ok)throw Error('HTTP '+r.status);return r.json()};
  const LOADERS={
+  archive:async y=>{const d=await json('/data/prediction-ledger.json?y='+y);if(!Array.isArray(d.records))throw Error('Forecast archive unavailable');return d;},
   standings:async y=>flattenStandings((await json(`/api/live?league=nba&season=${y}`)).groups).map(r=>({...r,key:key(r)})),
   live:async y=>{const d=await json(`/api/live?league=nba&season=${y}`);return {games:d.games||[],date:d.date,rows:flattenStandings(d.groups).map(r=>({...r,key:key(r)})),notes:d.notes}},
   players:async y=>{const d=await json(`/api/data?league=nba&season=${y}`);return (d.players||[]).map(p=>{const g=+p.games>0?+p.games:null;return {...p,ptsG:g&&ok(p.pts)?p.pts/g:null,rebG:g&&ok(p.reb)?p.reb/g:null,astG:g&&ok(p.ast)?p.ast/g:null,minG:g&&ok(p.mins)?p.mins/g:null}})}
@@ -141,8 +143,8 @@ export function createLabPro({shell,title,esc,render}){
 
  /* ---------- 3. Score Predictor ---------- */
  function predict(){
-  const Y=seasonNow();need('live',Y);need('standings',Y-1);
-  const live=get('live',Y),prev=get('standings',Y-1);
+  const Y=seasonNow();need('live',Y);need('standings',Y-1);need('archive',Y);
+  const live=get('live',Y),prev=get('standings',Y-1),archive=get('archive',Y);
   const rs=ratings(live?.rows,prev),lg=leagueAverage(rs,'ppg');
   const names=rs.map(r=>r.team).sort();
   if(!P.ui.home&&names.length){P.ui.home=names[0];P.ui.away=names[1]||names[0]}
@@ -158,6 +160,8 @@ export function createLabPro({shell,title,esc,render}){
   ${cell(1,'Today’s games',`E[pts A] = PF_A × PA_B / lgAvg ± ${HOME_EDGE/2};  P(home) = Φ(margin / ${NBA_SIGMA_MARGIN})`,rows.length?`<div class="table-wrap"><table class="data-table lab-table"><thead><tr><th>Game</th><th>Predicted score</th><th>Spread</th><th>Total</th><th>Home win</th><th>80% margin range</th><th>Actual</th></tr></thead><tbody>${rows.map(({g,p})=>`<tr><td>${esc(g.awayCode||g.away)} @ ${esc(g.homeCode||g.home)}</td>${p?`<td class="num">${nf(p.awayPts,0)} – ${nf(p.homePts,0)}</td><td class="num">${esc(g.homeCode||'H')} ${sign(-p.margin)}</td><td class="num">${nf(p.total,0)}</td><td class="num">${pct(p.homeWinProb)}</td><td class="num">${sign(p.marginLow)} to ${sign(p.marginHigh)}</td>`:'<td colspan="5" class="lab-empty">no rating for one team</td>'}<td class="num">${g.state==='pre'?'–':`${g.awayScore??'–'} – ${g.homeScore??'–'}`}${g.state==='in'?' · live':g.state==='post'?' · final':''}</td></tr>`).join('')}</tbody></table></div>`:`<div class="blank">${busy()?'Loading…':'No games on the feed for this date.'}</div>`)}
   ${cell(2,'Any matchup',`predictMatchup(home, away, lgAvg = ${nf(lg,1)})`,`<div class="lab-toolbar inner">${sel('lp-home',names.map(n=>[n,n]),P.ui.home,'Home')}${sel('lp-away',names.map(n=>[n,n]),P.ui.away,'Away')}</div>${custom?`<div class="lab-stats compact"><div class="lab-stat"><div class="k">PREDICTED SCORE</div><div class="v">${nf(custom.awayPts,0)}–${nf(custom.homePts,0)}</div><div class="s">${esc(away.abbr||away.team)} @ ${esc(home.abbr||home.team)}</div></div><div class="lab-stat"><div class="k">HOME WIN</div><div class="v">${pct(custom.homeWinProb)}</div><div class="s">margin ${sign(custom.margin)} for home</div></div><div class="lab-stat"><div class="k">TOTAL</div><div class="v">${nf(custom.total,0)}</div><div class="s">80%: ${nf(custom.totalLow,0)}–${nf(custom.totalHigh,0)}</div></div></div>${marginCurve(custom.margin,custom.sigmaMargin,{homeLabel:home.abbr||'Home',awayLabel:away.abbr||'Away'})}`:'<div class="blank">Pick two different teams.</div>'}`)}
   ${cell(3,'Ratings used',`blend = w·current + (1−w)·last season,  w = g / (g + 20)`,rs.length?`<div class="table-wrap"><table class="data-table lab-table"><thead><tr><th>Team</th><th>GP</th><th>Weight current</th><th>PF/G blended</th><th>PA/G blended</th><th>Net</th></tr></thead><tbody>${[...rs].sort((a,b)=>(b.ppg-b.oppg)-(a.ppg-a.oppg)).map(r=>`<tr><td>${esc(r.team)}</td><td class="num">${r.games}</td><td class="num">${pct(r.weightCurrent)}</td><td class="num">${nf(r.ppg,1)}</td><td class="num">${nf(r.oppg,1)}</td><td class="num">${sign(r.ppg-r.oppg)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="blank">Loading ratings…</div>')}
+  ${cell(4,'Pregame prediction archive · hit rate and error','Timestamped predictions locked before tipoff; never reconstructed from final scores',renderForecastLedger(archive,{esc,error:err('archive',Y),loading:P.loading.has('archive:'+Y)}))}
+  ${cell(5,'Multi-model consensus · vote by vote','Up to nine conditional models; actual model weights and verified source coverage',renderModelVotes(archive,{esc}))}
   ${warn(`<b>Assumptions, stated plainly.</b> Single-game margin σ = ${NBA_SIGMA_MARGIN} and total σ = ${NBA_SIGMA_TOTAL} points; home court = ${HOME_EDGE} points of margin; no injuries, rest days, travel or lineup data. These are exploratory estimates, not calibrated odds and not betting advice.`)}</div>`));
  }
 
@@ -242,7 +246,7 @@ export function createLabPro({shell,title,esc,render}){
   const Y=seasonNow();
   if(tab==='labcharts'){need('standings',P.ui.season);need('players',P.ui.season)}
   if(tab==='labequations')need('standings',P.ui.eqSeason);
-  if(tab==='labpredict'){need('live',Y);need('standings',Y-1)}
+  if(tab==='labpredict'){P.data.delete('archive:'+Y);P.errors.delete('archive:'+Y);need('live',Y);need('standings',Y-1);need('archive',Y)}
   if(tab==='laboutlook'){need('live',Y);needHistory()}
   if(tab==='labmodern')needHistory();
  }
