@@ -273,7 +273,7 @@
       }
     }
   ],
-  "updatedAt": "2026-10-22T13:06:15.467Z",
+  "updatedAt": "2026-10-22T13:07:30.846Z",
   "model": {
     "status": "baseline",
     "sample": 0,
@@ -297,8 +297,8 @@
     "margin80Coverage": null
   },
   "contextCache": {
-    "schema": 3,
-    "updatedAt": "2026-10-22T13:06:15.467Z",
+    "schema": 4,
+    "updatedAt": "2026-10-22T13:07:30.846Z",
     "homeGames": {
       "PHI": [
         {
@@ -17785,7 +17785,344 @@
         ]
       }
     },
-    "injuries": {},
+    "injuries": {
+      "PHI": [
+        {
+          "name": "Dominick Barlow",
+          "status": "Out"
+        },
+        {
+          "name": "Tacko Fall",
+          "status": "Out"
+        },
+        {
+          "name": "Ariel Hukporti",
+          "status": "Out"
+        },
+        {
+          "name": "Dean Wade",
+          "status": "Day-To-Day"
+        }
+      ],
+      "CLE": [
+        {
+          "name": "Jarrett Allen",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Khalifa Diop",
+          "status": "Out"
+        },
+        {
+          "name": "Nae'Qwan Tomlin",
+          "status": "Out"
+        }
+      ],
+      "OKC": [
+        {
+          "name": "Otega Oweh",
+          "status": "Out"
+        },
+        {
+          "name": "Thomas Sorber",
+          "status": "Out"
+        },
+        {
+          "name": "Nikola Topic",
+          "status": "Out"
+        }
+      ],
+      "DEN": [
+        {
+          "name": "Spencer Jones",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Julian Strawther",
+          "status": "Out"
+        }
+      ],
+      "CHI": [
+        {
+          "name": "Nic Claxton",
+          "status": "Out"
+        },
+        {
+          "name": "Jordan Hawkins",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Dailyn Swain",
+          "status": "Day-To-Day"
+        }
+      ],
+      "BOS": [
+        {
+          "name": "Devin Carter",
+          "status": "Out"
+        }
+      ],
+      "CHA": [
+        {
+          "name": "Kylan Boswell",
+          "status": "Out"
+        },
+        {
+          "name": "Kon Knueppel",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Coby White",
+          "status": "Out"
+        },
+        {
+          "name": "Grant Williams",
+          "status": "Out"
+        }
+      ],
+      "ATL": [
+        {
+          "name": "Mouhamed Gueye",
+          "status": "Out"
+        },
+        {
+          "name": "Henri Veesaar",
+          "status": "Out"
+        }
+      ],
+      "IND": [
+        {
+          "name": "T.J. McConnell",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Aaron Nesmith",
+          "status": "Day-To-Day"
+        }
+      ],
+      "DAL": [
+        {
+          "name": "Santi Aldama",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Tarik Biberovic",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jett Howard",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Dereck Lively II",
+          "status": "Out"
+        },
+        {
+          "name": "Caleb Martin",
+          "status": "Day-To-Day"
+        }
+      ],
+      "ORL": [
+        {
+          "name": "Anthony Black",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jonathan Isaac",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Izaiyah Nelson",
+          "status": "Out"
+        },
+        {
+          "name": "Noah Penda",
+          "status": "Out"
+        }
+      ],
+      "MIN": [
+        {
+          "name": "Donte DiVincenzo",
+          "status": "Out"
+        }
+      ],
+      "WAS": [
+        {
+          "name": "AJ Dybantsa",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Tristan Vukcevic",
+          "status": "Out"
+        },
+        {
+          "name": "Jamir Watkins",
+          "status": "Out"
+        }
+      ],
+      "TOR": [
+        {
+          "name": "Nate Bittle",
+          "status": "Out"
+        }
+      ],
+      "DET": [
+        {
+          "name": "Taurean Prince",
+          "status": "Day-To-Day"
+        }
+      ],
+      "SAS": [
+        {
+          "name": "Tobias Harris",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jayden Quaintance",
+          "status": "Out"
+        }
+      ],
+      "HOU": [
+        {
+          "name": "Steven Adams",
+          "status": "Day-To-Day"
+        }
+      ],
+      "UTAH": [
+        {
+          "name": "Trey Alexander",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Tony Bradley",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Blake Hinson",
+          "status": "Out"
+        },
+        {
+          "name": "Jusuf Nurkic",
+          "status": "Out"
+        }
+      ],
+      "GSW": [
+        {
+          "name": "Charles Bassey",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jimmy Butler III",
+          "status": "Out"
+        },
+        {
+          "name": "Moses Moody",
+          "status": "Out"
+        },
+        {
+          "name": "Brandin Podziemski",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Kristaps Porzingis",
+          "status": "Out"
+        }
+      ],
+      "MEM": [
+        {
+          "name": "Isaiah Stewart",
+          "status": "Day-To-Day"
+        }
+      ],
+      "LAL": [
+        {
+          "name": "Cameron Carr",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Collin Sexton",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Adou Thiero",
+          "status": "Day-To-Day"
+        }
+      ],
+      "LAC": [
+        {
+          "name": "Bradley Beal",
+          "status": "Out"
+        },
+        {
+          "name": "Brandon Ingram",
+          "status": "Out"
+        },
+        {
+          "name": "Jordan Miller",
+          "status": "Out"
+        },
+        {
+          "name": "Yanic Konan Niederhauser",
+          "status": "Out"
+        },
+        {
+          "name": "Max Strus",
+          "status": "Out"
+        }
+      ],
+      "SAC": [
+        {
+          "name": "Dylan Cardwell",
+          "status": "Out"
+        },
+        {
+          "name": "Malik Monk",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Maxime Raynaud",
+          "status": "Out"
+        },
+        {
+          "name": "Ben Simmons",
+          "status": "Out"
+        }
+      ],
+      "POR": [
+        {
+          "name": "Branden Carlson",
+          "status": "Out"
+        },
+        {
+          "name": "Shaedon Sharpe",
+          "status": "Out"
+        },
+        {
+          "name": "Chris Youngblood",
+          "status": "Day-To-Day"
+        }
+      ],
+      "BKN": [
+        {
+          "name": "Tyler Bilodeau",
+          "status": "Day-To-Day"
+        }
+      ],
+      "PHX": [
+        {
+          "name": "Oso Ighodaro",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Luke Kennard",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Mark Williams",
+          "status": "Out"
+        }
+      ]
+    },
     "elo": {
       "OKC": 1700.1268747877918,
       "HOU": 1584.9835067944998,
@@ -17841,7 +18178,7 @@
       "historicalFinals": 1249,
       "rosterTeams": 30,
       "previousRosterTeams": 3,
-      "injuryTeams": 0
+      "injuryTeams": 26
     }
   }
 }
