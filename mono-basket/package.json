@@ -1,0 +1,15 @@
+{
+  "name": "mono-basket",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MONO BASKET — NBA forecasting radar, calibrated model transparency and immutable pregame audit",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check app.js && node --check engine/ensemble-engine.js && node --check engine/forecast-engine.js",
+    "test": "node --test tests/*.test.js"
+  }
+}

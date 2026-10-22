@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: mono-basket
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: mono-basket
+    buildCommand: npm install --omit=dev --ignore-scripts
+    startCommand: npm start
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
