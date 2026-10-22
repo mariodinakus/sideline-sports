@@ -4,6 +4,7 @@
  */
 import {flattenStandings} from './data-lab.js';
 import {renderForecastLedger,renderModelVotes} from './forecast-ui.js';
+import {predictEnsemble,teamKey} from './ensemble-engine.js';
 import {NBA_ERA} from './evolution.js';
 import {mulberry32} from './models.js';
 import {ols,corrMatrix,histogram,pythagorean,fitPythagoreanExponent,eFG,trueShooting,possessions,fourFactorScore,eloUpdate,eloExpected,log5,normalCdf,mean,sd,blendRating,leagueAverage,predictMatchup,winPctMAE,NBA_SIGMA_MARGIN,NBA_SIGMA_TOTAL,HOME_EDGE} from './lab-math.js';
@@ -153,11 +154,36 @@ export function createLabPro({shell,title,esc,render}){
   const rows=(live?.games||[]).map(g=>{
    const h=findTeam(rs,g.home,g.homeCode),a=findTeam(rs,g.away,g.awayCode),p=h&&a?predictMatchup(h,a,lg):null;return {g,h,a,p};
   });
+  const snapshot=archive?.contextCache||{};
+  const modelFor=(h,a,g)=>{
+   if(!h||!a||!archive)return null;
+   const hk=teamKey(g.homeCode||h.abbr),ak=teamKey(g.awayCode||a.abbr);
+   const context={tip:g.date,homeGames:snapshot.homeGames?.[hk],awayGames:snapshot.homeGames?.[ak],
+    homeRoster:snapshot.rosters?.[hk],awayRoster:snapshot.rosters?.[ak],
+    homePriorRoster:snapshot.priorRosters?.[hk],awayPriorRoster:snapshot.priorRosters?.[ak],
+    homeInjuries:snapshot.injuries?.[hk],awayInjuries:snapshot.injuries?.[ak],elo:snapshot.elo};
+   return predictEnsemble(h,a,lg,archive.model||{},context,archive.records||[]);
+  };
+  const provisional=rows.filter(x=>x.g.state==='pre').map(x=>({...x,q:modelFor(x.h,x.a,x.g)})).filter(x=>x.q);
+  const provisionalTable=provisional.length?
+   '<div class="table-wrap"><table class="data-table lab-table"><thead><tr><th>Match</th><th>Ensemble score</th><th>Pick (1/2)</th><th>P(home)</th><th>Total</th><th>Models</th><th>Source coverage</th></tr></thead><tbody>'+
+   provisional.map(({g,q})=>{
+    const hk=teamKey(g.homeCode),ak=teamKey(g.awayCode);
+    const pick=q.homeWinProb>=.58?'1 · '+hk:q.homeWinProb<=.42?'2 · '+ak:'No confident pick';
+    const cov=q.conditions?.sourceCoverage||{};
+    const sources=Object.entries(cov).filter(([,value])=>value===true).map(([name])=>name).join(', ')||'season averages only';
+    const detail='<details><summary>'+q.activeModels+' models</summary><div class="lab-caption">'+q.modelVotes.map(v=>
+     '<div>'+esc(v.label)+' · '+nf(v.margin,1)+' pts · '+pct(v.homeWinProb)+' home · '+pct(v.weight)+' weight</div>').join('')+'</div></details>';
+    return '<tr><td>'+esc(ak+' @ '+hk)+'</td><td class="num">'+nf(q.awayPts,0)+'–'+nf(q.homePts,0)+
+     '</td><td>'+esc(pick)+'</td><td class="num">'+pct(q.homeWinProb)+'</td><td class="num">'+nf(q.total,1)+
+     '</td><td>'+detail+'</td><td>'+esc(sources)+'</td></tr>';
+   }).join('')+'</tbody></table></div>':'<div class="blank">No available upcoming game with sufficient team data for a provisional ensemble forecast.</div>';
   const thin=live&&live.rows.length&&Math.max(...live.rows.map(r=>r.games||0))<20;
   shell('Score Predictor',lab(`${title('DATA LAB / SCORE PREDICTOR','Call the score.<br><em>Show the odds.</em>','Expected points, margin, total and win probability for every game on today’s feed, built from current-season form shrunk toward last season.')}
   <div class="lab-toolbar"><span class="lab-meta-inline">NBA ${seasonLabel(Y)} · ratings blend with ${seasonLabel(Y-1)}</span>${status(['live',Y],['standings',Y-1])}</div>
   ${thin?warn('<b>Early season.</b> Teams have played only a handful of games, so each rating is mostly last season’s numbers. The blend weight for this season grows as g / (g + 20).'):''}
   ${cell(1,'Today’s games',`E[pts A] = PF_A × PA_B / lgAvg ± ${HOME_EDGE/2};  P(home) = Φ(margin / ${NBA_SIGMA_MARGIN})`,rows.length?`<div class="table-wrap"><table class="data-table lab-table"><thead><tr><th>Game</th><th>Predicted score</th><th>Spread</th><th>Total</th><th>Home win</th><th>80% margin range</th><th>Actual</th></tr></thead><tbody>${rows.map(({g,p})=>`<tr><td>${esc(g.awayCode||g.away)} @ ${esc(g.homeCode||g.home)}</td>${p?`<td class="num">${nf(p.awayPts,0)} – ${nf(p.homePts,0)}</td><td class="num">${esc(g.homeCode||'H')} ${sign(-p.margin)}</td><td class="num">${nf(p.total,0)}</td><td class="num">${pct(p.homeWinProb)}</td><td class="num">${sign(p.marginLow)} to ${sign(p.marginHigh)}</td>`:'<td colspan="5" class="lab-empty">no rating for one team</td>'}<td class="num">${g.state==='pre'?'–':`${g.awayScore??'–'} – ${g.homeScore??'–'}`}${g.state==='in'?' · live':g.state==='post'?' · final':''}</td></tr>`).join('')}</tbody></table></div>`:`<div class="blank">${busy()?'Loading…':'No games on the feed for this date.'}</div>`)}
+  ${cell('1B','Live multi-model consensus · provisional','New ratings, Elo, recent form, roster availability and rest when sourced. Only pre-tipoff archived versions count toward accuracy.',provisionalTable)}
   ${cell(2,'Any matchup',`predictMatchup(home, away, lgAvg = ${nf(lg,1)})`,`<div class="lab-toolbar inner">${sel('lp-home',names.map(n=>[n,n]),P.ui.home,'Home')}${sel('lp-away',names.map(n=>[n,n]),P.ui.away,'Away')}</div>${custom?`<div class="lab-stats compact"><div class="lab-stat"><div class="k">PREDICTED SCORE</div><div class="v">${nf(custom.awayPts,0)}–${nf(custom.homePts,0)}</div><div class="s">${esc(away.abbr||away.team)} @ ${esc(home.abbr||home.team)}</div></div><div class="lab-stat"><div class="k">HOME WIN</div><div class="v">${pct(custom.homeWinProb)}</div><div class="s">margin ${sign(custom.margin)} for home</div></div><div class="lab-stat"><div class="k">TOTAL</div><div class="v">${nf(custom.total,0)}</div><div class="s">80%: ${nf(custom.totalLow,0)}–${nf(custom.totalHigh,0)}</div></div></div>${marginCurve(custom.margin,custom.sigmaMargin,{homeLabel:home.abbr||'Home',awayLabel:away.abbr||'Away'})}`:'<div class="blank">Pick two different teams.</div>'}`)}
   ${cell(3,'Ratings used',`blend = w·current + (1−w)·last season,  w = g / (g + 20)`,rs.length?`<div class="table-wrap"><table class="data-table lab-table"><thead><tr><th>Team</th><th>GP</th><th>Weight current</th><th>PF/G blended</th><th>PA/G blended</th><th>Net</th></tr></thead><tbody>${[...rs].sort((a,b)=>(b.ppg-b.oppg)-(a.ppg-a.oppg)).map(r=>`<tr><td>${esc(r.team)}</td><td class="num">${r.games}</td><td class="num">${pct(r.weightCurrent)}</td><td class="num">${nf(r.ppg,1)}</td><td class="num">${nf(r.oppg,1)}</td><td class="num">${sign(r.ppg-r.oppg)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="blank">Loading ratings…</div>')}
   ${cell(4,'Pregame prediction archive · hit rate and error','Timestamped predictions locked before tipoff; never reconstructed from final scores',renderForecastLedger(archive,{esc,error:err('archive',Y),loading:P.loading.has('archive:'+Y)}))}
