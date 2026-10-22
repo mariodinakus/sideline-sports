@@ -49,6 +49,10 @@ function learnedWeights(votes,ledger=[]){
  const sum=Object.values(weights).reduce((a,b)=>a+b,0)||1;
  return Object.fromEntries(Object.entries(weights).map(([k,w])=>[k,w/sum]));
 }
+function chronologicalMargin(hf,af,eh,ea,model){
+ const xs=chronologicalFeatures(null,null,hf,af,eh,ea);
+ return clamp(xs.reduce((sum,x,i)=>sum+x*(model.weights?.[i]||0),0),-38,38);
+}
 export function predictEnsemble(home,away,leagueAvg,model={},context={},historical=[]){
  const baseline=forecastGame(home,away,leagueAvg,model);if(!baseline)return null;
  const gTime=Date.parse(context.tip)||Date.now(),hf=form(context.homeGames||[],gTime),af=form(context.awayGames||[],gTime);
@@ -73,7 +77,11 @@ export function predictEnsemble(home,away,leagueAvg,model={},context={},historic
   conditionalVote('momentum',2.5+(hf.ewma-af.ewma)*.53,baseline.total+(hf.avgPoints+af.avgPoints-baseline.total)*.24,'Exponentially weighted real match form',hf.games>=5&&af.games>=5),
   conditionalVote('elo',2.5+(eh-ea)*.032,baseline.total,'Chronological completed-game Elo',finite(eh)&&finite(ea)),
   conditionalVote('conditions',baseline.margin+conditions,baseline.total,'Rest days / verified OUT counts / roster overlap',contextAvailable),
-  conditionalVote('ridge',baseline.margin,baseline.total,'Chronologically validated residual regression',!!model.marginValidated)
+  conditionalVote('ridge',
+   context.historicalModel?.validated?chronologicalMargin(hf,af,eh,ea,context.historicalModel):baseline.margin,
+   baseline.total,
+   context.historicalModel?.validated?'Online ridge trained and prequentially tested on prior final games':'Chronologically validated residual regression',
+   !!(context.historicalModel?.validated||model.marginValidated))
  ].filter(Boolean);
  const weights=learnedWeights(votes,historical);
  const m=votes.reduce((s,v)=>s+v.margin*weights[v.id],0),total=votes.reduce((s,v)=>s+v.total*weights[v.id],0);
@@ -99,4 +107,62 @@ export function elosFromSchedules(games=[]){
   rates.set(h,hr+delta);rates.set(a,ar-delta);
  }
  return Object.fromEntries(rates);
+}
+
+
+/**
+ * Walk-forward learning from raw final NBA games. The game being evaluated is
+ * NEVER inserted into team form/Elo until after its prediction has been scored.
+ * Updates use robust stochastic ridge optimisation, retaining an online audit.
+ */
+function chronologicalFeatures(home,away,hf,af,eloH,eloA){
+ const safe=x=>finite(x)?x:0;
+ return [1,clamp((eloH-eloA)/250,-3,3),
+  clamp((safe(hf.last10)-safe(af.last10))/15,-3,3),
+  clamp((safe(hf.avgPoints)-safe(af.avgPoints))/14,-3,3),
+  clamp((safe(hf.avgAgainst)-safe(af.avgAgainst))/14,-3,3),
+  clamp((safe(hf.restDays)-safe(af.restDays))/4,-2,2)];
+}
+export function trainHistoricalOnline(games=[]){
+ const unique=[...new Map(games.filter(g=>g?.id&&g.final&&finite(g.homeScore)&&finite(g.awayScore)&&g.date)
+  .map(g=>[String(g.id),g])).values()].sort((a,b)=>Date.parse(a.date)-Date.parse(b.date));
+ const histories=new Map(),elo=new Map();
+ let w=[2.5,7,3,1.5,-1.5,.25],fitN=0,holdN=0,mlErr=0,baseErr=0,correct=0,brier=0;
+ for(const g of unique){
+  const h=teamKey(g.homeCode),a=teamKey(g.awayCode);
+  if(!h||!a||h===a)continue;
+  const hr=elo.get(h)||1500,ar=elo.get(a)||1500;
+  const hh=histories.get(h)||[],aa=histories.get(a)||[];
+  const time=Date.parse(g.date),hf=form(hh,time),af=form(aa,time);
+  const xs=chronologicalFeatures(h,a,hf,af,hr,ar);
+  const baseline=clamp(2.5+(hr-ar)*.032,-35,35);
+  const estimated=clamp(w.reduce((sum,v,i)=>sum+v*xs[i],0),-35,35);
+  const outcome=g.homeScore-g.awayScore;
+  if(hh.length>=5&&aa.length>=5){
+   fitN++;
+   if(fitN>=150){
+    holdN++;mlErr+=Math.abs(estimated-outcome);baseErr+=Math.abs(baseline-outcome);
+    const p=normalCdf(estimated/12),won=+(outcome>0);
+    correct+=+(+(estimated>=0)===won);brier+=(p-won)**2;
+   }
+   const err=clamp(estimated-outcome,-42,42),step=.013/Math.sqrt(1+fitN/200);
+   w=w.map((v,i)=>clamp(v-step*(err*xs[i]+(i===0?0:.008*v)),-32,32));
+  }
+  const expect=1/(1+Math.pow(10,((ar-hr-65)/400))),delta=18*((outcome>0?1:0)-expect);
+  elo.set(h,hr+delta);elo.set(a,ar-delta);
+  const add=(key,pts,other)=>{
+   const list=histories.get(key)||[];
+   list.push({date:g.date,final:true,for:pts,against:other});
+   if(list.length>82)list.shift();
+   histories.set(key,list);
+  };
+  add(h,g.homeScore,g.awayScore);add(a,g.awayScore,g.homeScore);
+ }
+ const validated=fitN>=250&&holdN>=50&&mlErr<baseErr;
+ return {method:'chronological-online-ridge',trained:fitN,backtest:holdN,validated,weights:w,
+  marginMAE:holdN?+(mlErr/holdN).toFixed(2):null,
+  eloBaselineMAE:holdN?+(baseErr/holdN).toFixed(2):null,
+  winAccuracy:holdN?+(correct/holdN).toFixed(3):null,
+  brier:holdN?+(brier/holdN).toFixed(4):null,
+  description:'Expanding time-order; prior games only, evaluated before learning each result.'};
 }
