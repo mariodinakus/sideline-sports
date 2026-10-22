@@ -1,13 +1,299 @@
 {
   "version": 1,
   "league": "NBA",
-  "records": [],
-  "updatedAt": null,
+  "records": [
+    {
+      "id": "2026:401909093",
+      "season": 2026,
+      "tip": "2026-10-22T23:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Philadelphia 76ers",
+      "away": "Cleveland Cavaliers",
+      "homeCode": "PHI",
+      "awayCode": "CLE",
+      "model": "baseline",
+      "features": [
+        1,
+        -0.0813853705413609,
+        0.17956648469708397,
+        -0.2931802380952381,
+        -0.00846209183673555
+      ],
+      "pick": "NO_PICK",
+      "forecast": {
+        "homePts": 116.75626883546539,
+        "awayPts": 117.73289328196171,
+        "margin": -0.9766244464963307,
+        "total": 234.4891621174271,
+        "homeWinProb": 0.4675676751821383,
+        "marginLow": -16.355243233036333,
+        "marginHigh": 14.40199434004367,
+        "totalLow": 211.4212339376171,
+        "totalHigh": 257.5570902972371
+      }
+    },
+    {
+      "id": "2026:401909094",
+      "season": 2026,
+      "tip": "2026-10-23T01:30:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Oklahoma City Thunder",
+      "away": "Denver Nuggets",
+      "homeCode": "OKC",
+      "awayCode": "DEN",
+      "model": "baseline",
+      "features": [
+        1,
+        0.7925336065422641,
+        0.16097858146746602,
+        -0.22805704081632833,
+        -0.6586610034013611
+      ],
+      "pick": "HOME",
+      "forecast": {
+        "homePts": 121.76743390759691,
+        "awayPts": 112.25703062908974,
+        "margin": 9.51040327850717,
+        "total": 234.02446453668665,
+        "homeWinProb": 0.7859752593942819,
+        "marginLow": -5.868215508032831,
+        "marginHigh": 24.889022065047172,
+        "totalLow": 210.95653635687665,
+        "totalHigh": 257.09239271649665
+      }
+    },
+    {
+      "id": "2026:401909848",
+      "season": 2026,
+      "tip": "2026-10-23T20:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Milwaukee Bucks",
+      "away": "Chicago Bulls",
+      "homeCode": "MIL",
+      "awayCode": "CHI",
+      "model": "baseline",
+      "features": [
+        1,
+        0.27197935002553447,
+        0.16635305605077746,
+        -0.3041312925170071,
+        -0.3415462585034023
+      ],
+      "pick": "HOME",
+      "forecast": {
+        "homePts": 118.71128930078793,
+        "awayPts": 115.44753710048151,
+        "margin": 3.2637522003064134,
+        "total": 234.15882640126944,
+        "homeWinProb": 0.6071809883532455,
+        "marginLow": -12.114866586233587,
+        "marginHigh": 18.642370986846416,
+        "totalLow": 211.09089822145944,
+        "totalHigh": 257.22675458107943
+      }
+    },
+    {
+      "id": "2026:401909095",
+      "season": 2026,
+      "tip": "2026-10-23T23:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Boston Celtics",
+      "away": "New York Knicks",
+      "homeCode": "BOS",
+      "awayCode": "NY",
+      "model": "baseline",
+      "features": [
+        1,
+        0.3542892326728264,
+        -0.5169464869106468,
+        -0.06445986394557833,
+        -0.15057210884353672
+      ],
+      "pick": "HOME",
+      "forecast": {
+        "homePts": 110.66390430965387,
+        "awayPts": 106.41243351757996,
+        "margin": 4.251470792073917,
+        "total": 217.07633782723383,
+        "homeWinProb": 0.6384388676539698,
+        "marginLow": -11.127147994466084,
+        "marginHigh": 19.63008957861392,
+        "totalLow": 194.00840964742383,
+        "totalHigh": 240.14426600704383
+      }
+    },
+    {
+      "id": "2026:401909843",
+      "season": 2026,
+      "tip": "2026-10-23T23:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Charlotte Hornets",
+      "away": "Atlanta Hawks",
+      "homeCode": "CHA",
+      "awayCode": "ATL",
+      "model": "baseline",
+      "features": [
+        1,
+        0.45393097768896123,
+        0.03298820587839828,
+        -0.2415802721088442,
+        -0.4058401360544214
+      ],
+      "pick": "HOME",
+      "forecast": {
+        "homePts": 118.13593843961374,
+        "awayPts": 112.68876670734622,
+        "margin": 5.447171732267535,
+        "total": 230.82470514695996,
+        "homeWinProb": 0.6750607234155681,
+        "marginLow": -9.931447054272466,
+        "marginHigh": 20.825790518807537,
+        "totalLow": 207.75677696714996,
+        "totalHigh": 253.89263332676995
+      }
+    },
+    {
+      "id": "2026:401909844",
+      "season": 2026,
+      "tip": "2026-10-23T23:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Indiana Pacers",
+      "away": "Dallas Mavericks",
+      "homeCode": "IND",
+      "awayCode": "DAL",
+      "model": "baseline",
+      "features": [
+        1,
+        0.1340798134104825,
+        0.23921982641585374,
+        -0.07109659863945593,
+        0.025883333333332814
+      ],
+      "pick": "NO_PICK",
+      "forecast": {
+        "homePts": 118.79472671066107,
+        "awayPts": 117.18576894973528,
+        "margin": 1.6089577609257901,
+        "total": 235.98049566039634,
+        "homeWinProb": 0.5533303001384998,
+        "marginLow": -13.76966102561421,
+        "marginHigh": 16.987576547465792,
+        "totalLow": 212.91256748058635,
+        "totalHigh": 259.04842384020634
+      }
+    },
+    {
+      "id": "2026:401909845",
+      "season": 2026,
+      "tip": "2026-10-23T23:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Orlando Magic",
+      "away": "Minnesota Timberwolves",
+      "homeCode": "ORL",
+      "awayCode": "MIN",
+      "model": "baseline",
+      "features": [
+        1,
+        -0.09417822187615954,
+        0.1528786012340106,
+        -0.17388408163265417,
+        0.11996054421768727
+      ],
+      "pick": "NO_PICK",
+      "forecast": {
+        "homePts": 116.34591318416818,
+        "awayPts": 117.47605184668208,
+        "margin": -1.1301386625139145,
+        "total": 233.82196503085027,
+        "homeWinProb": 0.4624837316200473,
+        "marginLow": -16.508757449053917,
+        "marginHigh": 14.248480124026086,
+        "totalLow": 210.75403685104027,
+        "totalHigh": 256.88989321066026
+      }
+    },
+    {
+      "id": "2026:401909846",
+      "season": 2026,
+      "tip": "2026-10-23T23:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Washington Wizards",
+      "away": "Toronto Raptors",
+      "homeCode": "WSH",
+      "awayCode": "TOR",
+      "model": "baseline",
+      "features": [
+        1,
+        -1.0416508351748075,
+        0.1396794316937303,
+        -0.14161326530612278,
+        0.9709639455782317
+      ],
+      "pick": "AWAY",
+      "forecast": {
+        "homePts": 110.49608788512279,
+        "awayPts": 122.99589790722047,
+        "margin": -12.49981002209769,
+        "total": 233.49198579234326,
+        "homeWinProb": 0.14878682087437567,
+        "marginLow": -27.878428808637693,
+        "marginHigh": 2.8788087644423097,
+        "totalLow": 210.42405761253326,
+        "totalHigh": 256.55991397215325
+      }
+    },
+    {
+      "id": "2026:401909847",
+      "season": 2026,
+      "tip": "2026-10-24T00:00:00.000Z",
+      "lockedAt": "2026-10-22T12:36:07.858Z",
+      "home": "Miami Heat",
+      "away": "Detroit Pistons",
+      "homeCode": "MIA",
+      "awayCode": "DET",
+      "model": "baseline",
+      "features": [
+        1,
+        -0.36883437291403115,
+        0.2276534008787303,
+        0.15969761904761878,
+        0.6684911564625854
+      ],
+      "pick": "AWAY",
+      "forecast": {
+        "homePts": 115.63266127349993,
+        "awayPts": 120.05867374846832,
+        "margin": -4.426012474968374,
+        "total": 235.69133502196826,
+        "homeWinProb": 0.35612565160041987,
+        "marginLow": -19.804631261508376,
+        "marginHigh": 10.952606311571627,
+        "totalLow": 212.62340684215826,
+        "totalHigh": 258.75926320177825
+      }
+    }
+  ],
+  "updatedAt": "2026-10-22T12:36:07.858Z",
   "model": {
     "status": "baseline",
-    "sample": 0
+    "sample": 0,
+    "minimum": 50,
+    "marginWeights": null,
+    "totalWeights": null,
+    "marginValidated": false,
+    "totalValidated": false,
+    "sigmaMargin": 12,
+    "sigmaTotal": 18
   },
   "summary": {
-    "n": 0
+    "n": 0,
+    "winnerAccuracy": null,
+    "decisiveAccuracy": null,
+    "decisiveN": 0,
+    "scoreMAE": null,
+    "marginMAE": null,
+    "totalMAE": null,
+    "brier": null,
+    "margin80Coverage": null
   }
 }
