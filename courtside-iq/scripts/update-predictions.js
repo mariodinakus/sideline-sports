@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {mapNbaLive,mapNbaStandings} from '../lib/live-mappers.js';
 import {blendRating,leagueAverage} from '../lib/lab-math.js';
 import {forecastGame,choosePick,scoreLedger,trainForecastModel} from '../lib/forecast-engine.js';
+import {predictEnsemble,elosFromSchedules,teamKey} from '../lib/ensemble-engine.js';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const filename=path.join(root,'data','prediction-ledger.json');
@@ -26,7 +27,7 @@ async function standingRows(season) {
  for(const group of mapNbaStandings(raw))for(const r of group.rows) {
    if(!r.abbr||out.has(normalize(r.abbr)))continue;
    const games=Number(r.wins||0)+Number(r.losses||0);
-   out.set(normalize(r.abbr),{abbr:normalize(r.abbr),team:r.name,ppg:r.ppg,oppg:r.oppg,games});
+   out.set(normalize(r.abbr),{abbr:normalize(r.abbr),team:r.name,ppg:r.ppg,oppg:r.oppg,games,wins:r.wins,losses:r.losses});
  }
  return out;
 }
@@ -40,6 +41,87 @@ async function loadLedger() {
   throw e;
  }
 }
+
+/** Optional public ESPN context. Every source can fail without manufacturing a signal. */
+const site='https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
+async function safeGet(url){try{return await espn(url)}catch(e){return null}}
+function roster(raw){
+ if(!raw)return null;
+ const entries=(raw.athletes||[]).flatMap(x=>Array.isArray(x.items)?x.items:[x]);
+ const athletes=entries.map(x=>({id:String(x.id||x.athlete?.id||''),name:String(x.displayName||x.athlete?.displayName||'')})).filter(x=>x.id);
+ return athletes.length>=8?{athletes}:null;
+}
+function playerInjuries(payload) {
+ if(!payload)return null;
+ const groups=payload.injuries||payload.teams||payload.items||[];
+ if(!Array.isArray(groups))return null;
+ const out={};
+ for(const group of groups){
+  const k=teamKey(group.team?.abbreviation||group.abbreviation||group.team?.shortDisplayName);
+  if(!k)continue;
+  const people=group.injuries||group.items||group.athletes||[];
+  out[k]=(out[k]||[]).concat((Array.isArray(people)?people:[]).map(x=>({
+   name:String(x.athlete?.displayName||x.displayName||x.name||'').slice(0,90),
+   status:String(x.status?.type||x.status?.name||x.status||x.type?.name||'').slice(0,50)
+  })).filter(x=>x.name&&x.status));
+ }
+ return out;
+}
+function scheduleEvents(raw){
+ if(!raw||!Array.isArray(raw.events))return [];
+ return raw.events.map(e=>{
+  const c=e.competitions?.[0]||{},teams=c.competitors||[];
+  const h=teams.find(x=>x.homeAway==='home'),a=teams.find(x=>x.homeAway==='away');
+  const val=x=>{const n=Number(typeof x==='object'?(x?.value??x?.displayValue):x);return Number.isFinite(n)?n:null};
+  if(!h?.team?.abbreviation||!a?.team?.abbreviation)return null;
+  const final=e.status?.type?.state==='post'||e.status?.type?.completed===true;
+  return {id:String(e.id||''),date:e.date||null,homeCode:teamKey(h.team.abbreviation),awayCode:teamKey(a.team.abbreviation),
+   homeScore:val(h.score),awayScore:val(a.score),final};
+ }).filter(x=>x&&x.date&&x.id);
+}
+async function contextSnapshot(games,rawBoards,old){
+ const idByCode=new Map();
+ for(const b of rawBoards)for(const e of b?.events||[])
+  for(const c of e.competitions?.[0]?.competitors||[])if(c?.team?.abbreviation&&c?.team?.id)
+   idByCode.set(teamKey(c.team.abbreviation),String(c.team.id));
+ const needed=[...new Set(games.filter(g=>g.state==='pre').flatMap(g=>[teamKey(g.homeCode),teamKey(g.awayCode)]))]
+ .filter(k=>idByCode.has(k));
+ const snapshot={updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{},injuries:null,elo:{}};
+ // Limit upstream calls and re-use the previous snapshot for six hours.
+ const priorTime=Date.parse(old?.updatedAt||'');
+ if(old&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
+ const injuryRaw=await safeGet(site+'/injuries');
+ snapshot.injuries=playerInjuries(injuryRaw);
+ const matches=[];
+ for(let i=0;i<needed.length;i+=5){
+  const batch=needed.slice(i,i+5);
+  const results=await Promise.all(batch.map(async key=>{
+   const id=idByCode.get(key);
+   const [currentSchedule,previousSchedule,currentRoster,previousRoster]=await Promise.all([
+    safeGet(site+'/teams/'+id+'/schedule?season='+(year+1)),
+    safeGet(site+'/teams/'+id+'/schedule?season='+year),
+    safeGet(site+'/teams/'+id+'/roster?season='+(year+1)),
+    safeGet(site+'/teams/'+id+'/roster?season='+year)
+   ]);
+   const recent=[...scheduleEvents(previousSchedule),...scheduleEvents(currentSchedule)];
+   const cr=roster(currentRoster),pr=roster(previousRoster);
+   const same=cr&&pr&&cr.athletes.length===pr.athletes.length&&
+      cr.athletes.every(p=>pr.athletes.some(q=>q.id===p.id));
+   return {key,events:recent,cr,pr:same?null:pr};
+  }));
+  for(const item of results){
+   matches.push(...item.events);
+   snapshot.homeGames[item.key]=item.events.filter(e=>e.final&&e.homeScore!==null&&e.awayScore!==null).map(e=>({
+    date:e.date,final:true,for:e.homeCode===item.key?e.homeScore:e.awayScore,
+    against:e.homeCode===item.key?e.awayScore:e.homeScore}));
+   if(item.cr)snapshot.rosters[item.key]=item.cr;
+   if(item.pr)snapshot.priorRosters[item.key]=item.pr;
+  }
+ }
+ snapshot.elo=elosFromSchedules(matches);
+ return snapshot;
+}
+
 async function main() {
  const ledger=await loadLedger();
  const oldIds=new Set(ledger.records.map(r=>r.id));
@@ -83,16 +165,24 @@ async function main() {
   }
  }
  const model=trainForecastModel(ledger.records);
+ const context=await contextSnapshot(games,scoreboards,ledger.contextCache);
+ if(context.updatedAt!==ledger.contextCache?.updatedAt){ledger.contextCache=context;changed=true;}
  for(const g of games){
    const id=String(year)+':'+g.id,tip=Date.parse(g.date);
    if(oldIds.has(id)||g.state!=='pre'||!Number.isFinite(tip)||tip<=now.getTime()+60000||tip>now.getTime()+36*3600000)continue;
    const home=teams.get(normalize(g.homeCode)),away=teams.get(normalize(g.awayCode));
    if(!home||!away||home===away)continue;
-   const p=forecastGame(home,away,leagueAvg,model);
+   const hk=teamKey(g.homeCode),ak=teamKey(g.awayCode);
+   const p=predictEnsemble(home,away,leagueAvg,model,{
+     tip:g.date,homeGames:context.homeGames?.[hk],awayGames:context.homeGames?.[ak],
+     homeRoster:context.rosters?.[hk],awayRoster:context.rosters?.[ak],
+     homePriorRoster:context.priorRosters?.[hk],awayPriorRoster:context.priorRosters?.[ak],
+     homeInjuries:context.injuries?.[hk],awayInjuries:context.injuries?.[ak],elo:context.elo
+   },ledger.records);
    if(!p||![p.homePts,p.awayPts,p.homeWinProb].every(Number.isFinite))continue;
    const record={id,season:year,tip:new Date(tip).toISOString(),lockedAt:now.toISOString(),
      home:g.home,away:g.away,homeCode:g.homeCode,awayCode:g.awayCode,
-     model:p.model,features:p.features,pick:choosePick(p.homeWinProb),
+     model:p.model,features:p.features,pick:choosePick(p.homeWinProb),modelVotes:p.modelVotes||[],conditions:p.conditions||null,
      forecast:{homePts:p.homePts,awayPts:p.awayPts,margin:p.margin,total:p.total,
        homeWinProb:p.homeWinProb,marginLow:p.marginLow,marginHigh:p.marginHigh,
        totalLow:p.totalLow,totalHigh:p.totalHigh}};
