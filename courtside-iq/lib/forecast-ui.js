@@ -44,6 +44,17 @@ export function renderForecastLedger(ledger,{esc=x=>String(x),error=null,loading
   (m.totalValidated?'Total residual learner validated.':'Total baseline retained.')+
   ' A time-ordered holdout must outperform the original baseline before any learner is used. Last archive update: '+
   e(ledger.updatedAt||'Not started')+'.</p>';
+ const historic=ledger.contextCache?.historicalModel||{};
+ if(historic.trained){
+  out+='<h3>Historical ML · expanding time-series validation</h3><div class="lab-stats compact">'+
+   tile('HISTORICAL TRAINING',String(historic.trained),'Real completed NBA games, chronological features')+
+   tile('PREQUENTIAL TESTS',String(historic.backtest||0),'Prediction graded before model update')+
+   tile('WINNER ACCURACY',pct(historic.winAccuracy),'Historical rolling evaluation; not future guarantee')+
+   tile('ML MARGIN MAE',num(historic.marginMAE,2)+' pts','Compared with Elo baseline '+num(historic.eloBaselineMAE,2))+
+   tile('Brier',num(historic.brier,4),'Historical probability scoring')+
+   tile('MODEL VALIDATION',historic.validated?'Passed':'Baseline retained','ML enabled only if historical MAE improves')+
+   '</div><p class="lab-caption">The historical online training sample is separate from the timestamped prospective prediction ledger. Prequential testing updates the model only after each historical game. Injury impact, confirmed lineups and historical player minutes are not reconstructed. Past backtest accuracy is not a guarantee of future performance.</p>';
+ }
  out+='<h3>Upcoming · forecasts locked before tipoff</h3>'+
   (upcoming.length?table(upcoming):'<div class="blank">No locked upcoming predictions. The scheduled data collector will add a match only when it sees it before tipoff.</div>');
  out+='<h3>Prediction versus reality · last 30 completed games</h3>'+
