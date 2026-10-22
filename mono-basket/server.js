@@ -43,7 +43,7 @@ const standings=year=>cached('standings:'+year,1200000,async()=>{
  const out=new Map();
  for(const group of mapNbaStandings(raw))for(const r of group.rows){
   const code=alias(r.abbr);if(!code||out.has(code))continue;
-  out.set(code,{abbr:code,team:r.name,ppg:Number(r.ppg),oppg:Number(r.oppg),games:Number(r.wins||0)+Number(r.losses||0),wins:Number(r.wins||0),losses:Number(r.losses||0)});
+  out.set(code,{abbr:code,team:r.name,ppg:r.ppg==null?null:Number(r.ppg),oppg:r.oppg==null?null:Number(r.oppg),games:Number(r.wins||0)+Number(r.losses||0),wins:Number(r.wins||0),losses:Number(r.losses||0)});
  }
  if(out.size<15)throw Error('Standings unavailable');
  return out;
@@ -100,15 +100,18 @@ function compactGame(g,teamMap,league,data,rec){
 }
 async function dashboard(day){
  const y=Number(day.slice(0,4))+(Number(day.slice(5,7))<9?-1:0);
- const out=await Promise.allSettled([ledger(),standings(y),standings(y-1),scoreboard(day)]);
- const [lr,cur,prev,board]=out;
+ const out=await Promise.allSettled([ledger(),standings(y),standings(y-1),scoreboard(day),scoreboard(plusDays(day,-1).toISOString().slice(0,10))]);
+ const [lr,cur,prev,board,priorBoard]=out;
  const warnings=[];
- out.forEach((v,i)=>{if(v.status==='rejected')warnings.push(['Archive','Current standings','Previous standings','ESPN scoreboard'][i]+': '+smallReason(v.reason))});
+ out.forEach((v,i)=>{if(v.status==='rejected')warnings.push(['Archive','Current standings','Previous standings','ESPN scoreboard','Previous day scoreboard'][i]+': '+smallReason(v.reason))});
  const data=lr.status==='fulfilled'?lr.value:{records:[],summary:{n:0},model:{status:'unavailable'}};
  const teamMap=ratings(cur.status==='fulfilled'?cur.value:null,prev.status==='fulfilled'?prev.value:null);
  const league=leagueAverage([...teamMap.values()],'ppg');
  const byId=new Map(data.records.map(r=>[String(r.id).split(':').at(-1),r]));
- const games=board.status==='fulfilled'?mapNbaLive(board.value).map(g=>compactGame(g,teamMap,league,data,byId.get(String(g.id)))):[];
+ const localDay=date=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Athens',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(date));
+ const rawGames=[...(board.status==='fulfilled'?mapNbaLive(board.value):[]),...(priorBoard.status==='fulfilled'?mapNbaLive(priorBoard.value):[])];
+ const games=[...new Map(rawGames.filter(g=>g.id&&g.date&&localDay(g.date)===day).map(g=>[String(g.id),g])).values()]
+  .map(g=>compactGame(g,teamMap,league,data,byId.get(String(g.id))));
  const audit=scoreLedger(data.records||[]);
  const historical=data.contextCache?.historicalModel||{};
  const last=(data.records||[]).filter(r=>r.actual).sort((a,b)=>String(b.tip).localeCompare(String(a.tip))).slice(0,36).map(compactRecord);
@@ -121,7 +124,7 @@ async function dashboard(day){
 function send(res,status,obj){
  const body=JSON.stringify(obj);
  res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff',
-  'access-control-allow-origin':'same-origin'});res.end(body);
+  'vary':'accept'});res.end(body);
 }
 const assets=new Map([['/','index.html'],['/index.html','index.html'],['/app.js','app.js'],['/style.css','style.css']]);
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8'};
@@ -141,7 +144,7 @@ http.createServer(async(req,res)=>{
   const type=mime[file.slice(file.lastIndexOf('.'))]||'application/octet-stream';
   res.writeHead(200,{'content-type':type,'cache-control':file==='index.html'?'no-store':'public, max-age=180',
    'x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'strict-origin-when-cross-origin',
-   'content-security-policy':"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; base-uri 'none'; object-src 'none'"});
+   'content-security-policy':"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self'; font-src 'self' https://fonts.gstatic.com; base-uri 'none'; object-src 'none'"});
   res.end(data);
  }catch(e){console.error('Request error',smallReason(e));send(res,500,{error:'Temporary data error',detail:smallReason(e)})}
 }).listen(PORT,'0.0.0.0',()=>console.log('MONO BASKET listening on '+PORT));

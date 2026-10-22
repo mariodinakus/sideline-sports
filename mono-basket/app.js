@@ -92,7 +92,7 @@ function render(){
  $('updated').textContent='Sync: '+dt(d.generatedAt);
 }
 async function load(){
- if(S.loading)return;S.loading=true;
+ S.loading=true;
  const serial=++S.serial;$('sync').textContent='● Συγχρονισμός…';$('sync').style.color='#ffbc83';
  try{
   const res=await fetch('/api/dashboard?date='+encodeURIComponent(S.day),{cache:'no-store'});
@@ -102,7 +102,7 @@ async function load(){
   render();
  }catch(err){$('sync').textContent='● Δεδομένα προσωρινά μη διαθέσιμα';$('sync').style.color='#ffaa8e';
   if(!S.data)$('view').innerHTML='<div class="empty">Δεν ήταν δυνατή η φόρτωση: '+esc(err.message)+'.<br>Δοκίμασε ανανέωση.</div>';
- }finally{S.loading=false}
+ }finally{if(serial===S.serial)S.loading=false}
 }
 function changeDay(n){const d=new Date(S.day+'T12:00:00');d.setDate(d.getDate()+n);S.day=d.toLocaleDateString('en-CA');$('date').value=S.day;load()}
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>nav(b.dataset.view)));
@@ -112,3 +112,6 @@ $('day-prev').addEventListener('click',()=>changeDay(-1));
 $('day-next').addEventListener('click',()=>changeDay(1));
 $('today').addEventListener('click',()=>{S.day=new Date().toLocaleDateString('en-CA');$('date').value=S.day;load()});
 load();
+
+// Recheck the ESPN feed and the immutable ledger while the radar is open.
+setInterval(()=>{if(!document.hidden&&!S.loading)load()},120000);
