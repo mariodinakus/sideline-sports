@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "league": "NBA",
+  "records": [],
+  "updatedAt": null,
+  "model": {
+    "status": "baseline",
+    "sample": 0
+  },
+  "summary": {
+    "n": 0
+  }
+}
