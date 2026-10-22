@@ -8,7 +8,7 @@
     "start": "node server.js",
     "dev": "node server.js",
     "test": "node --test tests/*.test.js",
-    "check": "node --check app.js && node --check api/data.js && node --check lib/normalize.js && node --check lib/models.js && node --check studio.js && node --check history-data.js && node --check api/legacy.js && node --check lib/visuals.js && node --check lib/studio-features.js && node --check national-data.js && node --check lib/match-ml.js && node --check api/news.js && node --check api/player.js && node --check api/live.js && node --check lib/live-mappers.js && node --check lib/evolution.js && node --check lib/next-labs.js && node --check lib/navigation.js && node --check lib/data-lab.js && node --check lib/lab-math.js && node --check lib/lab-charts.js && node --check lib/data-lab-pro.js && node --check server.js"
+    "check": "node --check app.js && node --check api/data.js && node --check lib/normalize.js && node --check lib/models.js && node --check studio.js && node --check history-data.js && node --check api/legacy.js && node --check lib/visuals.js && node --check lib/studio-features.js && node --check national-data.js && node --check lib/match-ml.js && node --check api/news.js && node --check api/player.js && node --check api/live.js && node --check lib/live-mappers.js && node --check lib/evolution.js && node --check lib/next-labs.js && node --check lib/navigation.js && node --check lib/data-lab.js && node --check lib/lab-math.js && node --check lib/lab-charts.js && node --check lib/data-lab-pro.js && node --check lib/forecast-engine.js && node --check lib/forecast-ui.js && node --check lib/ensemble-engine.js && node --check scripts/update-predictions.js && node --check server.js"
   },
   "engines": {
     "node": ">=20"
