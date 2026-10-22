@@ -51,3 +51,22 @@ export function renderForecastLedger(ledger,{esc=x=>String(x),error=null,loading
  out+='<p class="lab-caption">Source: ESPN public NBA scoreboard and team standings. This is a reproducible pregame audit, not an odds service. The provisional live forecast higher on this page can change; only the timestamped archive counts toward accuracy. Automatic updates depend on GitHub Actions running successfully and Vercel publishing the resulting data.</p>';
  return out;
 }
+
+
+/** Model-level evidence and coverage for timestamped, immutable predictions. */
+export function renderModelVotes(ledger,{esc=x=>String(x)}={}){
+ const rows=(ledger?.records||[]).filter(r=>Array.isArray(r.modelVotes)&&r.modelVotes.length)
+ .slice().sort((a,b)=>String(b.tip).localeCompare(String(a.tip))).slice(0,12);
+ if(!rows.length)return '<div class="blank">No multi-model snapshots yet. The next successful scheduled run will add them to future games without rewriting already locked forecasts.</div>';
+ const pct=x=>Number.isFinite(x)?(x*100).toFixed(1)+'%':'—';
+ const n=x=>Number.isFinite(x)?x.toFixed(1):'—';
+ return rows.map(r=>{
+   const cond=r.conditions||{},cc=cond.sourceCoverage||{};
+   const coverage=Object.entries(cc).filter(([k,v])=>v===true).map(([k])=>k).join(', ')||'team averages only';
+   const parts=r.modelVotes.map(v=>'<tr><td>'+esc(v.label||v.id)+'</td><td class="num">'+n(v.margin)+'</td><td class="num">'+pct(v.homeWinProb)+'</td><td class="num">'+pct(v.weight)+'</td><td>'+esc(v.why||'')+'</td></tr>').join('');
+   return '<details class="lab-cell" style="padding:10px;margin:10px 0"><summary><strong>'+esc(r.awayCode)+' @ '+esc(r.homeCode)+
+    '</strong> · '+r.modelVotes.length+' contributing models · '+esc(String(r.tip).slice(0,16))+' UTC</summary>'+
+    '<p class="lab-caption">Data coverage: '+esc(coverage)+'. Injury counts are only a coarse availability proxy and do not measure impact or confirmed starting lineups.</p>'+
+    '<div class="table-wrap"><table class="data-table lab-table"><thead><tr><th>Model</th><th>Home margin</th><th>Home win</th><th>Ensemble weight</th><th>Method</th></tr></thead><tbody>'+parts+'</tbody></table></div></details>';
+ }).join('');
+}
