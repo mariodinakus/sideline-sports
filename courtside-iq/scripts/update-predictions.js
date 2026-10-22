@@ -56,6 +56,13 @@ function roster(raw){
  const athletes=entries.map(x=>({id:String(x.id||x.athlete?.id||''),name:String(x.displayName||x.athlete?.displayName||'')})).filter(x=>x.id);
  return athletes.length>=8?{athletes}:null;
 }
+function injuriesFromRoster(raw){
+ const athletes=(raw?.athletes||[]).flatMap(x=>Array.isArray(x.items)?x.items:[x]);
+ return athletes.flatMap(a=>(Array.isArray(a.injuries)?a.injuries:[]).map(i=>({
+  name:String(a.displayName||a.athlete?.displayName||'').slice(0,90),
+  status:String(i.status?.name||i.status?.type||i.status||'').slice(0,50)
+ }))).filter(x=>x.name&&x.status);
+}
 function playerInjuries(payload) {
  if(!payload)return null;
  const groups=payload.injuries||payload.teams||payload.items||[];
@@ -92,10 +99,10 @@ async function contextSnapshot(games,rawBoards,old){
    idByCode.set(teamKey(c.team.abbreviation),String(c.team.id));
  const needed=[...new Set(games.filter(g=>g.state==='pre').flatMap(g=>[teamKey(g.homeCode),teamKey(g.awayCode)]))]
  .filter(k=>idByCode.has(k));
- const snapshot={schema:3,updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{},injuries:null,elo:{}};
+ const snapshot={schema:4,updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{...(old?.priorRosters||{})},injuries:null,elo:{}};
  // Limit upstream calls and re-use the previous snapshot for six hours.
  const priorTime=Date.parse(old?.updatedAt||'');
- if(old?.schema===3&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
+ if(old?.schema===4&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
  const injuryRaw=await safeGet(site+'/injuries');
  snapshot.injuries=playerInjuries(injuryRaw);
  const matches=[];
@@ -113,7 +120,7 @@ async function contextSnapshot(games,rawBoards,old){
    const cr=roster(currentRoster),pr=historicalRoster(previousRoster);
    const same=cr&&pr&&cr.athletes.length===pr.athletes.length&&
       cr.athletes.every(p=>pr.athletes.some(q=>q.id===p.id));
-   return {key,events:recent,cr,pr:same?null:pr};
+   return {key,events:recent,cr,pr:same?null:pr,rosterInjuries:injuriesFromRoster(currentRoster)};
   }));
   for(const item of results){
    matches.push(...item.events);
@@ -122,6 +129,10 @@ async function contextSnapshot(games,rawBoards,old){
     against:e.homeCode===item.key?e.awayScore:e.homeScore}));
    if(item.cr)snapshot.rosters[item.key]=item.cr;
    if(item.pr)snapshot.priorRosters[item.key]=item.pr;
+   if(item.rosterInjuries?.length&&(!snapshot.injuries||!snapshot.injuries[item.key]?.length)){
+    snapshot.injuries=snapshot.injuries||{};
+    snapshot.injuries[item.key]=item.rosterInjuries;
+   }
   }
  }
  // A league-wide seasonal range helps when per-team schedules are sparse or omit game results.
