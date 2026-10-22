@@ -92,10 +92,10 @@ async function contextSnapshot(games,rawBoards,old){
    idByCode.set(teamKey(c.team.abbreviation),String(c.team.id));
  const needed=[...new Set(games.filter(g=>g.state==='pre').flatMap(g=>[teamKey(g.homeCode),teamKey(g.awayCode)]))]
  .filter(k=>idByCode.has(k));
- const snapshot={updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{},injuries:null,elo:{}};
+ const snapshot={schema:2,updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{},injuries:null,elo:{}};
  // Limit upstream calls and re-use the previous snapshot for six hours.
  const priorTime=Date.parse(old?.updatedAt||'');
- if(old&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
+ if(old?.schema===2&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
  const injuryRaw=await safeGet(site+'/injuries');
  snapshot.injuries=playerInjuries(injuryRaw);
  const matches=[];
@@ -124,7 +124,27 @@ async function contextSnapshot(games,rawBoards,old){
    if(item.pr)snapshot.priorRosters[item.key]=item.pr;
   }
  }
+ // A league-wide seasonal range helps when per-team schedules are sparse or omit game results.
+ if(matches.filter(g=>g.final&&g.homeScore!==null).length<40){
+   const prevStart=String(year-1)+'1001',prevEnd=String(year)+'0630';
+   const currStart=String(year)+'1001',currEnd=dateCode(now);
+   const boards=await Promise.all([
+    safeGet(site+'/scoreboard?dates='+prevStart+'-'+prevEnd+'&limit=2000'),
+    safeGet(site+'/scoreboard?dates='+currStart+'-'+currEnd+'&limit=700')
+   ]);
+   const backfill=boards.flatMap(x=>scheduleEvents(x)).filter(g=>g.final&&g.homeScore!==null&&g.awayScore!==null);
+   matches.push(...backfill);
+   for(const [key,list] of Object.entries(snapshot.homeGames)){
+     const extraGames=backfill.filter(g=>g.homeCode===key||g.awayCode===key).map(e=>({
+      date:e.date,final:true,for:e.homeCode===key?e.homeScore:e.awayScore,against:e.homeCode===key?e.awayScore:e.homeScore
+     }));
+     snapshot.homeGames[key]=[...new Map([...list,...extraGames].map(v=>[v.date+':'+v.for+':'+v.against,v])).values()];
+   }
+ }
  snapshot.elo=elosFromSchedules(matches);
+ snapshot.diagnostics={historicalFinals:[...new Set(matches.filter(g=>g.final&&g.homeScore!==null).map(g=>g.id))].length,
+  rosterTeams:Object.keys(snapshot.rosters).length,previousRosterTeams:Object.keys(snapshot.priorRosters).length,
+  injuryTeams:Object.keys(snapshot.injuries||{}).length};
  return snapshot;
 }
 
