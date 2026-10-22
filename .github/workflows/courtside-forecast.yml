@@ -25,6 +25,9 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '24'
+      - name: Validate JavaScript syntax and model tests
+        working-directory: courtside-iq
+        run: npm run check && npm test
       - name: Record pregame predictions and settle completed games
         run: node courtside-iq/scripts/update-predictions.js
       - name: Publish only changed forecasts
