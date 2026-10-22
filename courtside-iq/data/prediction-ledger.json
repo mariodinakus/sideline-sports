@@ -990,7 +990,7 @@
       }
     }
   ],
-  "updatedAt": "2026-10-22T17:36:54.020Z",
+  "updatedAt": "2026-10-22T20:46:38.489Z",
   "model": {
     "status": "baseline",
     "sample": 0,
@@ -1015,7 +1015,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-10-22T13:07:30.846Z",
+    "updatedAt": "2026-10-22T20:46:38.489Z",
     "homeGames": {
       "PHI": [
         {
@@ -18561,8 +18561,20 @@
       ],
       "CHI": [
         {
+          "name": "Tobe Awaka",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Nic Claxton",
           "status": "Out"
+        },
+        {
+          "name": "Zach Collins",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Josh Giddey",
+          "status": "Day-To-Day"
         },
         {
           "name": "Jordan Hawkins",
@@ -18590,11 +18602,11 @@
         },
         {
           "name": "Coby White",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Grant Williams",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "ATL": [
@@ -18620,11 +18632,11 @@
       "DAL": [
         {
           "name": "Santi Aldama",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Tarik Biberovic",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Jett Howard",
@@ -18636,17 +18648,17 @@
         },
         {
           "name": "Caleb Martin",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "ORL": [
         {
           "name": "Anthony Black",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Jonathan Isaac",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Izaiyah Nelson",
@@ -18666,7 +18678,7 @@
       "WAS": [
         {
           "name": "AJ Dybantsa",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Tristan Vukcevic",
@@ -18757,6 +18769,10 @@
           "status": "Day-To-Day"
         },
         {
+          "name": "Jake LaRavia",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Collin Sexton",
           "status": "Day-To-Day"
         },
@@ -18808,7 +18824,7 @@
       "POR": [
         {
           "name": "Branden Carlson",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Shaedon Sharpe",
