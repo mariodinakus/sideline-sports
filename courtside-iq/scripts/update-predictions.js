@@ -45,6 +45,11 @@ async function loadLedger() {
 /** Optional public ESPN context. Every source can fail without manufacturing a signal. */
 const site='https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 async function safeGet(url){try{return await espn(url)}catch(e){return null}}
+function historicalRoster(raw){
+ if(!raw||!Array.isArray(raw.items))return null;
+ const athletes=raw.items.map(x=>{const ref=String(x.$ref||x.href||'');const id=(ref.match(/\/athletes\/(\d+)(?:[/?]|$)/)||[])[1];return id?{id,name:id}:null}).filter(Boolean);
+ return athletes.length>=8?{athletes}:null;
+}
 function roster(raw){
  if(!raw)return null;
  const entries=(raw.athletes||[]).flatMap(x=>Array.isArray(x.items)?x.items:[x]);
@@ -74,7 +79,8 @@ function scheduleEvents(raw){
   const h=teams.find(x=>x.homeAway==='home'),a=teams.find(x=>x.homeAway==='away');
   const val=x=>{const n=Number(typeof x==='object'?(x?.value??x?.displayValue):x);return Number.isFinite(n)?n:null};
   if(!h?.team?.abbreviation||!a?.team?.abbreviation)return null;
-  const final=e.status?.type?.state==='post'||e.status?.type?.completed===true;
+  const state=e.status?.type||c.status?.type||{};
+  const final=state.state==='post'||state.completed===true;
   return {id:String(e.id||''),date:e.date||null,homeCode:teamKey(h.team.abbreviation),awayCode:teamKey(a.team.abbreviation),
    homeScore:val(h.score),awayScore:val(a.score),final};
  }).filter(x=>x&&x.date&&x.id);
@@ -101,10 +107,10 @@ async function contextSnapshot(games,rawBoards,old){
     safeGet(site+'/teams/'+id+'/schedule?season='+(year+1)),
     safeGet(site+'/teams/'+id+'/schedule?season='+year),
     safeGet(site+'/teams/'+id+'/roster?season='+(year+1)),
-    safeGet(site+'/teams/'+id+'/roster?season='+year)
+    safeGet('https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/'+year+'/teams/'+id+'/athletes?limit=100')
    ]);
    const recent=[...scheduleEvents(previousSchedule),...scheduleEvents(currentSchedule)];
-   const cr=roster(currentRoster),pr=roster(previousRoster);
+   const cr=roster(currentRoster),pr=historicalRoster(previousRoster);
    const same=cr&&pr&&cr.athletes.length===pr.athletes.length&&
       cr.athletes.every(p=>pr.athletes.some(q=>q.id===p.id));
    return {key,events:recent,cr,pr:same?null:pr};
@@ -144,7 +150,7 @@ async function main() {
  ]);
  if(current.size<20&&previous.size<20)throw Error('ESPN standings incomplete; no forecasts saved');
  const teams=new Map();
- for(const [code,p] of previous)teams.set(code,{...p,games:0});
+ for(const [code,p] of previous)teams.set(code,{...p,games:0,wins:0,losses:0});
  for(const [code,c] of current){
   const p=previous.get(code);
   const b=blendRating(c,p);
