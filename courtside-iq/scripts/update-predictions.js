@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {mapNbaLive,mapNbaStandings} from '../lib/live-mappers.js';
 import {blendRating,leagueAverage} from '../lib/lab-math.js';
 import {forecastGame,choosePick,scoreLedger,trainForecastModel} from '../lib/forecast-engine.js';
-import {predictEnsemble,elosFromSchedules,teamKey} from '../lib/ensemble-engine.js';
+import {predictEnsemble,elosFromSchedules,teamKey,trainHistoricalOnline} from '../lib/ensemble-engine.js';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const filename=path.join(root,'data','prediction-ledger.json');
@@ -92,10 +92,10 @@ async function contextSnapshot(games,rawBoards,old){
    idByCode.set(teamKey(c.team.abbreviation),String(c.team.id));
  const needed=[...new Set(games.filter(g=>g.state==='pre').flatMap(g=>[teamKey(g.homeCode),teamKey(g.awayCode)]))]
  .filter(k=>idByCode.has(k));
- const snapshot={schema:2,updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{},injuries:null,elo:{}};
+ const snapshot={schema:3,updatedAt:now.toISOString(),homeGames:{},rosters:{},priorRosters:{},injuries:null,elo:{}};
  // Limit upstream calls and re-use the previous snapshot for six hours.
  const priorTime=Date.parse(old?.updatedAt||'');
- if(old?.schema===2&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
+ if(old?.schema===3&&Number.isFinite(priorTime)&&now.getTime()-priorTime<6*3600000)return old;
  const injuryRaw=await safeGet(site+'/injuries');
  snapshot.injuries=playerInjuries(injuryRaw);
  const matches=[];
@@ -142,6 +142,7 @@ async function contextSnapshot(games,rawBoards,old){
    }
  }
  snapshot.elo=elosFromSchedules(matches);
+ snapshot.historicalModel=trainHistoricalOnline(matches);
  snapshot.diagnostics={historicalFinals:[...new Set(matches.filter(g=>g.final&&g.homeScore!==null).map(g=>g.id))].length,
   rosterTeams:Object.keys(snapshot.rosters).length,previousRosterTeams:Object.keys(snapshot.priorRosters).length,
   injuryTeams:Object.keys(snapshot.injuries||{}).length};
@@ -203,7 +204,7 @@ async function main() {
      tip:g.date,homeGames:context.homeGames?.[hk],awayGames:context.homeGames?.[ak],
      homeRoster:context.rosters?.[hk],awayRoster:context.rosters?.[ak],
      homePriorRoster:context.priorRosters?.[hk],awayPriorRoster:context.priorRosters?.[ak],
-     homeInjuries:context.injuries?.[hk],awayInjuries:context.injuries?.[ak],elo:context.elo
+     homeInjuries:context.injuries?.[hk],awayInjuries:context.injuries?.[ak],elo:context.elo,historicalModel:context.historicalModel
    },ledger.records);
    if(!p||![p.homePts,p.awayPts,p.homeWinProb].every(Number.isFinite))continue;
    const record={id,season:year,tip:new Date(tip).toISOString(),lockedAt:now.toISOString(),
