@@ -161,7 +161,7 @@ export function createLabPro({shell,title,esc,render}){
    const context={tip:g.date,homeGames:snapshot.homeGames?.[hk],awayGames:snapshot.homeGames?.[ak],
     homeRoster:snapshot.rosters?.[hk],awayRoster:snapshot.rosters?.[ak],
     homePriorRoster:snapshot.priorRosters?.[hk],awayPriorRoster:snapshot.priorRosters?.[ak],
-    homeInjuries:snapshot.injuries?.[hk],awayInjuries:snapshot.injuries?.[ak],elo:snapshot.elo};
+    homeInjuries:snapshot.injuries?.[hk],awayInjuries:snapshot.injuries?.[ak],elo:snapshot.elo,historicalModel:snapshot.historicalModel};
    return predictEnsemble(h,a,lg,archive.model||{},context,archive.records||[]);
   };
   const provisional=rows.filter(x=>x.g.state==='pre').map(x=>({...x,q:modelFor(x.h,x.a,x.g)})).filter(x=>x.q);
