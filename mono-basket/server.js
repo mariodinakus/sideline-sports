@@ -144,7 +144,7 @@ http.createServer(async(req,res)=>{
   const type=mime[file.slice(file.lastIndexOf('.'))]||'application/octet-stream';
   res.writeHead(200,{'content-type':type,'cache-control':file==='index.html'?'no-store':'public, max-age=180',
    'x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'strict-origin-when-cross-origin',
-   'content-security-policy':"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self' data:; connect-src 'self'; font-src 'self' https://fonts.gstatic.com; base-uri 'none'; object-src 'none'"});
+   'content-security-policy':"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self' https://fonts.gstatic.com; base-uri 'none'; object-src 'none'"});
   res.end(data);
  }catch(e){console.error('Request error',smallReason(e));send(res,500,{error:'Temporary data error',detail:smallReason(e)})}
 }).listen(PORT,'0.0.0.0',()=>console.log('MONO BASKET listening on '+PORT));

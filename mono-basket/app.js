@@ -1,6 +1,7 @@
 // MONO BASKET — accessible, no-framework client. Immutable vs provisional is explicit.
 const $=id=>document.getElementById(id);
-const S={view:'radar',day:new Date().toLocaleDateString('en-CA'),data:null,loading:false,serial:0};
+const todayInGreece=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Athens',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const S={view:'radar',day:todayInGreece(),data:null,loading:false,serial:0};
 const esc=x=>String(x??'—').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const pct=n=>Number.isFinite(n)?(100*n).toFixed(1)+'%':'—';
 const num=(n,d=1)=>Number.isFinite(n)?n.toFixed(d):'—';
@@ -56,7 +57,7 @@ function modelLab(d){
  ['elo','Historical Elo','Δυναμική βαθμολογία από προηγούμενα πραγματικά παιχνίδια.'],
  ['conditions','Rest / roster / availability','Ξεκούραση, αριθμός απόντων και σύμπτωση ρόστερ, μόνο όπου υπάρχουν δεδομένα.'],
  ['ridge','Online / validated ridge','Μοντέλο που εκπαιδεύεται χρονολογικά και χρησιμοποιείται μόνο όταν βελτιώνει ιστορικά το baseline.']];
- return '<div class="notice">Δεν «τρέχουν» πάντα εννέα μοντέλα. Το MONO BASKET ενεργοποιεί μια ψήφο μόνο όταν έχει τις απαιτούμενες πηγές. Ιστορικά 66,9% δεν σημαίνει 66,9% σε μελλοντικούς αγώνες.</div>'
+ return '<div class="notice">Δεν «τρέχουν» πάντα εννέα μοντέλα. Το MONO BASKET ενεργοποιεί μια ψήφο μόνο όταν έχει τις απαιτούμενες πηγές. Η ιστορική επίδοση '+pct(d.history?.winAccuracy)+' δεν σημαίνει ότι θα επαναληφθεί σε μελλοντικούς αγώνες.</div>'
  +(first?'<div class="info-card" style="margin-bottom:16px"><h3>Συνδυαστική ψήφος · '+esc(first.awayCode)+' @ '+esc(first.homeCode)+'</h3><p>Διαθέσιμες ψήφοι: '+first.votes.length+' / 9. Πάτησε στο Game Radar για όλες τις προβλέψεις.</p><div class="vote-list">'+first.votes.map(v=>'<div class="vote"><strong>'+esc(v.label||v.id)+'</strong><span class="num">'+pct(v.homeWinProb)+'</span><span class="num">'+pct(v.weight)+'</span></div>').join('')+'</div></div>':'')
  +'<div class="info-grid">'+names.map(([id,n,why])=>'<article class="info-card"><div class="eyebrow small">'+esc(id.toUpperCase())+'</div><h3 style="margin-top:12px">'+esc(n)+'</h3><p>'+esc(why)+'</p></article>').join('')+'</div>';
 }
@@ -104,13 +105,13 @@ async function load(){
   if(!S.data)$('view').innerHTML='<div class="empty">Δεν ήταν δυνατή η φόρτωση: '+esc(err.message)+'.<br>Δοκίμασε ανανέωση.</div>';
  }finally{if(serial===S.serial)S.loading=false}
 }
-function changeDay(n){const d=new Date(S.day+'T12:00:00');d.setDate(d.getDate()+n);S.day=d.toLocaleDateString('en-CA');$('date').value=S.day;load()}
+function changeDay(n){const d=new Date(S.day+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);S.day=d.toISOString().slice(0,10);$('date').value=S.day;load()}
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>nav(b.dataset.view)));
 $('refresh').addEventListener('click',load);
 $('date').value=S.day;$('date').addEventListener('change',e=>{if(!e.target.value)return;S.day=e.target.value;load()});
 $('day-prev').addEventListener('click',()=>changeDay(-1));
 $('day-next').addEventListener('click',()=>changeDay(1));
-$('today').addEventListener('click',()=>{S.day=new Date().toLocaleDateString('en-CA');$('date').value=S.day;load()});
+$('today').addEventListener('click',()=>{S.day=todayInGreece();$('date').value=S.day;load()});
 load();
 
 // Recheck the ESPN feed and the immutable ledger while the radar is open.
