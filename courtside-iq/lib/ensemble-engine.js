@@ -10,7 +10,7 @@ export const teamKey=x=>alias[String(x||'').toUpperCase()]||String(x||'').toUppe
 export const MODEL_LABELS={
  scoring:'Attack / defence',net:'Net-rating strength',pyth:'Pythagorean expectation',
  bayes:'Bayesian win rates',form:'Last-10 form',momentum:'Recency-weighted form',
- elo:'Historical Elo',conditions:'Rest / roster / availability',ridge:'Validated residual ML'
+ elo:'Historical Elo',conditions:'Rest / roster / availability',ridge:'Online / validated ridge'
 };
 function form(schedule=[],before=Date.now()){
  const played=schedule.filter(g=>g&&g.final&&finite(g.for)&&finite(g.against)&&Date.parse(g.date)<before)
@@ -78,10 +78,10 @@ export function predictEnsemble(home,away,leagueAvg,model={},context={},historic
   conditionalVote('elo',2.5+(eh-ea)*.032,baseline.total,'Chronological completed-game Elo',finite(eh)&&finite(ea)),
   conditionalVote('conditions',baseline.margin+conditions,baseline.total,'Rest days / verified OUT counts / roster overlap',contextAvailable),
   conditionalVote('ridge',
-   context.historicalModel?.validated?chronologicalMargin(hf,af,eh,ea,context.historicalModel):baseline.margin,
+   context.historicalModel?.validated&&finite(eh)&&finite(ea)?chronologicalMargin(hf,af,eh,ea,context.historicalModel):baseline.margin,
    baseline.total,
    context.historicalModel?.validated?'Online ridge trained and prequentially tested on prior final games':'Chronologically validated residual regression',
-   !!(context.historicalModel?.validated||model.marginValidated))
+   !!((context.historicalModel?.validated&&finite(eh)&&finite(ea))||model.marginValidated))
  ].filter(Boolean);
  const weights=learnedWeights(votes,historical);
  const m=votes.reduce((s,v)=>s+v.margin*weights[v.id],0),total=votes.reduce((s,v)=>s+v.total*weights[v.id],0);
