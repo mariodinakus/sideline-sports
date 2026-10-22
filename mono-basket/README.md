@@ -11,6 +11,12 @@ Independent NBA forecasting radar for Render, developed alongside but **not serv
 - ESPN public scores and standings fetched server-side without browser API keys.
 - Works on phones, desktops and tablet screens.
 
+## One-click Render deployment
+
+[![Deploy MONO BASKET to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mariodinakus/sideline-sports)
+
+This opens the official Render Blueprint flow. Sign in to your Render account, review the service, and approve creation. This step cannot be done by GitHub alone because Render needs account authorization.
+
 ## Deploy on Render
 From the existing repository [mariodinakus/sideline-sports](https://github.com/mariodinakus/sideline-sports):
 1. New > Blueprint, connect the GitHub repository and point it at the **root `render.yaml`**.
