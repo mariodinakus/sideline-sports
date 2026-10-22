@@ -1,5 +1,17 @@
 # COURTSIDE IQ v4 — Live Center / Basketball Evolution / Stats Academy
 
+
+## October 2026 — NBA multi-model engine, prospective audit and continuous learning
+
+- **Nine conditional model families:** historical attack/defence, net scoring differential, Pythagorean wins, Bayesian wins + Log5, previous-ten-game form, exponentially weighted recent form, historical Elo, rest/roster/injury context and chronologically validated ridge regression. Only models with usable signals contribute.
+- **Real roster and conditions:** current NBA rosters come from ESPN. When accessible, season-correct previous rosters come from ESPN core-v2 per-season athlete references, allowing player-overlap (not minutes-weighted continuity). Injury feeds and roster reports provide cautious OUT/Doubtful counts, not verified individual player impact. Recent final scores provide ten-game form and rest-day gaps.
+- **Scheduled learning:** GitHub Actions updates NBA final scores and immutable pre-tipoff predictions hourly, and refreshes historical game training and contextual inputs when available. Changed ledger snapshots are committed and deployed automatically through Vercel. Public ESPN endpoints are undocumented and can throttle or fail.
+- **Historical online ridge:** the engine constructs chronological game features, generates each prediction before consuming the matching result, updates after the game and enables its trained vote only if prequential margin MAE beats a simple Elo baseline. Historical validation metrics are not prospective performance.
+- **Live previews versus audited forecasts:** the Score Predictor also computes provisional ensemble predictions for the next games, while the performance ledger counts only snapshots recorded before tipoff. Old forecasts are not rewritten, even when newer models improve.
+- **Accuracy reporting:** winner hit rate, Brier, exact-score count and score/margin/total absolute errors are computed only after observed final scores are available.
+- **Coverage limits:** the new multi-model engine supports NBA, not full EuroLeague forecasting. Future confirmed starting lineups, player-level on/off impact, bookmaker prices, robust calibration and guaranteed source uptime are not supplied. A larger ensemble is not necessarily more accurate.
+- **Modules:** lib/ensemble-engine.js, lib/forecast-engine.js, lib/forecast-ui.js, scripts/update-predictions.js, data/prediction-ledger.json and .github/workflows/courtside-forecast.yml. Tests: npm run check and npm test.
+
 ## New in v4
 - **Live Scores & Standings**: ESPN NBA scoreboard and conference standings, public EuroLeague fixtures and round-specific standings, manually refreshable plus visible-tab refresh. All games display their actual source status; unavailable data is never fabricated.
 - **Team DNA Lab**: 12 available team metrics, ranking bars, side-by-side player/team style comparison, team radar when at least three observed comparable axes are present; metric-dependent analysis where sufficient inputs exist.
@@ -108,7 +120,7 @@ This model **has not been backtested on historical seasons**, calibrated or comp
 
 - Code and 8 unit checks are ready. **Live integration with the upstream data sources was not verified from this build environment**; the endpoints may fail or schemas may differ on deployment. The UI surfaces missing feeds rather than showing demo numbers as live statistics.
 - EuroLeague advanced stats depend on fields returned in the actual provider payload.
-- This project has no historical data warehouse, possession-by-possession event feed, trained ML model, injury feed, player-prop forecasting model, calibration study, account management or push notifications yet.
+- This project has no licensed historical data warehouse, possession-by-possession event feed, guaranteed injury availability, player-specific injury impact, player-prop forecasting model, externally validated calibration, account management or push notifications yet. The separate Score Predictor now provides a conditional walk-forward-trained NBA model.
 - NBA game feed currently shows the day's slate, not a whole-season archive. Season selection applies to player/team feeds.
 - If a provider fails, the related section may be empty or prediction may be unavailable until another valid data feed is configured.
 
