@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check app.js && node --check engine/ensemble-engine.js && node --check engine/forecast-engine.js",
+    "check": "node --check server.js && node --check app.js && node --check engine/ensemble-engine.js && node --check engine/forecast-engine.js && node --check lib/dashboard-core.js && node --check api/dashboard.js && node --check api/health.js",
     "test": "node --test tests/*.test.js"
   }
 }

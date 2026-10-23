@@ -18,3 +18,15 @@ test('time-series trainer needs finished historical samples',()=>{
  const out=trainHistoricalOnline([{id:'X',date:'2026-10-22T20:00:00Z',homeCode:'BOS',awayCode:'NYK',homeScore:100,awayScore:90,final:false}]);
  assert.equal(out.backtest,0);assert.equal(out.validated,false);
 });
+
+import dashboardHandler from '../api/dashboard.js';
+import healthHandler from '../api/health.js';
+function response(){const h={};return {statusCode:200,body:null,setHeader:(k,v)=>h[k]=v,end(s){this.body=JSON.parse(s)},status(s){this.statusCode=s;return this},json(x){this.body=x;return this},headers:h}}
+test('Vercel dashboard rejects invalid date without hitting upstream feeds', async()=>{
+ const r=response();await dashboardHandler({method:'GET',url:'/api/dashboard?date=not-a-date'},r);
+ assert.equal(r.statusCode,400);assert.ok(r.body.error);
+});
+test('Vercel health function responds with the intended app name',()=>{
+ const r=response();healthHandler({method:'GET'},r);
+ assert.equal(r.statusCode,200);assert.equal(r.body.service,'MONO BASKET');
+});
