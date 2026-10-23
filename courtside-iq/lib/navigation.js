@@ -58,8 +58,9 @@ export const NAV_GROUPS = [
   },
   {
     id:'predict', label:'Predictions', icon:'◈', caption:'What might happen next',
-    description:'Transparent match models, title scenarios and MVP watchlists.',
+    description:'MONO BASKET live radar, pregame score projections, model audit and futures.',
     pages:[
+      {route:'monobasket', label:'MONO BASKET · Forecast Radar'},
       {route:'matchlab', label:'Match Prediction Lab'},
       {route:'future', label:'Future Champions & MVPs'}
     ]
@@ -96,6 +97,7 @@ const SEARCH_ALIASES={
   goat:'greatest of all time head to head comparison rankings',
   globalgoat:'goat greatest of all time best basketball player ever equation weights international',
   twins:'similar careers player comps analogues raptor war',
+  monobasket:'mono basket live radar nba forecast prediction 1/2 score models accuracy reliability locked prospective online learning injuries elo',
   matchlab:'ml machine learning predictions games betting model',
   future:'future predictions championships mvp scenarios',
   academy:'what is raptor war bpm vorp per ws plus minus ts efg dictionary glossary definitions',
