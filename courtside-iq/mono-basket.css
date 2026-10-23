@@ -1,0 +1,111 @@
+/* MONO BASKET — native Courtside IQ design system extension.
+ * Scoped components prevent unintended changes to history, players and GOAT screens.
+ */
+:root{--mono-orange:#ff9963;--mono-lime:#c6f28b;--mono-ink:#eaf0f4;--mono-border:#34434a}
+.mono-top-action{border:1px solid #855a3c;background:linear-gradient(115deg,#36261c,#281d18);color:#ffb182;padding:10px 13px;font-weight:800;letter-spacing:.07em;border-radius:9px;font-size:11px;white-space:nowrap;cursor:pointer}
+.mono-top-action:hover{border-color:#ff955b;background:#4b2f21}
+.mono-nav-entry{color:#ffbf9c!important;font-weight:800!important}
+.mono-nav-entry .nav-dot{background:#ff955b!important;box-shadow:0 0 0 5px #ff955b1d}
+.mono-nav-entry.active{color:#1a100e!important}
+.mono-global{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 19px;margin:18px 38px 0;background:linear-gradient(112deg,#1d2729,#222d2e 58%,#26251f);border:1px solid #395044;border-radius:14px;color:#e5f0e4}
+.mono-global-name{display:flex;gap:13px;align-items:center;min-width:0}
+.mono-global-ball{display:grid;place-items:center;background:#ff955b1a;border:1px solid #a65c34;border-radius:10px;width:39px;height:39px;color:#ff9f60;font-size:22px;flex:none}
+.mono-global-name strong{font:800 11px 'Space Grotesk',sans-serif;letter-spacing:.09em;display:block;color:#ffb486}
+.mono-global-name small{font-size:11px;color:#b1c6c0;margin-top:5px;display:block;line-height:1.4}
+.mono-global-actions{display:flex;align-items:center;gap:15px;flex-shrink:0}
+.mono-global-clock{font-size:10px;font-weight:800;letter-spacing:.08em;color:#a5c4b0;white-space:nowrap}
+.mono-global-button{padding:10px 13px;border:1px solid #71895d;border-radius:9px;background:#c9f397;color:#192218;font-size:10px;letter-spacing:.04em;font-weight:800;white-space:nowrap}
+.mono-global-button:hover{background:#ddffb4}
+.mono-home-panel{background:radial-gradient(circle at 82% 10%,#53402c 0,transparent 40%),linear-gradient(120deg,#101b24,#18252a);color:#e6ecf0;border:1px solid #39504b;border-radius:20px;padding:28px 30px;margin:0 0 30px}
+.mono-home-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.mono-eyebrow{font-size:10px;letter-spacing:.18em;color:#c9f18c;font-weight:800;display:block}
+.mono-home-panel h2{font:750 clamp(29px,3.5vw,43px)/1.06 'Space Grotesk',sans-serif;letter-spacing:-.05em;margin:11px 0}
+.mono-home-panel h2 em{font-style:normal;color:var(--mono-orange)}
+.mono-home-panel p{font-size:12px;line-height:1.85;color:#a2b8c3;max-width:660px}
+.mono-main-action{border:1px solid #f8a56e;color:#1c1712;background:#ffae76;border-radius:9px;padding:12px 15px;font-weight:800;font-size:11px;white-space:nowrap}
+.mono-home-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:19px}
+.mono-home-metrics>div{background:#20303b9c;border:1px solid #41515d;border-radius:12px;padding:15px;min-width:0}
+.mono-home-metrics span,.mono-home-metrics small{font-size:9px;line-height:1.4;font-weight:700;letter-spacing:.065em;color:#9caebb;display:block}
+.mono-home-metrics strong{display:block;font:750 clamp(23px,2.8vw,33px) 'Space Grotesk',sans-serif;color:#d5fc9c;letter-spacing:-.035em;margin:7px 0}
+.mono-home-metrics small{letter-spacing:0;font-weight:500}
+.mono-home-games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:13px}
+.mono-home-games button{text-align:left;background:#14232cbf;color:#e6eff8;border:1px solid #354c54;border-radius:10px;padding:12px;min-width:0;display:flex;gap:5px;flex-direction:column}
+.mono-home-games button span,.mono-home-games button small{font-size:10px;color:#9bb0c2}
+.mono-home-games button strong{font:700 21px 'Space Grotesk',sans-serif;color:#ffad73}
+.mono-home-empty{color:#a2b5c4;font-size:12px;margin-top:15px}
+.mono-hub{color:#e8edf3;--mono-bg:#101b26;--mono-deeper:#0b141e}
+.mono-hero{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(circle at 82% 46%,#485043,transparent 35%),linear-gradient(110deg,#101b24,#19232d);border:1px solid #465550;border-radius:20px;padding:33px 37px;min-height:234px}
+.mono-hero h1{font:750 clamp(39px,4.5vw,67px)/.99 'Space Grotesk',sans-serif;letter-spacing:-.07em;margin:17px 0}
+.mono-hero h1 em{color:#ff9d66;font-style:normal}
+.mono-hero p{font-size:13px;color:#b6c3cd;max-width:570px;line-height:1.7;margin:0}
+.mono-hero-seal{position:absolute;right:10%;top:27%;font:800 100px 'Space Grotesk',sans-serif;color:#e9ffdb09;transform:rotate(-13deg);z-index:-1}
+.mono-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:15px 0 29px}
+.mono-metric{border:1px solid #354653;border-radius:14px;background:#14222c;padding:18px;min-width:0}
+.mono-metric span{display:block;color:#91a6b5;font-size:9px;font-weight:800;letter-spacing:.13em;line-height:1.45}
+.mono-metric strong{display:block;font:750 clamp(23px,2.8vw,36px) 'Space Grotesk',sans-serif;letter-spacing:-.05em;margin:10px 0;color:#d0f897;overflow-wrap:anywhere}
+.mono-metric small{font-size:10px;color:#93a6b7;display:block;line-height:1.45}
+.mono-page-nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;margin-bottom:19px}
+.mono-page-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.mono-page-tabs button,.mono-day-picker button{color:#b7c5d2;border:1px solid #384b59;background:#192833;padding:9px 13px;border-radius:9px;font-size:11px;font-weight:700}
+.mono-page-tabs button.active{background:#3f372b;color:#ffbf8e;border-color:#9d6d50}
+.mono-page-tabs button:hover,.mono-day-picker button:hover{border-color:#ff9d66}
+.mono-day-picker{display:flex;align-items:center;gap:4px;background:#13212d;border:1px solid #304452;border-radius:11px;padding:4px}
+.mono-day-picker button{padding:8px 10px;background:transparent;border:0}
+.mono-day-picker input{background:#192831;border:1px solid #344552;border-radius:7px;color:#e9eef5;color-scheme:dark;padding:8px 5px;font-size:11px;width:125px}
+.mono-game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.mono-game{border:1px solid #354553;background:#14212b;border-radius:14px;padding:20px;min-width:0}
+.mono-game-head{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#a3b6c1;font-size:11px;padding-bottom:13px;border-bottom:1px solid #31404e}
+.mono-status{padding:6px 8px;border:1px solid #415461;border-radius:6px;font-size:9px;font-weight:800;letter-spacing:.05em;color:#c9d5df;white-space:nowrap}
+.mono-status.is-locked{border-color:#6b8a52;color:#d8ffa5;background:#4556323b}
+.mono-status.is-live{border-color:#a26a4f;color:#ffc196}
+.mono-match{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:20px 0}
+.mono-match>div{min-width:0;flex:1}
+.mono-match>div:last-child{text-align:right}
+.mono-match b{font:750 clamp(24px,3vw,32px) 'Space Grotesk',sans-serif;color:#f6f7f9}
+.mono-match small{display:block;font-size:11px;color:#9db0bd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+.mono-match>span{color:#5e7488}
+.mono-game-score{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#23313e;border-radius:10px;padding:13px 15px}
+.mono-game-score span{font-size:10px;font-weight:800;letter-spacing:.1em;color:#a8bbc9}
+.mono-game-score strong{font:750 23px 'Space Grotesk',sans-serif;color:#f3f7f9;white-space:nowrap}
+.mono-prob-meta,.mono-prob-ends{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:18px;color:#adc0ca;font-size:10px}
+.mono-prob-meta b{color:#d6f4a6;font-size:13px}
+.mono-prob-track{height:9px;border-radius:99px;background:#526274;overflow:hidden;margin:8px 0}
+.mono-prob-track span{display:block;height:100%;background:linear-gradient(90deg,#ff975c,#ffc37d);border-radius:99px}
+.mono-prob-ends{margin:6px 0;color:#a7b8c7;font-size:10px}
+.mono-pick{margin:18px 0 0;font-size:10px;color:#a2b4c0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mono-pick strong{color:#d3f59e;font-size:12px}
+.mono-pick span{margin-left:auto;color:#91d9ee}
+.mono-details{border-top:1px solid #364753;margin-top:16px;padding-top:13px}
+.mono-details summary{font-size:11px;font-weight:700;color:#d5e6e9;cursor:pointer}
+.mono-votes{display:grid;gap:10px;margin-top:12px}
+.mono-vote,.mono-vote-head{display:grid;grid-template-columns:minmax(0,1fr) 75px 65px;gap:8px;align-items:start}
+.mono-vote{font-size:11px;padding:8px 0;border-bottom:1px solid #34424c;color:#e0e7ed}
+.mono-vote small{display:block;font-size:10px;color:#94a8b5;margin-top:4px;line-height:1.4}
+.mono-vote b{color:#d4f9a3;text-align:right;font-size:11px}
+.mono-vote-head{color:#9db5bd;font-size:9px;font-weight:800}
+.mono-hint{font-size:10px;color:#92a6b4;line-height:1.7}
+.mono-empty{padding:35px 19px;border:1px dashed #475c67;border-radius:14px;background:#14212a;color:#a8b9c6;text-align:center;font-size:13px;line-height:1.8}
+.mono-note{padding:14px 18px;border:1px solid #5d674b;background:#31392860;color:#c5dbbb;border-radius:10px;margin:15px 0;font-size:12px;line-height:1.75}
+.mono-model-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.mono-model,.mono-wide{padding:21px;background:#14222c;border:1px solid #384b58;border-radius:14px;min-width:0}
+.mono-model>span{color:#ffad80;font-size:9px;letter-spacing:.14em;font-weight:800}
+.mono-model h3,.mono-wide h3{font:750 19px 'Space Grotesk',sans-serif;margin:10px 0}
+.mono-model p,.mono-wide p{font-size:12px;color:#abc0c9;line-height:1.8;margin-bottom:0}
+.mono-accuracy-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.mono-big{font:750 clamp(35px,4vw,54px) 'Space Grotesk',sans-serif;letter-spacing:-.06em;color:#d7fba8;display:block;margin:16px 0}
+.mono-rows{display:grid;margin-top:12px}
+.mono-rows>div{padding:11px 0;border-bottom:1px solid #3a4955;display:flex;justify-content:space-between;gap:8px;color:#a8bdc8;font-size:12px}
+.mono-rows b{color:#eef4f8}
+.mono-section-title{font:750 21px 'Space Grotesk',sans-serif;color:#eaf2f6;margin:30px 0 13px}
+.mono-table-scroll{overflow-x:auto;border:1px solid #364a55;border-radius:12px;background:#14212b}
+.mono-table{border-collapse:collapse;width:100%;min-width:680px}
+.mono-table th,.mono-table td{text-align:left;padding:13px;border-bottom:1px solid #2f4150}
+.mono-table th{color:#9eafbc;font-size:9px;letter-spacing:.08em}
+.mono-table td{color:#d6e1e7;font-size:11px}
+.mono-table tr:last-child td{border-bottom:0}
+.mono-table .mono-good{color:#c8f38d}.mono-table .mono-bad{color:#ffb29a}
+.mono-footnote{padding:16px 3px 5px;color:#8fa7b6;font-size:11px;line-height:1.8}
+.mono-top-action:focus-visible,.mono-global-button:focus-visible,.mono-main-action:focus-visible,.mono-page-tabs button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media(max-width:1120px){.mono-global{margin:14px 20px 0}.mono-global-clock{display:none}.mono-model-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mono-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.mono-home-top{align-items:start}}
+@media(max-width:790px){.mono-global{margin:10px 13px 0;padding:12px;align-items:flex-start}.mono-global-actions{align-self:center}.mono-global-name small{font-size:10px}.mono-global-button{padding:9px;font-size:9px;white-space:normal;text-align:center}.mono-top-action{font-size:10px;padding:7px}.mono-home-panel{padding:22px}.mono-home-top{display:block}.mono-main-action{margin-top:10px}.mono-home-games{grid-template-columns:1fr}.mono-home-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.mono-game-grid,.mono-accuracy-grid{grid-template-columns:1fr}.mono-model-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mono-hero{padding:26px}.mono-hero h1{font-size:44px}.mono-hero-seal{display:none}}
+@media(max-width:520px){.mono-global{flex-wrap:wrap}.mono-global-actions{width:100%;justify-content:flex-end}.mono-global-button{width:100%;text-align:center}.mono-home-metrics{grid-template-columns:1fr 1fr}.mono-home-metrics strong{font-size:26px}.mono-metrics{gap:8px}.mono-metric{padding:13px}.mono-metric strong{font-size:26px}.mono-hero h1{font-size:40px}.mono-model-grid{grid-template-columns:1fr}.mono-page-nav{display:block}.mono-day-picker{margin-top:12px;max-width:100%;width:max-content;flex-wrap:wrap}.mono-page-tabs button{flex:1;padding:8px;font-size:10px}.mono-page-tabs{flex-wrap:nowrap}.mono-top-action{font-size:9px;white-space:normal;max-width:98px}}
