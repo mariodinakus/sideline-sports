@@ -12,7 +12,7 @@ test('Courtside global MONO BASKET banner remains source-honest before data load
  const mono=createMonoBasket({esc:s=>String(s),shell:(title,html)=>{body=html},render(){}});
  assert.match(mono.strip(),/MONO BASKET/);
  assert.match(mono.strip(),/Forecast Radar/i);
- assert.match(mono.homeHTML(),/Forecast intelligence/);
+ assert.match(mono.homeHTML(),/COURTSIDE IQ × MONO BASKET/);
  mono.routes.monobasket();
  assert.match(body,/Game Radar/);
  assert.match(body,/Accuracy Tracker/);
