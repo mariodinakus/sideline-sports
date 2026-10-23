@@ -6,9 +6,9 @@ import {NAV_GROUPS,NAV_ROUTES,groupFor,pageFor,navigationMatches} from '../lib/n
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const studio=readFileSync(new URL('../studio.js',import.meta.url),'utf8');
 
-test('seven user-oriented categories cover 26 tools without duplicates',()=>{
+test('seven user-oriented categories cover 27 tools without duplicates',()=>{
  assert.equal(NAV_GROUPS.length,7);
- assert.equal(NAV_ROUTES.length,27); // Overview + 26 tools
+ assert.equal(NAV_ROUTES.length,28); // Overview + 27 tools
  assert.equal(new Set(NAV_ROUTES).size,NAV_ROUTES.length);
  for (const group of NAV_GROUPS){
   assert.ok(group.label && group.description);
@@ -20,7 +20,7 @@ test('seven user-oriented categories cover 26 tools without duplicates',()=>{
  }
 });
 
-test('all twenty-seven screens have an accessible deep-linked navigation item',()=>{
+test('all twenty-eight screens have an accessible deep-linked navigation item',()=>{
  for (const route of NAV_ROUTES){
   assert.ok(html.includes(`data-tab="${route}"`),`missing ${route}`);
   assert.ok(NAV_ROUTES.includes(route),`unregistered route ${route}`);
@@ -50,4 +50,11 @@ test('navigation preserves existing hash routes and contextual links',()=>{
  assert.equal(pageFor('missing'),null);
  assert.ok(studio.includes('sectionTabs()'));
  assert.ok(studio.includes("history.replaceState(null,'','#'+ST.tab)"));
+});
+test('MONO BASKET is a first-class prediction section and indexed for search',()=>{
+ assert.equal(groupFor('monobasket')?.id,'predict');
+ assert.ok(navigationMatches('monobasket','accuracy'));
+ assert.match(html,/data-tab="monobasket"/);
+ assert.match(studio,/mono\.strip\(\)/);
+ assert.match(studio,/mono\.homeHTML\(\)/);
 });
