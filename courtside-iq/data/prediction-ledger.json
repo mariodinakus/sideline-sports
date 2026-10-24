@@ -3118,9 +3118,156 @@
         "totalLow": 204.73232323367864,
         "totalHigh": 250.86812323367866
       }
+    },
+    {
+      "id": "2026:401909867",
+      "season": 2026,
+      "tip": "2026-10-26T01:00:00.000Z",
+      "lockedAt": "2026-10-24T14:48:51.258Z",
+      "home": "Sacramento Kings",
+      "away": "Memphis Grizzlies",
+      "homeCode": "SAC",
+      "awayCode": "MEM",
+      "model": "multi-model-ensemble",
+      "features": [
+        1,
+        -0.2752378368408526,
+        0.21080029417471904,
+        -0.29680064935065076,
+        0.1439655844155843
+      ],
+      "pick": "NO_PICK",
+      "modelVotes": [
+        {
+          "id": "scoring",
+          "label": "Attack / defence",
+          "margin": -3.3,
+          "total": 235.27,
+          "homeWinProb": 0.3916,
+          "why": "Blended points for and against",
+          "weight": 0.11
+        },
+        {
+          "id": "net",
+          "label": "Net-rating strength",
+          "margin": -0.96,
+          "total": 235.27,
+          "homeWinProb": 0.4683,
+          "why": "Smoothed net points per game",
+          "weight": 0.111
+        },
+        {
+          "id": "pyth",
+          "label": "Pythagorean expectation",
+          "margin": -2.68,
+          "total": 235.27,
+          "homeWinProb": 0.4115,
+          "why": "Pythagorean expectation",
+          "weight": 0.11
+        },
+        {
+          "id": "bayes",
+          "label": "Bayesian win rates",
+          "margin": -1.84,
+          "total": 235.27,
+          "homeWinProb": 0.4391,
+          "why": "Beta(6,6) prior and Log5",
+          "weight": 0.113
+        },
+        {
+          "id": "form",
+          "label": "Last-10 form",
+          "margin": 7.04,
+          "total": 235.27,
+          "homeWinProb": 0.7212,
+          "why": "Past ten real results",
+          "weight": 0.112
+        },
+        {
+          "id": "momentum",
+          "label": "Recency-weighted form",
+          "margin": 2.23,
+          "total": 232.37,
+          "homeWinProb": 0.5738,
+          "why": "Exponentially weighted real match form",
+          "weight": 0.114
+        },
+        {
+          "id": "elo",
+          "label": "Historical Elo",
+          "margin": 2.78,
+          "total": 235.27,
+          "homeWinProb": 0.5916,
+          "why": "Chronological completed-game Elo",
+          "weight": 0.109
+        },
+        {
+          "id": "conditions",
+          "label": "Rest / roster / availability",
+          "margin": -4.8,
+          "total": 235.27,
+          "homeWinProb": 0.3445,
+          "why": "Rest days / verified OUT counts / roster overlap",
+          "weight": 0.111
+        },
+        {
+          "id": "ridge",
+          "label": "Online / validated ridge",
+          "margin": 6.7,
+          "total": 235.27,
+          "homeWinProb": 0.7117,
+          "why": "Online ridge trained and prequentially tested on prior final games",
+          "weight": 0.11
+        }
+      ],
+      "conditions": {
+        "formH": {
+          "games": 84,
+          "last10": -8.8,
+          "last5": -8.8,
+          "ewma": -10.62471463638688,
+          "avgPoints": 111.6,
+          "avgAgainst": 120.4,
+          "restDays": 1.9583333333333333
+        },
+        "formA": {
+          "games": 85,
+          "last10": -17.2,
+          "last5": -14.2,
+          "ewma": -10.117797695262484,
+          "avgPoints": 111.6,
+          "avgAgainst": 128.8,
+          "restDays": 1.9583333333333333
+        },
+        "rosterH": null,
+        "rosterA": null,
+        "restGapDays": 0,
+        "outH": 3,
+        "outA": 0,
+        "sourceCoverage": {
+          "roster": true,
+          "previousRoster": false,
+          "injuries": true,
+          "rest": true,
+          "form": true,
+          "elo": true,
+          "note": "Context proxies are conservative; player minutes, opponent-adjusted strength and verified starting lineups may be unavailable."
+        }
+      },
+      "forecast": {
+        "homePts": 117.75899881772222,
+        "awayPts": 117.17911019822927,
+        "margin": 0.5798886194929606,
+        "total": 234.93810901595148,
+        "homeWinProb": 0.5192710733025335,
+        "marginLow": -14.798711380507038,
+        "marginHigh": 15.95848861949296,
+        "totalLow": 211.87020901595147,
+        "totalHigh": 258.00600901595146
+      }
     }
   ],
-  "updatedAt": "2026-10-24T11:30:37.081Z",
+  "updatedAt": "2026-10-24T14:48:51.258Z",
   "model": {
     "status": "baseline",
     "sample": 14,
@@ -3145,7 +3292,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-10-24T06:23:24.455Z",
+    "updatedAt": "2026-10-24T14:48:51.258Z",
     "homeGames": {
       "CHA": [
         {
@@ -20303,6 +20450,10 @@
           "status": "Day-To-Day"
         },
         {
+          "name": "Kyrie Irving",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Dereck Lively II",
           "status": "Out"
         },
@@ -20314,7 +20465,7 @@
       "SAS": [
         {
           "name": "Tobias Harris",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Jayden Quaintance",
@@ -20333,8 +20484,16 @@
       ],
       "HOU": [
         {
+          "name": "Steven Adams",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Reed Sheppard",
-          "status": "Out"
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Fred VanVleet",
+          "status": "Day-To-Day"
         }
       ],
       "DEN": [
@@ -20378,14 +20537,22 @@
       "GSW": [
         {
           "name": "Charles Bassey",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Jimmy Butler III",
           "status": "Out"
         },
         {
+          "name": "Stephen Curry",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Moses Moody",
+          "status": "Out"
+        },
+        {
+          "name": "Brandin Podziemski",
           "status": "Out"
         },
         {
@@ -20396,7 +20563,7 @@
       "UTAH": [
         {
           "name": "Trey Alexander",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Blake Hinson",
@@ -20410,15 +20577,15 @@
       "LAL": [
         {
           "name": "Cameron Carr",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Jake LaRavia",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Adou Thiero",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "IND": [
@@ -20528,7 +20695,7 @@
       "MEM": [
         {
           "name": "Cedric Coward",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "BOS": [
