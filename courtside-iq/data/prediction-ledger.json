@@ -100,7 +100,12 @@
         "marginHigh": 18.642370986846416,
         "totalLow": 211.09089822145944,
         "totalHigh": 257.22675458107943
-      }
+      },
+      "actual": {
+        "home": 125,
+        "away": 132
+      },
+      "settledAt": "2026-10-24T01:01:03.578Z"
     },
     {
       "id": "2026:401909095",
@@ -2191,10 +2196,10 @@
       }
     }
   ],
-  "updatedAt": "2026-10-23T22:34:31.103Z",
+  "updatedAt": "2026-10-24T01:01:03.578Z",
   "model": {
     "status": "baseline",
-    "sample": 2,
+    "sample": 3,
     "minimum": 50,
     "marginWeights": null,
     "totalWeights": null,
@@ -2204,14 +2209,14 @@
     "sigmaTotal": 18
   },
   "summary": {
-    "n": 2,
-    "winnerAccuracy": 0.5,
-    "decisiveAccuracy": 1,
-    "decisiveN": 1,
-    "scoreMAE": 17.128406663528438,
-    "marginMAE": 5.733110583994581,
-    "totalMAE": 34.256813327056875,
-    "brier": 0.16464538505114898,
+    "n": 3,
+    "winnerAccuracy": 0.3333333333333333,
+    "decisiveAccuracy": 0.5,
+    "decisiveN": 2,
+    "scoreMAE": 15.225800042140719,
+    "marginMAE": 7.243324456098525,
+    "totalMAE": 30.451600084281438,
+    "brier": 0.232653174239974,
     "margin80Coverage": 1
   },
   "contextCache": {
