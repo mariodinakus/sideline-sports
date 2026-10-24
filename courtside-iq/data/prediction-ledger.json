@@ -3267,7 +3267,7 @@
       }
     }
   ],
-  "updatedAt": "2026-10-24T14:48:51.258Z",
+  "updatedAt": "2026-10-24T21:07:44.331Z",
   "model": {
     "status": "baseline",
     "sample": 14,
@@ -3292,7 +3292,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-10-24T14:48:51.258Z",
+    "updatedAt": "2026-10-24T21:07:44.331Z",
     "homeGames": {
       "CHA": [
         {
@@ -20373,14 +20373,20 @@
         },
         {
           "name": "Kon Knueppel",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Coby White",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Grant Williams",
+          "status": "Out"
+        }
+      ],
+      "MIA": [
+        {
+          "name": "Pelle Larsson",
           "status": "Day-To-Day"
         }
       ],
@@ -20405,7 +20411,7 @@
         },
         {
           "name": "LeBron James",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Dean Wade",
@@ -20416,12 +20422,16 @@
         {
           "name": "Nic Claxton",
           "status": "Out"
+        },
+        {
+          "name": "Noa Essengue",
+          "status": "Day-To-Day"
         }
       ],
       "WAS": [
         {
           "name": "AJ Dybantsa",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Tristan Vukcevic",
@@ -20435,10 +20445,14 @@
       "DAL": [
         {
           "name": "Santi Aldama",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Tarik Biberovic",
+          "status": "Out"
+        },
+        {
+          "name": "Max Christie",
           "status": "Day-To-Day"
         },
         {
@@ -20447,10 +20461,14 @@
         },
         {
           "name": "Jett Howard",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Kyrie Irving",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Morez Johnson Jr.",
           "status": "Day-To-Day"
         },
         {
@@ -20459,13 +20477,17 @@
         },
         {
           "name": "Caleb Martin",
+          "status": "Out"
+        },
+        {
+          "name": "Zaccharie Risacher",
           "status": "Day-To-Day"
         }
       ],
       "SAS": [
         {
           "name": "Tobias Harris",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Jayden Quaintance",
@@ -20485,15 +20507,19 @@
       "HOU": [
         {
           "name": "Steven Adams",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Reed Sheppard",
           "status": "Day-To-Day"
         },
         {
-          "name": "Fred VanVleet",
+          "name": "Marcus Smart",
           "status": "Day-To-Day"
+        },
+        {
+          "name": "Fred VanVleet",
+          "status": "Out"
         }
       ],
       "DEN": [
@@ -20517,13 +20543,13 @@
       "NOP": [
         {
           "name": "Yves Missi",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "PHX": [
         {
           "name": "Oso Ighodaro",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Luke Kennard",
@@ -20545,7 +20571,15 @@
         },
         {
           "name": "Stephen Curry",
+          "status": "Out"
+        },
+        {
+          "name": "Draymond Green",
           "status": "Day-To-Day"
+        },
+        {
+          "name": "Al Horford",
+          "status": "Out"
         },
         {
           "name": "Moses Moody",
@@ -20591,6 +20625,10 @@
       "IND": [
         {
           "name": "T.J. McConnell",
+          "status": "Out"
+        },
+        {
+          "name": "Aaron Nesmith",
           "status": "Day-To-Day"
         },
         {
@@ -20601,7 +20639,7 @@
       "ORL": [
         {
           "name": "Paolo Banchero",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Anthony Black",
@@ -20609,7 +20647,7 @@
         },
         {
           "name": "Jonathan Isaac",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Izaiyah Nelson",
@@ -20671,7 +20709,7 @@
       "DET": [
         {
           "name": "Jalen Duren",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Ausar Thompson",
@@ -20760,7 +20798,7 @@
       "historicalFinals": 1263,
       "rosterTeams": 29,
       "previousRosterTeams": 3,
-      "injuryTeams": 25
+      "injuryTeams": 26
     }
   }
 }
