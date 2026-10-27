@@ -7051,7 +7051,7 @@
       }
     }
   ],
-  "updatedAt": "2026-10-27T16:50:16.826Z",
+  "updatedAt": "2026-10-27T21:27:51.383Z",
   "model": {
     "status": "baseline",
     "sample": 38,
@@ -7076,7 +7076,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-10-27T10:52:53.455Z",
+    "updatedAt": "2026-10-27T21:27:51.383Z",
     "homeGames": {
       "BOS": [
         {
@@ -24436,6 +24436,10 @@
         {
           "name": "Devin Carter",
           "status": "Out"
+        },
+        {
+          "name": "Derrick White",
+          "status": "Day-To-Day"
         }
       ],
       "BKN": [
@@ -24500,10 +24504,6 @@
       ],
       "POR": [
         {
-          "name": "Branden Carlson",
-          "status": "Day-To-Day"
-        },
-        {
           "name": "Scoot Henderson",
           "status": "Day-To-Day"
         },
@@ -24524,12 +24524,26 @@
         {
           "name": "Henri Veesaar",
           "status": "Out"
+        },
+        {
+          "name": "Aaron Wiggins",
+          "status": "Day-To-Day"
+        }
+      ],
+      "MIA": [
+        {
+          "name": "Simone Fontecchio",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Pelle Larsson",
+          "status": "Day-To-Day"
         }
       ],
       "WAS": [
         {
           "name": "Justin Champagnie",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "AJ Dybantsa",
@@ -24564,6 +24578,10 @@
       ],
       "IND": [
         {
+          "name": "Tyrese Haliburton",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "T.J. McConnell",
           "status": "Out"
         },
@@ -24572,26 +24590,26 @@
           "status": "Day-To-Day"
         },
         {
+          "name": "Aaron Nesmith",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Ben Sheppard",
           "status": "Out"
         },
         {
-          "name": "Ivica Zubac",
+          "name": "Obi Toppin",
           "status": "Day-To-Day"
+        },
+        {
+          "name": "Ivica Zubac",
+          "status": "Out"
         }
       ],
       "PHI": [
         {
           "name": "Dominick Barlow",
           "status": "Out"
-        },
-        {
-          "name": "VJ Edgecombe",
-          "status": "Day-To-Day"
-        },
-        {
-          "name": "Joel Embiid",
-          "status": "Day-To-Day"
         },
         {
           "name": "Tacko Fall",
@@ -24603,7 +24621,7 @@
         },
         {
           "name": "Jabari Walker",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "TOR": [
@@ -24613,7 +24631,7 @@
         },
         {
           "name": "Kawhi Leonard",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "ORL": [
@@ -24640,6 +24658,10 @@
       ],
       "CHI": [
         {
+          "name": "Tobe Awaka",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Nic Claxton",
           "status": "Out"
         },
@@ -24651,6 +24673,10 @@
       "HOU": [
         {
           "name": "Steven Adams",
+          "status": "Out"
+        },
+        {
+          "name": "Alperen Sengun",
           "status": "Out"
         },
         {
@@ -24670,6 +24696,10 @@
           "status": "Out"
         },
         {
+          "name": "Yaxel Lendeborg",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Moses Moody",
           "status": "Out"
         },
@@ -24682,6 +24712,10 @@
         {
           "name": "Yves Missi",
           "status": "Out"
+        },
+        {
+          "name": "Jordan Poole",
+          "status": "Day-To-Day"
         }
       ],
       "DEN": [
@@ -24717,7 +24751,7 @@
         },
         {
           "name": "Jaren Jackson Jr.",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Lauri Markkanen",
@@ -24761,7 +24795,7 @@
         },
         {
           "name": "Chet Holmgren",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Otega Oweh",
@@ -24787,6 +24821,10 @@
       "LAC": [
         {
           "name": "Bradley Beal",
+          "status": "Out"
+        },
+        {
+          "name": "Rui Hachimura",
           "status": "Out"
         },
         {
@@ -24862,7 +24900,7 @@
       "historicalFinals": 1287,
       "rosterTeams": 29,
       "previousRosterTeams": 3,
-      "injuryTeams": 25
+      "injuryTeams": 26
     }
   }
 }
