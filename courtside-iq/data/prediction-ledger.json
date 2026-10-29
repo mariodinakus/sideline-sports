@@ -8761,9 +8761,303 @@
         "totalLow": 199.21998265707714,
         "totalHigh": 252.03192556363257
       }
+    },
+    {
+      "id": "2026:401909285",
+      "season": 2026,
+      "tip": "2026-10-31T02:00:00.000Z",
+      "lockedAt": "2026-10-29T19:48:05.186Z",
+      "home": "Golden State Warriors",
+      "away": "Los Angeles Lakers",
+      "homeCode": "GS",
+      "awayCode": "LAL",
+      "model": "multi-model-ensemble",
+      "features": [
+        1,
+        -0.09633290580706344,
+        0.10552488339093316,
+        -0.17895428571428645,
+        0.11700342857142942
+      ],
+      "pick": "NO_PICK",
+      "modelVotes": [
+        {
+          "id": "scoring",
+          "label": "Attack / defence",
+          "margin": -1.16,
+          "total": 232.64,
+          "homeWinProb": 0.4616,
+          "why": "Blended points for and against",
+          "weight": 0.113
+        },
+        {
+          "id": "net",
+          "label": "Net-rating strength",
+          "margin": 0.18,
+          "total": 232.64,
+          "homeWinProb": 0.506,
+          "why": "Smoothed net points per game",
+          "weight": 0.111
+        },
+        {
+          "id": "pyth",
+          "label": "Pythagorean expectation",
+          "margin": -1.68,
+          "total": 232.64,
+          "homeWinProb": 0.4443,
+          "why": "Pythagorean expectation",
+          "weight": 0.114
+        },
+        {
+          "id": "bayes",
+          "label": "Bayesian win rates",
+          "margin": -1.11,
+          "total": 232.64,
+          "homeWinProb": 0.4632,
+          "why": "Beta(6,6) prior and Log5",
+          "weight": 0.104
+        },
+        {
+          "id": "form",
+          "label": "Last-10 form",
+          "margin": -3.22,
+          "total": 232.64,
+          "homeWinProb": 0.3941,
+          "why": "Past ten real results",
+          "weight": 0.112
+        },
+        {
+          "id": "momentum",
+          "label": "Recency-weighted form",
+          "margin": -2.02,
+          "total": 232.65,
+          "homeWinProb": 0.4333,
+          "why": "Exponentially weighted real match form",
+          "weight": 0.113
+        },
+        {
+          "id": "elo",
+          "label": "Historical Elo",
+          "margin": -2.99,
+          "total": 232.64,
+          "homeWinProb": 0.4015,
+          "why": "Chronological completed-game Elo",
+          "weight": 0.109
+        },
+        {
+          "id": "conditions",
+          "label": "Rest / roster / availability",
+          "margin": -1.62,
+          "total": 232.64,
+          "homeWinProb": 0.4462,
+          "why": "Rest days / verified OUT counts / roster overlap",
+          "weight": 0.114
+        },
+        {
+          "id": "ridge",
+          "label": "Online / validated ridge",
+          "margin": -7.32,
+          "total": 232.64,
+          "homeWinProb": 0.2708,
+          "why": "Online ridge trained and prequentially tested on prior final games",
+          "weight": 0.11
+        }
+      ],
+      "conditions": {
+        "formH": {
+          "games": 88,
+          "last10": -3.2,
+          "last5": -1.8,
+          "ewma": 0.7275405319915474,
+          "avgPoints": 114.5,
+          "avgAgainst": 117.7,
+          "restDays": 2.0833333333333335
+        },
+        "formA": {
+          "games": 87,
+          "last10": 7.4,
+          "last5": 9.6,
+          "ewma": 9.247858825479245,
+          "avgPoints": 118.2,
+          "avgAgainst": 110.8,
+          "restDays": 1.9791666666666667
+        },
+        "rosterH": null,
+        "rosterA": null,
+        "restGapDays": 0.10416666666666674,
+        "outH": 3,
+        "outA": 2,
+        "sourceCoverage": {
+          "roster": true,
+          "previousRoster": false,
+          "injuries": true,
+          "rest": true,
+          "form": true,
+          "elo": true,
+          "note": "Context proxies are conservative; player minutes, opponent-adjusted strength and verified starting lineups may be unavailable."
+        }
+      },
+      "forecast": {
+        "homePts": 115.1593048584838,
+        "awayPts": 117.48182213612442,
+        "margin": -2.322517277640616,
+        "total": 232.64112699460821,
+        "homeWinProb": 0.4363321144268542,
+        "marginLow": -20.89320612464434,
+        "marginHigh": 16.248171569363105,
+        "totalLow": 206.2351555413305,
+        "totalHigh": 259.0470984478859
+      }
+    },
+    {
+      "id": "2026:401909286",
+      "season": 2026,
+      "tip": "2026-10-31T02:00:00.000Z",
+      "lockedAt": "2026-10-29T19:48:05.186Z",
+      "home": "Phoenix Suns",
+      "away": "Denver Nuggets",
+      "homeCode": "PHX",
+      "awayCode": "DEN",
+      "model": "multi-model-ensemble",
+      "features": [
+        1,
+        -0.10628666722000091,
+        0.028114833580532378,
+        -0.5731991211180129,
+        -0.2621889611801253
+      ],
+      "pick": "NO_PICK",
+      "modelVotes": [
+        {
+          "id": "scoring",
+          "label": "Attack / defence",
+          "margin": -1.28,
+          "total": 230.7,
+          "homeWinProb": 0.4577,
+          "why": "Blended points for and against",
+          "weight": 0.113
+        },
+        {
+          "id": "net",
+          "label": "Net-rating strength",
+          "margin": 0.06,
+          "total": 230.7,
+          "homeWinProb": 0.5021,
+          "why": "Smoothed net points per game",
+          "weight": 0.111
+        },
+        {
+          "id": "pyth",
+          "label": "Pythagorean expectation",
+          "margin": -1.82,
+          "total": 230.7,
+          "homeWinProb": 0.4396,
+          "why": "Pythagorean expectation",
+          "weight": 0.114
+        },
+        {
+          "id": "bayes",
+          "label": "Bayesian win rates",
+          "margin": 1.47,
+          "total": 230.7,
+          "homeWinProb": 0.5486,
+          "why": "Beta(6,6) prior and Log5",
+          "weight": 0.104
+        },
+        {
+          "id": "form",
+          "label": "Last-10 form",
+          "margin": -3.76,
+          "total": 230.7,
+          "homeWinProb": 0.3769,
+          "why": "Past ten real results",
+          "weight": 0.112
+        },
+        {
+          "id": "momentum",
+          "label": "Recency-weighted form",
+          "margin": -2.28,
+          "total": 231.21,
+          "homeWinProb": 0.4247,
+          "why": "Exponentially weighted real match form",
+          "weight": 0.113
+        },
+        {
+          "id": "elo",
+          "label": "Historical Elo",
+          "margin": -0.75,
+          "total": 230.7,
+          "homeWinProb": 0.4751,
+          "why": "Chronological completed-game Elo",
+          "weight": 0.109
+        },
+        {
+          "id": "conditions",
+          "label": "Rest / roster / availability",
+          "margin": 0.86,
+          "total": 230.7,
+          "homeWinProb": 0.5287,
+          "why": "Rest days / verified OUT counts / roster overlap",
+          "weight": 0.114
+        },
+        {
+          "id": "ridge",
+          "label": "Online / validated ridge",
+          "margin": -3.31,
+          "total": 230.7,
+          "homeWinProb": 0.3913,
+          "why": "Online ridge trained and prequentially tested on prior final games",
+          "weight": 0.11
+        }
+      ],
+      "conditions": {
+        "formH": {
+          "games": 85,
+          "last10": -6.2,
+          "last5": -7.8,
+          "ewma": -6.608341156936597,
+          "avgPoints": 109.1,
+          "avgAgainst": 115.3,
+          "restDays": 4.083333333333333
+        },
+        "formA": {
+          "games": 87,
+          "last10": 5.4,
+          "last5": -0.6,
+          "ewma": 2.4086487786588946,
+          "avgPoints": 123.7,
+          "avgAgainst": 118.3,
+          "restDays": 2.0833333333333335
+        },
+        "rosterH": null,
+        "rosterA": null,
+        "restGapDays": 1.9999999999999996,
+        "outH": 1,
+        "outA": 4,
+        "sourceCoverage": {
+          "roster": true,
+          "previousRoster": false,
+          "injuries": true,
+          "rest": true,
+          "form": true,
+          "elo": true,
+          "note": "Context proxies are conservative; player minutes, opponent-adjusted strength and verified starting lineups may be unavailable."
+        }
+      },
+      "forecast": {
+        "homePts": 114.77025462668408,
+        "awayPts": 115.98722209833468,
+        "margin": -1.2169674716505943,
+        "total": 230.75747672501876,
+        "homeWinProb": 0.4665352832028052,
+        "marginLow": -19.787656318654317,
+        "marginHigh": 17.35372137535313,
+        "totalLow": 204.35150527174105,
+        "totalHigh": 257.16344817829645
+      }
     }
   ],
-  "updatedAt": "2026-10-29T13:38:11.371Z",
+  "updatedAt": "2026-10-29T19:48:05.186Z",
   "model": {
     "status": "baseline-holdout-rejected",
     "sample": 54,
@@ -8793,7 +9087,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-10-29T13:38:11.371Z",
+    "updatedAt": "2026-10-29T19:48:05.186Z",
     "homeGames": {
       "ATL": [
         {
@@ -26939,6 +27233,16 @@
           "status": "Out"
         }
       ],
+      "CLE": [
+        {
+          "name": "Meleek Thomas",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jaylon Tyson",
+          "status": "Day-To-Day"
+        }
+      ],
       "NOP": [
         {
           "name": "Yves Missi",
@@ -26971,6 +27275,10 @@
         {
           "name": "Shaedon Sharpe",
           "status": "Out"
+        },
+        {
+          "name": "Robert Williams III",
+          "status": "Day-To-Day"
         },
         {
           "name": "Chris Youngblood",
@@ -27029,6 +27337,10 @@
           "status": "Out"
         },
         {
+          "name": "Jalen Smith",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Patrick Williams",
           "status": "Out"
         }
@@ -27040,7 +27352,7 @@
         },
         {
           "name": "Egor Demin",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "DET": [
@@ -27383,7 +27695,7 @@
       "historicalFinals": 1303,
       "rosterTeams": 30,
       "previousRosterTeams": 3,
-      "injuryTeams": 27
+      "injuryTeams": 28
     }
   }
 }
