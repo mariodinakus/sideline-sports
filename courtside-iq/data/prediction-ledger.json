@@ -7741,7 +7741,12 @@
         "marginHigh": 13.094706316254133,
         "totalLow": 202.27693082457617,
         "totalHigh": 255.0888737311316
-      }
+      },
+      "actual": {
+        "home": 95,
+        "away": 79
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909278",
@@ -7888,7 +7893,12 @@
         "marginHigh": 33.20069413383105,
         "totalLow": 205.68898199675982,
         "totalHigh": 258.50092490331525
-      }
+      },
+      "actual": {
+        "home": 125,
+        "away": 111
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909279",
@@ -8040,7 +8050,12 @@
         "marginHigh": 7.503083271222366,
         "totalLow": 192.67166484039802,
         "totalHigh": 245.48360774695345
-      }
+      },
+      "actual": {
+        "home": 94,
+        "away": 110
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909280",
@@ -8187,7 +8202,12 @@
         "marginHigh": 18.70669566355495,
         "totalLow": 197.1413290859012,
         "totalHigh": 249.95327199245662
-      }
+      },
+      "actual": {
+        "home": 98,
+        "away": 93
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909281",
@@ -8334,7 +8354,12 @@
         "marginHigh": 26.871508954755285,
         "totalLow": 198.70999927426018,
         "totalHigh": 251.5219421808156
-      }
+      },
+      "actual": {
+        "home": 114,
+        "away": 121
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909282",
@@ -8481,7 +8506,12 @@
         "marginHigh": 24.8245615554396,
         "totalLow": 213.2993443824495,
         "totalHigh": 266.1112872890049
-      }
+      },
+      "actual": {
+        "home": 145,
+        "away": 125
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909283",
@@ -8775,7 +8805,12 @@
         "marginHigh": 24.942215284106947,
         "totalLow": 199.21998265707714,
         "totalHigh": 252.03192556363257
-      }
+      },
+      "actual": {
+        "home": 127,
+        "away": 101
+      },
+      "settledAt": "2026-10-31T02:41:19.626Z"
     },
     {
       "id": "2026:401909285",
@@ -10088,39 +10123,39 @@
       }
     }
   ],
-  "updatedAt": "2026-10-30T23:09:03.875Z",
+  "updatedAt": "2026-10-31T02:41:19.626Z",
   "model": {
     "status": "validated-learning",
-    "sample": 57,
+    "sample": 64,
     "minimum": 50,
-    "holdout": 15,
+    "holdout": 16,
     "marginWeights": null,
     "totalWeights": [
-      -3.225988224843576,
-      1.0829419582185351,
-      -0.7997069161401672,
-      1.0904284114884653,
-      0.10496221466124095
+      -4.049307689862517,
+      1.9676116043784813,
+      -0.47030868366816797,
+      1.2794923636075446,
+      -0.47724987678022673
     ],
     "marginValidated": false,
     "totalValidated": true,
-    "marginHoldoutMAE": 12.040100569054038,
-    "marginModelHoldoutMAE": 12.425332688594983,
-    "totalHoldoutMAE": 16.25210974258594,
-    "totalModelHoldoutMAE": 15.837006030563968,
-    "sigmaMargin": 14.68075901385962,
-    "sigmaTotal": 19.779594582282847
+    "marginHoldoutMAE": 13.331065750094659,
+    "marginModelHoldoutMAE": 13.761697664423316,
+    "totalHoldoutMAE": 18.991449432776093,
+    "totalModelHoldoutMAE": 18.479080029352303,
+    "sigmaMargin": 14.578910721255868,
+    "sigmaTotal": 20.417702623067388
   },
   "summary": {
-    "n": 57,
-    "winnerAccuracy": 0.6666666666666666,
-    "decisiveAccuracy": 0.7380952380952381,
-    "decisiveN": 42,
-    "scoreMAE": 10.365357829582093,
-    "marginMAE": 10.535070966654999,
-    "totalMAE": 16.233552203209776,
-    "brier": 0.20812437411976936,
-    "margin80Coverage": 0.7543859649122807
+    "n": 64,
+    "winnerAccuracy": 0.671875,
+    "decisiveAccuracy": 0.7291666666666666,
+    "decisiveN": 48,
+    "scoreMAE": 10.570997313030864,
+    "marginMAE": 10.64182564823112,
+    "totalMAE": 16.78247063390638,
+    "brier": 0.20836937222693314,
+    "margin80Coverage": 0.75
   },
   "contextCache": {
     "schema": 4,
