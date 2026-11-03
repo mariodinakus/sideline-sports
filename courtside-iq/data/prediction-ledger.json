@@ -10930,7 +10930,12 @@
         "marginHigh": 20.75206508902502,
         "totalLow": 202.13540556072962,
         "totalHigh": 255.12791003617076
-      }
+      },
+      "actual": {
+        "home": 112,
+        "away": 117
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909908",
@@ -11082,7 +11087,12 @@
         "marginHigh": 15.222455271311375,
         "totalLow": 188.46645498708568,
         "totalHigh": 241.45895946252682
-      }
+      },
+      "actual": {
+        "home": 91,
+        "away": 124
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909909",
@@ -11229,7 +11239,12 @@
         "marginHigh": 16.079812643346372,
         "totalLow": 210.54086424430807,
         "totalHigh": 263.5333687197492
-      }
+      },
+      "actual": {
+        "home": 104,
+        "away": 108
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909910",
@@ -11381,7 +11396,12 @@
         "marginHigh": 31.828922792452296,
         "totalLow": 191.00671077284971,
         "totalHigh": 243.99921524829085
-      }
+      },
+      "actual": {
+        "home": 103,
+        "away": 90
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909911",
@@ -11533,7 +11553,12 @@
         "marginHigh": 26.428190182554914,
         "totalLow": 206.88617291802163,
         "totalHigh": 259.87867739346274
-      }
+      },
+      "actual": {
+        "home": 94,
+        "away": 103
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909912",
@@ -11680,7 +11705,12 @@
         "marginHigh": 29.528977338401717,
         "totalLow": 208.8984128052658,
         "totalHigh": 261.8909172807069
-      }
+      },
+      "actual": {
+        "home": 126,
+        "away": 107
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909913",
@@ -11827,7 +11857,12 @@
         "marginHigh": 29.09076455966137,
         "totalLow": 208.04541453606254,
         "totalHigh": 261.0379190115037
-      }
+      },
+      "actual": {
+        "home": 100,
+        "away": 115
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909914",
@@ -11974,7 +12009,12 @@
         "marginHigh": 23.438150315495463,
         "totalLow": 212.66800700963688,
         "totalHigh": 265.660511485078
-      }
+      },
+      "actual": {
+        "home": 134,
+        "away": 135
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909915",
@@ -12121,7 +12161,12 @@
         "marginHigh": 31.56975075262239,
         "totalLow": 205.16497348180056,
         "totalHigh": 258.15747795724167
-      }
+      },
+      "actual": {
+        "home": 112,
+        "away": 100
+      },
+      "settledAt": "2026-11-03T03:40:29.285Z"
     },
     {
       "id": "2026:401909916",
@@ -12988,33 +13033,33 @@
       }
     }
   ],
-  "updatedAt": "2026-11-02T21:53:34.690Z",
+  "updatedAt": "2026-11-03T03:40:29.285Z",
   "model": {
     "status": "baseline-holdout-rejected",
-    "sample": 78,
+    "sample": 87,
     "minimum": 50,
-    "holdout": 20,
+    "holdout": 22,
     "marginWeights": null,
     "totalWeights": null,
     "marginValidated": false,
     "totalValidated": false,
-    "marginHoldoutMAE": 12.105868665213716,
-    "marginModelHoldoutMAE": 12.909423085506893,
-    "totalHoldoutMAE": 16.200090738819654,
-    "totalModelHoldoutMAE": 16.28136375877913,
-    "sigmaMargin": 14.594743105934933,
-    "sigmaTotal": 21.015471074868998
+    "marginHoldoutMAE": 12.066087608569914,
+    "marginModelHoldoutMAE": 12.004339549867387,
+    "totalHoldoutMAE": 17.553182484457274,
+    "totalModelHoldoutMAE": 17.528404283050463,
+    "sigmaMargin": 14.587571547370045,
+    "sigmaTotal": 21.081156432948127
   },
   "summary": {
-    "n": 78,
-    "winnerAccuracy": 0.6666666666666666,
-    "decisiveAccuracy": 0.7321428571428571,
-    "decisiveN": 56,
-    "scoreMAE": 10.499372502314385,
-    "marginMAE": 11.078107704286651,
-    "totalMAE": 16.71791272611801,
-    "brier": 0.21197579590799825,
-    "margin80Coverage": 0.7435897435897436
+    "n": 87,
+    "winnerAccuracy": 0.6551724137931034,
+    "decisiveAccuracy": 0.7142857142857143,
+    "decisiveN": 63,
+    "scoreMAE": 10.590911910711311,
+    "marginMAE": 11.002501702518147,
+    "totalMAE": 16.80182333966922,
+    "brier": 0.21525374636162672,
+    "margin80Coverage": 0.7471264367816092
   },
   "contextCache": {
     "schema": 4,
