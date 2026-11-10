@@ -19596,7 +19596,12 @@
         "marginHigh": 24.436109404491248,
         "totalLow": 204.0354139756948,
         "totalHigh": 253.49595747714832
-      }
+      },
+      "actual": {
+        "home": 102,
+        "away": 118
+      },
+      "settledAt": "2026-11-10T11:40:18.423Z"
     },
     {
       "id": "2026:401909956",
@@ -19743,7 +19748,12 @@
         "marginHigh": 23.506784216642586,
         "totalLow": 202.5373103902177,
         "totalHigh": 251.9978538916712
-      }
+      },
+      "actual": {
+        "home": 125,
+        "away": 122
+      },
+      "settledAt": "2026-11-10T11:40:18.423Z"
     },
     {
       "id": "2026:401909957",
@@ -19890,7 +19900,12 @@
         "marginHigh": 21.196332030306674,
         "totalLow": 202.2841746887274,
         "totalHigh": 251.74471819018092
-      }
+      },
+      "actual": {
+        "home": 110,
+        "away": 100
+      },
+      "settledAt": "2026-11-10T11:40:18.423Z"
     },
     {
       "id": "2026:401909958",
@@ -20037,7 +20052,12 @@
         "marginHigh": 11.866084616816618,
         "totalLow": 196.49659254778294,
         "totalHigh": 245.95713604923645
-      }
+      },
+      "actual": {
+        "home": 96,
+        "away": 122
+      },
+      "settledAt": "2026-11-10T11:40:18.423Z"
     },
     {
       "id": "2026:401909959",
@@ -20184,7 +20204,12 @@
         "marginHigh": 23.287408916558356,
         "totalLow": 209.29840325804534,
         "totalHigh": 258.7589467594989
-      }
+      },
+      "actual": {
+        "home": 138,
+        "away": 87
+      },
+      "settledAt": "2026-11-10T11:40:18.423Z"
     },
     {
       "id": "2026:401909960",
@@ -21051,1152 +21076,38 @@
       }
     }
   ],
-  "updatedAt": "2026-11-10T02:52:59.086Z",
+  "updatedAt": "2026-11-10T11:40:18.423Z",
   "model": {
     "status": "baseline-holdout-rejected",
-    "sample": 135,
+    "sample": 140,
     "minimum": 50,
-    "holdout": 34,
+    "holdout": 35,
     "marginWeights": null,
     "totalWeights": null,
     "marginValidated": false,
     "totalValidated": false,
-    "marginHoldoutMAE": 10.98381118081199,
-    "marginModelHoldoutMAE": 10.783798388281843,
-    "totalHoldoutMAE": 13.803836635459751,
-    "totalModelHoldoutMAE": 13.961053282029503,
-    "sigmaMargin": 14.154412003256837,
-    "sigmaTotal": 19.52201706760521
+    "marginHoldoutMAE": 11.925703913346004,
+    "marginModelHoldoutMAE": 11.842627035847753,
+    "totalHoldoutMAE": 13.973744954045777,
+    "totalModelHoldoutMAE": 13.717344767668555,
+    "sigmaMargin": 14.65971492565381,
+    "sigmaTotal": 19.32750850036533
   },
   "summary": {
-    "n": 135,
-    "winnerAccuracy": 0.7037037037037037,
-    "decisiveAccuracy": 0.7474747474747475,
-    "decisiveN": 99,
-    "scoreMAE": 9.917447267145041,
-    "marginMAE": 10.840263871586046,
-    "totalMAE": 15.655257731636748,
-    "brier": 0.20085019813913588,
-    "margin80Coverage": 0.7925925925925926
+    "n": 140,
+    "winnerAccuracy": 0.7071428571428572,
+    "decisiveAccuracy": 0.75,
+    "decisiveN": 104,
+    "scoreMAE": 10.00886199615864,
+    "marginMAE": 11.148355766765718,
+    "totalMAE": 15.5087705935941,
+    "brier": 0.20068399083134045,
+    "margin80Coverage": 0.7785714285714286
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-10T02:52:59.086Z",
+    "updatedAt": "2026-11-10T11:40:18.423Z",
     "homeGames": {
-      "GSW": [
-        {
-          "date": "2025-10-22T02:00Z",
-          "final": true,
-          "for": 119,
-          "against": 109
-        },
-        {
-          "date": "2025-10-24T02:17Z",
-          "final": true,
-          "for": 137,
-          "against": 131
-        },
-        {
-          "date": "2025-10-25T02:00Z",
-          "final": true,
-          "for": 119,
-          "against": 139
-        },
-        {
-          "date": "2025-10-28T02:00Z",
-          "final": true,
-          "for": 131,
-          "against": 118
-        },
-        {
-          "date": "2025-10-29T03:00Z",
-          "final": true,
-          "for": 98,
-          "against": 79
-        },
-        {
-          "date": "2025-10-31T00:00Z",
-          "final": true,
-          "for": 110,
-          "against": 120
-        },
-        {
-          "date": "2025-11-01T23:00Z",
-          "final": true,
-          "for": 109,
-          "against": 114
-        },
-        {
-          "date": "2025-11-05T03:00Z",
-          "final": true,
-          "for": 118,
-          "against": 107
-        },
-        {
-          "date": "2025-11-06T03:00Z",
-          "final": true,
-          "for": 116,
-          "against": 121
-        },
-        {
-          "date": "2025-11-08T03:00Z",
-          "final": true,
-          "for": 104,
-          "against": 129
-        },
-        {
-          "date": "2025-11-10T01:30Z",
-          "final": true,
-          "for": 114,
-          "against": 83
-        },
-        {
-          "date": "2025-11-12T01:00Z",
-          "final": true,
-          "for": 102,
-          "against": 126
-        },
-        {
-          "date": "2025-11-13T01:00Z",
-          "final": true,
-          "for": 125,
-          "against": 120
-        },
-        {
-          "date": "2025-11-15T02:30Z",
-          "final": true,
-          "for": 109,
-          "against": 108
-        },
-        {
-          "date": "2025-11-17T00:00Z",
-          "final": true,
-          "for": 124,
-          "against": 106
-        },
-        {
-          "date": "2025-11-19T00:00Z",
-          "final": true,
-          "for": 113,
-          "against": 121
-        },
-        {
-          "date": "2025-11-20T00:30Z",
-          "final": true,
-          "for": 96,
-          "against": 110
-        },
-        {
-          "date": "2025-11-22T03:00Z",
-          "final": true,
-          "for": 123,
-          "against": 127
-        },
-        {
-          "date": "2025-11-25T03:00Z",
-          "final": true,
-          "for": 134,
-          "against": 117
-        },
-        {
-          "date": "2025-11-27T03:00Z",
-          "final": true,
-          "for": 100,
-          "against": 104
-        },
-        {
-          "date": "2025-11-30T01:30Z",
-          "final": true,
-          "for": 104,
-          "against": 96
-        },
-        {
-          "date": "2025-12-03T04:00Z",
-          "final": true,
-          "for": 112,
-          "against": 124
-        },
-        {
-          "date": "2025-12-05T00:00Z",
-          "final": true,
-          "for": 98,
-          "against": 99
-        },
-        {
-          "date": "2025-12-07T00:30Z",
-          "final": true,
-          "for": 99,
-          "against": 94
-        },
-        {
-          "date": "2025-12-08T00:00Z",
-          "final": true,
-          "for": 123,
-          "against": 91
-        },
-        {
-          "date": "2025-12-13T03:00Z",
-          "final": true,
-          "for": 120,
-          "against": 127
-        },
-        {
-          "date": "2025-12-15T02:00Z",
-          "final": true,
-          "for": 131,
-          "against": 136
-        },
-        {
-          "date": "2025-12-19T02:00Z",
-          "final": true,
-          "for": 98,
-          "against": 99
-        },
-        {
-          "date": "2025-12-21T01:30Z",
-          "final": true,
-          "for": 119,
-          "against": 116
-        },
-        {
-          "date": "2025-12-23T03:00Z",
-          "final": true,
-          "for": 120,
-          "against": 97
-        },
-        {
-          "date": "2025-12-25T22:17Z",
-          "final": true,
-          "for": 126,
-          "against": 116
-        },
-        {
-          "date": "2025-12-28T20:30Z",
-          "final": true,
-          "for": 127,
-          "against": 141
-        },
-        {
-          "date": "2025-12-30T00:30Z",
-          "final": true,
-          "for": 120,
-          "against": 107
-        },
-        {
-          "date": "2025-12-31T18:00Z",
-          "final": true,
-          "for": 132,
-          "against": 125
-        },
-        {
-          "date": "2026-01-03T03:00Z",
-          "final": true,
-          "for": 94,
-          "against": 131
-        },
-        {
-          "date": "2026-01-04T03:00Z",
-          "final": true,
-          "for": 123,
-          "against": 114
-        },
-        {
-          "date": "2026-01-06T03:00Z",
-          "final": true,
-          "for": 102,
-          "against": 103
-        },
-        {
-          "date": "2026-01-08T03:00Z",
-          "final": true,
-          "for": 120,
-          "against": 113
-        },
-        {
-          "date": "2026-01-10T03:00Z",
-          "final": true,
-          "for": 137,
-          "against": 103
-        },
-        {
-          "date": "2026-01-12T01:30Z",
-          "final": true,
-          "for": 111,
-          "against": 124
-        },
-        {
-          "date": "2026-01-14T04:00Z",
-          "final": true,
-          "for": 119,
-          "against": 97
-        },
-        {
-          "date": "2026-01-16T03:00Z",
-          "final": true,
-          "for": 126,
-          "against": 113
-        },
-        {
-          "date": "2026-01-18T01:30Z",
-          "final": true,
-          "for": 136,
-          "against": 116
-        },
-        {
-          "date": "2026-01-20T03:00Z",
-          "final": true,
-          "for": 135,
-          "against": 112
-        },
-        {
-          "date": "2026-01-21T03:00Z",
-          "final": true,
-          "for": 127,
-          "against": 145
-        },
-        {
-          "date": "2026-01-23T00:30Z",
-          "final": true,
-          "for": 115,
-          "against": 123
-        },
-        {
-          "date": "2026-01-24T22:30Z",
-          "final": true,
-          "for": 0,
-          "against": 0
-        },
-        {
-          "date": "2026-01-25T22:30Z",
-          "final": true,
-          "for": 111,
-          "against": 85
-        },
-        {
-          "date": "2026-01-27T02:30Z",
-          "final": true,
-          "for": 83,
-          "against": 108
-        },
-        {
-          "date": "2026-01-29T02:00Z",
-          "final": true,
-          "for": 140,
-          "against": 124
-        },
-        {
-          "date": "2026-01-31T03:00Z",
-          "final": true,
-          "for": 124,
-          "against": 131
-        },
-        {
-          "date": "2026-02-04T03:00Z",
-          "final": true,
-          "for": 94,
-          "against": 113
-        },
-        {
-          "date": "2026-02-06T03:00Z",
-          "final": true,
-          "for": 101,
-          "against": 97
-        },
-        {
-          "date": "2026-02-08T01:30Z",
-          "final": true,
-          "for": 99,
-          "against": 105
-        },
-        {
-          "date": "2026-02-10T03:00Z",
-          "final": true,
-          "for": 114,
-          "against": 113
-        },
-        {
-          "date": "2026-02-12T03:00Z",
-          "final": true,
-          "for": 113,
-          "against": 126
-        },
-        {
-          "date": "2026-02-20T03:00Z",
-          "final": true,
-          "for": 110,
-          "against": 121
-        },
-        {
-          "date": "2026-02-22T20:30Z",
-          "final": true,
-          "for": 128,
-          "against": 117
-        },
-        {
-          "date": "2026-02-25T01:00Z",
-          "final": true,
-          "for": 109,
-          "against": 113
-        },
-        {
-          "date": "2026-02-26T00:30Z",
-          "final": true,
-          "for": 133,
-          "against": 112
-        },
-        {
-          "date": "2026-03-01T01:30Z",
-          "final": true,
-          "for": 101,
-          "against": 129
-        },
-        {
-          "date": "2026-03-03T03:00Z",
-          "final": true,
-          "for": 101,
-          "against": 114
-        },
-        {
-          "date": "2026-03-06T00:30Z",
-          "final": true,
-          "for": 115,
-          "against": 113
-        },
-        {
-          "date": "2026-03-08T01:30Z",
-          "final": true,
-          "for": 97,
-          "against": 104
-        },
-        {
-          "date": "2026-03-10T01:00Z",
-          "final": true,
-          "for": 116,
-          "against": 119
-        },
-        {
-          "date": "2026-03-11T02:00Z",
-          "final": true,
-          "for": 124,
-          "against": 130
-        },
-        {
-          "date": "2026-03-14T02:00Z",
-          "final": true,
-          "for": 117,
-          "against": 127
-        },
-        {
-          "date": "2026-03-16T00:00Z",
-          "final": true,
-          "for": 107,
-          "against": 110
-        },
-        {
-          "date": "2026-03-16T23:00Z",
-          "final": true,
-          "for": 125,
-          "against": 117
-        },
-        {
-          "date": "2026-03-18T23:00Z",
-          "final": true,
-          "for": 99,
-          "against": 120
-        },
-        {
-          "date": "2026-03-20T23:30Z",
-          "final": true,
-          "for": 101,
-          "against": 115
-        },
-        {
-          "date": "2026-03-22T00:00Z",
-          "final": true,
-          "for": 110,
-          "against": 126
-        },
-        {
-          "date": "2026-03-24T01:30Z",
-          "final": true,
-          "for": 137,
-          "against": 131
-        },
-        {
-          "date": "2026-03-26T02:00Z",
-          "final": true,
-          "for": 109,
-          "against": 106
-        },
-        {
-          "date": "2026-03-28T02:00Z",
-          "final": true,
-          "for": 131,
-          "against": 126
-        },
-        {
-          "date": "2026-03-30T02:00Z",
-          "final": true,
-          "for": 93,
-          "against": 116
-        },
-        {
-          "date": "2026-04-02T02:00Z",
-          "final": true,
-          "for": 113,
-          "against": 127
-        },
-        {
-          "date": "2026-04-03T02:00Z",
-          "final": true,
-          "for": 111,
-          "against": 118
-        },
-        {
-          "date": "2026-04-06T02:00Z",
-          "final": true,
-          "for": 116,
-          "against": 117
-        },
-        {
-          "date": "2026-04-08T02:00Z",
-          "final": true,
-          "for": 110,
-          "against": 105
-        },
-        {
-          "date": "2026-04-10T02:00Z",
-          "final": true,
-          "for": 103,
-          "against": 119
-        },
-        {
-          "date": "2026-04-11T02:00Z",
-          "final": true,
-          "for": 118,
-          "against": 124
-        },
-        {
-          "date": "2026-04-13T00:30Z",
-          "final": true,
-          "for": 110,
-          "against": 115
-        },
-        {
-          "date": "2026-10-22T02:00Z",
-          "final": true,
-          "for": 105,
-          "against": 127
-        },
-        {
-          "date": "2026-10-24T02:00Z",
-          "final": true,
-          "for": 108,
-          "against": 111
-        },
-        {
-          "date": "2026-10-25T02:00Z",
-          "final": true,
-          "for": 122,
-          "against": 131
-        },
-        {
-          "date": "2026-10-27T02:00Z",
-          "final": true,
-          "for": 134,
-          "against": 114
-        },
-        {
-          "date": "2026-10-29T00:00Z",
-          "final": true,
-          "for": 119,
-          "against": 114
-        },
-        {
-          "date": "2026-10-31T02:00Z",
-          "final": true,
-          "for": 112,
-          "against": 95
-        },
-        {
-          "date": "2026-11-02T01:30Z",
-          "final": true,
-          "for": 124,
-          "against": 112
-        },
-        {
-          "date": "2026-11-03T03:00Z",
-          "final": true,
-          "for": 116,
-          "against": 113
-        },
-        {
-          "date": "2026-11-06T03:00Z",
-          "final": true,
-          "for": 120,
-          "against": 100
-        },
-        {
-          "date": "2026-11-08T01:30Z",
-          "final": true,
-          "for": 126,
-          "against": 119
-        }
-      ],
-      "NOP": [
-        {
-          "date": "2025-10-23T00:00Z",
-          "final": true,
-          "for": 122,
-          "against": 128
-        },
-        {
-          "date": "2025-10-25T00:00Z",
-          "final": true,
-          "for": 116,
-          "against": 120
-        },
-        {
-          "date": "2025-10-28T00:00Z",
-          "final": true,
-          "for": 90,
-          "against": 122
-        },
-        {
-          "date": "2025-10-30T01:00Z",
-          "final": true,
-          "for": 88,
-          "against": 122
-        },
-        {
-          "date": "2025-11-01T02:30Z",
-          "final": true,
-          "for": 124,
-          "against": 126
-        },
-        {
-          "date": "2025-11-02T20:30Z",
-          "final": true,
-          "for": 106,
-          "against": 137
-        },
-        {
-          "date": "2025-11-05T01:00Z",
-          "final": true,
-          "for": 116,
-          "against": 112
-        },
-        {
-          "date": "2025-11-06T01:30Z",
-          "final": true,
-          "for": 101,
-          "against": 99
-        },
-        {
-          "date": "2025-11-09T01:00Z",
-          "final": true,
-          "for": 119,
-          "against": 126
-        },
-        {
-          "date": "2025-11-11T02:00Z",
-          "final": true,
-          "for": 98,
-          "against": 121
-        },
-        {
-          "date": "2025-11-13T01:00Z",
-          "final": true,
-          "for": 117,
-          "against": 125
-        },
-        {
-          "date": "2025-11-15T01:00Z",
-          "final": true,
-          "for": 104,
-          "against": 118
-        },
-        {
-          "date": "2025-11-17T00:00Z",
-          "final": true,
-          "for": 106,
-          "against": 124
-        },
-        {
-          "date": "2025-11-18T01:00Z",
-          "final": true,
-          "for": 109,
-          "against": 126
-        },
-        {
-          "date": "2025-11-20T01:00Z",
-          "final": true,
-          "for": 118,
-          "against": 125
-        },
-        {
-          "date": "2025-11-22T01:30Z",
-          "final": true,
-          "for": 115,
-          "against": 118
-        },
-        {
-          "date": "2025-11-23T00:00Z",
-          "final": true,
-          "for": 98,
-          "against": 115
-        },
-        {
-          "date": "2025-11-25T01:00Z",
-          "final": true,
-          "for": 143,
-          "against": 130
-        },
-        {
-          "date": "2025-11-27T01:00Z",
-          "final": true,
-          "for": 128,
-          "against": 133
-        },
-        {
-          "date": "2025-11-30T01:30Z",
-          "final": true,
-          "for": 96,
-          "against": 104
-        },
-        {
-          "date": "2025-12-01T02:30Z",
-          "final": true,
-          "for": 121,
-          "against": 133
-        },
-        {
-          "date": "2025-12-03T01:00Z",
-          "final": true,
-          "for": 142,
-          "against": 149
-        },
-        {
-          "date": "2025-12-05T01:00Z",
-          "final": true,
-          "for": 116,
-          "against": 125
-        },
-        {
-          "date": "2025-12-06T22:00Z",
-          "final": true,
-          "for": 101,
-          "against": 119
-        },
-        {
-          "date": "2025-12-09T01:00Z",
-          "final": true,
-          "for": 132,
-          "against": 135
-        },
-        {
-          "date": "2025-12-12T01:00Z",
-          "final": true,
-          "for": 143,
-          "against": 120
-        },
-        {
-          "date": "2025-12-15T00:00Z",
-          "final": true,
-          "for": 114,
-          "against": 104
-        },
-        {
-          "date": "2025-12-19T01:00Z",
-          "final": true,
-          "for": 133,
-          "against": 128
-        },
-        {
-          "date": "2025-12-21T00:00Z",
-          "final": true,
-          "for": 128,
-          "against": 109
-        },
-        {
-          "date": "2025-12-23T01:00Z",
-          "final": true,
-          "for": 119,
-          "against": 113
-        },
-        {
-          "date": "2025-12-24T00:30Z",
-          "final": true,
-          "for": 118,
-          "against": 141
-        },
-        {
-          "date": "2025-12-27T01:00Z",
-          "final": true,
-          "for": 108,
-          "against": 115
-        },
-        {
-          "date": "2025-12-28T00:00Z",
-          "final": true,
-          "for": 114,
-          "against": 123
-        },
-        {
-          "date": "2025-12-30T01:00Z",
-          "final": true,
-          "for": 125,
-          "against": 130
-        },
-        {
-          "date": "2026-01-01T00:00Z",
-          "final": true,
-          "for": 118,
-          "against": 134
-        },
-        {
-          "date": "2026-01-03T01:00Z",
-          "final": true,
-          "for": 109,
-          "against": 122
-        },
-        {
-          "date": "2026-01-04T23:00Z",
-          "final": true,
-          "for": 106,
-          "against": 125
-        },
-        {
-          "date": "2026-01-07T01:00Z",
-          "final": true,
-          "for": 103,
-          "against": 111
-        },
-        {
-          "date": "2026-01-08T00:30Z",
-          "final": true,
-          "for": 100,
-          "against": 117
-        },
-        {
-          "date": "2026-01-10T00:00Z",
-          "final": true,
-          "for": 128,
-          "against": 107
-        },
-        {
-          "date": "2026-01-11T20:00Z",
-          "final": true,
-          "for": 118,
-          "against": 128
-        },
-        {
-          "date": "2026-01-14T01:00Z",
-          "final": true,
-          "for": 116,
-          "against": 122
-        },
-        {
-          "date": "2026-01-15T01:00Z",
-          "final": true,
-          "for": 116,
-          "against": 113
-        },
-        {
-          "date": "2026-01-17T00:00Z",
-          "final": true,
-          "for": 119,
-          "against": 127
-        },
-        {
-          "date": "2026-01-19T00:00Z",
-          "final": true,
-          "for": 110,
-          "against": 119
-        },
-        {
-          "date": "2026-01-22T01:00Z",
-          "final": true,
-          "for": 104,
-          "against": 112
-        },
-        {
-          "date": "2026-01-24T01:00Z",
-          "final": true,
-          "for": 133,
-          "against": 127
-        },
-        {
-          "date": "2026-01-26T00:00Z",
-          "final": true,
-          "for": 104,
-          "against": 95
-        },
-        {
-          "date": "2026-01-28T01:00Z",
-          "final": true,
-          "for": 95,
-          "against": 104
-        },
-        {
-          "date": "2026-01-31T00:30Z",
-          "final": true,
-          "for": 114,
-          "against": 106
-        },
-        {
-          "date": "2026-02-01T00:30Z",
-          "final": true,
-          "for": 114,
-          "against": 124
-        },
-        {
-          "date": "2026-02-02T20:00Z",
-          "final": true,
-          "for": 95,
-          "against": 102
-        },
-        {
-          "date": "2026-02-05T01:00Z",
-          "final": true,
-          "for": 137,
-          "against": 141
-        },
-        {
-          "date": "2026-02-07T01:00Z",
-          "final": true,
-          "for": 119,
-          "against": 115
-        },
-        {
-          "date": "2026-02-10T01:00Z",
-          "final": true,
-          "for": 120,
-          "against": 94
-        },
-        {
-          "date": "2026-02-12T01:00Z",
-          "final": true,
-          "for": 111,
-          "against": 123
-        },
-        {
-          "date": "2026-02-21T01:00Z",
-          "final": true,
-          "for": 118,
-          "against": 139
-        },
-        {
-          "date": "2026-02-22T00:00Z",
-          "final": true,
-          "for": 126,
-          "against": 111
-        },
-        {
-          "date": "2026-02-25T01:00Z",
-          "final": true,
-          "for": 113,
-          "against": 109
-        },
-        {
-          "date": "2026-02-27T02:00Z",
-          "final": true,
-          "for": 129,
-          "against": 118
-        },
-        {
-          "date": "2026-03-01T02:30Z",
-          "final": true,
-          "for": 115,
-          "against": 105
-        },
-        {
-          "date": "2026-03-02T02:00Z",
-          "final": true,
-          "for": 117,
-          "against": 137
-        },
-        {
-          "date": "2026-03-04T03:30Z",
-          "final": true,
-          "for": 101,
-          "against": 110
-        },
-        {
-          "date": "2026-03-06T03:00Z",
-          "final": true,
-          "for": 133,
-          "against": 123
-        },
-        {
-          "date": "2026-03-07T02:00Z",
-          "final": true,
-          "for": 116,
-          "against": 118
-        },
-        {
-          "date": "2026-03-08T23:00Z",
-          "final": true,
-          "for": 138,
-          "against": 118
-        },
-        {
-          "date": "2026-03-12T00:00Z",
-          "final": true,
-          "for": 122,
-          "against": 111
-        },
-        {
-          "date": "2026-03-14T00:00Z",
-          "final": true,
-          "for": 105,
-          "against": 107
-        },
-        {
-          "date": "2026-03-17T00:00Z",
-          "final": true,
-          "for": 129,
-          "against": 111
-        },
-        {
-          "date": "2026-03-19T00:00Z",
-          "final": true,
-          "for": 124,
-          "against": 109
-        },
-        {
-          "date": "2026-03-20T00:00Z",
-          "final": true,
-          "for": 105,
-          "against": 99
-        },
-        {
-          "date": "2026-03-21T23:00Z",
-          "final": true,
-          "for": 106,
-          "against": 111
-        },
-        {
-          "date": "2026-03-24T23:30Z",
-          "final": true,
-          "for": 116,
-          "against": 121
-        },
-        {
-          "date": "2026-03-26T23:00Z",
-          "final": true,
-          "for": 108,
-          "against": 129
-        },
-        {
-          "date": "2026-03-28T00:30Z",
-          "final": true,
-          "for": 106,
-          "against": 119
-        },
-        {
-          "date": "2026-03-29T23:00Z",
-          "final": true,
-          "for": 102,
-          "against": 134
-        },
-        {
-          "date": "2026-04-03T02:00Z",
-          "final": true,
-          "for": 106,
-          "against": 118
-        },
-        {
-          "date": "2026-04-04T02:00Z",
-          "final": true,
-          "for": 113,
-          "against": 117
-        },
-        {
-          "date": "2026-04-05T23:00Z",
-          "final": true,
-          "for": 108,
-          "against": 112
-        },
-        {
-          "date": "2026-04-08T00:00Z",
-          "final": true,
-          "for": 156,
-          "against": 137
-        },
-        {
-          "date": "2026-04-10T23:30Z",
-          "final": true,
-          "for": 118,
-          "against": 144
-        },
-        {
-          "date": "2026-04-13T00:30Z",
-          "final": true,
-          "for": 126,
-          "against": 132
-        },
-        {
-          "date": "2026-10-22T00:00Z",
-          "final": true,
-          "for": 120,
-          "against": 123
-        },
-        {
-          "date": "2026-10-24T01:30Z",
-          "final": true,
-          "for": 119,
-          "against": 120
-        },
-        {
-          "date": "2026-10-25T01:00Z",
-          "final": true,
-          "for": 135,
-          "against": 141
-        },
-        {
-          "date": "2026-10-29T00:00Z",
-          "final": true,
-          "for": 91,
-          "against": 104
-        },
-        {
-          "date": "2026-10-30T00:00Z",
-          "final": true,
-          "for": 132,
-          "against": 120
-        },
-        {
-          "date": "2026-10-31T23:00Z",
-          "final": true,
-          "for": 121,
-          "against": 99
-        },
-        {
-          "date": "2026-11-03T01:00Z",
-          "final": true,
-          "for": 135,
-          "against": 134
-        },
-        {
-          "date": "2026-11-05T01:00Z",
-          "final": true,
-          "for": 120,
-          "against": 113
-        },
-        {
-          "date": "2026-11-07T01:00Z",
-          "final": true,
-          "for": 109,
-          "against": 115
-        },
-        {
-          "date": "2026-11-09T02:00Z",
-          "final": true,
-          "for": 123,
-          "against": 139
-        }
-      ],
       "NYK": [
         {
           "date": "2025-10-22T23:00Z",
@@ -24965,6 +23876,12 @@
           "final": true,
           "for": 102,
           "against": 99
+        },
+        {
+          "date": "2026-11-10T02:00Z",
+          "final": true,
+          "for": 96,
+          "against": 122
         }
       ],
       "LAC": [
@@ -29385,6 +28302,12 @@
           "final": true,
           "for": 102,
           "against": 114
+        },
+        {
+          "date": "2026-11-10T01:00Z",
+          "final": true,
+          "for": 122,
+          "against": 125
         }
       ],
       "WAS": [
@@ -31053,6 +29976,12 @@
           "final": true,
           "for": 121,
           "against": 107
+        },
+        {
+          "date": "2026-11-10T00:30Z",
+          "final": true,
+          "for": 102,
+          "against": 118
         }
       ],
       "CHI": [
@@ -32167,6 +31096,12 @@
           "final": true,
           "for": 125,
           "against": 103
+        },
+        {
+          "date": "2026-11-10T02:00Z",
+          "final": true,
+          "for": 122,
+          "against": 96
         }
       ],
       "MEM": [
@@ -32721,6 +31656,12 @@
           "final": true,
           "for": 97,
           "against": 128
+        },
+        {
+          "date": "2026-11-10T00:30Z",
+          "final": true,
+          "for": 118,
+          "against": 102
         }
       ],
       "DEN": [
@@ -33269,6 +32210,12 @@
           "final": true,
           "for": 114,
           "against": 102
+        },
+        {
+          "date": "2026-11-10T01:30Z",
+          "final": true,
+          "for": 100,
+          "against": 110
         }
       ],
       "LAL": [
@@ -33835,6 +32782,566 @@
           "final": true,
           "for": 124,
           "against": 114
+        }
+      ],
+      "NOP": [
+        {
+          "date": "2025-10-23T00:00Z",
+          "final": true,
+          "for": 122,
+          "against": 128
+        },
+        {
+          "date": "2025-10-25T00:00Z",
+          "final": true,
+          "for": 116,
+          "against": 120
+        },
+        {
+          "date": "2025-10-28T00:00Z",
+          "final": true,
+          "for": 90,
+          "against": 122
+        },
+        {
+          "date": "2025-10-30T01:00Z",
+          "final": true,
+          "for": 88,
+          "against": 122
+        },
+        {
+          "date": "2025-11-01T02:30Z",
+          "final": true,
+          "for": 124,
+          "against": 126
+        },
+        {
+          "date": "2025-11-02T20:30Z",
+          "final": true,
+          "for": 106,
+          "against": 137
+        },
+        {
+          "date": "2025-11-05T01:00Z",
+          "final": true,
+          "for": 116,
+          "against": 112
+        },
+        {
+          "date": "2025-11-06T01:30Z",
+          "final": true,
+          "for": 101,
+          "against": 99
+        },
+        {
+          "date": "2025-11-09T01:00Z",
+          "final": true,
+          "for": 119,
+          "against": 126
+        },
+        {
+          "date": "2025-11-11T02:00Z",
+          "final": true,
+          "for": 98,
+          "against": 121
+        },
+        {
+          "date": "2025-11-13T01:00Z",
+          "final": true,
+          "for": 117,
+          "against": 125
+        },
+        {
+          "date": "2025-11-15T01:00Z",
+          "final": true,
+          "for": 104,
+          "against": 118
+        },
+        {
+          "date": "2025-11-17T00:00Z",
+          "final": true,
+          "for": 106,
+          "against": 124
+        },
+        {
+          "date": "2025-11-18T01:00Z",
+          "final": true,
+          "for": 109,
+          "against": 126
+        },
+        {
+          "date": "2025-11-20T01:00Z",
+          "final": true,
+          "for": 118,
+          "against": 125
+        },
+        {
+          "date": "2025-11-22T01:30Z",
+          "final": true,
+          "for": 115,
+          "against": 118
+        },
+        {
+          "date": "2025-11-23T00:00Z",
+          "final": true,
+          "for": 98,
+          "against": 115
+        },
+        {
+          "date": "2025-11-25T01:00Z",
+          "final": true,
+          "for": 143,
+          "against": 130
+        },
+        {
+          "date": "2025-11-27T01:00Z",
+          "final": true,
+          "for": 128,
+          "against": 133
+        },
+        {
+          "date": "2025-11-30T01:30Z",
+          "final": true,
+          "for": 96,
+          "against": 104
+        },
+        {
+          "date": "2025-12-01T02:30Z",
+          "final": true,
+          "for": 121,
+          "against": 133
+        },
+        {
+          "date": "2025-12-03T01:00Z",
+          "final": true,
+          "for": 142,
+          "against": 149
+        },
+        {
+          "date": "2025-12-05T01:00Z",
+          "final": true,
+          "for": 116,
+          "against": 125
+        },
+        {
+          "date": "2025-12-06T22:00Z",
+          "final": true,
+          "for": 101,
+          "against": 119
+        },
+        {
+          "date": "2025-12-09T01:00Z",
+          "final": true,
+          "for": 132,
+          "against": 135
+        },
+        {
+          "date": "2025-12-12T01:00Z",
+          "final": true,
+          "for": 143,
+          "against": 120
+        },
+        {
+          "date": "2025-12-15T00:00Z",
+          "final": true,
+          "for": 114,
+          "against": 104
+        },
+        {
+          "date": "2025-12-19T01:00Z",
+          "final": true,
+          "for": 133,
+          "against": 128
+        },
+        {
+          "date": "2025-12-21T00:00Z",
+          "final": true,
+          "for": 128,
+          "against": 109
+        },
+        {
+          "date": "2025-12-23T01:00Z",
+          "final": true,
+          "for": 119,
+          "against": 113
+        },
+        {
+          "date": "2025-12-24T00:30Z",
+          "final": true,
+          "for": 118,
+          "against": 141
+        },
+        {
+          "date": "2025-12-27T01:00Z",
+          "final": true,
+          "for": 108,
+          "against": 115
+        },
+        {
+          "date": "2025-12-28T00:00Z",
+          "final": true,
+          "for": 114,
+          "against": 123
+        },
+        {
+          "date": "2025-12-30T01:00Z",
+          "final": true,
+          "for": 125,
+          "against": 130
+        },
+        {
+          "date": "2026-01-01T00:00Z",
+          "final": true,
+          "for": 118,
+          "against": 134
+        },
+        {
+          "date": "2026-01-03T01:00Z",
+          "final": true,
+          "for": 109,
+          "against": 122
+        },
+        {
+          "date": "2026-01-04T23:00Z",
+          "final": true,
+          "for": 106,
+          "against": 125
+        },
+        {
+          "date": "2026-01-07T01:00Z",
+          "final": true,
+          "for": 103,
+          "against": 111
+        },
+        {
+          "date": "2026-01-08T00:30Z",
+          "final": true,
+          "for": 100,
+          "against": 117
+        },
+        {
+          "date": "2026-01-10T00:00Z",
+          "final": true,
+          "for": 128,
+          "against": 107
+        },
+        {
+          "date": "2026-01-11T20:00Z",
+          "final": true,
+          "for": 118,
+          "against": 128
+        },
+        {
+          "date": "2026-01-14T01:00Z",
+          "final": true,
+          "for": 116,
+          "against": 122
+        },
+        {
+          "date": "2026-01-15T01:00Z",
+          "final": true,
+          "for": 116,
+          "against": 113
+        },
+        {
+          "date": "2026-01-17T00:00Z",
+          "final": true,
+          "for": 119,
+          "against": 127
+        },
+        {
+          "date": "2026-01-19T00:00Z",
+          "final": true,
+          "for": 110,
+          "against": 119
+        },
+        {
+          "date": "2026-01-22T01:00Z",
+          "final": true,
+          "for": 104,
+          "against": 112
+        },
+        {
+          "date": "2026-01-24T01:00Z",
+          "final": true,
+          "for": 133,
+          "against": 127
+        },
+        {
+          "date": "2026-01-26T00:00Z",
+          "final": true,
+          "for": 104,
+          "against": 95
+        },
+        {
+          "date": "2026-01-28T01:00Z",
+          "final": true,
+          "for": 95,
+          "against": 104
+        },
+        {
+          "date": "2026-01-31T00:30Z",
+          "final": true,
+          "for": 114,
+          "against": 106
+        },
+        {
+          "date": "2026-02-01T00:30Z",
+          "final": true,
+          "for": 114,
+          "against": 124
+        },
+        {
+          "date": "2026-02-02T20:00Z",
+          "final": true,
+          "for": 95,
+          "against": 102
+        },
+        {
+          "date": "2026-02-05T01:00Z",
+          "final": true,
+          "for": 137,
+          "against": 141
+        },
+        {
+          "date": "2026-02-07T01:00Z",
+          "final": true,
+          "for": 119,
+          "against": 115
+        },
+        {
+          "date": "2026-02-10T01:00Z",
+          "final": true,
+          "for": 120,
+          "against": 94
+        },
+        {
+          "date": "2026-02-12T01:00Z",
+          "final": true,
+          "for": 111,
+          "against": 123
+        },
+        {
+          "date": "2026-02-21T01:00Z",
+          "final": true,
+          "for": 118,
+          "against": 139
+        },
+        {
+          "date": "2026-02-22T00:00Z",
+          "final": true,
+          "for": 126,
+          "against": 111
+        },
+        {
+          "date": "2026-02-25T01:00Z",
+          "final": true,
+          "for": 113,
+          "against": 109
+        },
+        {
+          "date": "2026-02-27T02:00Z",
+          "final": true,
+          "for": 129,
+          "against": 118
+        },
+        {
+          "date": "2026-03-01T02:30Z",
+          "final": true,
+          "for": 115,
+          "against": 105
+        },
+        {
+          "date": "2026-03-02T02:00Z",
+          "final": true,
+          "for": 117,
+          "against": 137
+        },
+        {
+          "date": "2026-03-04T03:30Z",
+          "final": true,
+          "for": 101,
+          "against": 110
+        },
+        {
+          "date": "2026-03-06T03:00Z",
+          "final": true,
+          "for": 133,
+          "against": 123
+        },
+        {
+          "date": "2026-03-07T02:00Z",
+          "final": true,
+          "for": 116,
+          "against": 118
+        },
+        {
+          "date": "2026-03-08T23:00Z",
+          "final": true,
+          "for": 138,
+          "against": 118
+        },
+        {
+          "date": "2026-03-12T00:00Z",
+          "final": true,
+          "for": 122,
+          "against": 111
+        },
+        {
+          "date": "2026-03-14T00:00Z",
+          "final": true,
+          "for": 105,
+          "against": 107
+        },
+        {
+          "date": "2026-03-17T00:00Z",
+          "final": true,
+          "for": 129,
+          "against": 111
+        },
+        {
+          "date": "2026-03-19T00:00Z",
+          "final": true,
+          "for": 124,
+          "against": 109
+        },
+        {
+          "date": "2026-03-20T00:00Z",
+          "final": true,
+          "for": 105,
+          "against": 99
+        },
+        {
+          "date": "2026-03-21T23:00Z",
+          "final": true,
+          "for": 106,
+          "against": 111
+        },
+        {
+          "date": "2026-03-24T23:30Z",
+          "final": true,
+          "for": 116,
+          "against": 121
+        },
+        {
+          "date": "2026-03-26T23:00Z",
+          "final": true,
+          "for": 108,
+          "against": 129
+        },
+        {
+          "date": "2026-03-28T00:30Z",
+          "final": true,
+          "for": 106,
+          "against": 119
+        },
+        {
+          "date": "2026-03-29T23:00Z",
+          "final": true,
+          "for": 102,
+          "against": 134
+        },
+        {
+          "date": "2026-04-03T02:00Z",
+          "final": true,
+          "for": 106,
+          "against": 118
+        },
+        {
+          "date": "2026-04-04T02:00Z",
+          "final": true,
+          "for": 113,
+          "against": 117
+        },
+        {
+          "date": "2026-04-05T23:00Z",
+          "final": true,
+          "for": 108,
+          "against": 112
+        },
+        {
+          "date": "2026-04-08T00:00Z",
+          "final": true,
+          "for": 156,
+          "against": 137
+        },
+        {
+          "date": "2026-04-10T23:30Z",
+          "final": true,
+          "for": 118,
+          "against": 144
+        },
+        {
+          "date": "2026-04-13T00:30Z",
+          "final": true,
+          "for": 126,
+          "against": 132
+        },
+        {
+          "date": "2026-10-22T00:00Z",
+          "final": true,
+          "for": 120,
+          "against": 123
+        },
+        {
+          "date": "2026-10-24T01:30Z",
+          "final": true,
+          "for": 119,
+          "against": 120
+        },
+        {
+          "date": "2026-10-25T01:00Z",
+          "final": true,
+          "for": 135,
+          "against": 141
+        },
+        {
+          "date": "2026-10-29T00:00Z",
+          "final": true,
+          "for": 91,
+          "against": 104
+        },
+        {
+          "date": "2026-10-30T00:00Z",
+          "final": true,
+          "for": 132,
+          "against": 120
+        },
+        {
+          "date": "2026-10-31T23:00Z",
+          "final": true,
+          "for": 121,
+          "against": 99
+        },
+        {
+          "date": "2026-11-03T01:00Z",
+          "final": true,
+          "for": 135,
+          "against": 134
+        },
+        {
+          "date": "2026-11-05T01:00Z",
+          "final": true,
+          "for": 120,
+          "against": 113
+        },
+        {
+          "date": "2026-11-07T01:00Z",
+          "final": true,
+          "for": 109,
+          "against": 115
+        },
+        {
+          "date": "2026-11-09T02:00Z",
+          "final": true,
+          "for": 123,
+          "against": 139
+        },
+        {
+          "date": "2026-11-10T03:00Z",
+          "final": true,
+          "for": 87,
+          "against": 138
         }
       ],
       "BKN": [
@@ -34943,6 +34450,578 @@
           "final": true,
           "for": 99,
           "against": 102
+        },
+        {
+          "date": "2026-11-10T01:30Z",
+          "final": true,
+          "for": 110,
+          "against": 100
+        }
+      ],
+      "GSW": [
+        {
+          "date": "2025-10-22T02:00Z",
+          "final": true,
+          "for": 119,
+          "against": 109
+        },
+        {
+          "date": "2025-10-24T02:17Z",
+          "final": true,
+          "for": 137,
+          "against": 131
+        },
+        {
+          "date": "2025-10-25T02:00Z",
+          "final": true,
+          "for": 119,
+          "against": 139
+        },
+        {
+          "date": "2025-10-28T02:00Z",
+          "final": true,
+          "for": 131,
+          "against": 118
+        },
+        {
+          "date": "2025-10-29T03:00Z",
+          "final": true,
+          "for": 98,
+          "against": 79
+        },
+        {
+          "date": "2025-10-31T00:00Z",
+          "final": true,
+          "for": 110,
+          "against": 120
+        },
+        {
+          "date": "2025-11-01T23:00Z",
+          "final": true,
+          "for": 109,
+          "against": 114
+        },
+        {
+          "date": "2025-11-05T03:00Z",
+          "final": true,
+          "for": 118,
+          "against": 107
+        },
+        {
+          "date": "2025-11-06T03:00Z",
+          "final": true,
+          "for": 116,
+          "against": 121
+        },
+        {
+          "date": "2025-11-08T03:00Z",
+          "final": true,
+          "for": 104,
+          "against": 129
+        },
+        {
+          "date": "2025-11-10T01:30Z",
+          "final": true,
+          "for": 114,
+          "against": 83
+        },
+        {
+          "date": "2025-11-12T01:00Z",
+          "final": true,
+          "for": 102,
+          "against": 126
+        },
+        {
+          "date": "2025-11-13T01:00Z",
+          "final": true,
+          "for": 125,
+          "against": 120
+        },
+        {
+          "date": "2025-11-15T02:30Z",
+          "final": true,
+          "for": 109,
+          "against": 108
+        },
+        {
+          "date": "2025-11-17T00:00Z",
+          "final": true,
+          "for": 124,
+          "against": 106
+        },
+        {
+          "date": "2025-11-19T00:00Z",
+          "final": true,
+          "for": 113,
+          "against": 121
+        },
+        {
+          "date": "2025-11-20T00:30Z",
+          "final": true,
+          "for": 96,
+          "against": 110
+        },
+        {
+          "date": "2025-11-22T03:00Z",
+          "final": true,
+          "for": 123,
+          "against": 127
+        },
+        {
+          "date": "2025-11-25T03:00Z",
+          "final": true,
+          "for": 134,
+          "against": 117
+        },
+        {
+          "date": "2025-11-27T03:00Z",
+          "final": true,
+          "for": 100,
+          "against": 104
+        },
+        {
+          "date": "2025-11-30T01:30Z",
+          "final": true,
+          "for": 104,
+          "against": 96
+        },
+        {
+          "date": "2025-12-03T04:00Z",
+          "final": true,
+          "for": 112,
+          "against": 124
+        },
+        {
+          "date": "2025-12-05T00:00Z",
+          "final": true,
+          "for": 98,
+          "against": 99
+        },
+        {
+          "date": "2025-12-07T00:30Z",
+          "final": true,
+          "for": 99,
+          "against": 94
+        },
+        {
+          "date": "2025-12-08T00:00Z",
+          "final": true,
+          "for": 123,
+          "against": 91
+        },
+        {
+          "date": "2025-12-13T03:00Z",
+          "final": true,
+          "for": 120,
+          "against": 127
+        },
+        {
+          "date": "2025-12-15T02:00Z",
+          "final": true,
+          "for": 131,
+          "against": 136
+        },
+        {
+          "date": "2025-12-19T02:00Z",
+          "final": true,
+          "for": 98,
+          "against": 99
+        },
+        {
+          "date": "2025-12-21T01:30Z",
+          "final": true,
+          "for": 119,
+          "against": 116
+        },
+        {
+          "date": "2025-12-23T03:00Z",
+          "final": true,
+          "for": 120,
+          "against": 97
+        },
+        {
+          "date": "2025-12-25T22:17Z",
+          "final": true,
+          "for": 126,
+          "against": 116
+        },
+        {
+          "date": "2025-12-28T20:30Z",
+          "final": true,
+          "for": 127,
+          "against": 141
+        },
+        {
+          "date": "2025-12-30T00:30Z",
+          "final": true,
+          "for": 120,
+          "against": 107
+        },
+        {
+          "date": "2025-12-31T18:00Z",
+          "final": true,
+          "for": 132,
+          "against": 125
+        },
+        {
+          "date": "2026-01-03T03:00Z",
+          "final": true,
+          "for": 94,
+          "against": 131
+        },
+        {
+          "date": "2026-01-04T03:00Z",
+          "final": true,
+          "for": 123,
+          "against": 114
+        },
+        {
+          "date": "2026-01-06T03:00Z",
+          "final": true,
+          "for": 102,
+          "against": 103
+        },
+        {
+          "date": "2026-01-08T03:00Z",
+          "final": true,
+          "for": 120,
+          "against": 113
+        },
+        {
+          "date": "2026-01-10T03:00Z",
+          "final": true,
+          "for": 137,
+          "against": 103
+        },
+        {
+          "date": "2026-01-12T01:30Z",
+          "final": true,
+          "for": 111,
+          "against": 124
+        },
+        {
+          "date": "2026-01-14T04:00Z",
+          "final": true,
+          "for": 119,
+          "against": 97
+        },
+        {
+          "date": "2026-01-16T03:00Z",
+          "final": true,
+          "for": 126,
+          "against": 113
+        },
+        {
+          "date": "2026-01-18T01:30Z",
+          "final": true,
+          "for": 136,
+          "against": 116
+        },
+        {
+          "date": "2026-01-20T03:00Z",
+          "final": true,
+          "for": 135,
+          "against": 112
+        },
+        {
+          "date": "2026-01-21T03:00Z",
+          "final": true,
+          "for": 127,
+          "against": 145
+        },
+        {
+          "date": "2026-01-23T00:30Z",
+          "final": true,
+          "for": 115,
+          "against": 123
+        },
+        {
+          "date": "2026-01-24T22:30Z",
+          "final": true,
+          "for": 0,
+          "against": 0
+        },
+        {
+          "date": "2026-01-25T22:30Z",
+          "final": true,
+          "for": 111,
+          "against": 85
+        },
+        {
+          "date": "2026-01-27T02:30Z",
+          "final": true,
+          "for": 83,
+          "against": 108
+        },
+        {
+          "date": "2026-01-29T02:00Z",
+          "final": true,
+          "for": 140,
+          "against": 124
+        },
+        {
+          "date": "2026-01-31T03:00Z",
+          "final": true,
+          "for": 124,
+          "against": 131
+        },
+        {
+          "date": "2026-02-04T03:00Z",
+          "final": true,
+          "for": 94,
+          "against": 113
+        },
+        {
+          "date": "2026-02-06T03:00Z",
+          "final": true,
+          "for": 101,
+          "against": 97
+        },
+        {
+          "date": "2026-02-08T01:30Z",
+          "final": true,
+          "for": 99,
+          "against": 105
+        },
+        {
+          "date": "2026-02-10T03:00Z",
+          "final": true,
+          "for": 114,
+          "against": 113
+        },
+        {
+          "date": "2026-02-12T03:00Z",
+          "final": true,
+          "for": 113,
+          "against": 126
+        },
+        {
+          "date": "2026-02-20T03:00Z",
+          "final": true,
+          "for": 110,
+          "against": 121
+        },
+        {
+          "date": "2026-02-22T20:30Z",
+          "final": true,
+          "for": 128,
+          "against": 117
+        },
+        {
+          "date": "2026-02-25T01:00Z",
+          "final": true,
+          "for": 109,
+          "against": 113
+        },
+        {
+          "date": "2026-02-26T00:30Z",
+          "final": true,
+          "for": 133,
+          "against": 112
+        },
+        {
+          "date": "2026-03-01T01:30Z",
+          "final": true,
+          "for": 101,
+          "against": 129
+        },
+        {
+          "date": "2026-03-03T03:00Z",
+          "final": true,
+          "for": 101,
+          "against": 114
+        },
+        {
+          "date": "2026-03-06T00:30Z",
+          "final": true,
+          "for": 115,
+          "against": 113
+        },
+        {
+          "date": "2026-03-08T01:30Z",
+          "final": true,
+          "for": 97,
+          "against": 104
+        },
+        {
+          "date": "2026-03-10T01:00Z",
+          "final": true,
+          "for": 116,
+          "against": 119
+        },
+        {
+          "date": "2026-03-11T02:00Z",
+          "final": true,
+          "for": 124,
+          "against": 130
+        },
+        {
+          "date": "2026-03-14T02:00Z",
+          "final": true,
+          "for": 117,
+          "against": 127
+        },
+        {
+          "date": "2026-03-16T00:00Z",
+          "final": true,
+          "for": 107,
+          "against": 110
+        },
+        {
+          "date": "2026-03-16T23:00Z",
+          "final": true,
+          "for": 125,
+          "against": 117
+        },
+        {
+          "date": "2026-03-18T23:00Z",
+          "final": true,
+          "for": 99,
+          "against": 120
+        },
+        {
+          "date": "2026-03-20T23:30Z",
+          "final": true,
+          "for": 101,
+          "against": 115
+        },
+        {
+          "date": "2026-03-22T00:00Z",
+          "final": true,
+          "for": 110,
+          "against": 126
+        },
+        {
+          "date": "2026-03-24T01:30Z",
+          "final": true,
+          "for": 137,
+          "against": 131
+        },
+        {
+          "date": "2026-03-26T02:00Z",
+          "final": true,
+          "for": 109,
+          "against": 106
+        },
+        {
+          "date": "2026-03-28T02:00Z",
+          "final": true,
+          "for": 131,
+          "against": 126
+        },
+        {
+          "date": "2026-03-30T02:00Z",
+          "final": true,
+          "for": 93,
+          "against": 116
+        },
+        {
+          "date": "2026-04-02T02:00Z",
+          "final": true,
+          "for": 113,
+          "against": 127
+        },
+        {
+          "date": "2026-04-03T02:00Z",
+          "final": true,
+          "for": 111,
+          "against": 118
+        },
+        {
+          "date": "2026-04-06T02:00Z",
+          "final": true,
+          "for": 116,
+          "against": 117
+        },
+        {
+          "date": "2026-04-08T02:00Z",
+          "final": true,
+          "for": 110,
+          "against": 105
+        },
+        {
+          "date": "2026-04-10T02:00Z",
+          "final": true,
+          "for": 103,
+          "against": 119
+        },
+        {
+          "date": "2026-04-11T02:00Z",
+          "final": true,
+          "for": 118,
+          "against": 124
+        },
+        {
+          "date": "2026-04-13T00:30Z",
+          "final": true,
+          "for": 110,
+          "against": 115
+        },
+        {
+          "date": "2026-10-22T02:00Z",
+          "final": true,
+          "for": 105,
+          "against": 127
+        },
+        {
+          "date": "2026-10-24T02:00Z",
+          "final": true,
+          "for": 108,
+          "against": 111
+        },
+        {
+          "date": "2026-10-25T02:00Z",
+          "final": true,
+          "for": 122,
+          "against": 131
+        },
+        {
+          "date": "2026-10-27T02:00Z",
+          "final": true,
+          "for": 134,
+          "against": 114
+        },
+        {
+          "date": "2026-10-29T00:00Z",
+          "final": true,
+          "for": 119,
+          "against": 114
+        },
+        {
+          "date": "2026-10-31T02:00Z",
+          "final": true,
+          "for": 112,
+          "against": 95
+        },
+        {
+          "date": "2026-11-02T01:30Z",
+          "final": true,
+          "for": 124,
+          "against": 112
+        },
+        {
+          "date": "2026-11-03T03:00Z",
+          "final": true,
+          "for": 116,
+          "against": 113
+        },
+        {
+          "date": "2026-11-06T03:00Z",
+          "final": true,
+          "for": 120,
+          "against": 100
+        },
+        {
+          "date": "2026-11-08T01:30Z",
+          "final": true,
+          "for": 126,
+          "against": 119
+        },
+        {
+          "date": "2026-11-10T03:00Z",
+          "final": true,
+          "for": 138,
+          "against": 87
         }
       ],
       "DET": [
@@ -36623,6 +36702,12 @@
           "final": true,
           "for": 130,
           "against": 93
+        },
+        {
+          "date": "2026-11-10T01:00Z",
+          "final": true,
+          "for": 125,
+          "against": 122
         }
       ],
       "CHA": [
@@ -37187,158 +37272,6 @@
       ]
     },
     "rosters": {
-      "GSW": {
-        "athletes": [
-          {
-            "id": "4397886",
-            "name": "Charles Bassey"
-          },
-          {
-            "id": "6430",
-            "name": "Jimmy Butler III"
-          },
-          {
-            "id": "4433149",
-            "name": "LJ Cryer"
-          },
-          {
-            "id": "3975",
-            "name": "Stephen Curry"
-          },
-          {
-            "id": "6589",
-            "name": "Draymond Green"
-          },
-          {
-            "id": "3213",
-            "name": "Al Horford"
-          },
-          {
-            "id": "4703396",
-            "name": "Graham Ike"
-          },
-          {
-            "id": "5175737",
-            "name": "Yaxel Lendeborg"
-          },
-          {
-            "id": "4897449",
-            "name": "Malevy Leons"
-          },
-          {
-            "id": "4066436",
-            "name": "De'Anthony Melton"
-          },
-          {
-            "id": "4432171",
-            "name": "Moses Moody"
-          },
-          {
-            "id": "2990969",
-            "name": "Georges Niang"
-          },
-          {
-            "id": "3134903",
-            "name": "Gary Payton II"
-          },
-          {
-            "id": "4709138",
-            "name": "Brandin Podziemski"
-          },
-          {
-            "id": "3102531",
-            "name": "Kristaps Porzingis"
-          },
-          {
-            "id": "4897262",
-            "name": "Will Richard"
-          },
-          {
-            "id": "4997536",
-            "name": "Gui Santos"
-          },
-          {
-            "id": "4397040",
-            "name": "Brandon Williams"
-          }
-        ]
-      },
-      "NOP": {
-        "athletes": [
-          {
-            "id": "4397136",
-            "name": "Saddiq Bey"
-          },
-          {
-            "id": "4712862",
-            "name": "Malik Dia"
-          },
-          {
-            "id": "5144091",
-            "name": "Jeremiah Fears"
-          },
-          {
-            "id": "5170947",
-            "name": "AJ Johnson"
-          },
-          {
-            "id": "4277813",
-            "name": "Herbert Jones"
-          },
-          {
-            "id": "3442",
-            "name": "DeAndre Jordan"
-          },
-          {
-            "id": "4683634",
-            "name": "Bennedict Mathurin"
-          },
-          {
-            "id": "4997538",
-            "name": "Karlo Matkovic"
-          },
-          {
-            "id": "4576086",
-            "name": "Bryce McGowens"
-          },
-          {
-            "id": "5061589",
-            "name": "Yves Missi"
-          },
-          {
-            "id": "4397688",
-            "name": "Trey Murphy III"
-          },
-          {
-            "id": "3907497",
-            "name": "Dejounte Murray"
-          },
-          {
-            "id": "4703115",
-            "name": "Jaron Pierre Jr."
-          },
-          {
-            "id": "4277956",
-            "name": "Jordan Poole"
-          },
-          {
-            "id": "4869780",
-            "name": "Derik Queen"
-          },
-          {
-            "id": "4683742",
-            "name": "Julian Reese"
-          },
-          {
-            "id": "4431675",
-            "name": "Trendon Watford"
-          },
-          {
-            "id": "4395628",
-            "name": "Zion Williamson"
-          }
-        ]
-      },
       "NYK": {
         "athletes": [
           {
@@ -38875,6 +38808,82 @@
           }
         ]
       },
+      "NOP": {
+        "athletes": [
+          {
+            "id": "4397136",
+            "name": "Saddiq Bey"
+          },
+          {
+            "id": "4712862",
+            "name": "Malik Dia"
+          },
+          {
+            "id": "5144091",
+            "name": "Jeremiah Fears"
+          },
+          {
+            "id": "5170947",
+            "name": "AJ Johnson"
+          },
+          {
+            "id": "4277813",
+            "name": "Herbert Jones"
+          },
+          {
+            "id": "3442",
+            "name": "DeAndre Jordan"
+          },
+          {
+            "id": "4683634",
+            "name": "Bennedict Mathurin"
+          },
+          {
+            "id": "4997538",
+            "name": "Karlo Matkovic"
+          },
+          {
+            "id": "4576086",
+            "name": "Bryce McGowens"
+          },
+          {
+            "id": "5061589",
+            "name": "Yves Missi"
+          },
+          {
+            "id": "4397688",
+            "name": "Trey Murphy III"
+          },
+          {
+            "id": "3907497",
+            "name": "Dejounte Murray"
+          },
+          {
+            "id": "4703115",
+            "name": "Jaron Pierre Jr."
+          },
+          {
+            "id": "4277956",
+            "name": "Jordan Poole"
+          },
+          {
+            "id": "4869780",
+            "name": "Derik Queen"
+          },
+          {
+            "id": "4683742",
+            "name": "Julian Reese"
+          },
+          {
+            "id": "4431675",
+            "name": "Trendon Watford"
+          },
+          {
+            "id": "4395628",
+            "name": "Zion Williamson"
+          }
+        ]
+      },
       "BKN": {
         "athletes": [
           {
@@ -39020,6 +39029,82 @@
           {
             "id": "2991230",
             "name": "Fred VanVleet"
+          }
+        ]
+      },
+      "GSW": {
+        "athletes": [
+          {
+            "id": "4397886",
+            "name": "Charles Bassey"
+          },
+          {
+            "id": "6430",
+            "name": "Jimmy Butler III"
+          },
+          {
+            "id": "4433149",
+            "name": "LJ Cryer"
+          },
+          {
+            "id": "3975",
+            "name": "Stephen Curry"
+          },
+          {
+            "id": "6589",
+            "name": "Draymond Green"
+          },
+          {
+            "id": "3213",
+            "name": "Al Horford"
+          },
+          {
+            "id": "4703396",
+            "name": "Graham Ike"
+          },
+          {
+            "id": "5175737",
+            "name": "Yaxel Lendeborg"
+          },
+          {
+            "id": "4897449",
+            "name": "Malevy Leons"
+          },
+          {
+            "id": "4066436",
+            "name": "De'Anthony Melton"
+          },
+          {
+            "id": "4432171",
+            "name": "Moses Moody"
+          },
+          {
+            "id": "2990969",
+            "name": "Georges Niang"
+          },
+          {
+            "id": "3134903",
+            "name": "Gary Payton II"
+          },
+          {
+            "id": "4709138",
+            "name": "Brandin Podziemski"
+          },
+          {
+            "id": "3102531",
+            "name": "Kristaps Porzingis"
+          },
+          {
+            "id": "4897262",
+            "name": "Will Richard"
+          },
+          {
+            "id": "4997536",
+            "name": "Gui Santos"
+          },
+          {
+            "id": "4397040",
+            "name": "Brandon Williams"
           }
         ]
       },
@@ -39563,46 +39648,6 @@
       }
     },
     "injuries": {
-      "GSW": [
-        {
-          "name": "Jimmy Butler III",
-          "status": "Out"
-        },
-        {
-          "name": "Moses Moody",
-          "status": "Out"
-        },
-        {
-          "name": "Gary Payton II",
-          "status": "Out"
-        },
-        {
-          "name": "Kristaps Porzingis",
-          "status": "Out"
-        },
-        {
-          "name": "Will Richard",
-          "status": "Out"
-        }
-      ],
-      "NOP": [
-        {
-          "name": "Yves Missi",
-          "status": "Out"
-        },
-        {
-          "name": "Trey Murphy III",
-          "status": "Out"
-        },
-        {
-          "name": "Trendon Watford",
-          "status": "Out"
-        },
-        {
-          "name": "Zion Williamson",
-          "status": "Out"
-        }
-      ],
       "NYK": [
         {
           "name": "Josh Hart",
@@ -39612,10 +39657,6 @@
       "MIL": [
         {
           "name": "Tyler Herro",
-          "status": "Day-To-Day"
-        },
-        {
-          "name": "Gary Trent Jr.",
           "status": "Day-To-Day"
         }
       ],
@@ -39790,7 +39831,7 @@
         },
         {
           "name": "Bilal Coulibaly",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Tristan Vukcevic",
@@ -39814,7 +39855,7 @@
       "TOR": [
         {
           "name": "Scottie Barnes",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Nate Bittle",
@@ -39826,11 +39867,11 @@
         },
         {
           "name": "Collin Murray-Boyles",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Immanuel Quickley",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "CHI": [
@@ -39854,7 +39895,7 @@
         },
         {
           "name": "Devin Vassell",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "MEM": [
@@ -39872,7 +39913,7 @@
         },
         {
           "name": "Isaiah Stewart",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "DEN": [
@@ -39884,11 +39925,29 @@
       "LAL": [
         {
           "name": "Quentin Grimes",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Austin Reaves",
+          "status": "Day-To-Day"
+        }
+      ],
+      "NOP": [
+        {
+          "name": "Yves Missi",
           "status": "Out"
+        },
+        {
+          "name": "Trey Murphy III",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Trendon Watford",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Zion Williamson",
+          "status": "Day-To-Day"
         }
       ],
       "BKN": [
@@ -39916,7 +39975,33 @@
         },
         {
           "name": "Oscar Tshiebwe",
+          "status": "Day-To-Day"
+        }
+      ],
+      "GSW": [
+        {
+          "name": "Jimmy Butler III",
           "status": "Out"
+        },
+        {
+          "name": "Moses Moody",
+          "status": "Out"
+        },
+        {
+          "name": "Gary Payton II",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Kristaps Porzingis",
+          "status": "Out"
+        },
+        {
+          "name": "Will Richard",
+          "status": "Out"
+        },
+        {
+          "name": "Brandon Williams",
+          "status": "Day-To-Day"
         }
       ],
       "DET": [
@@ -39950,7 +40035,7 @@
         },
         {
           "name": "Morez Johnson Jr.",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Dereck Lively II",
@@ -39960,7 +40045,7 @@
       "CHA": [
         {
           "name": "Moussa Diabate",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Kon Knueppel",
@@ -39968,7 +40053,7 @@
         },
         {
           "name": "Brandon Miller",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Dennis Schroder",
@@ -39982,9 +40067,9 @@
     },
     "elo": {
       "OKC": 1706.0735494676217,
-      "HOU": 1602.8662737379482,
+      "HOU": 1610.6642303036292,
       "LAL": 1643.0584321095723,
-      "GSW": 1486.986026838677,
+      "GSW": 1492.164207525479,
       "NYK": 1599.7488988403404,
       "CLE": 1576.3223847980148,
       "ORL": 1495.8472819255717,
@@ -39994,45 +40079,45 @@
       "BOS": 1665.5035339234548,
       "PHI": 1587.6444624772366,
       "ATL": 1558.4092176977667,
-      "TOR": 1532.5228506105377,
-      "MEM": 1355.7010829447236,
-      "NOP": 1394.4770460895063,
+      "TOR": 1518.10633744842,
       "MIL": 1356.4620839693694,
       "WAS": 1311.4769873523228,
       "CHI": 1349.3612076219472,
       "DET": 1655.4729847237393,
+      "MEM": 1370.1175961068413,
+      "NOP": 1389.2988654027042,
       "UTAH": 1286.0978415212235,
       "LAC": 1485.99342648628,
-      "DAL": 1414.9723992755673,
-      "SAS": 1697.2658472981834,
-      "PHX": 1507.4155948562018,
+      "DAL": 1420.0757962243829,
+      "SAS": 1703.1640915409646,
+      "PHX": 1501.5173506134206,
       "SAC": 1322.679865852635,
       "POR": 1546.6425867410458,
       "MIN": 1584.697163086149,
-      "IND": 1318.9260060291033,
-      "DEN": 1621.1837312118432
+      "IND": 1313.8226090802877,
+      "DEN": 1613.3857746461622
     },
     "historicalModel": {
       "method": "chronological-online-ridge",
-      "trained": 1305,
-      "backtest": 1156,
+      "trained": 1310,
+      "backtest": 1161,
       "validated": true,
       "weights": [
-        1.7610547180578584,
-        7.494646783639167,
-        2.8694245726215644,
-        0.7359975905208378,
-        -2.139083121368903,
-        1.2204479510388406
+        1.7786512703602566,
+        7.537470393869886,
+        2.97160517490627,
+        0.7121542496181922,
+        -2.272443418686312,
+        1.2745926594230474
       ],
-      "marginMAE": 11.57,
-      "eloBaselineMAE": 11.96,
+      "marginMAE": 11.61,
+      "eloBaselineMAE": 11.99,
       "winAccuracy": 0.67,
-      "brier": 0.2063,
+      "brier": 0.2062,
       "description": "Expanding time-order; prior games only, evaluated before learning each result."
     },
     "diagnostics": {
-      "historicalFinals": 1384,
+      "historicalFinals": 1389,
       "rosterTeams": 29,
       "previousRosterTeams": 3,
       "injuryTeams": 28
