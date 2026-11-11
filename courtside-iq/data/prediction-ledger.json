@@ -23166,7 +23166,7 @@
       }
     }
   ],
-  "updatedAt": "2026-11-11T16:31:52.616Z",
+  "updatedAt": "2026-11-11T22:58:49.262Z",
   "model": {
     "status": "baseline-holdout-rejected",
     "sample": 146,
@@ -23196,7 +23196,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-11T16:31:52.616Z",
+    "updatedAt": "2026-11-11T22:58:49.262Z",
     "homeGames": {
       "IND": [
         {
@@ -42454,10 +42454,6 @@
           "status": "Out"
         },
         {
-          "name": "T.J. McConnell",
-          "status": "Day-To-Day"
-        },
-        {
           "name": "Ben Sheppard",
           "status": "Out"
         }
@@ -42477,12 +42473,6 @@
         },
         {
           "name": "Jamir Watkins",
-          "status": "Out"
-        }
-      ],
-      "NYK": [
-        {
-          "name": "Josh Hart",
           "status": "Out"
         }
       ],
@@ -42507,25 +42497,23 @@
         },
         {
           "name": "Trayce Jackson-Davis",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Kawhi Leonard",
           "status": "Out"
-        },
+        }
+      ],
+      "BOS": [
         {
-          "name": "Collin Murray-Boyles",
-          "status": "Day-To-Day"
-        },
-        {
-          "name": "Immanuel Quickley",
-          "status": "Day-To-Day"
+          "name": "Paul George",
+          "status": "Out"
         }
       ],
       "CHI": [
         {
           "name": "Tobe Awaka",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Zach Collins",
@@ -42533,6 +42521,10 @@
         },
         {
           "name": "Norman Powell",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Caleb Wilson",
           "status": "Day-To-Day"
         }
       ],
@@ -42578,15 +42570,23 @@
         {
           "name": "Tyler Herro",
           "status": "Day-To-Day"
+        },
+        {
+          "name": "Myles Turner",
+          "status": "Out"
         }
       ],
       "LAL": [
         {
           "name": "Quentin Grimes",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "NOP": [
+        {
+          "name": "Bennedict Mathurin",
+          "status": "Out"
+        },
         {
           "name": "Yves Missi",
           "status": "Out"
@@ -42606,12 +42606,8 @@
           "status": "Out"
         },
         {
-          "name": "Egor Demin",
-          "status": "Out"
-        },
-        {
           "name": "Nolan Traore",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "UTAH": [
@@ -42625,7 +42621,7 @@
         },
         {
           "name": "Lauri Markkanen",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Jusuf Nurkic",
@@ -42636,6 +42632,10 @@
         {
           "name": "Paolo Banchero",
           "status": "Out"
+        },
+        {
+          "name": "Jamal Cain",
+          "status": "Day-To-Day"
         },
         {
           "name": "Tristan da Silva",
@@ -42687,7 +42687,7 @@
         },
         {
           "name": "Will Richard",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Brandon Williams",
@@ -42706,11 +42706,19 @@
         {
           "name": "Shaedon Sharpe",
           "status": "Out"
+        },
+        {
+          "name": "Chris Youngblood",
+          "status": "Out"
         }
       ],
       "OKC": [
         {
           "name": "Chet Holmgren",
+          "status": "Out"
+        },
+        {
+          "name": "Ajay Mitchell",
           "status": "Out"
         },
         {
@@ -42740,8 +42748,16 @@
           "status": "Out"
         },
         {
+          "name": "Joel Embiid",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Ariel Hukporti",
           "status": "Out"
+        },
+        {
+          "name": "LeBron James",
+          "status": "Day-To-Day"
         }
       ],
       "DET": [
