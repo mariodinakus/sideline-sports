@@ -26641,7 +26641,7 @@
       }
     }
   ],
-  "updatedAt": "2026-11-14T14:26:09.006Z",
+  "updatedAt": "2026-11-14T23:18:59.176Z",
   "model": {
     "status": "baseline-holdout-rejected",
     "sample": 169,
@@ -26671,7 +26671,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-14T14:26:09.006Z",
+    "updatedAt": "2026-11-14T23:18:59.176Z",
     "homeGames": {
       "NOP": [
         {
@@ -46221,11 +46221,11 @@
     "injuries": {
       "NOP": [
         {
-          "name": "Bryce McGowens",
+          "name": "Bennedict Mathurin",
           "status": "Out"
         },
         {
-          "name": "Yves Missi",
+          "name": "Bryce McGowens",
           "status": "Out"
         },
         {
@@ -46249,7 +46249,19 @@
       ],
       "CLE": [
         {
+          "name": "Jarrett Allen",
+          "status": "Out"
+        },
+        {
+          "name": "James Harden",
+          "status": "Out"
+        },
+        {
           "name": "Sam Merrill",
+          "status": "Out"
+        },
+        {
+          "name": "Donovan Mitchell",
           "status": "Out"
         },
         {
@@ -46258,6 +46270,10 @@
         },
         {
           "name": "Nae'Qwan Tomlin",
+          "status": "Out"
+        },
+        {
+          "name": "Peyton Watson",
           "status": "Out"
         }
       ],
@@ -46268,15 +46284,11 @@
         },
         {
           "name": "Max Christie",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Sergio de Larrea",
           "status": "Out"
-        },
-        {
-          "name": "Morez Johnson Jr.",
-          "status": "Day-To-Day"
         },
         {
           "name": "Dereck Lively II",
@@ -46285,12 +46297,16 @@
       ],
       "MIA": [
         {
+          "name": "Giannis Antetokounmpo",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Pelle Larsson",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Klay Thompson",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "DET": [
@@ -46310,6 +46326,14 @@
       "MEM": [
         {
           "name": "Zach Edey",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jerami Grant",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Ty Jerome",
           "status": "Out"
         },
         {
@@ -46328,6 +46352,10 @@
       "BKN": [
         {
           "name": "Mikel Brown Jr.",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Michael Porter Jr.",
           "status": "Day-To-Day"
         },
         {
@@ -46351,12 +46379,16 @@
           "status": "Out"
         },
         {
-          "name": "Jalen Smith",
+          "name": "Nic Claxton",
           "status": "Day-To-Day"
         },
         {
-          "name": "Dailyn Swain",
-          "status": "Out"
+          "name": "Norman Powell",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Jalen Smith",
+          "status": "Day-To-Day"
         },
         {
           "name": "Caleb Wilson",
@@ -46373,12 +46405,12 @@
           "status": "Out"
         },
         {
-          "name": "Ariel Hukporti",
+          "name": "Joel Embiid",
           "status": "Out"
         },
         {
-          "name": "LeBron James",
-          "status": "Day-To-Day"
+          "name": "Ariel Hukporti",
+          "status": "Out"
         }
       ],
       "IND": [
@@ -46389,6 +46421,10 @@
         {
           "name": "Tyrese Haliburton",
           "status": "Out"
+        },
+        {
+          "name": "T.J. McConnell",
+          "status": "Day-To-Day"
         },
         {
           "name": "Aaron Nesmith",
@@ -46410,10 +46446,6 @@
         }
       ],
       "LAL": [
-        {
-          "name": "Luka Doncic",
-          "status": "Day-To-Day"
-        },
         {
           "name": "Quentin Grimes",
           "status": "Day-To-Day"
@@ -46491,12 +46523,6 @@
           "status": "Out"
         }
       ],
-      "BOS": [
-        {
-          "name": "Paul George",
-          "status": "Day-To-Day"
-        }
-      ],
       "TOR": [
         {
           "name": "Scottie Barnes",
@@ -46505,10 +46531,6 @@
         {
           "name": "Nate Bittle",
           "status": "Out"
-        },
-        {
-          "name": "Trayce Jackson-Davis",
-          "status": "Day-To-Day"
         },
         {
           "name": "Kawhi Leonard",
@@ -46533,6 +46555,14 @@
           "status": "Out"
         },
         {
+          "name": "Tre Johnson",
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Alex Sarr",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Tristan Vukcevic",
           "status": "Out"
         },
@@ -46553,12 +46583,22 @@
         {
           "name": "Marcus Smart",
           "status": "Suspension"
+        },
+        {
+          "name": "Fred VanVleet",
+          "status": "Out"
+        }
+      ],
+      "MIL": [
+        {
+          "name": "Ousmane Dieng",
+          "status": "Out"
         }
       ],
       "ATL": [
         {
           "name": "Kingston Flemings",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Keshon Gilbert",
@@ -46580,7 +46620,11 @@
       "SAC": [
         {
           "name": "Precious Achiuwa",
-          "status": "Out"
+          "status": "Day-To-Day"
+        },
+        {
+          "name": "Keegan Murray",
+          "status": "Day-To-Day"
         },
         {
           "name": "Maxime Raynaud",
@@ -46598,7 +46642,7 @@
         },
         {
           "name": "Ajay Mitchell",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Thomas Sorber",
@@ -46650,7 +46694,7 @@
         },
         {
           "name": "Chris Youngblood",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "GSW": [
