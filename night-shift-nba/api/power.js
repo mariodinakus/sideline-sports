@@ -46,6 +46,10 @@ function toPlayer(e,defs,teams){
  const games=pick('general','gamesPlayed'),ppg=pick('offensive','avgPoints'),rpg=pick('general','avgRebounds'),apg=pick('offensive','avgAssists');
  const spg=pick('defensive','avgSteals'),bpg=pick('defensive','avgBlocks'),mpg=pick('general','avgMinutes'),fg=pick('offensive','fieldGoalPct');
  const team=teams.find(x=>x.id===teamId),wp=team?.winPct??.5;
+ const fgm=pick('offensive','avgFieldGoalsMade'),fga=pick('offensive','avgFieldGoalsAttempted'),three=pick('offensive','avgThreePointFieldGoalsMade'),fta=pick('offensive','avgFreeThrowsAttempted'),turnovers=pick('offensive','avgTurnovers');
+ const efg=fgm!==null&&fga>0&&three!==null?100*(fgm+0.5*three)/fga:null;
+ const ts=ppg!==null&&fga!==null&&fta!==null&&(fga+.44*fta)>0?100*ppg/(2*(fga+.44*fta)):null;
+ const astTo=apg!==null&&turnovers>0?apg/turnovers:null;
  if(!id||!name||games===null||ppg===null)return null;
  const eligible=games>=5&&mpg!==null&&mpg>=18;
  const gpFactor=clamp(games/13,.45,1);
@@ -53,7 +57,7 @@ function toPlayer(e,defs,teams){
  const context=(.45+.55*wp)*.15;
  const mvp=100*(production+context)*gpFactor;
  return {id,name,teamId,team:team?.abbr||null,teamName:team?.name||null,headshot:e.athlete?.headshot?.href||null,
-   games,mpg,ppg,rpg,apg,spg,bpg,fg,teamWinPct:team?.winPct??null,teamRank:team?teams.indexOf(team)+1:null,
+   games,mpg,ppg,rpg,apg,spg,bpg,fg,tsPct:ts===null?null:Number(ts.toFixed(1)),efgPct:efg===null?null:Number(efg.toFixed(1)),astTo:astTo===null?null:Number(astTo.toFixed(2)),turnovers,teamWinPct:team?.winPct??null,teamRank:team?teams.indexOf(team)+1:null,
    index:Number(mvp.toFixed(2)),eligible,uncertainty:games<12?'high':games<40?'moderate':'lower'};
 }
 async function athletes(teams) {
@@ -75,8 +79,11 @@ module.exports=async(req,res)=>{
  const source={league:'NBA',season:2027,seasonName:raw.season?.displayName||'2026-27',asOf:new Date().toISOString(),sources:['ESPN 2026–27 current standings','ESPN 2026–27 player averages'],method:'Editorial heuristic, not sportsbook odds'};
  let playerData=null,playerError=null;
  try{playerData=await athletes(teams)}catch(e){playerError=String(e.message||e)}
- const result={...source,teams,teamCount:teams.length,players:playerData?.players.filter(p=>p.eligible).slice(0,60)||[],playerCount:playerData?.total||0,playerPartial:playerData?.partial||false,
- notes:{title:'TITLE SHARE is a normalized softmax over team power ratings, not a calibrated championship probability. Index mixes season win rate (53%), adjusted point differential (34%) and last-ten form (13%), with sample-size shrinkage toward league average. Not a playoff simulation.',mvp:'MVP INDEX is a custom 0–100 score: scoring 38%, rebounding 17%, assists 20%, steals+blocks 10%, team winning context 15%. It is scaled for games played and requires at least 5 games and 18 MPG. Not an official award forecast or voting poll.',data:'Earlier-season advanced metrics (PER/BPM/WS) are unavailable for 2026–27 and are excluded. No fabricated statistics. ESPN public feeds are unofficial and subject to revision.'},
+ const playersAll=playerData?.players||[];
+ const leaders=teams.map(t=>({teamId:t.id,leader:playersAll.find(p=>p.teamId===t.id&&p.eligible)||playersAll.find(p=>p.teamId===t.id)||null}));
+ const rankedPlayers=playersAll.filter(p=>p.eligible).slice(0,80);
+ const result={...source,teams,teamCount:teams.length,players:rankedPlayers,teamLeaders:leaders,playerCount:playerData?.total||0,playerPartial:playerData?.partial||false,
+ notes:{title:'TITLE SHARE is a normalized softmax over team power ratings, not a calibrated championship probability. Index mixes season win rate (53%), adjusted point differential (34%) and last-ten form (13%), with sample-size shrinkage toward league average. Not a playoff simulation.',mvp:'MVP INDEX is a custom 0–100 score: scoring 38%, rebounding 17%, assists 20%, steals+blocks 10%, team winning context 15%. It is scaled for games played and requires at least 5 games and 18 MPG. Not an official award forecast or voting poll.',data:'2026–27 eFG%, TS% and AST/TO are calculated from reported ESPN per-game stats; rounded inputs can cause minor differences. PER/BPM/WS are not supplied for this season in this source and are not invented. ESPN public feeds are unofficial and subject to revision.'},
  errors:playerError?[{type:'MVP',message:playerError}]:[]};
  res.setHeader('Cache-Control','public, s-maxage=360, stale-while-revalidate=900');
  res.status(200).json(result);
