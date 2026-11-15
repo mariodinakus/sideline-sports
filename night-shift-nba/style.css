@@ -258,3 +258,63 @@ h1,h2,h3,h4,.hero-counter,.brand b,.brand-icon,.spot b,.stat-card b,.team-card s
 .market-team-strip b{font-size:19px}
 .market-team-strip small{font-size:8px}
 }
+
+/* NIGHT SHIFT v7 — measured standings density + daily watch radar */
+.standings-table th,.standings-table td{padding:10px 12px;vertical-align:middle;font-size:11px}
+.standings-table tbody td:nth-child(n+3){font-family:'Archivo',sans-serif;font-weight:750;font-variant-numeric:tabular-nums}
+.standings-table tbody td:nth-child(4){color:#f0d2d1}
+.stand-team{display:inline-flex;align-items:center;gap:10px;min-width:168px;max-width:265px}
+.stand-team b{font:800 12px/1.2 'Archivo',sans-serif;white-space:normal;overflow-wrap:normal}
+.standings-table .stand-logo,
+.historical-table .stand-logo,
+.stand-team .stand-logo{display:block!important;width:25px!important;height:25px!important;max-width:25px!important;max-height:25px!important;min-width:25px!important;object-fit:contain;flex:none}
+.stand-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+.stand-summary>div{padding:17px 14px;background:#201e25;border:1px solid #3a3540;border-radius:11px;min-width:0}
+.stand-summary small{font:800 9px 'Archivo';letter-spacing:.07em;display:block;color:#b3aab6}
+.stand-summary strong{font:900 clamp(18px,3vw,28px) 'Archivo';color:#edd2d2;display:block;margin-top:11px;letter-spacing:-.04em}
+.prime-gp{display:block;white-space:nowrap;font:750 9px/1 'Archivo',sans-serif;color:#98949f;letter-spacing:-.02em;padding-bottom:6px}
+.prime-year{height:242px;justify-content:flex-end}
+.prime-scroll{padding-bottom:7px}
+.prime-chart{height:242px}
+.prime-year.in-prime .prime-gp{color:#dc9da5}
+.prime-summary{background:#30262f;border:1px solid #73505b;border-radius:9px;padding:10px 13px}
+.prime-summary strong{display:inline-block;color:#f4d9da;font-size:13px}
+.tier-tabs{margin-top:2px;margin-bottom:16px;border:0;padding:5px;background:#26232b;gap:4px}
+.tier-tabs .int-tab{min-width:105px;flex:1}
+.nba-radar{margin-top:22px}
+.radar-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.radar-panel{min-width:0;padding:15px;border:1px solid #3c3540;background:#1d1c22;border-radius:13px}
+.radar-label{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.radar-label span{font:900 12px 'Archivo';color:#f0d9d9}
+.radar-label small{font:650 10px 'Inter';color:#9c96a0}
+.radar-game{display:block;background:#28232b;border:1px solid #443941;color:inherit;text-align:left;border-radius:9px;width:100%;padding:12px 14px;margin:7px 0}
+.radar-game:hover{border-color:#bb7883;background:#2e252c}
+.radar-match{display:flex;align-items:center;justify-content:space-between;gap:13px;margin:10px 0 8px;font:850 14px 'Archivo';color:#f4ebed}
+.radar-match b{font:900 18px 'Archivo';color:#edbfc4}
+.radar-game>small{font:650 10px/1.55 'Inter';color:#b3a9b3}
+.radar-tv{background:#231f27;border-top:1px solid #443845;padding-top:12px;margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.radar-tv small{font:850 9px 'Archivo';color:#b09ea9}
+.radar-tv strong{font:800 11px/1.5 'Inter';color:#e8d8db}
+.radar-tv a{font:800 10px 'Archivo';color:#d99fa9;text-decoration:none}
+.economy-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.economy-metric{min-width:0;padding:17px;border:1px solid #3d3640;background:linear-gradient(140deg,#242029,#1a1a20);border-radius:11px}
+.economy-metric small{display:block;color:#a69ba9;font:850 9px 'Archivo';letter-spacing:.08em}
+.economy-metric strong{display:block;margin-top:12px;color:#ecd3d5;font:900 clamp(19px,2.5vw,25px) 'Archivo';letter-spacing:-.04em}
+.nba-economics .section-title a{color:#cfa0a8}
+@media(max-width:920px){
+.radar-columns{grid-template-columns:1fr}
+.economy-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:640px){
+.stand-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+.standings-table th,.standings-table td{padding:9px 8px;font-size:10px}
+.stand-team{min-width:110px;gap:7px}
+.stand-team b{font-size:10px}
+.standings-table .stand-logo,.historical-table .stand-logo,.stand-team .stand-logo{width:21px!important;height:21px!important;max-height:21px!important;max-width:21px!important;min-width:21px!important}
+.radar-label{align-items:flex-start;flex-wrap:wrap}
+.economy-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+.economy-metric{padding:13px}
+.economy-metric strong{font-size:19px}
+.tier-tabs{flex-wrap:nowrap;overflow-x:auto}
+.tier-tabs .int-tab{min-width:100px;font-size:9px}
+}
