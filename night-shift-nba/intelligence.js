@@ -79,7 +79,7 @@ return'<div class="profile"><div class="profile-info"><div class="eyebrow">NBA /
 '<p class="muted" style="font-size:11px">ESPN public historical statistics · ορισμένες μετρικές δεν υπήρχαν πριν θεσπιστούν (π.χ. 3PT, STL, BLK). Το «—» σημαίνει μη διαθέσιμο και όχι μηδέν.</p>';
 }
 function historicalPlayerPage(id){const h=state.histPlayers[id];return historyPlayerCore(id)+(h&&!h.loading&&!h.error?awardsSummary(h)+powerPlayerPanel(id)+advancedPlayerPanel(id):'')}
-function historicalTeamPage(id){const y=state.histYear,key=id+'@'+y,h=state.histRosters[key];return teamPage(id)+powerTeamPanel(id)+'<section class="section"><div class="section-title"><div><div class="eyebrow">TEAM TIME MACHINE</div><h2>Historical roster</h2></div>'+seasonPicker('roster-season',y)+'</div>'+
+function historicalTeamPage(id){const y=state.histYear,key=id+'@'+y,h=state.histRosters[key];return teamPage(id)+powerTeamPanel(id)+teamMarketPanel(id)+'<section class="section"><div class="section-title"><div><div class="eyebrow">TEAM TIME MACHINE</div><h2>Historical roster</h2></div>'+seasonPicker('roster-season',y)+'</div>'+
 (!h||h.loading?skeleton(2):h.error?error(h.error):h.players?.length?'<div class="player-grid">'+h.players.map(p=>playerCard(p)).join('')+'</div>'+(h.partial?'<p class="warning">Η ESPN επέστρεψε μόνο μέρος του ρόστερ.</p>':''):error('Δεν υπάρχει διαθέσιμο ρόστερ αυτής της σεζόν για την ομάδα.'))+'</section>'}
 function historicalSearchPage(){
 const q=state.q.toLowerCase(),teams=state.teams.filter(t=>(t.name+' '+t.abbr).toLowerCase().includes(q)),present=state.players.filter(p=>p.name.toLowerCase().includes(q)),famous=legendPlayers.filter(a=>a[1].toLowerCase().includes(q)).map(a=>({id:a[0],name:a[1]})),all=[...state.histSearch,...present,...famous];
