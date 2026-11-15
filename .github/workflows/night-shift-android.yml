@@ -7,7 +7,7 @@ on:
       - '.github/workflows/night-shift-android.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,3 +37,11 @@ jobs:
           path: night-shift-nba/android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
           if-no-files-found: error
+      - name: Publish APK to NIGHT SHIFT web download
+        run: |
+          mkdir -p night-shift-nba/downloads
+          cp night-shift-nba/android/app/build/outputs/apk/debug/app-debug.apk night-shift-nba/downloads/night-shift-nba.apk
+          git config user.name "night-shift-build[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f night-shift-nba/downloads/night-shift-nba.apk
+          git diff --cached --quiet || (git commit -m "build(nba): publish Android debug APK" && git push origin HEAD:night-shift-nba)
