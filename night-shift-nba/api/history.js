@@ -52,7 +52,7 @@ async function playerDetail(id) {
   return {id,athlete:profile.status==='fulfilled'?playerRecord(profile.value):null,
     regular:season.status==='fulfilled'?snapshot(season.value):null,
     playoffs:playoffs.status==='fulfilled'?snapshot(playoffs.value):null,
-    awards:bio.status==='fulfilled'?(bio.value.awards||[]).slice(0,60).map(a=>({name:a.name||'',count:a.displayCount||'',seasons:a.seasons||[]})):[],
+    awards:bio.status==='fulfilled'?(bio.value.awards||[]).filter(a=>a.league==='nba').slice(0,60).map(a=>({name:a.name||'',count:a.displayCount||'',seasons:a.seasons||[]})):[],
     teamHistory:bio.status==='fulfilled'?(bio.value.teamHistory||[]).slice(0,35):[],
     warnings:[profile,season,playoffs,bio].map((v,i)=>v.status==='rejected'?['Profile','Regular season','Playoffs','Honors'][i]+' unavailable':null).filter(Boolean)};
 }
