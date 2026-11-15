@@ -16,7 +16,7 @@ function archivePage(){
 const year=state.histYear,st=state.histStandings[year];return pageTitle('NBA / HISTORICAL','Time machine','Αρχεία ESPN ανά σεζόν · διαθέσιμα ρόστερ, καριέρες και βαθμολογίες')+
 '<div class="archive-hero"><div class="eyebrow red">77+ YEARS OF NBA</div><h2>THE GAME<br>NEVER STOPS.</h2><p>1946 → 2027 · Τα κενά ιστορικών δεδομένων επισημαίνονται. Δεν αναπληρώνονται με εκτιμήσεις.</p></div>'+
 '<section class="section"><div class="section-title"><div><div class="eyebrow">YEAR BY YEAR</div><h2>Standings & rosters</h2></div>'+seasonPicker('archive-season',year)+'</div>'+
-(!st||st.loading?skeleton(2):st.error?error('Ιστορική σεζόν: '+st.error):(st.groups||[]).map(g=>'<div class="table-wrap historical-table"><table><thead><tr><th colspan="5">'+hEsc(g.name)+' · '+hEsc(st.seasonName)+'</th></tr><tr><th>#</th><th>TEAM</th><th>W</th><th>L</th><th>PCT</th></tr></thead><tbody>'+g.entries.map((e,i)=>'<tr class="click-row" data-historic-team="'+esc(e.team.id)+'"><td>'+esc(i+1)+'</td><td>'+logo(e.team)+hEsc(e.team.name)+'</td><td>'+hEsc(e.stats?.wins)+'</td><td>'+hEsc(e.stats?.losses)+'</td><td>'+hEsc(e.stats?.winPercent)+'</td></tr>').join('')+'</tbody></table></div>').join('')||error('No historical standings for this season.'))+'</section>'+
+(!st||st.loading?skeleton(2):st.error?error('Ιστορική σεζόν: '+st.error):(st.groups||[]).map(g=>'<div class="table-wrap historical-table"><table><thead><tr><th colspan="5">'+hEsc(g.name)+' · '+hEsc(st.seasonName)+'</th></tr><tr><th>#</th><th>TEAM</th><th>W</th><th>L</th><th>PCT</th></tr></thead><tbody>'+g.entries.map((e,i)=>'<tr class="click-row" data-historic-team="'+esc(e.team.id)+'"><td>'+esc(i+1)+'</td><td>'+standingTeamLogo(e.team)+'</td><td>'+hEsc(e.stats?.wins)+'</td><td>'+hEsc(e.stats?.losses)+'</td><td>'+hEsc(e.stats?.winPercent)+'</td></tr>').join('')+'</tbody></table></div>').join('')||error('No historical standings for this season.'))+'</section>'+
 '<section class="section"><div class="section-title"><div><div class="eyebrow">HALL OF FAME & ACTIVE LEGENDS</div><h2>Find the greats</h2></div></div><p class="muted" style="font-size:12px;margin-bottom:16px">Τα ονόματα είναι ενδεικτικά. Η αναζήτηση βρίσκει και χιλιάδες παλιούς παίκτες, εφόσον υπάρχουν στον κατάλογο ESPN.</p><div class="player-grid">'+legendPlayers.map(([id,n])=>playerCard({id,name:n,team:{abbr:'NBA HISTORY'}})).join('')+'</div></section>'+
 '<section class="section"><div class="section-title"><h2>Historic games</h2></div><div class="panel"><p class="muted">Στο Game Center διάλεξε οποιαδήποτε ημερομηνία. Θα εμφανιστούν μόνο όσα ιστορικά σκορ ή box scores διαθέτει η ESPN.</p><button class="wide-btn" '+action('nav','games')+'>Browse dates</button></div></section>';
 }
@@ -29,16 +29,18 @@ function playerHistoryTable(rows){return!rows?.length?error('Δεν βρέθηκ
  */
 function seasonNum(x,k){const v=x?.stats?.[k];return v===null||v===undefined||v===''?null:Number.isFinite(Number(v))?Number(v):null}
 function statPrime(rows){
- const years=new Map();
- for(const r of rows||[]){const gp=seasonNum(r,'gamesPlayed')||0;if(!r.season||gp<=0)continue;
- const old=years.get(r.season);if(!old||(seasonNum(old,'gamesPlayed')||0)<gp)years.set(r.season,r)}
- const ordered=[...years.values()].sort((a,b)=>a.season-b.season).filter(r=>seasonNum(r,'avgPoints')!==null);
- const windows=[];for(let i=0;i<=ordered.length-3;i++){const a=ordered.slice(i,i+3);if(a.some((r,j)=>j>0&&r.season!==a[j-1].season+1)||(a.some(r=>(seasonNum(r,'gamesPlayed')||0)<25)))continue;
- const val=a.reduce((sum,r)=>sum+(seasonNum(r,'avgPoints')||0)+.60*(seasonNum(r,'avgAssists')||0)+.28*(seasonNum(r,'avgRebounds')||0),0)/3;
- windows.push({seasons:a.map(r=>r.season),score:val,ppg:a.reduce((n,r)=>n+(seasonNum(r,'avgPoints')||0),0)/3,start:a[0].seasonLabel,end:a[2].seasonLabel})}
- windows.sort((a,b)=>b.score-a.score);let prime=windows[0]||null;
- const peak=[...ordered].sort((a,b)=>(seasonNum(b,'avgPoints')||0)-(seasonNum(a,'avgPoints')||0))[0]||null;
- return {prime,peak,ordered};
+ const byYear=new Map();
+ for(const r of rows||[]){const gp=seasonNum(r,'gamesPlayed')||0;if(!Number.isInteger(r.season)||!gp)continue;const old=byYear.get(r.season);if(!old||(seasonNum(old,'gamesPlayed')||0)<gp)byYear.set(r.season,r)}
+ const ordered=[...byYear.values()].filter(r=>seasonNum(r,'avgPoints')!==null).sort((a,b)=>a.season-b.season);
+ const production=r=>(seasonNum(r,'avgPoints')||0)+.6*(seasonNum(r,'avgAssists')||0)+.28*(seasonNum(r,'avgRebounds')||0);
+ const candidates=ordered.filter(r=>(seasonNum(r,'gamesPlayed')||0)>=25);
+ const peak=candidates.length?candidates.slice().sort((a,b)=>production(b)-production(a))[0]:null;
+ const scorePeak=candidates.length?candidates.slice().sort((a,b)=>(seasonNum(b,'avgPoints')||0)-(seasonNum(a,'avgPoints')||0))[0]:null;
+ if(!peak)return {prime:null,peak:scorePeak,ordered};
+ const qualified=new Map(candidates.filter(r=>production(r)>=.82*production(peak)).map(r=>[r.season,r]));
+ let first=peak.season,last=peak.season;while(qualified.has(first-1))first--;while(qualified.has(last+1))last++;
+ const interval=ordered.filter(r=>r.season>=first&&r.season<=last);
+ return {ordered,peak:scorePeak,prime:{seasons:interval.map(r=>r.season),length:interval.length,start:interval[0]?.seasonLabel,end:interval.at(-1)?.seasonLabel,ppg:interval.reduce((a,r)=>a+(seasonNum(r,'avgPoints')||0),0)/interval.length,totalGP:interval.reduce((a,r)=>a+(seasonNum(r,'gamesPlayed')||0),0)}};
 }
 function playerStyle(career){
  const pts=Number(career.avgPoints)||0,ast=Number(career.avgAssists)||0,reb=Number(career.avgRebounds)||0,stl=Number(career.avgSteals)||0,blk=Number(career.avgBlocks)||0,pct=Number(career.threePointFieldGoalPct)||0;
@@ -54,19 +56,18 @@ function playerStyle(career){
  return ['All-round NBA profile','Αγωνιστικό προφίλ από τους διαθέσιμους μέσους όρους'];
 }
 function careerPrimeChart(rows){
- const a=statPrime(rows),ps=a.prime?.seasons||[],peak=a.peak?.season,ordered=a.ordered,max=Math.max(30,...ordered.map(r=>seasonNum(r,'avgPoints')||0));
- if(!ordered.length)return error('Season scoring statistics unavailable');
- return '<div class="prime-chart-panel"><div class="prime-chart-top"><div><div class="eyebrow">YEAR-BY-YEAR SCORING · REGULAR SEASON</div><h3>Career timeline</h3></div><div class="prime-summary">'+(a.prime?'<span class="prime-dot"></span><strong>STATISTICAL PRIME</strong> '+esc(a.prime.start+' → '+a.prime.end)+' <b>'+aVal(a.prime.ppg)+' PPG</b>':'<strong>PRIME</strong> Insufficient 3 consecutive qualified seasons')+'</div></div>'+
- '<div class="prime-scroll"><div class="prime-chart" style="--prime-years:'+ordered.length+'">'+ordered.map(r=>{const p=seasonNum(r,'avgPoints'),isPrime=ps.includes(r.season),isPeak=r.season===peak;return'<div class="prime-year '+(isPrime?'in-prime ':'')+(isPeak?'peak-season':'')+'" title="'+esc(r.seasonLabel)+' · '+(p===null?'N/A':p.toFixed(1))+' PPG'+(isPrime?' · STATISTICAL PRIME':'')+'"><span class="prime-value">'+(p===null?'—':p.toFixed(1))+'</span><div class="prime-column"><div style="height:'+Math.max(1,(p||0)/max*100)+'%"></div></div><span class="prime-year-label">'+esc(r.seasonLabel)+'</span></div>'}).join('')+'</div></div><div class="prime-legend"><span class="prime-key active"></span>Prime 3 seasons <span class="prime-key peak"></span>Peak scoring season <span class="prime-key"></span>Other seasons</div><p class="int-note">Prime = best available 3 consecutive regular seasons, each with at least 25 games, on PPG + 0.60 APG + 0.28 RPG. Peak marks maximum season PPG. This is a transparent statistical label, not a definitive judgment of a player’s career.</p></div>';
+ const result=statPrime(rows),prime=result.prime,years=result.ordered,peak=result.peak?.season,max=Math.max(30,...years.map(r=>seasonNum(r,'avgPoints')||0));
+ if(!years.length)return error('Season scoring statistics unavailable');
+ return '<div class="prime-chart-panel"><div class="prime-chart-top"><div><div class="eyebrow">YEAR-BY-YEAR · REGULAR SEASON</div><h3>Career prime & duration</h3></div><div class="prime-summary">'+(prime?'<strong>'+prime.length+' SEASONS OF PRIME</strong><br>'+esc(prime.start+' → '+prime.end)+'<b>'+aVal(prime.ppg)+' PPG · '+prime.totalGP+' GP</b>':'<strong>PRIME</strong> Insufficient qualified seasons')+'</div></div>'+
+ '<div class="prime-scroll"><div class="prime-chart">'+years.map(r=>{const p=seasonNum(r,'avgPoints'),gp=seasonNum(r,'gamesPlayed'),active=prime?.seasons.includes(r.season),isPeak=r.season===peak;return'<div class="prime-year '+(active?'in-prime ':'')+(isPeak?'peak-season':'')+'" title="'+esc(r.seasonLabel)+' · '+(p??'—')+' PPG · '+(gp??'—')+' GP"><span class="prime-value">'+(p===null?'—':p.toFixed(1))+'</span><div class="prime-column"><div style="height:'+Math.max(1,(p||0)/max*100)+'%"></div></div><span class="prime-year-label">'+esc(r.seasonLabel)+'</span><span class="prime-gp">'+(gp??'—')+' GP</span></div>'}).join('')+'</div></div><div class="prime-legend"><span class="prime-key active"></span>Prime · '+(prime?.length??'—')+' seasons <span class="prime-key peak"></span>Peak season <span class="prime-key"></span>Other seasons</div><p class="int-note">Δυναμική prime: συνεχόμενες σεζόν με τουλάχιστον 25 GP και ≥82% της μέγιστης ετήσιας παραγωγής PPG + 0,60×APG + 0,28×RPG. Δεν επιβάλλεται διάρκεια 3 σεζόν. Πρόκειται για περιγραφικό δείκτη, όχι επίσημη κατάταξη.</p></div>';
 }
-
 function historyPlayerCore(id){
 const h=state.histPlayers[id],fallback=state.players.find(p=>p.id===id)||legendPlayers.find(x=>x[0]===id)&&{id,name:legendPlayers.find(x=>x[0]===id)[1]}||stars.find(p=>p.id===id);
 if(!h||h.loading)return pageTitle('PLAYER / ALL ERAS',hEsc(fallback?.name||'Loading'))+skeleton(2);
 if(h.error)return pageTitle('PLAYER / ALL ERAS',hEsc(fallback?.name||id))+error('ESPN: '+h.error);
 const player=h.athlete||fallback||{id,name:'Player '+id},base=h.regular||{},mode=state.histMode==='playoffs'?'playoffs':'regular',data=h[mode]||{},career=base.careerAverages||{},totals=base.careerTotals||{},rows=data.seasonRows||[];
 const label=player.active?'ACTIVE PLAYER':'NBA HISTORY';
-const metrics=[['CAREER PPG',statCell(career,'avgPoints')],['CAREER RPG',statCell(career,'avgRebounds')],['CAREER APG',statCell(career,'avgAssists')],['SEASONS',base.yearCount??'—']];
+const metrics=[['CAREER PPG',statCell(career,'avgPoints')],['CAREER RPG',statCell(career,'avgRebounds')],['CAREER APG',statCell(career,'avgAssists')],['GAMES PLAYED',statCell(totals,'gamesPlayed')],['SEASONS',base.yearCount??'—']];
 const honors=(h.awards||[]).filter(a=>a.name).slice(0,25);
 const trait=playerStyle(career);
 return'<div class="profile"><div class="profile-info"><div class="eyebrow">NBA / CAREER DOSSIER</div><h1>'+hEsc(player.name||fallback?.name)+'</h1><div class="profile-sub">'+esc(label)+' · '+hEsc(player.position||'NBA')+'</div><div class="player-trait"><b>'+esc(trait[0])+'</b><span>'+esc(trait[1])+'</span></div><p>'+favButton('player',id)+'</p></div><img class="hero-face" alt="" src="'+head(player)+'"></div>'+
@@ -117,4 +118,4 @@ async function loadSidelineStories(){if(state.sidelineStories||state.sidelineBus
 function sidelinePanel(){const stories=state.sidelineStories||[];return'<section class="section"><div class="section-title"><div><div class="eyebrow">04 / SIDELINE SPORTS</div><h2>NBA News Radar</h2></div><a class="eyebrow" target="_blank" rel="noopener noreferrer" href="https://sideline-sports-gilt.vercel.app">SOURCE ↗</a></div>'+
 (stories.length?'<div class="news-grid">'+stories.slice(0,6).map(x=>'<a class="news-card" href="'+esc(x.url)+'" target="_blank" rel="noopener noreferrer"><span class="eyebrow red">'+esc(x.source||'SIDELINE')+'</span><strong>'+esc(x.title)+'</strong><small>'+esc(x.publishedAt?.slice(0,16).replace('T',' ')||'')+' UTC · OPEN ARTICLE ↗</small></a>').join('')+'</div>':state.sidelineBusy?'<div class="loading"></div>':error(state.sidelineError||'Δεν εντοπίστηκαν νέα NBA από το SIDELINE'))+'</section>'+
 '<section class="section"><div class="section-title"><div><div class="eyebrow">05 / CONNECTED LABS</div><h2>The intelligence network</h2></div></div><div class="connect-grid"><a class="connect-card" href="#/forecasts"><span class="eyebrow">COURTSIDE IQ</span><strong>Forecast Audit</strong><small>Probabilities · accuracy · locked predictions</small></a><a class="connect-card" href="#/archive"><span class="eyebrow">NBA ARCHIVE</span><strong>History Lab</strong><small>Player eras · old rosters · career statistics</small></a><a class="connect-card" href="#/advanced"><span class="eyebrow">ADVANCED DATA</span><strong>Team DNA & Evolution</strong><small>Advanced metrics · comparisons · stats academy</small></a><a class="connect-card" href="#/power"><span class="eyebrow">2026–27 POWER</span><strong>Championship & MVP Race</strong><small>Season strength · best players by team</small></a><a class="connect-card" href="#/goat"><span class="eyebrow">GOAT INDEX</span><strong>Greatness ranking</strong><small>ESPN awards · peak · longevity · scoring</small></a></div></section>'}
-function home(){return homeCore()+leadersStrip()+sidelinePanel()}
+function home(){const core=homeCore(),pos=core.indexOf('<section class="section">');return(pos>=0?core.slice(0,pos)+homeRadar()+core.slice(pos):core+homeRadar())+leadersStrip()+nbaEconomyPanel()+sidelinePanel()}
