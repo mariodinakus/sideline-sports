@@ -12,7 +12,7 @@ const ROOT=__dirname;
 const PORT=Number(process.env.PORT)||10000;
 const API_NAMES=new Set(['data','history','advanced','goat','power','intel','markets','sideline']);
 const STATIC_FILES=new Set([
- 'index.html','style.css','app.js','intelligence.js','advanced-ui.js','power-ui.js',
+ 'index.html','style.css','app.js','intelligence.js','advanced-ui.js','power-ui.js','daily-intel.js',
  'icon.svg','manifest.webmanifest','sw.js','downloads/night-shift-nba.apk'
 ]);
 const TYPES={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json','.apk':'application/vnd.android.package-archive'};
