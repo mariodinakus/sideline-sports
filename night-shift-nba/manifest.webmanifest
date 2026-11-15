@@ -1,0 +1,18 @@
+{
+  "name": "NIGHT SHIFT — NBA",
+  "short_name": "NIGHT SHIFT",
+  "description": "NBA basketball scores, team and player profiles",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101013",
+  "theme_color": "#101013",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
