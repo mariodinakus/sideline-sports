@@ -6,7 +6,7 @@ const CANDIDATES=[
 ['1966','LeBron James'],['1035','Michael Jordan'],['110','Kobe Bryant'],['2334','Magic Johnson'],['4145','Kareem Abdul-Jabbar'],
 ['2335','Larry Bird'],['215','Tim Duncan'],['609','Dirk Nowitzki'],['614','Shaquille O’Neal'],['366','Allen Iverson'],
 ['619','Hakeem Olajuwon'],['4152','Bill Russell'],['4142','Wilt Chamberlain'],['3975','Stephen Curry'],['3202','Kevin Durant'],
-['1987','Dwyane Wade'],['3032977','Giannis Antetokounmpo'],['3112335','Nikola Jokić'],['3945274','Luka Dončić'],['4594268','Anthony Edwards'],['5041939','Cooper Flagg']
+['1987','Dwyane Wade'],['3032977','Giannis Antetokounmpo'],['3112335','Nikola Jokić'],['3945274','Luka Dončić'],['4594268','Anthony Edwards'],['5041939','Cooper Flagg'],['4119','Oscar Robertson'],['501','Karl Malone'],['37','Charles Barkley'],['261','Kevin Garnett'],['3992','James Harden'],['3468','Russell Westbrook'],['2779','Chris Paul'],['4065648','Jayson Tatum'],['4278073','Shai Gilgeous-Alexander'],['5104157','Victor Wembanyama'],['715','David Robinson'],['3507','Isiah Thomas'],['812','John Stockton'],['663','Scottie Pippen'],['6450','Kawhi Leonard'],['3776','Moses Malone'],['4135','Elgin Baylor'],['4151','Jerry West']
 ];
 async function pull(url){const r=await fetch(url,{signal:AbortSignal.timeout(11000),headers:{accept:'application/json'},next:{revalidate:7200}});if(!r.ok)throw Error('ESPN HTTP '+r.status);return r.json()}
 function nums(v){const n=Number(v);return Number.isFinite(n)?n:null}
