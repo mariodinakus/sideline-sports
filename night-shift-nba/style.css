@@ -34,3 +34,14 @@
 @media(max-width:930px){.mobile-nav{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}.mobile-nav .nav-item{width:79px;min-width:79px;flex:0 0 79px}.mobile-nav::-webkit-scrollbar{display:none}}
 @media(max-width:680px){.career-grid{grid-template-columns:repeat(3,1fr)}.award-grid{grid-template-columns:repeat(2,1fr)}.forecast-row{grid-template-columns:1.3fr 1fr 1fr}.forecast-row>div:last-child{display:none}.forecast-row b{font-size:12px}.archive-hero{padding:30px 22px}.tv-panel{flex-direction:column;align-items:flex-start}.game-insights{font-size:9px}.section-title{flex-wrap:wrap}.section-title .filters{width:100%}.stat-card b{font-size:23px}}
 @media(max-width:390px){.award-grid{grid-template-columns:1fr}.career-grid{grid-template-columns:repeat(2,1fr)}}
+
+.news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.news-card{border:1px solid var(--line);background:var(--panel);min-height:156px;display:flex;flex-direction:column;gap:12px;justify-content:space-between;padding:19px;border-radius:12px;transition:.2s}
+.news-card:hover,.connect-card:hover{border-color:#815b60;transform:translateY(-2px)}
+.news-card strong{font:700 14px/1.4 'Space Grotesk';letter-spacing:-.02em}
+.news-card small,.connect-card small{font-size:10px;color:var(--muted)}
+.connect-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.connect-card{border:1px solid var(--line);background:linear-gradient(150deg,#282429,#19191e);border-radius:13px;padding:21px;display:flex;flex-direction:column;gap:13px;transition:.2s}
+.connect-card strong{font:700 18px 'Space Grotesk'}
+@media(max-width:750px){.news-grid,.connect-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:470px){.news-grid,.connect-grid{grid-template-columns:1fr}.news-card{min-height:120px}}
