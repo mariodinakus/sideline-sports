@@ -25495,7 +25495,12 @@
         "marginHigh": 26.84537164362665,
         "totalLow": 202.69924061483957,
         "totalHigh": 251.53935550135392
-      }
+      },
+      "actual": {
+        "home": 131,
+        "away": 124
+      },
+      "settledAt": "2026-11-15T23:06:48.263Z"
     },
     {
       "id": "2026:401909986",
@@ -27852,33 +27857,33 @@
       }
     }
   ],
-  "updatedAt": "2026-11-15T17:56:52.759Z",
+  "updatedAt": "2026-11-15T23:06:48.263Z",
   "model": {
     "status": "baseline-holdout-rejected",
-    "sample": 174,
+    "sample": 175,
     "minimum": 50,
     "holdout": 44,
     "marginWeights": null,
     "totalWeights": null,
     "marginValidated": false,
     "totalValidated": false,
-    "marginHoldoutMAE": 12.909556694086008,
-    "marginModelHoldoutMAE": 13.240034279189642,
-    "totalHoldoutMAE": 13.414007141383026,
-    "totalModelHoldoutMAE": 13.719555644492551,
-    "sigmaMargin": 14.949272343597654,
-    "sigmaTotal": 18.974248981521402
+    "marginHoldoutMAE": 12.609297309429785,
+    "marginModelHoldoutMAE": 12.86022503941494,
+    "totalHoldoutMAE": 13.376781546444153,
+    "totalModelHoldoutMAE": 13.636822520642562,
+    "sigmaMargin": 14.906611342113075,
+    "sigmaTotal": 19.036984033130956
   },
   "summary": {
-    "n": 174,
-    "winnerAccuracy": 0.7068965517241379,
-    "decisiveAccuracy": 0.732824427480916,
-    "decisiveN": 131,
-    "scoreMAE": 9.84333190566361,
-    "marginMAE": 11.414702572551008,
-    "totalMAE": 15.087218821457453,
-    "brier": 0.20288511413593882,
-    "margin80Coverage": 0.7701149425287356
+    "n": 175,
+    "winnerAccuracy": 0.7085714285714285,
+    "decisiveAccuracy": 0.7348484848484849,
+    "decisiveN": 132,
+    "scoreMAE": 9.866743443179542,
+    "marginMAE": 11.35385155807652,
+    "totalMAE": 15.160324439288571,
+    "brier": 0.20224338308236042,
+    "margin80Coverage": 0.7714285714285715
   },
   "contextCache": {
     "schema": 4,
