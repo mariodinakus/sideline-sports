@@ -46,9 +46,9 @@
     return{seed:i+1,conference:g.name,zone:i<6?'PLAYOFF':i<10?'PLAY-IN':'OUTSIDE',entry:rows[i]};
   }
   function rotationByMinutes(roster){
-    const positions=['PG','SG','SF','PF','C'],out=[];
-    for(const pos of positions){
-      const list=roster.filter(p=>String(p.position||'').toUpperCase().split(/[\/, -]+/).includes(pos)&&p.stats?.min!==null&&p.stats?.min!==undefined).sort((a,b)=>(b.stats.min||0)-(a.stats.min||0)).slice(0,2);
+    const groups=[['G',['G','PG','SG']],['F',['F','SF','PF']],['C',['C']]],out=[];
+    for(const [pos,aliases] of groups){
+      const list=roster.filter(p=>{const v=String(p.position||'').toUpperCase().replace(/\s/g,'');return aliases.some(a=>v.split(/[\/, -]+/).includes(a)||v===a)}&&p.stats?.min!==null&&p.stats?.min!==undefined).sort((a,b)=>(b.stats.min||0)-(a.stats.min||0)).slice(0,3);
       if(list.length)out.push({position:pos,players:list});
     }
     return out;
@@ -68,9 +68,10 @@
     const rosterById=new Map(roster.map(p=>[String(p.id),p]));
     const seed=standing?'<span class="ti-rank">#'+standing.seed+' '+escx(standing.conference)+' · '+standing.zone+'</span>':'<span class="ti-rank">STANDING UNAVAILABLE</span>';
     const lineup=starters.length?'<div class="ti-five-grid">'+starters.map((p,i)=>{const season=rosterById.get(String(p.id))?.stats||null;const g=p.gameStats||{};return'<article class="ti-five-card"><div class="ti-five-top"><span>'+(p.position||positions[i]||'—')+'</span><small>#'+escx(p.jersey||'—')+'</small></div>'+playerPhoto(p)+'<strong>'+escx(p.name)+'</strong><small class="ti-season-line">'+(season?'2026–27 · '+val(season.pts)+' PPG / '+val(season.reb)+' RPG / '+val(season.ast)+' APG':'Season averages unavailable')+'</small><small class="ti-game-line">LAST GAME · '+val(g.pts,0)+' PTS / '+val(g.reb,0)+' REB / '+val(g.ast,0)+' AST</small></article>'}).join('')+'</div>':'<div class="ti-empty">No starting five was published in the latest available completed box score. The app will not guess a current lineup.</div>';
-    const posOptions=['ALL','PG','SG','SF','PF','C'].map(x=>'<option value="'+x+'"'+(controls.position===x?' selected':'')+'>'+x+'</option>').join('');
+    const positionValues=[...new Set(roster.map(p=>String(p.position||'').toUpperCase()).filter(Boolean))].sort();
+    const posOptions=['ALL',...positionValues].map(x=>'<option value="'+x+'"'+(controls.position===x?' selected':'')+'>'+x+'</option>').join('');
     const sortSelect=sortOptions.map(x=>'<option value="'+x[0]+'"'+(controls.sort===x[0]?' selected':'')+'>'+x[1]+'</option>').join('');
-    let rows=roster.filter(p=>controls.position==='ALL'||String(p.position||'').toUpperCase().includes(controls.position));
+    let rows=roster.filter(p=>controls.position==='ALL'||String(p.position||'').toUpperCase()===controls.position);
     rows.sort((a,b)=>{const get=p=>{const k=controls.sort;return k==='per'?p.advanced?.per:k==='winShares'?p.advanced?.winShares:k==='ws48'?p.advanced?.ws48:k==='bpm'?p.advanced?.bpm:k==='vorp'?p.advanced?.vorp:k==='usagePercent'?p.advanced?.usagePercent:p.stats?.[k]};const av=get(a),bv=get(b);if(av===null||av===undefined)return 1;if(bv===null||bv===undefined)return-1;return(Number(av)-Number(bv))*(controls.descending?-1:1)});
     const advancedColumns='<th>PER<br>25–26</th><th>WS<br>25–26</th><th>WS/48<br>25–26</th><th>BPM<br>25–26</th><th>VORP<br>25–26</th><th>USG%<br>25–26</th>';
     const table='<div class="table-wrap ti-table-wrap"><table class="ti-roster-table"><thead><tr><th>PLAYER</th><th>POS</th><th>GP</th><th>MIN</th><th>PPG</th><th>RPG</th><th>APG</th><th>STL</th><th>BLK</th><th>TOV</th><th>FG%</th><th>3P%</th><th>FT%</th><th>TS%</th><th>eFG%</th>'+advancedColumns+'</tr></thead><tbody>'+(rows.length?rows.map(p=>'<tr><td><button class="ti-player-link" data-go="player:'+escx(p.id)+'">'+playerPhoto(p)+'<span>'+escx(p.name)+'</span></button></td><td>'+escx(p.position||'—')+'</td><td>'+val(p.stats?.gp,0)+'</td><td>'+val(p.stats?.min)+'</td><td>'+val(p.stats?.pts)+'</td><td>'+val(p.stats?.reb)+'</td><td>'+val(p.stats?.ast)+'</td><td>'+val(p.stats?.stl)+'</td><td>'+val(p.stats?.blk)+'</td><td>'+val(p.stats?.tov)+'</td><td>'+pct(p.stats?.fg)+'</td><td>'+pct(p.stats?.three)+'</td><td>'+pct(p.stats?.ft)+'</td><td>'+pct(p.stats?.ts)+'</td><td>'+pct(p.stats?.efg)+'</td><td>'+val(p.advanced?.per)+'</td><td>'+val(p.advanced?.winShares)+'</td><td>'+val(p.advanced?.ws48,3)+'</td><td>'+val(p.advanced?.bpm)+'</td><td>'+val(p.advanced?.vorp)+'</td><td>'+pct(p.advanced?.usagePercent)+'</td></tr>').join(''):'<tr><td colspan="21">Roster statistics unavailable from ESPN for this team/season.</td></tr>')+'</tbody></table></div>';
@@ -91,7 +92,7 @@
     let rows=(tx.items||[]).slice().sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
     if(controls.txTeam!=='ALL'){
       const team=getTeam(controls.txTeam),needles=[norm(team.name),norm(team.abbr)].filter(Boolean);
-      rows=rows.filter(x=>(x.teamIds||[]).includes(String(controls.txTeam))||(x.teams||[]).some(t=>needles.some(n=>norm(t.name).includes(n)||n.includes(norm(t.name)))));
+      rows=rows.filter(x=>(x.teamIds||[]).includes(String(controls.txTeam))||(x.teams||[]).some(t=>needles.some(n=>norm(t.name).includes(n)||n.includes(norm(t.name))))||needles.some(n=>norm(x.description).includes(n)));
     }
     if(controls.txType!=='ALL')rows=rows.filter(x=>x.category===controls.txType);
     if(controls.query){const q=norm(controls.query);rows=rows.filter(x=>norm([x.description,x.type,(x.players||[]).join(' '),(x.teams||[]).map(t=>t.name).join(' ')].join(' ')).includes(q))}
@@ -100,8 +101,8 @@
   }
   function playerTransactionsPanel(id){
     if(!tx.loaded||!tx.items.length)return'';
-    const p=(state.players||[]).find(x=>String(x.id)===String(id))||Object.values(state.rosters||{}).flatMap(x=>x?.players||[]).find(x=>String(x.id)===String(id))||{};
-    const items=tx.items.filter(x=>(x.playerIds||[]).includes(String(id))||(p.name&&(x.players||[]).some(n=>norm(n)===norm(p.name))));
+    const p=(state.players||[]).find(x=>String(x.id)===String(id))||Object.values(state.rosters||{}).flatMap(x=>x?.players||[]).find(x=>String(x.id)===String(id))||state.histPlayers?.[id]?.athlete||{};
+    const items=tx.items.filter(x=>(x.playerIds||[]).includes(String(id))||(p.name&&((x.players||[]).some(n=>norm(n)===norm(p.name))||norm(x.description).includes(norm(p.name)))));
     if(!items.length)return'';
     return'<section class="section ti-player-transactions"><div class="ti-block-head"><div><span>FRONT OFFICE HISTORY</span><h3>Transactions involving '+escx(p.name||'this player')+'</h3></div><button data-go="nav:transactions">OPEN TRADES →</button></div>'+teamTxHtml(items)+'</section>';
   }

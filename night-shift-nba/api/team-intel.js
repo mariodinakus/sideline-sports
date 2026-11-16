@@ -27,15 +27,22 @@ function statMap(raw){
     root.names.forEach((k,i)=>{values[k]=arr[i]??null});
   }
   const cats=root.categories||raw?.categories||raw?.results?.stats?.categories||[];
-  for(const c of cats)for(const s of c.stats||[])if(s?.name)values[s.name]=s.displayValue??s.value??null;
+  for(const c of cats){
+    if(Array.isArray(c.statistics)&&Array.isArray(c.names)){
+      const row=c.statistics.find(x=>Number(x.season?.year)===SEASON)||c.statistics[0];
+      if(row)c.names.forEach((k,i)=>{values[k]=row.stats?.[i]??null});
+    }else for(const s of c.stats||[])if(s?.name)values[s.name]=s.displayValue??s.value??null;
+  }
   if(root.names&&Array.isArray(root.values))root.names.forEach((k,i)=>{if(values[k]===undefined)values[k]=root.values[i]});
   return values;
 }
 function seasonStats(raw){
   const v=statMap(raw),get=(...keys)=>{for(const k of keys)if(v[k]!==undefined&&v[k]!==null&&v[k]!=='')return num(v[k]);return null};
   const gp=get('gamesPlayed','GP'),min=get('avgMinutes','minutes','MIN'),pts=get('avgPoints','PTS'),reb=get('avgRebounds','REB'),ast=get('avgAssists','AST'),stl=get('avgSteals','STL'),blk=get('avgBlocks','BLK'),tov=get('avgTurnovers','TOV');
-  const fgm=get('avgFieldGoalsMade','fieldGoalsMade'),fga=get('avgFieldGoalsAttempted','fieldGoalsAttempted'),tpm=get('avgThreePointFieldGoalsMade','threePointFieldGoalsMade'),fta=get('avgFreeThrowsAttempted','freeThrowsAttempted');
-  let fg=pct(get('fieldGoalPct','fieldGoalPercentage','FG%')),three=pct(get('threePointFieldGoalPct','threePointFieldGoalPercentage','3P%')),ft=pct(get('freeThrowPct','freeThrowPercentage','FT%'));
+  const pair=(...keys)=>{for(const k of keys){const m=String(v[k]??'').match(/(-?\d+(?:\.\d+)?)\s*[-/]\s*(-?\d+(?:\.\d+)?)/);if(m)return{made:Number(m[1]),attempted:Number(m[2])}}return{made:null,attempted:null}};
+  const fgPair=pair('avgFieldGoalsMade-avgFieldGoalsAttempted','fieldGoalsMade-fieldGoalsAttempted'),threePair=pair('avgThreePointFieldGoalsMade-avgThreePointFieldGoalsAttempted','threePointFieldGoalsMade-threePointFieldGoalsAttempted'),ftPair=pair('avgFreeThrowsMade-avgFreeThrowsAttempted','freeThrowsMade-freeThrowsAttempted');
+  const fgm=get('avgFieldGoalsMade','fieldGoalsMade')??fgPair.made,fga=get('avgFieldGoalsAttempted','fieldGoalsAttempted')??fgPair.attempted,tpm=get('avgThreePointFieldGoalsMade','threePointFieldGoalsMade')??threePair.made,fta=get('avgFreeThrowsAttempted','freeThrowsAttempted')??ftPair.attempted;
+  let fg=pct(get('fieldGoalPct','fieldGoalPercentage','FG%')),three=pct(get('threePointFieldGoalPct','threePointPct','threePointFieldGoalPercentage','3P%')),ft=pct(get('freeThrowPct','freeThrowPercentage','FT%'));
   if(fg===null&&fgm!==null&&fga>0)fg=fgm/fga*100;
   if(three===null&&tpm!==null){const a=get('avgThreePointFieldGoalsAttempted','threePointFieldGoalsAttempted');if(a>0)three=tpm/a*100}
   const efg=fgm!==null&&tpm!==null&&fga>0?(fgm+.5*tpm)/fga*100:null;
@@ -70,6 +77,8 @@ function transactionRow(x,scopeTeamId){
   const description=txt(x.description||x.headline||x.displayName||x.text||x.summary||x.shortText||x.details?.description||x.note||x.name);
   const people=x.athletes||x.players||x.participants||(x.athlete?[x.athlete]:[]);
   const playerRows=(Array.isArray(people)?people:[people]).filter(Boolean).map(p=>athlete(p)).filter(p=>p.name);
+  const inferred=/\b(?:traded|signed|waived|released|claimed|re-signed|resigned|guaranteed|converted|assigned)\s+(?:(?:PG|SG|SF|PF|C|G|F)\s+)?([A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ.'’\-]+(?:\s+[A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ.'’\-]+){0,2})(?=\s+(?:to|from|for|on|and)\b|[.;]|$)/gi;
+  for(const m of String(description||'').matchAll(inferred)){const name=m[1].replace(/['’]s$/,'').trim();if(name&&!playerRows.some(p=>p.name.toLowerCase()===name.toLowerCase()))playerRows.push({id:'',name})}
   const teamItems=[...(Array.isArray(x.teams)?x.teams:[]),x.team,x.fromTeam,x.toTeam,x.sourceTeam,x.destinationTeam].filter(Boolean);
   const teams=teamItems.map(t=>({id:String(t.id||t.teamId||''),name:txt(t.displayName||t.name||t.abbreviation||t)})).filter(t=>t.name);
   const teamIds=[...new Set(teams.map(t=>t.id).filter(Boolean).concat(scopeTeamId?[String(scopeTeamId)]:[]))];
@@ -80,7 +89,7 @@ function transactionRow(x,scopeTeamId){
   let date=x.date||x.transactionDate||x.created||x.createdAt||x.timestamp||x.dateCreated||'';
   if(typeof date==='object')date=date.date||date.value||date.iso||'';
   const url=x.links?.web?.href||x.links?.source?.href||x.link?.href||x.url||'';
-  return{id:String(x.id||x.uid||x.guid||textValue+'-'+date),date:String(date||''),type:type||category,category,description:textValue,players:playerRows.map(p=>p.name),playerIds:playerRows.map(p=>p.id).filter(Boolean),teams,teamIds,url:typeof url==='string'&&url.startsWith('https://')?url:'',source:'ESPN public transactions feed'};
+  return{id:String(x.id||x.uid||x.guid||textValue+'-'+date),date:String(date||''),type:type||category,category,description:textValue,players:playerRows.map(p=>p.name),playerIds:playerRows.map(p=>p.id).filter(Boolean),teams,teamIds,url:typeof url==='string'&&url.startsWith('https://')?url:'https://www.espn.com/nba/transactions',source:'ESPN public transactions feed'};
 }
 async function transactionFeed(url,scopeTeamId){
   const raw=await pull(url,7000),parts=extractTransactions(raw);
@@ -99,9 +108,18 @@ function rosterList(raw){
 function completedEvents(raw,id){
   return(raw?.events||raw?.items||[]).filter(e=>{
     const comp=e.competitions?.[0]||{},has=(comp.competitors||[]).some(c=>String(c.team?.id||'')===String(id));
-    const status=e.status?.type||{};
+    const status=e.status?.type||comp.status?.type||{};
     return has&&(status.completed===true||status.state==='post'||/final/i.test(txt(status.detail||status.description)));
   }).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+}
+async function recentScoreboardGame(id){
+  const dates=Array.from({length:12},(_,i)=>{const d=new Date(Date.now()-i*86400000);return d.toISOString().slice(0,10).replace(/-/g,'')});
+  const feeds=await mapLimit(dates,6,d=>pull(ROOT+'/scoreboard?dates='+d+'&limit=100',5500));
+  const events=feeds.flatMap(x=>x?.events||[]);
+  return events.filter(e=>{
+    const c=e.competitions?.[0]||{},has=(c.competitors||[]).some(t=>String(t.team?.id||'')===String(id)),s=e.status?.type||{};
+    return has&&(s.state==='post'||s.completed===true||/final/i.test(txt(s.detail||s.description)));
+  }).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0))[0]||null;
 }
 function lastGamePlayers(summary,id){
   const groups=summary?.boxscore?.players||[],out=new Map();
@@ -131,7 +149,8 @@ async function teamData(id){
   });
   roster.forEach((p,i)=>{p.stats=statResults[i]||null;p.statsSeason='2026–27'});
   let lastGame=null,starters=[];
-  const events=completedEvents(scheduleRaw,id);
+  let events=completedEvents(scheduleRaw,id);
+  if(!events.length){const recent=await recentScoreboardGame(id);if(recent)events=[recent]}
   if(events.length){
     const e=events[0],summary=await pull(ROOT+'/summary?event='+encodeURIComponent(e.id),6500);
     const comp=e.competitions?.[0]||{},sides=comp.competitors||[],mine=sides.find(x=>String(x.team?.id||'')===String(id)),opponent=sides.find(x=>String(x.team?.id||'')!==String(id));
