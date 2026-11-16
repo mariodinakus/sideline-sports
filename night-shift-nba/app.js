@@ -1,6 +1,26 @@
 'use strict';
 const $=s=>document.querySelector(s),$all=s=>Array.from(document.querySelectorAll(s)),el=s=>document.createElement(s);
 const nav=[['home','⌂','Overview'],['games','◫','Games'],['teams','◉','Teams'],['players','♙','Players'],['standings','▤','Standings'],['alltime','♜','All-Time'],['transactions','⇄','Trades'],['favorites','☆','Watchlist'],['archive','◷','History'],['forecasts','⌁','Forecasts'],['advanced','▥','Advanced'],['goat','♛','GOAT'],['power','◈','Power']];
+
+const atlasMenuPaths={
+  home:'<path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/>',
+  games:'<rect x="3" y="7" width="18" height="12" rx="3"/><path d="M7 13h6M10 10v6M16 11h2M17 10v2M16 15h2"/>',
+  teams:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+  players:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
+  standings:'<path d="M3 3v18h18"/><path d="M7 17v-5h3v5M12 17V8h3v9M17 17V5h3v12"/>',
+  alltime:'<path d="M8 21h8M12 17v4M7 3h10v7a5 5 0 0 1-10 0V3ZM7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4"/>',
+  transactions:'<path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4"/>',
+  favorites:'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>',
+  archive:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3.5 2"/>',
+  forecasts:'<path d="m3 17 6-6 4 4 8-8M15 7h6v6"/>',
+  advanced:'<path d="M3 3v18h18M6 16l4-6 4 3 5-8"/>',
+  goat:'<path d="m2 8 4 4 6-8 6 8 4-4-2 12H4L2 8Z"/><path d="M4 20h16"/>',
+  power:'<path d="m13 2-9 12h7l-1 8 10-12h-7l0-8Z"/>'
+};
+function atlasNavIcon(id){
+  return '<svg class="atlas-lucide" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(atlasMenuPaths[id]||atlasMenuPaths.home)+'</svg>';
+}
+
 const stars=[{id:'1966',name:'LeBron James',label:'THE KING'},{id:'3945274',name:'Luka Dončić',label:'THE MAGICIAN'},{id:'4594268',name:'Anthony Edwards',label:'ANT'},{id:'5041939',name:'Cooper Flagg',label:'NEXT GENERATION'}];
 const state={sidelineStories:null,sidelineBusy:false,histYear:2027,histMode:'regular',histPlayers:{},histRosters:{},histStandings:{},histSearch:[],histSearching:false,greekTV:{},tvBusy:false,forecasts:null,forecastBusy:false,page:'home',date:athensDate(),games:[],teams:[],groups:[],rosters:{},players:[],details:{},gameDetails:{},loadedPlayers:false,loadingPlayers:false,filter:'all',q:'',busy:false,errors:{},fav:readFav()};
 function readFav(){try{return JSON.parse(localStorage.getItem('ns-favorites')||'{"players":["1966","3945274","4594268","5041939"],"teams":[]}')}catch(e){return{players:stars.map(s=>s.id),teams:[]}}}
@@ -85,7 +105,7 @@ const byId=new Map(nav.map(n=>[n[0],n]));
 const navItem=(key,dock=false)=>{
  const n=byId.get(key);if(!n)return '';
  const active=current===key;
- return '<button type="button" class="nav-item atlas-nav-link'+(active?' active':'')+(dock?' atlas-dock-item':'')+'" title="'+esc(n[2])+'" aria-label="'+esc(n[2])+'"'+(active?' aria-current="page"':'')+' '+action('nav',key)+'><span class="nav-ico" aria-hidden="true">'+n[1]+'</span><span class="nav-caption">'+esc(n[2])+'</span></button>';
+ return '<button type="button" class="nav-item atlas-nav-link'+(active?' active':'')+(dock?' atlas-dock-item':'')+'" title="'+esc(n[2])+'" aria-label="'+esc(n[2])+'"'+(active?' aria-current="page"':'')+' '+action('nav',key)+'><span class="nav-ico" aria-hidden="true">'+atlasNavIcon(key)+'</span><span class="nav-caption">'+esc(n[2])+'</span></button>';
 };
 const groups=[['COURTSIDE',['home','games','standings','teams','players']],['INTELLIGENCE',['alltime','advanced','goat','power','forecasts']],['YOUR SPACE',['transactions','archive','favorites']]];
 $('#desktop-nav').innerHTML=groups.map(([label,keys],i)=>'<div class="atlas-nav-group"><div class="atlas-group-label"><span class="atlas-group-line"></span>'+label+'</div>'+keys.map(key=>navItem(key)).join('')+'</div>').join('');

@@ -538,3 +538,89 @@ h1,h2,h3,h4,.hero-counter,.brand b,.brand-icon,.spot b,.stat-card b,.team-card s
  #nav-mobile-open{width:29px;min-width:29px}
 }
 @media(prefers-reduced-motion:reduce){.rail,.workspace,.rail .atlas-nav-link{transition:none!important}}
+
+
+/* TYPOGRAPHY SYSTEM v2 — legible data density and consistent Greek/Latin rendering */
+:root{
+  --atlas-body-font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  --atlas-text:#e7eaed;
+  --atlas-subtext:#b4bec7;
+  --atlas-muted:#9ba7b0;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;text-rendering:optimizeLegibility}
+body,button,input,select,textarea{font-family:var(--atlas-body-font);-webkit-font-smoothing:antialiased;letter-spacing:normal}
+#screen{line-height:1.5}
+#screen :is(p,li,label,button,input,select,textarea,th,td,small){text-wrap:pretty}
+#screen :is(h1,h2,h3,h4){text-wrap:balance;overflow-wrap:normal}
+#screen :is(.page-heading,.section-title,.profile-sub,.player-trait,.warning,.empty){overflow-wrap:break-word}
+#screen :is(.eyebrow,.dna-label,.ext-mini,.int-tab,.ti-section-head,.ti-block-head,.ti-rank,.ti-live,.ti-chip,.ti-note,.ti-count,.ti-foot,.ti-controls,.ti-tx-toolbar,.al-shell,.al-overline,.al-disclaimer,.al-search-wrap,.al-history-note,.al-tab,.al-snapshot,.al-ranking-top,.al-rank-header){
+  font-family:var(--atlas-body-font);
+}
+#screen :is(.ti-shell,.al-shell) :is(h1,h2,h3,p,button,small,span,label,th,td,input,select,a){
+  font-family:var(--atlas-body-font);
+}
+#screen :is(.ti-player-name,.ti-player-link,.al-person-name,.al-podium-name,.al-tab span,.al-leader-name){font-family:var(--atlas-body-font);letter-spacing:normal}
+#screen :is(.al-leader-value,.al-number,.al-podium strong,.ti-roster-table td:not(:first-child)){font-variant-numeric:tabular-nums}
+#screen :is(.eyebrow,.radar-label,.al-overline,.al-rank-header,.ti-block-head,.ti-controls label,.ti-tx-toolbar label){
+  letter-spacing:.075em;
+}
+/* Prevent compressed, 8px text on navigation, leaderboards and transaction cards */
+.rail .brand-copy b{font-family:var(--atlas-body-font);font-size:13px;line-height:1.25;font-weight:850;letter-spacing:.025em}
+.rail .brand-copy small{font-family:var(--atlas-body-font);font-size:10px;line-height:1.4;font-weight:650;letter-spacing:.04em}
+.atlas-group-label{font-family:var(--atlas-body-font);font-size:10px;line-height:1.5;letter-spacing:.08em;color:#95a3ac}
+.rail .atlas-nav-link{font-family:var(--atlas-body-font);font-size:12.5px;line-height:1.35;font-weight:700;letter-spacing:0}
+.rail .rail-footer{font-size:10.5px;line-height:1.5;color:#9daab2}
+.rail .rail-disclaimer{font-size:10px;line-height:1.5;color:#94a0a9}
+.rail .atlas-nav-link .nav-ico{color:#a2b6bd}
+.rail .atlas-nav-link .atlas-lucide,.mobile-nav .atlas-lucide{display:block;flex:none;width:19px;height:19px;stroke:currentColor}
+.rail .atlas-nav-link.active .atlas-lucide,.mobile-nav .atlas-dock-item.active .atlas-lucide{stroke:#a5e7e7}
+/* All-time: readable tab labels, rank headings, sources and numbers */
+.al-overline,.al-leader-kicker,.al-topthree-kicker{font-size:11px;line-height:1.5}
+.al-tab{font-size:13px;line-height:1.35}
+.al-tab small{font-size:10.5px;line-height:1.3;color:#a4aeb7}
+.al-snapshot span,.al-snapshot small{font-size:10px;line-height:1.4;color:#a9b4ba}
+.al-leader-unit,.al-leader-bottom{font-size:11px;line-height:1.5}
+.al-ranking-top h2 span{font-size:11px;line-height:1.4}
+.al-search-wrap,.al-rank-header{font-size:11px;line-height:1.45;color:#aebbc3}
+.al-number small{font-size:10.5px;color:#b0bec5}
+.al-history-note,.al-disclaimer{font-size:12px;line-height:1.75;color:#b1bac3}
+.al-disclaimer b{font-size:11px}
+.al-sources a{font-size:11px;line-height:1.7}
+/* Team intel: tables and filters must be usable without zooming */
+.ti-section-head>div>small,.ti-block-head>div>span,.ti-rank,.ti-live{font-size:11px;line-height:1.5}
+.ti-chip,.ti-game-line,.ti-rotation-grid>div>small,.ti-controls label,.ti-tx-toolbar label,.ti-count{font-size:10.5px;line-height:1.45}
+.ti-five-top,.ti-last-game,.ti-season-line,.ti-tx-row>div:first-child>small{font-size:11px;line-height:1.5}
+.ti-five-top small,.ti-rotation-grid>div>span,.ti-rotation-grid b,.ti-tx-row>div:nth-child(2)>small{font-size:11px;line-height:1.5}
+.ti-note,.ti-advanced-note,.ti-foot,.ti-tx-card p{font-size:11.5px;line-height:1.75;color:#aeb6bf}
+.ti-controls select,.ti-tx-toolbar select,.ti-tx-toolbar input{font-size:12px;line-height:1.45;min-height:36px}
+.ti-roster-table th{font-size:10.5px;line-height:1.45;letter-spacing:.025em;white-space:nowrap;color:#b8c4ca}
+.ti-roster-table td,.ti-player-link{font-size:12px;line-height:1.55}
+.ti-roster-table th,.ti-roster-table td{padding-top:10px;padding-bottom:10px}
+.ti-tx-row>a,.ti-tx-row>.ti-source,.ti-tx-card footer{font-size:10.5px;line-height:1.45}
+.ti-tx-summary{font-size:12px}
+.ti-tx-card h3{font-size:13px;line-height:1.55}
+.ti-empty button,.ti-section-head button,.ti-block-head button,.ti-controls button,.ti-tx-toolbar>button{font-size:11.5px}
+/* Other dense historical, market, player and performance sections */
+#screen :is(.market-head,.market-name small,.market-team-strip small,.stand-summary small,.stand-team b,.radar-tv small,.radar-tv a,.economy-metric small,.advanced-row small,.prime-year-label,.prime-gp,.power-row-end small,.leader-line,.goat-medals span,.goat-method small,.goat-name small,.dna-metric small,.compare-labels span,.evo-year small,.market-banner small,.market-sources small,.team-power-rank small,.team-power-rank span,.power-row-body small,.game-insights,.forecast-row small,.connect-card small,.news-card small){
+  font-size:11px;line-height:1.55;
+}
+#screen :is(.standings-table th,.standings-table td,.market-row>strong,.market-name b,.ti-rank){font-size:12px}
+#screen :is(.prime-year-label,.int-tab,.tier-tabs .int-tab,.evo-ends,.market-team-strip small){font-size:11px}
+#screen :is(.award small,.bar-labels,.prime-legend,.radar-label small,.radar-game>small,.player-trait span){font-size:11.5px;line-height:1.6}
+#screen :is(.market-head,.ti-roster-table th,.standings-table th){letter-spacing:.025em}
+#screen :is(.market-name small,.ti-season-line,.ti-note,.al-history-note){color:#b9c3ca}
+#screen :is(.market-name small,.market-row>strong,.ti-roster-table td){font-variant-numeric:tabular-nums}
+/* Mobile: no microscopic bottom tabs or clipped Greek names */
+@media(max-width:930px){
+ .mobile-nav .atlas-dock-item{font-family:var(--atlas-body-font);font-size:10px;line-height:1.25;letter-spacing:0;min-height:54px;gap:4px}
+ .mobile-nav .atlas-dock-item .nav-caption{overflow:hidden;max-width:100%;text-overflow:ellipsis;white-space:nowrap}
+ .rail .atlas-nav-link{font-size:13px}
+ .mobile-nav .atlas-lucide{width:20px;height:20px}
+}
+@media(max-width:390px){.mobile-nav .atlas-dock-item{font-size:9.5px;min-height:52px}}
+@media(max-width:700px){
+ #screen :is(.al-titlebar p,.al-disclaimer,.al-history-note){font-size:12px}
+ #screen :is(.al-person-name,.ti-player-link){font-size:12px}
+ #screen :is(.al-number,.ti-roster-table td){font-size:12px}
+ .al-titlebar h1{line-height:1.07;letter-spacing:-.035em}
+}
