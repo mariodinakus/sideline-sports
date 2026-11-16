@@ -23,6 +23,14 @@ const year=state.histYear,st=state.histStandings[year];return pageTitle('NBA / H
 const statColumns=[['gamesPlayed','GP'],['avgMinutes','MIN'],['avgPoints','PPG'],['avgRebounds','RPG'],['avgAssists','APG'],['fieldGoalPct','FG%'],['threePointFieldGoalPct','3P%'],['freeThrowPct','FT%'],['avgSteals','STL'],['avgBlocks','BLK']];
 const totalColumns=[['gamesPlayed','GP'],['points','PTS'],['totalRebounds','REB'],['assists','AST'],['steals','STL'],['blocks','BLK']];
 function statCell(x,n){const v=x?.[n];return v===null||v===undefined||v===''?'—':String(v)}
+function careerGames(base){
+ const direct=[base?.careerTotals?.gamesPlayed,base?.careerAverages?.gamesPlayed].find(v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v))&&Number(v)>=0);
+ if(direct!==undefined)return String(direct);
+ const rows=base?.seasonRows||[];if(!rows.length)return '—';
+ const years=new Map();
+ for(const r of rows){const v=r?.stats?.gamesPlayed;if(!r.season||v===null||v===undefined||v===''||!Number.isInteger(Number(v))||Number(v)<0)return '—';const list=years.get(r.season)||[];list.push(r);years.set(r.season,list)}
+ let sum=0;for(const list of years.values()){if(list.length===1)sum+=Number(list[0].stats.gamesPlayed);else{const total=list.find(r=>/^(total|tot|2tm|3tm|4tm)$/i.test(r.teamSlug||''));if(!total)return '—';sum+=Number(total.stats.gamesPlayed)}}return String(sum)
+}
 function playerHistoryTable(rows){return!rows?.length?error('Δεν βρέθηκαν δημοσιευμένα στατιστικά για αυτή την κατηγορία.'):'<div class="table-wrap"><table><thead><tr><th>SEASON</th><th>TEAM</th>'+statColumns.map(x=>'<th>'+x[1]+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr><td>'+hEsc(r.seasonLabel)+'</td><td>'+hEsc((r.teamSlug||r.teamId||'NBA').replaceAll('-',' ').toUpperCase())+'</td>'+statColumns.map(x=>'<td>'+hEsc(statCell(r.stats,x[0]))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}
 /* Career prime: highest 3-consecutive-season window by published scoring + playmaking + rebounding rates.
  * Qualification: at least 25 GP per season. No estimated/invented seasons.
@@ -67,14 +75,14 @@ if(!h||h.loading)return pageTitle('PLAYER / ALL ERAS',hEsc(fallback?.name||'Load
 if(h.error)return pageTitle('PLAYER / ALL ERAS',hEsc(fallback?.name||id))+error('ESPN: '+h.error);
 const player=h.athlete||fallback||{id,name:'Player '+id},base=h.regular||{},mode=state.histMode==='playoffs'?'playoffs':'regular',data=h[mode]||{},career=base.careerAverages||{},totals=base.careerTotals||{},rows=data.seasonRows||[];
 const label=player.active?'ACTIVE PLAYER':'NBA HISTORY';
-const metrics=[['CAREER PPG',statCell(career,'avgPoints')],['CAREER RPG',statCell(career,'avgRebounds')],['CAREER APG',statCell(career,'avgAssists')],['GAMES PLAYED',statCell(totals,'gamesPlayed')],['SEASONS',base.yearCount??'—']];
+const metrics=[['CAREER PPG',statCell(career,'avgPoints')],['CAREER RPG',statCell(career,'avgRebounds')],['CAREER APG',statCell(career,'avgAssists')],['GAMES PLAYED · REGULAR',careerGames(base)],['SEASONS',base.yearCount??'—']];
 const honors=(h.awards||[]).filter(a=>a.name).slice(0,25);
 const trait=playerStyle(career);
 return'<div class="profile"><div class="profile-info"><div class="eyebrow">NBA / CAREER DOSSIER</div><h1>'+hEsc(player.name||fallback?.name)+'</h1><div class="profile-sub">'+esc(label)+' · '+hEsc(player.position||'NBA')+'</div><div class="player-trait"><b>'+esc(trait[0])+'</b><span>'+esc(trait[1])+'</span></div><p>'+favButton('player',id)+'</p></div><img class="hero-face" alt="" src="'+head(player)+'"></div>'+
 '<div class="stat-cards">'+metrics.map(([k,v])=>'<div class="stat-card"><b>'+hEsc(v)+'</b><span>'+k+'</span></div>').join('')+'</div>'+
 '<section class="section"><div class="section-title"><div><div class="eyebrow">HISTORICAL PERFORMANCE</div><h2>Season by season</h2></div><div class="filters"><button class="filter '+(mode==='regular'?'active':'')+'" data-history-mode="regular">Regular</button><button class="filter '+(mode==='playoffs'?'active':'')+'" data-history-mode="playoffs">Playoffs</button></div></div>'+
 (base.seasonRows?.length?careerPrimeChart(base.seasonRows):'')+playerHistoryTable(rows)+'</section>'+
-'<section class="section"><div class="section-title"><div><div class="eyebrow">TOTAL CAREER RECORD</div><h2>Career totals</h2></div></div><div class="career-grid">'+totalColumns.map(([key,label])=>'<div class="stat-card"><b>'+hEsc(statCell(totals,key))+'</b><span>'+label+'</span></div>').join('')+'</div></section>'+
+'<section class="section"><div class="section-title"><div><div class="eyebrow">TOTAL CAREER RECORD</div><h2>Career totals</h2></div></div><div class="career-grid">'+totalColumns.map(([key,label])=>'<div class="stat-card"><b>'+hEsc(key==='gamesPlayed'?careerGames(base):statCell(totals,key))+'</b><span>'+label+'</span></div>').join('')+'</div></section>'+
 (honors.length?'<section class="section"><div class="section-title"><h2>Honors & awards</h2></div><div class="award-grid">'+honors.map(a=>'<div class="award"><strong>'+hEsc(a.name)+'</strong><span>'+hEsc(a.count||'')+'</span><small>'+esc((a.seasons||[]).slice(0,8).join(' · '))+'</small></div>').join('')+'</div></section>':'')+
 (h.warnings?.length?'<p class="warning">Πηγές προσωρινά μη διαθέσιμες: '+hEsc(h.warnings.join(', '))+'</p>':'')+
 '<p class="muted" style="font-size:11px">ESPN public historical statistics · ορισμένες μετρικές δεν υπήρχαν πριν θεσπιστούν (π.χ. 3PT, STL, BLK). Το «—» σημαίνει μη διαθέσιμο και όχι μηδέν.</p>';
