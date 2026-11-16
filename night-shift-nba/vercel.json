@@ -1,36 +1,13 @@
 {
   "version": 2,
   "functions": {
-    "api/data.js": {
-      "maxDuration": 30
-    }
+    "api/data.js": { "maxDuration": 30 },
+    "api/power.js": { "maxDuration": 30 },
+    "api/goat.js": { "maxDuration": 30 },
+    "api/history.js": { "maxDuration": 30 }
   },
   "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
-    },
-    {
-      "source": "/downloads/:path*",
-      "headers": [
-        {
-          "key": "Content-Disposition",
-          "value": "attachment; filename=\"NBA-ATLAS.apk\""
-        },
-        {
-          "key": "Content-Type",
-          "value": "application/vnd.android.package-archive"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
-    }
+    { "source": "/api/(.*)", "headers": [ { "key": "X-Content-Type-Options", "value": "nosniff" } ] },
+    { "source": "/sw.js", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] }
   ]
 }
