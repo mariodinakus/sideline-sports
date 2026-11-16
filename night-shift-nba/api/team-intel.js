@@ -22,14 +22,14 @@ function mapLimit(items,limit,fn){
 function statMap(raw){
   const root=raw?.statistics||raw?.stats?.statistics||raw?.stats||raw||{},values={};
   if(Array.isArray(root.names)&&Array.isArray(root.splits)&&root.splits.length){
-    const split=root.splits.find(x=>/regular/i.test(txt(x.displayName||x.name))&&(!x.season?.year||Number(x.season.year)===SEASON))||root.splits.find(x=>Number(x.season?.year)===SEASON)||root.splits[0];
+    const split=root.splits.find(x=>/regular/i.test(txt(x.displayName||x.name))&&(!x.season?.year||Number(x.season.year)===SEASON))||root.splits.find(x=>Number(x.season?.year)===SEASON);
     const arr=split?.stats||split?.values||[];
     root.names.forEach((k,i)=>{values[k]=arr[i]??null});
   }
   const cats=root.categories||raw?.categories||raw?.results?.stats?.categories||[];
   for(const c of cats){
     if(Array.isArray(c.statistics)&&Array.isArray(c.names)){
-      const row=c.statistics.find(x=>Number(x.season?.year)===SEASON)||c.statistics[0];
+      const row=c.statistics.find(x=>Number(x.season?.year)===SEASON);
       if(row)c.names.forEach((k,i)=>{values[k]=row.stats?.[i]??null});
     }else for(const s of c.stats||[])if(s?.name)values[s.name]=s.displayValue??s.value??null;
   }
@@ -77,8 +77,8 @@ function transactionRow(x,scopeTeamId){
   const description=txt(x.description||x.headline||x.displayName||x.text||x.summary||x.shortText||x.details?.description||x.note||x.name);
   const people=x.athletes||x.players||x.participants||(x.athlete?[x.athlete]:[]);
   const playerRows=(Array.isArray(people)?people:[people]).filter(Boolean).map(p=>athlete(p)).filter(p=>p.name);
-  const inferred=/\b(?:traded|signed|waived|released|claimed|re-signed|resigned|guaranteed|converted|assigned)\s+(?:(?:PG|SG|SF|PF|C|G|F)\s+)?([A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ.'’\-]+(?:\s+[A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ.'’\-]+){0,2})(?=\s+(?:to|from|for|on|and)\b|[.;]|$)/gi;
-  for(const m of String(description||'').matchAll(inferred)){const name=m[1].replace(/['’]s$/,'').trim();if(name&&!playerRows.some(p=>p.name.toLowerCase()===name.toLowerCase()))playerRows.push({id:'',name})}
+  const inferred=/\b(?:traded|signed|waived|released|claimed|re-signed|resigned|guaranteed|converted|assigned)\s+(?:(?:PG|SG|SF|PF|C|G|F)\s+)?([A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ.'’\-]+(?:\s+[A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ.'’\-]+){0,2})(?=\s+(?:to|from|for|on|and|full|salary)\b|[.;]|$)/gi;
+  for(const m of String(description||'').matchAll(inferred)){const name=m[1].replace(/['’]s$/,'').replace(/[.,;]+$/,'').trim();if(name&&!playerRows.some(p=>p.name.toLowerCase()===name.toLowerCase()))playerRows.push({id:'',name})}
   const teamItems=[...(Array.isArray(x.teams)?x.teams:[]),x.team,x.fromTeam,x.toTeam,x.sourceTeam,x.destinationTeam].filter(Boolean);
   const teams=teamItems.map(t=>({id:String(t.id||t.teamId||''),name:txt(t.displayName||t.name||t.abbreviation||t)})).filter(t=>t.name);
   const teamIds=[...new Set(teams.map(t=>t.id).filter(Boolean).concat(scopeTeamId?[String(scopeTeamId)]:[]))];
