@@ -95,8 +95,41 @@ return'<section class="section"><div class="section-title"><div><div class="eyeb
 (!data||data.loading?'<p class="muted">Fetching advanced source…</p>':data.error?'<p class="muted">Advanced feed unavailable: '+esc(data.error)+'</p>':p?'<div class="dna-metrics">'+advancedProfileLabel.map(([k,n])=>advFigure(n,p[k],'2025–26 NBA ADVANCED',k==='ws48'?3:1)).join('')+'</div>':'<p class="muted">Οι συγκεκριμένες advanced μετρικές δεν είναι διαθέσιμες από τη συνδεδεμένη πηγή για αυτή τη σεζόν. Δεν συμπληρώνονται με εκτιμήσεις.</p>')+
 '<div class="profile-ref-links">'+(link?'<a target="_blank" rel="noopener noreferrer" href="'+esc(link)+'">Basketball Reference ↗</a>':'<a target="_blank" rel="noopener noreferrer" href="https://www.basketball-reference.com/search/search.fcgi?search='+encodeURIComponent(name)+'">Search Basketball Reference ↗</a>')+'<a target="_blank" rel="noopener noreferrer" href="https://www.espn.com/nba/player/_/id/'+encodeURIComponent(id)+'">ESPN profile ↗</a></div></div></section>'}
 function awardsSummary(h){
- const awards=h?.awards||[], k=n=>awards.filter(a=>a.name===n).reduce((a,v)=>a+(v.seasons?.length||0),0);
- const verified={'1966':{years:'2012 · 2013 · 2016 · 2020',count:4,url:'https://www.nba.com/player/2544/lebronjames/bio'},'3975':{years:'2015 · 2017 · 2018 · 2022',count:4,url:'https://www.nba.com/warriors/videos/the-best-of-stephen-curry-in-the-nba-finals'}};
- const ring=verified[String(h?.id)], tiles=[['NBA CHAMPIONSHIPS',ring?ring.count:'—'],['MVP',k('MVP')],['FINALS MVP',k('Finals MVP')],['ALL-NBA 1ST',k('All-NBA 1st Team')],['DPOY',k('Defensive Player of the Year')]];
- return '<section class="section"><div class="section-title"><h2>Awards &amp; rings</h2></div><div class="awards-summary">'+tiles.map(([n,v])=>'<div><b>'+v+'</b><span>'+n+'</span></div>').join('')+'</div><p class="int-note">'+(ring?'NBA titles: '+ring.years+' · <a href="'+ring.url+'" target="_blank" rel="noopener noreferrer">NBA.com source ↗</a>':'NBA championships: verified player data unavailable; — does not mean zero.')+' · Other award counts: ESPN records.</p></section>'
+ const awards=h?.awards||[],k=n=>awards.filter(a=>a.name===n).reduce((a,v)=>a+(v.seasons?.length||0),0);
+ const data={
+ 'bill russell':[1957,1959,1960,1961,1962,1963,1964,1965,1966,1968,1969],
+ 'sam jones':[1959,1960,1961,1962,1963,1964,1965,1966,1968,1969],
+ 'john havlicek':[1963,1964,1965,1966,1968,1969,1974,1976],
+ 'tom heinsohn':[1957,1959,1960,1961,1962,1963,1964,1965],
+ 'kc jones':[1959,1960,1961,1962,1963,1964,1965,1966],
+ 'tom sanders':[1961,1962,1963,1964,1965,1966,1968,1969],
+ 'robert horry':[1994,1995,2000,2001,2002,2005,2007],
+ 'kareem abdul jabbar':[1971,1980,1982,1985,1987,1988],
+ 'bob cousy':[1957,1959,1960,1961,1962,1963],
+ 'michael jordan':[1991,1992,1993,1996,1997,1998],
+ 'scottie pippen':[1991,1992,1993,1996,1997,1998],
+ 'kobe bryant':[2000,2001,2002,2009,2010],
+ 'magic johnson':[1980,1982,1985,1987,1988],
+ 'tim duncan':[1999,2003,2005,2007,2014],
+ 'dennis rodman':[1989,1990,1996,1997,1998],
+ 'stephen curry':[2015,2017,2018,2022],
+ 'draymond green':[2015,2017,2018,2022],
+ 'klay thompson':[2015,2017,2018,2022],
+ 'andre iguodala':[2015,2017,2018,2022],
+ 'lebron james':[2012,2013,2016,2020],
+ 'shaquille oneal':[2000,2001,2002,2006],
+ 'tony parker':[2003,2005,2007,2014],
+ 'manu ginobili':[2003,2005,2007,2014],
+ 'kevin durant':[2017,2018],
+ 'nikola jokic':[2023],
+ 'jayson tatum':[2024],
+ 'jaylen brown':[2024],
+ 'jalen brunson':[2026],
+ 'mikal bridges':[2026],
+ 'josh hart':[2026]
+ };
+ const norm=x=>String(x||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/['’\.]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+ const years=data[norm(h?.athlete?.name)],ring=years?years.length:null;
+ const tiles=[['NBA CHAMPIONSHIPS',ring??'—'],['MVP',k('MVP')],['FINALS MVP',k('Finals MVP')],['ALL-NBA 1ST',k('All-NBA 1st Team')],['DPOY',k('Defensive Player of the Year')]];
+ return '<section class="section"><div class="section-title"><h2>Awards &amp; rings</h2></div><div class="awards-summary">'+tiles.map(([n,v])=>'<div><b>'+v+'</b><span>'+n+'</span></div>').join('')+'</div><p class="int-note">'+(years?'NBA titles: '+years.join(' · ')+' · <a href="https://sportsringcount.com/most-rings-in-nba-history/" target="_blank" rel="noopener noreferrer">Championship sources ↗</a>':'NBA championships: not yet verified for this player; — does not mean zero.')+' · Other award counts: ESPN records.</p></section>'
 }
