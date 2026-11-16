@@ -97,6 +97,8 @@ return'<section class="section"><div class="section-title"><div><div class="eyeb
 function awardsSummary(h){
  const awards=h?.awards||[],k=n=>awards.filter(a=>a.name===n).reduce((a,v)=>a+(v.seasons?.length||0),0);
  const data={
+ 'jim loscutoff':[1957,1959,1960,1961,1962,1963,1964],
+ 'frank ramsey':[1957,1959,1960,1961,1962,1963,1964],
  'bill russell':[1957,1959,1960,1961,1962,1963,1964,1965,1966,1968,1969],
  'sam jones':[1959,1960,1961,1962,1963,1964,1965,1966,1968,1969],
  'john havlicek':[1963,1964,1965,1966,1968,1969,1974,1976],
@@ -131,5 +133,5 @@ function awardsSummary(h){
  const norm=x=>String(x||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/['’\.]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
  const years=data[norm(h?.athlete?.name)],ring=years?years.length:null;
  const tiles=[['NBA CHAMPIONSHIPS',ring??'—'],['MVP',k('MVP')],['FINALS MVP',k('Finals MVP')],['ALL-NBA 1ST',k('All-NBA 1st Team')],['DPOY',k('Defensive Player of the Year')]];
- return '<section class="section"><div class="section-title"><h2>Awards &amp; rings</h2></div><div class="awards-summary">'+tiles.map(([n,v])=>'<div><b>'+v+'</b><span>'+n+'</span></div>').join('')+'</div><p class="int-note">'+(years?'NBA titles: '+years.join(' · ')+' · <a href="https://sportsringcount.com/most-rings-in-nba-history/" target="_blank" rel="noopener noreferrer">Championship sources ↗</a>':'NBA championships: not yet verified for this player; — does not mean zero.')+' · Other award counts: ESPN records.</p></section>'
+ return '<section class="section"><div class="section-title"><h2>Awards &amp; rings</h2></div><div class="awards-summary">'+tiles.map(([n,v])=>'<div><b>'+v+'</b><span>'+n+'</span></div>').join('')+'</div><p class="int-note">'+(years?'NBA titles: '+years.join(' · ')+' · <a href="https://www.basketball-reference.com/leaders/most_championships.html" target="_blank" rel="noopener noreferrer">Championship sources ↗</a>':'NBA championships: not yet verified for this player; — does not mean zero.')+' · Other award counts: ESPN records.</p></section>'
 }
