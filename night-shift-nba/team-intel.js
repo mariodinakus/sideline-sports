@@ -48,7 +48,7 @@
   function rotationByMinutes(roster){
     const groups=[['G',['G','PG','SG']],['F',['F','SF','PF']],['C',['C']]],out=[];
     for(const [pos,aliases] of groups){
-      const list=roster.filter(p=>{const v=String(p.position||'').toUpperCase().replace(/\s/g,'');return aliases.some(a=>v.split(/[\/, -]+/).includes(a)||v===a)}&&p.stats?.min!==null&&p.stats?.min!==undefined).sort((a,b)=>(b.stats.min||0)-(a.stats.min||0)).slice(0,3);
+      const list=roster.filter(p=>{const v=String(p.position||'').toUpperCase().replace(/\s/g,'');return aliases.some(a=>v.split(/[\/, -]+/).includes(a)||v===a)&&p.stats?.min!==null&&p.stats?.min!==undefined}).sort((a,b)=>(b.stats.min||0)-(a.stats.min||0)).slice(0,3);
       if(list.length)out.push({position:pos,players:list});
     }
     return out;
