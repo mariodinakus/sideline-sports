@@ -26551,7 +26551,12 @@
         "marginHigh": 13.25533667971441,
         "totalLow": 207.38769481690025,
         "totalHigh": 256.2278097034146
-      }
+      },
+      "actual": {
+        "home": 106,
+        "away": 113
+      },
+      "settledAt": "2026-11-16T11:58:12.502Z"
     },
     {
       "id": "2026:401909993",
@@ -26698,7 +26703,12 @@
         "marginHigh": 9.027049525245763,
         "totalLow": 200.72956144807569,
         "totalHigh": 249.56967633459004
-      }
+      },
+      "actual": {
+        "home": 103,
+        "away": 125
+      },
+      "settledAt": "2026-11-16T11:58:12.502Z"
     },
     {
       "id": "2026:401909994",
@@ -27887,37 +27897,37 @@
       }
     }
   ],
-  "updatedAt": "2026-11-16T02:59:29.724Z",
+  "updatedAt": "2026-11-16T11:58:12.502Z",
   "model": {
     "status": "baseline-holdout-rejected",
-    "sample": 181,
+    "sample": 183,
     "minimum": 50,
     "holdout": 46,
     "marginWeights": null,
     "totalWeights": null,
     "marginValidated": false,
     "totalValidated": false,
-    "marginHoldoutMAE": 12.759829644953602,
-    "marginModelHoldoutMAE": 12.954388701642985,
-    "totalHoldoutMAE": 13.733140234745298,
-    "totalModelHoldoutMAE": 14.128916514439707,
-    "sigmaMargin": 14.859412602529233,
-    "sigmaTotal": 19.11021406348751
+    "marginHoldoutMAE": 12.502490614336367,
+    "marginModelHoldoutMAE": 12.759232480917497,
+    "totalHoldoutMAE": 13.454010447426764,
+    "totalModelHoldoutMAE": 13.829785699534712,
+    "sigmaMargin": 14.804613049260864,
+    "sigmaTotal": 19.030233947746513
   },
   "summary": {
-    "n": 181,
-    "winnerAccuracy": 0.7182320441988951,
-    "decisiveAccuracy": 0.7407407407407407,
-    "decisiveN": 135,
-    "scoreMAE": 9.872801204321336,
-    "marginMAE": 11.328109316751283,
-    "totalMAE": 15.166763782150518,
-    "brier": 0.19968437825588298,
-    "margin80Coverage": 0.7734806629834254
+    "n": 183,
+    "winnerAccuracy": 0.7213114754098361,
+    "decisiveAccuracy": 0.7445255474452555,
+    "decisiveN": 137,
+    "scoreMAE": 9.832538910233923,
+    "marginMAE": 11.276016280484814,
+    "totalMAE": 15.086570371246275,
+    "brier": 0.19850402910619916,
+    "margin80Coverage": 0.7759562841530054
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-16T02:59:29.724Z",
+    "updatedAt": "2026-11-16T11:58:12.502Z",
     "homeGames": {
       "BOS": [
         {
@@ -42843,6 +42853,12 @@
           "final": true,
           "for": 99,
           "against": 107
+        },
+        {
+          "date": "2026-11-16T01:00Z",
+          "final": true,
+          "for": 106,
+          "against": 113
         }
       ],
       "OKC": [
@@ -43415,6 +43431,12 @@
           "final": true,
           "for": 112,
           "against": 113
+        },
+        {
+          "date": "2026-11-16T02:00Z",
+          "final": true,
+          "for": 125,
+          "against": 103
         }
       ],
       "ATL": [
@@ -43987,6 +44009,12 @@
           "final": true,
           "for": 117,
           "against": 125
+        },
+        {
+          "date": "2026-11-16T01:00Z",
+          "final": true,
+          "for": 113,
+          "against": 106
         }
       ],
       "DAL": [
@@ -45137,6 +45165,12 @@
           "final": true,
           "for": 107,
           "against": 120
+        },
+        {
+          "date": "2026-11-16T02:00Z",
+          "final": true,
+          "for": 103,
+          "against": 125
         }
       ]
     },
@@ -47148,6 +47182,10 @@
             "name": "Nickeil Alexander-Walker"
           },
           {
+            "id": "4684443",
+            "name": "Rafael Castro"
+          },
+          {
             "id": "4869342",
             "name": "Dyson Daniels"
           },
@@ -47170,10 +47208,6 @@
           {
             "id": "5149077",
             "name": "Kingston Flemings"
-          },
-          {
-            "id": "4585618",
-            "name": "Keshon Gilbert"
           },
           {
             "id": "4712863",
@@ -48007,10 +48041,6 @@
           "status": "Out"
         },
         {
-          "name": "Keshon Gilbert",
-          "status": "Out"
-        },
-        {
           "name": "Mouhamed Gueye",
           "status": "Out"
         },
@@ -48077,7 +48107,7 @@
       ]
     },
     "elo": {
-      "OKC": 1671.4174997681132,
+      "OKC": 1674.2077869232085,
       "HOU": 1620.3444368582311,
       "LAL": 1654.2623983803942,
       "GSW": 1484.5760097098416,
@@ -48089,11 +48119,11 @@
       "BKN": 1315.904637325691,
       "BOS": 1683.1671479513755,
       "PHI": 1587.2273579341063,
-      "ATL": 1545.8151595129707,
+      "ATL": 1551.4894150554674,
       "TOR": 1496.8600059189112,
       "CHI": 1374.2927060989955,
       "DET": 1647.3098760843131,
-      "MIL": 1346.0534519221449,
+      "MIL": 1340.3791963796482,
       "WAS": 1297.85444734243,
       "MEM": 1382.3396686963822,
       "NOP": 1361.232470423907,
@@ -48104,31 +48134,31 @@
       "POR": 1573.4265634166647,
       "MIN": 1573.2793226191463,
       "PHX": 1509.0188765298346,
-      "SAC": 1311.8286538000782,
+      "SAC": 1309.038366644983,
       "IND": 1332.3415998405906,
       "DEN": 1622.7032167392472
     },
     "historicalModel": {
       "method": "chronological-online-ridge",
-      "trained": 1351,
-      "backtest": 1202,
+      "trained": 1353,
+      "backtest": 1204,
       "validated": true,
       "weights": [
-        2.396284038014729,
-        7.285065969028014,
-        2.702164380041615,
-        0.7612694157725397,
-        -1.9349485597810259,
-        1.2826515923822766
+        2.346280883954912,
+        7.353943943215514,
+        2.7475743312172014,
+        0.7792523986288777,
+        -1.9656339491092278,
+        1.2822750354970351
       ],
-      "marginMAE": 11.63,
+      "marginMAE": 11.62,
       "eloBaselineMAE": 11.98,
-      "winAccuracy": 0.672,
-      "brier": 0.2057,
+      "winAccuracy": 0.673,
+      "brier": 0.2054,
       "description": "Expanding time-order; prior games only, evaluated before learning each result."
     },
     "diagnostics": {
-      "historicalFinals": 1430,
+      "historicalFinals": 1432,
       "rosterTeams": 30,
       "previousRosterTeams": 3,
       "injuryTeams": 27
