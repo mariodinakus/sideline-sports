@@ -1,6 +1,6 @@
 {
-  "name": "NIGHT SHIFT — NBA",
-  "short_name": "NIGHT SHIFT",
+  "name": "NBA ATLAS — NBA",
+  "short_name": "NBA ATLAS",
   "description": "NBA basketball scores, team and player profiles",
   "start_url": "/",
   "scope": "/",

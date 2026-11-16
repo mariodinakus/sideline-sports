@@ -318,3 +318,94 @@ h1,h2,h3,h4,.hero-counter,.brand b,.brand-icon,.spot b,.stat-card b,.team-card s
 .tier-tabs{flex-wrap:nowrap;overflow-x:auto}
 .tier-tabs .int-tab{min-width:100px;font-size:9px}
 }
+
+
+/* NBA ATLAS — team intelligence, confirmed lineups, roster analytics and transaction wire */
+.ti-shell{--ti-accent:#b9a0a6;margin:26px 0 30px;border:1px solid #35343b;border-top:3px solid var(--ti-accent);border-radius:16px;background:linear-gradient(145deg,#17171c,#111115);padding:22px;min-width:0}
+.ti-section-head,.ti-block-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ti-section-head>div>small,.ti-block-head>div>span{font:850 9px 'Archivo';letter-spacing:.16em;color:var(--ti-accent)}
+.ti-section-head h2{margin:7px 0 0;font:850 clamp(21px,3vw,29px) 'Archivo';letter-spacing:-.04em}
+.ti-rank{font:850 9px 'Archivo';letter-spacing:.08em;border:1px solid color-mix(in srgb,var(--ti-accent) 55%,#393940);border-radius:20px;padding:8px 11px;color:#e9dfe2;background:#272329;text-align:center}
+.ti-live{font:850 9px 'Archivo';letter-spacing:.1em;color:#a8d7bc;border:1px solid #315343;background:#17251e;padding:8px 10px;border-radius:20px;white-space:nowrap}
+.ti-loading,.ti-empty{padding:20px;border:1px dashed #45424a;border-radius:10px;color:#aaa6af;font:600 12px/1.7 'Inter';margin-top:15px}
+.ti-empty button,.ti-section-head button,.ti-block-head button,.ti-controls button,.ti-tx-toolbar>button{background:#28252d;border:1px solid #48414b;color:#eee3e6;border-radius:8px;padding:9px 12px;font:800 9px 'Archivo';letter-spacing:.06em}
+.ti-empty button:hover,.ti-controls button:hover,.ti-tx-toolbar>button:hover{border-color:var(--ti-accent,#b9a0a6)}
+.ti-block{margin-top:22px;padding-top:20px;border-top:1px solid #34323a;min-width:0}
+.ti-block-head{margin-bottom:13px}
+.ti-block-head h3{margin:5px 0 0;font:850 20px 'Archivo';letter-spacing:-.035em}
+.ti-chip{display:inline-flex;align-items:center;border:1px solid #47424b;border-radius:20px;padding:5px 8px;font:850 8px 'Archivo';letter-spacing:.08em;color:#d8cdd2;white-space:nowrap}
+.ti-chip.confirmed{border-color:#315c49;color:#a7d9bd;background:#18261f}
+.ti-chip.estimate{border-color:#6c5736;color:#e4c38c;background:#292218}
+.ti-chip.trade{border-color:#7a4d54;color:#e8b3b9;background:#2a1d22}
+.ti-chip.move{border-color:#465d69;color:#b9d4e2;background:#1c252b}
+.ti-five-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.ti-five-card{min-width:0;padding:13px 11px;border:1px solid #3b3941;border-radius:12px;background:linear-gradient(155deg,#242129,#19191e);display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px}
+.ti-five-top{width:100%;display:flex;justify-content:space-between;align-items:center;font:850 10px 'Archivo';color:var(--ti-accent)}
+.ti-five-top small{color:#8f8b94;font:700 9px 'Inter'}
+.ti-player-photo{width:34px;height:38px;object-fit:contain;object-position:center bottom;flex:none}
+.ti-five-card>.ti-player-photo{width:76px;height:83px}
+.ti-five-card>strong{font:850 12px 'Archivo';line-height:1.25;min-height:30px}
+.ti-season-line{font:650 9px/1.5 'Inter';color:#c5c0c7}
+.ti-game-line{font:800 8px/1.5 'Archivo';color:#a8a2ad;letter-spacing:.035em}
+.ti-last-game{font:800 9px 'Archivo';letter-spacing:.07em;color:#b7b0ba;margin:2px 0 13px}
+.ti-note,.ti-advanced-note{font:600 10px/1.65 'Inter';color:#89858f;margin:11px 0 0}
+.ti-rotation-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.ti-rotation-grid>div{padding:12px 10px;border:1px solid #39363f;border-radius:9px;background:#1e1d23;min-width:0}
+.ti-rotation-grid>div>small{display:block;color:var(--ti-accent);font:850 8px/1.5 'Archivo';letter-spacing:.06em;margin-bottom:8px}
+.ti-rotation-grid>div>span{display:flex;justify-content:space-between;gap:5px;padding:6px 0;border-top:1px solid #34313a;color:#d7d1d9;font:650 9px/1.4 'Inter'}
+.ti-rotation-grid b{white-space:nowrap;color:#a8d7bc;font:800 9px 'Archivo'}
+.ti-controls{display:flex;align-items:end;flex-wrap:wrap;gap:9px;margin:12px 0}
+.ti-controls label,.ti-tx-toolbar label{display:flex;flex-direction:column;gap:6px;color:#8f8994;font:850 8px 'Archivo';letter-spacing:.09em}
+.ti-controls select,.ti-tx-toolbar select,.ti-tx-toolbar input{height:36px;min-width:116px;border:1px solid #45414a;border-radius:8px;background:#211f26;color:#e9e4ea;padding:0 10px;font:650 10px 'Inter'}
+.ti-controls button:disabled{opacity:.55;cursor:wait}
+.ti-count{font:850 9px 'Archivo';color:#b9b2bd;letter-spacing:.1em}
+.ti-table-wrap{overflow:auto;border:1px solid #3a3740;border-radius:10px;max-width:100%;background:#17171c}
+.ti-roster-table{border-collapse:separate;border-spacing:0;min-width:1350px;width:100%}
+.ti-roster-table th{position:sticky;top:0;background:#25222a;color:#aaa3ae;font:850 8px/1.35 'Archivo';letter-spacing:.06em;text-align:right;padding:11px 9px;white-space:nowrap;border-bottom:1px solid #47414a}
+.ti-roster-table th:first-child,.ti-roster-table td:first-child{text-align:left;min-width:180px}
+.ti-roster-table td{padding:9px 9px;border-bottom:1px solid #302e35;text-align:right;white-space:nowrap;color:#ded9e0;font:700 10px 'Archivo';font-variant-numeric:tabular-nums}
+.ti-roster-table tbody tr:hover{background:#24212a}
+.ti-player-link{display:flex;align-items:center;gap:9px;background:none;border:0;color:#f0eaf0;padding:0;text-align:left;font:800 10px 'Inter'}
+.ti-player-link:hover{color:var(--ti-accent)}
+.ti-tx-list{display:flex;flex-direction:column;gap:7px}
+.ti-tx-row{display:grid;grid-template-columns:104px minmax(0,1fr) 90px;gap:12px;align-items:center;padding:12px;border:1px solid #38353d;border-radius:9px;background:#1d1c22}
+.ti-tx-row>div:first-child{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.ti-tx-row>div:nth-child(2){min-width:0}
+.ti-tx-row>div:nth-child(2)>strong{display:block;font:750 11px/1.5 'Inter';color:#e5e0e6}
+.ti-tx-row>div:nth-child(2)>small{display:block;margin-top:4px;color:#89848e;font:600 9px 'Inter'}
+.ti-tx-row>div:first-child>small{font:650 8px 'Inter';color:#96909b}
+.ti-tx-row>a,.ti-tx-row>.ti-source{font:850 8px 'Archivo';color:var(--ti-accent);text-align:right;letter-spacing:.05em}
+.ti-foot{border-top:1px solid #33313a;margin-top:18px;padding-top:12px;color:#797580;font:600 9px/1.6 'Inter'}
+.ti-transactions{margin-top:0}
+.ti-tx-toolbar{display:flex;align-items:end;gap:10px;flex-wrap:wrap;margin:20px 0 15px}
+.ti-tx-toolbar label:last-of-type{flex:1;min-width:190px}
+.ti-tx-toolbar label:last-of-type input{width:100%;min-width:180px}
+.ti-tx-summary{display:flex;align-items:baseline;gap:9px;margin:14px 0;color:#a7a1ab;font:650 10px 'Inter'}
+.ti-tx-summary strong{font:900 25px 'Archivo';color:#f0e9ef}
+.ti-tx-summary small{margin-left:auto;color:#817b86}
+.ti-tx-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ti-tx-card{min-width:0;padding:15px;border:1px solid #3a3740;border-radius:11px;background:linear-gradient(150deg,#24212a,#19191e)}
+.ti-tx-meta{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.ti-tx-meta time{color:#8d8792;font:650 9px 'Inter'}
+.ti-tx-card h3{font:800 12px/1.6 'Inter';color:#eee8ee;margin:12px 0 8px}
+.ti-tx-card p{font:650 9px/1.6 'Inter';color:#a49da8;margin:5px 0}
+.ti-tx-card footer{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #39343e;padding-top:10px;margin-top:12px;color:#7e7884;font:800 8px 'Archivo';letter-spacing:.06em}
+.ti-tx-card footer a{color:var(--ti-accent)}
+.ti-player-transactions{margin-top:18px}
+@media(max-width:1050px){.ti-five-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ti-rotation-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){
+.ti-shell{padding:15px;margin:18px 0}
+.ti-five-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.ti-five-card{padding:11px 7px}
+.ti-five-card>.ti-player-photo{width:64px;height:72px}
+.ti-rotation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ti-section-head,.ti-block-head{align-items:flex-start;flex-wrap:wrap}
+.ti-rank{max-width:100%;font-size:8px}
+.ti-tx-row{grid-template-columns:82px minmax(0,1fr);gap:8px}
+.ti-tx-row>a,.ti-tx-row>.ti-source{grid-column:2;text-align:left}
+.ti-tx-grid{grid-template-columns:1fr}
+.ti-tx-toolbar{align-items:stretch}
+.ti-tx-toolbar label{flex:1}
+.ti-tx-summary{flex-wrap:wrap}
+.ti-tx-summary small{width:100%;margin-left:0}
+}
