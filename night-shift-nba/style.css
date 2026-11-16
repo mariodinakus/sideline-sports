@@ -470,3 +470,71 @@ h1,h2,h3,h4,.hero-counter,.brand b,.brand-icon,.spot b,.stat-card b,.team-card s
 .al-sources a:hover{text-decoration:underline}
 @media(max-width:950px){.al-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.al-dashboard{grid-template-columns:1fr 1fr}.al-leader-value{font-size:65px}}
 @media(max-width:700px){.al-titlebar{align-items:start;flex-direction:column;margin-bottom:21px}.al-titlebar h1{font-size:45px}.al-snapshot{text-align:left;width:100%;box-sizing:border-box}.al-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.al-dashboard{grid-template-columns:1fr}.al-leader{min-height:230px;padding:21px}.al-leader-value{font-size:73px}.al-topthree{padding:19px}.al-ranking{padding:17px 12px 10px}.al-ranking-top{align-items:stretch;flex-direction:column;gap:17px}.al-search-wrap input{min-width:0;width:100%;box-sizing:border-box}.al-person{gap:12px}.al-person-name{font-size:12px}.al-number{font-size:15px}.al-row{padding-left:5px;padding-right:5px}.al-bar{left:45px;right:5px}}
+
+
+/* NBA ATLAS compact navigation / dedicated sidebar */
+.rail,.workspace,.nav-overlay{box-sizing:border-box}
+.rail .brand{position:relative;gap:10px;min-height:54px;padding:5px 5px 18px;margin:0 0 13px;border-bottom:1px solid #30343c}
+.rail .brand-icon{flex:0 0 36px;width:36px;height:36px;min-width:36px;border-radius:10px;font-size:24px;letter-spacing:-2px;background:#e9f4f2;color:#14191b}
+.rail .brand-copy{min-width:0;flex:1}
+.rail .brand-copy b{font:900 12px 'Archivo',sans-serif;white-space:nowrap;letter-spacing:.055em}
+.rail .brand-copy small{font:700 8px 'Inter',sans-serif;letter-spacing:.095em;white-space:nowrap;margin-top:4px;color:#88959b}
+#desktop-nav{display:flex;flex-direction:column;gap:7px}
+.atlas-nav-group{display:flex;flex-direction:column;gap:2px;margin-bottom:2px}
+.atlas-group-label{display:flex;gap:9px;align-items:center;padding:12px 11px 6px;font:850 8px 'Archivo',sans-serif;color:#65737e;letter-spacing:.13em;white-space:nowrap}
+.atlas-group-line{display:inline-block;width:14px;height:2px;border-radius:2px;background:#5d9e9f}
+.rail .atlas-nav-link{position:relative;display:flex;align-items:center;gap:11px;min-height:36px;width:100%;padding:8px 10px;border:1px solid transparent;border-radius:8px;background:transparent;text-align:left;color:#a9adb6;font:750 11px 'Inter',sans-serif;transition:background .15s,color .15s,border-color .15s}
+.rail .atlas-nav-link .nav-ico{width:20px;min-width:20px;display:flex;justify-content:center;align-items:center;font:800 17px/1 'Archivo',sans-serif;color:#7e9297}
+.rail .atlas-nav-link .nav-caption{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rail .atlas-nav-link:hover{color:#e2f4f3;background:#272e32;border-color:#3a5054}
+.rail .atlas-nav-link:hover .nav-ico{color:#98d8d8}
+.rail .atlas-nav-link.active{color:#e6ffff;background:#26373c;border-color:#467176;box-shadow:inset 2px 0 #8ddddd}
+.rail .atlas-nav-link.active:before{display:none}
+.rail .atlas-nav-link.active .nav-ico{color:#93dce0}
+.rail .rail-footer{padding:13px 5px 0;font:750 9px 'Inter',sans-serif;letter-spacing:.07em;color:#81929b}
+.rail .rail-disclaimer{font-size:9px;color:#69737c;margin-top:7px}
+#nav-toggle{appearance:none;flex:none;width:24px;height:25px;display:flex;align-items:center;justify-content:center;padding:0;border:1px solid #383f45;border-radius:7px;background:#23272d;color:#b9cbd0;font:800 15px 'Archivo',sans-serif;cursor:pointer}
+#nav-toggle:hover{background:#354148;color:#e4ffff}
+#nav-toggle:focus-visible,.rail .atlas-nav-link:focus-visible,#nav-mobile-open:focus-visible,#nav-mobile-close:focus-visible,.atlas-dock-item:focus-visible{outline:2px solid #8cdadd;outline-offset:2px}
+#nav-mobile-open,#nav-mobile-close{display:none}
+.nav-overlay{display:none}
+@media(min-width:931px){
+ .rail{width:208px;padding:18px 11px 14px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#3d4549 transparent;background:#191b20;border-right:1px solid #2d3438}
+ .workspace{margin-left:208px;transition:margin-left .18s ease}
+ html.atlas-rail-compact .rail{width:70px;padding:18px 7px 12px}
+ html.atlas-rail-compact .workspace{margin-left:70px}
+ html.atlas-rail-compact .rail .brand{flex-direction:column;align-items:center;gap:8px;min-height:94px;padding:5px 0 10px}
+ html.atlas-rail-compact .rail .brand-copy,html.atlas-rail-compact .atlas-group-label,html.atlas-rail-compact .rail-footer,html.atlas-rail-compact .rail .nav-caption{display:none}
+ html.atlas-rail-compact .rail .brand-icon{flex:0 0 36px}
+ html.atlas-rail-compact #nav-toggle{width:29px}
+ html.atlas-rail-compact #desktop-nav{gap:4px}
+ html.atlas-rail-compact .atlas-nav-group{gap:3px;padding-bottom:9px;margin-bottom:7px;border-bottom:1px solid #333b41}
+ html.atlas-rail-compact .rail .atlas-nav-link{width:48px;min-height:41px;margin:0 auto;padding:8px;border-radius:9px;justify-content:center}
+ html.atlas-rail-compact .rail .atlas-nav-link .nav-ico{font-size:19px}
+}
+@media(max-width:930px){
+ .rail{display:flex;position:fixed;top:0;left:0;bottom:0;right:auto;transform:translateX(-102%);transition:transform .23s ease;width:min(284px,85vw);max-width:284px;padding:21px 15px 19px;background:#191c21;border-right:1px solid #4a535a;overflow-y:auto;overflow-x:hidden;z-index:110;box-shadow:16px 0 46px #0008;visibility:hidden}
+ body.atlas-drawer-open .rail{transform:translateX(0);visibility:visible}
+ body.atlas-drawer-open{overflow:hidden}
+ .rail .brand{padding-bottom:21px;margin-bottom:10px}
+ .rail #nav-toggle{display:none}
+ #nav-mobile-close{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;padding:0;border:1px solid #3d484c;border-radius:8px;background:#232b30;color:#dfedec;font-size:23px;cursor:pointer}
+ .rail .atlas-nav-link{min-height:42px;font-size:12px}
+ .nav-overlay{display:none;position:fixed;inset:0;background:rgba(5,8,13,.74);border:0;z-index:109;cursor:pointer}
+ body.atlas-drawer-open .nav-overlay{display:block}
+ #nav-mobile-open{display:grid;place-items:center;width:31px;height:31px;min-width:31px;padding:0;border:1px solid #39474a;border-radius:8px;background:#20292c;color:#d5f5f1;font-size:16px;cursor:pointer}
+ .mobile-nav{display:flex;justify-content:space-around;gap:3px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));overflow-x:visible;scrollbar-width:none;box-sizing:border-box;background:rgba(18,21,26,.98);border-top:1px solid #385155}
+ .mobile-nav .atlas-dock-item{min-width:0;width:auto;flex:1;display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;padding:6px 2px;border:1px solid transparent;border-radius:8px;background:transparent;color:#8e9ca6;font-size:9px;font-weight:800;text-align:center}
+ .mobile-nav .atlas-dock-item .nav-ico{font-size:18px;color:#7f9a9d}
+ .mobile-nav .atlas-dock-item.active{background:#24373b;border-color:#41666b;color:#dcf4f3}
+ .mobile-nav .atlas-dock-item.active .nav-ico{color:#8bdada}
+ .mobile-nav .atlas-dock-item.active:before{display:none}
+ .mobile-nav .atlas-nav-more{color:#9da9ad}
+ .workspace{margin-left:0}
+}
+@media(max-width:390px){
+ .mobile-nav .atlas-dock-item{font-size:8px;padding:6px 1px;gap:3px}
+ .mobile-nav .atlas-dock-item .nav-ico{font-size:16px}
+ #nav-mobile-open{width:29px;min-width:29px}
+}
+@media(prefers-reduced-motion:reduce){.rail,.workspace,.rail .atlas-nav-link{transition:none!important}}
