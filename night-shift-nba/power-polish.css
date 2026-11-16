@@ -1,0 +1,47 @@
+/* NBA ATLAS / POWER INDEX: compact, legible 2026–27 comparison UI */
+#screen .pw-hero{padding:23px 27px;margin:14px 0 17px;background:linear-gradient(135deg,#22262b 0%,#191b20 58%,#241f24 100%);border:1px solid #45464b;border-radius:14px}
+#screen .pw-hero h2{font-family:'Archivo',sans-serif;font-size:clamp(30px,4vw,49px);line-height:1.08;letter-spacing:-.065em;margin:9px 0 7px}
+#screen .pw-hero h2 span{color:#e0b2b6}
+#screen .pw-hero p{font-size:12px;max-width:630px;line-height:1.6;color:#c7c4c9;margin:0}
+#screen .power-overview{margin:13px 0 18px}
+#screen .power-tabs{display:flex;gap:5px;flex-wrap:wrap;padding:5px;background:#1a1d21;border:1px solid #333a40;border-radius:12px;margin-bottom:17px}
+#screen .power-tabs .int-tab{flex:1 1 145px;border-radius:8px;min-height:39px;font-size:11px;line-height:1.3;white-space:normal}
+#screen .pw-toolbar{display:flex;align-items:end;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+#screen .pw-toolbar .int-search{flex:1 1 230px;min-width:170px;border:1px solid #4c5159;background:#22262c;color:#f4f5f6;border-radius:9px;font-size:12px;padding:11px 13px}
+#screen .pw-select-wrap{display:flex;flex-direction:column;gap:5px;flex:0 1 168px;min-width:145px}
+#screen .pw-select-wrap span{color:#abb1b8;font-weight:750;font-size:10px}
+#screen .pw-select-wrap select{width:100%;min-width:0;min-height:40px;border:1px solid #495058;background:#22262c;color:#f4f5f6;font-size:12px}
+#screen .pw-result-count{font-size:11px;line-height:1.5;color:#a9b0b8;margin:3px 0 10px}
+#screen .power-list{border-color:#383e43;background:#191d21}
+#screen .power-data-row{border-bottom:1px solid #353b41;transition:background .15s ease;min-height:85px;column-gap:12px}
+#screen .power-data-row:hover{background:#282c31}
+#screen .power-data-row:focus-visible{outline:2px solid #d4a4a8;outline-offset:-3px}
+#screen .power-data-row .power-row-body strong{font-size:13.5px;line-height:1.35;color:#f5f5f5}
+#screen .power-data-row .power-row-body small{font-size:11px;line-height:1.45;white-space:normal;overflow:visible;text-overflow:clip}
+#screen .power-data-row .power-row-body .pw-team-stats{color:#c6c8cd}
+#screen .power-data-row .power-row-body .pw-player-line{color:#9daab4}
+#screen .power-data-row .power-row-end b{font-size:17px;color:#f5d2d5}
+#screen .power-data-row .power-row-end small{font-size:10px;line-height:1.25;color:#b6b9bf;letter-spacing:0}
+#screen .power-data-row .power-no{font-size:20px}
+#screen .pw-source-note{font-size:11px;line-height:1.65;color:#aeb3b9;margin:13px 2px 21px}
+#screen .pw-empty{padding:26px 16px;color:#c0c5cb;text-align:center;font-size:13px}
+@media(max-width:700px){
+ #screen .pw-hero{padding:20px 18px}
+ #screen .pw-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:end}
+ #screen .pw-toolbar .int-search{grid-column:1/-1;min-width:0;width:100%}
+ #screen .pw-select-wrap{min-width:0;width:100%}
+ #screen .power-data-row{grid-template-columns:27px 33px minmax(0,1fr) 57px 65px;gap:7px;padding:11px 9px;min-height:89px}
+ #screen .power-data-row>img{width:31px;height:33px}
+ #screen .power-data-row .power-face{width:30px;height:38px}
+ #screen .power-data-row .power-no{font-size:16px}
+ #screen .power-data-row .power-row-body strong{font-size:12px;white-space:normal}
+ #screen .power-data-row .power-row-body small{font-size:10px;line-height:1.38}
+ #screen .power-data-row .power-row-end b{font-size:13px}
+ #screen .power-data-row .power-row-end small{font-size:9px}
+}
+@media(max-width:390px){
+ #screen .power-data-row{grid-template-columns:24px 29px minmax(0,1fr) 54px;gap:5px;padding:9px 7px}
+ #screen .power-data-row .pw-share{display:none}
+ #screen .power-data-row>img{width:27px}
+ #screen .power-data-row .power-no{font-size:14px}
+}

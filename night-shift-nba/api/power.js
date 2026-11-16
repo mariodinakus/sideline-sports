@@ -81,8 +81,8 @@ module.exports=async(req,res)=>{
  try{playerData=await athletes(teams)}catch(e){playerError=String(e.message||e)}
  const playersAll=playerData?.players||[];
  const leaders=teams.map(t=>({teamId:t.id,leader:playersAll.find(p=>p.teamId===t.id&&p.eligible)||playersAll.find(p=>p.teamId===t.id)||null}));
- const rankedPlayers=playersAll.filter(p=>p.eligible).slice(0,80);
- const result={...source,teams,teamCount:teams.length,players:rankedPlayers,teamLeaders:leaders,playerCount:playerData?.total||0,playerPartial:playerData?.partial||false,
+ const rankedPlayers=playersAll.filter(p=>p.eligible);
+ const result={...source,teams,teamCount:teams.length,players:rankedPlayers,teamLeaders:leaders,playerCount:playerData?.total||0,eligibleCount:rankedPlayers.length,playerPartial:playerData?.partial||false,
  notes:{title:'TITLE SHARE is a normalized softmax over team power ratings, not a calibrated championship probability. Index mixes season win rate (53%), adjusted point differential (34%) and last-ten form (13%), with sample-size shrinkage toward league average. Not a playoff simulation.',mvp:'MVP INDEX is a custom 0–100 score: scoring 38%, rebounding 17%, assists 20%, steals+blocks 10%, team winning context 15%. It is scaled for games played and requires at least 5 games and 18 MPG. Not an official award forecast or voting poll.',data:'2026–27 eFG%, TS% and AST/TO are calculated from reported ESPN per-game stats; rounded inputs can cause minor differences. PER/BPM/WS are not supplied for this season in this source and are not invented. ESPN public feeds are unofficial and subject to revision.'},
  errors:playerError?[{type:'MVP',message:playerError}]:[]};
  res.setHeader('Cache-Control','public, s-maxage=360, stale-while-revalidate=900');
