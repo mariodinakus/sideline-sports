@@ -1,12 +1,12 @@
 {
-  "name": "NBA ATLAS — NBA",
+  "name": "NBA ATLAS",
   "short_name": "NBA ATLAS",
-  "description": "NBA basketball scores, team and player profiles",
+  "description": "NBA scores, champions, players and advanced statistics",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#101013",
-  "theme_color": "#101013",
+  "background_color": "#0b1118",
+  "theme_color": "#0b1118",
   "icons": [
     {
       "src": "/icon.svg",

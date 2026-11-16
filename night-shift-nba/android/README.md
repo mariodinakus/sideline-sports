@@ -1,10 +1,5 @@
-# NIGHT SHIFT Android APK
+# NBA ATLAS Android
 
-This module is a native Java Android WebView shell for the live HTTPS site \`https://night-shift-nba.vercel.app/\`. It requires an internet connection. No third-party WebView plugin, no extra permissions, no bundled fake basketball data.
+Official app label: **NBA ATLAS**. Package ID: `app.nbaatlas.mobile`. A native WebView shell for `https://nba-atlas.vercel.app/` with dark system UI, in-app SPA navigation, Android back button, safe handling of external links and an offline retry screen. Internet required for live NBA data.
 
-## GitHub Actions build
-On any push to the \`night-shift-nba\` branch changing \`android/**\` or the workflow, GitHub Actions starts \`NIGHT SHIFT · Android APK\`. After a successful run, open the run's **Artifacts** section and download **NIGHT-SHIFT-NBA-Android-APK**. Extract the ZIP and install \`app-debug.apk\` on Android.
-
-Debug APK is for personal testing. It is not signed for release distribution via Play Store; a release signing key, keystore and release pipeline are required for that.
-
-GitHub Actions must be enabled for the repository. If no run starts, manually enable Actions for the branch or run the project locally with JDK 17, Android SDK API 35, Gradle 8.9: \`gradle :app:assembleDebug\`.
+Android SDK 35, Java 17, Gradle 8.9: `gradle -p night-shift-nba/android :app:assembleDebug`. The GitHub workflow validates the APK identity and uploads the built APK to `night-shift-nba/downloads/nba-atlas.apk` with SHA-256 checksum. The downloaded APK is **debug-signed for personal installation**, not Play Store release-signed. Because the new package ID differs from NIGHT SHIFT NBA, it installs as a distinct app.

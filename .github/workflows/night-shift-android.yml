@@ -1,4 +1,4 @@
-name: NIGHT SHIFT · Android APK
+name: NBA ATLAS Android APK
 on:
   push:
     branches: [night-shift-nba]
@@ -20,28 +20,38 @@ jobs:
           java-version: '17'
       - name: Prepare Android SDK
         run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
           SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager | head -n 1)
           test -x "$SDKMANAGER"
-          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-      - name: Assemble debug APK
-        run: gradle -p night-shift-nba/android :app:assembleDebug --no-daemon --stacktrace
-      - name: Upload installable APK
+      - name: Build NBA ATLAS APK
+        run: gradle -p night-shift-nba/android :app:assembleDebug --no-daemon
+      - name: Verify Android APK identity
+        run: |
+          APK=night-shift-nba/android/app/build/outputs/apk/debug/app-debug.apk
+          test -s "$APK"
+          test "$(stat -c %s "$APK")" -gt 10000
+          unzip -t "$APK" | tail -1
+          AAPT=$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -type f -name aapt | sort -V | tail -n 1)
+          "$AAPT" dump badging "$APK" | tee /tmp/nba-atlas-badging
+          grep -q "name='app.nbaatlas.mobile'" /tmp/nba-atlas-badging
+          grep -q "label='NBA ATLAS'" /tmp/nba-atlas-badging
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: NIGHT-SHIFT-NBA-Android-APK
+          name: NBA-ATLAS-Android-APK
           path: night-shift-nba/android/app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 30
           if-no-files-found: error
-      - name: Publish APK to NIGHT SHIFT web download
+          retention-days: 30
+      - name: Publish APK to NBA ATLAS downloads
         run: |
           mkdir -p night-shift-nba/downloads
-          cp night-shift-nba/android/app/build/outputs/apk/debug/app-debug.apk night-shift-nba/downloads/night-shift-nba.apk
-          git config user.name "night-shift-build[bot]"
+          cp night-shift-nba/android/app/build/outputs/apk/debug/app-debug.apk night-shift-nba/downloads/nba-atlas.apk
+          (cd night-shift-nba/downloads && sha256sum nba-atlas.apk > nba-atlas.sha256)
+          git config user.name "nba-atlas-build[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f night-shift-nba/downloads/night-shift-nba.apk
-          git diff --cached --quiet || (git commit -m "build(nba): publish Android debug APK" && git push origin HEAD:night-shift-nba)
+          git add -f night-shift-nba/downloads/nba-atlas.apk night-shift-nba/downloads/nba-atlas.sha256
+          git diff --cached --quiet || (git commit -m "build(nba-atlas): publish Android APK" && git push origin HEAD:night-shift-nba)

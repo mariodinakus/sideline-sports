@@ -1,0 +1,95 @@
+
+/* NBA ATLAS V3 — graphite, cool cyan, warm gold only for championships. */
+:root{color-scheme:dark;--bg:#0b1118;--rail:#0e161f;--panel:#151e28;--panel2:#1c2934;--line:#2d4250;--line2:#243643;--text:#eef6fb;--sub:#b8cad6;--muted:#95abbc;--red:#79d5e6;--redsoft:rgba(121,213,230,.13);--green:#9bdcb9;--atlas-cyan:#79d5e6;--atlas-gold:#e9c899;--atlas-text:#eef6fb;--atlas-subtext:#bbceda;--atlas-muted:#a6bac8}
+html,body{background:var(--bg);color:var(--text)}
+body,button,input,select,textarea{font-family:'Inter','Segoe UI',Arial,sans-serif}
+:where(button,a,input,select,textarea):focus-visible{outline:2px solid #92e5f5!important;outline-offset:3px}
+.rail{background:#0e1821!important;border-right-color:#304553!important}
+.brand-icon{background:linear-gradient(145deg,#e1faff,#a7e4ed)!important;color:#11242e!important;box-shadow:0 8px 28px #0005}
+.brand-dot,.mobile-mark span{color:#307c8e!important}
+.rail .brand-copy b{color:#f1fbff;font-size:13px;letter-spacing:.03em}
+.rail .brand-copy small{color:#a4bdcb!important}
+.atlas-group-label{color:#a8beca!important;font-size:10px!important}
+.atlas-group-line{background:#78d0df!important}
+.rail .atlas-nav-link{min-height:41px!important;color:#c4d3dc!important;border-radius:10px!important}
+.rail .atlas-nav-link .nav-ico{color:#a9c6d5!important}
+.rail .atlas-nav-link:hover{background:#1c303e!important;color:#edfaff!important;border-color:#3e6172!important}
+.rail .atlas-nav-link.active{background:#203e4a!important;color:#f0fdff!important;border-color:#578c9d!important;box-shadow:inset 3px 0 #80dce9!important}
+.rail .atlas-nav-link.active .nav-ico{color:#9be8f2!important}
+.rail .rail-footer{color:#adc2cf!important;border-top-color:#304553!important}
+.rail .rail-disclaimer{color:#9fb4c0!important}
+.topbar{background:#111b24;border-bottom:1px solid #304654}
+.top-left,.top-right{gap:11px}
+.season-pill{background:#182e3a;color:#d3eaf1;border-color:#395c6c;font-size:11px}
+.source-label{color:#aec8d3;font-size:11px}
+.search-wrap{background:#182a36;border-color:#365769;min-width:180px}
+.search-wrap:focus-within{border-color:#79d5e6;box-shadow:0 0 0 3px #79d5e620}
+.search-wrap input,.search-wrap input::placeholder{font-size:13px}
+.search-wrap input::placeholder{color:#a8bfce}
+.icon-btn,.ghost-btn{background:#213541;border-color:#3d5a68;color:#e4f7ff}
+.icon-btn:hover,.ghost-btn:hover{border-color:#82cadb;background:#2b4756}
+.atlas-download{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:37px;padding:0 12px;background:#22434e;border:1px solid #518fa0;border-radius:9px;color:#e6fbff;font-size:11px;font-weight:800;white-space:nowrap}
+.atlas-download:hover{background:#305966;border-color:#91e4f0}
+.atlas-download svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ticker{background:#304451;border-bottom-color:#304451}
+.tick-game{background:#162430;color:#f2f9fc}
+.tick-game:hover{background:#263c49}
+.tick-head,.ticker-empty{color:#aac3cf}
+.hero,.profile{background:radial-gradient(ellipse at 85% 28%,rgba(63,137,154,.22),transparent 40%),linear-gradient(115deg,#1c2d3a,#101922 75%)!important;border-color:#355566!important}
+.hero h1 em,.eyebrow.red,.kicker{color:#8ae0ef!important}
+.hero p,.page-heading p{color:#b7cad6}
+.hero:after{color:#b9eaf51a}
+.page-heading h1,.section-title h2,.profile h1{color:#f1faff;letter-spacing:-.04em}
+.section-title button{color:#a8e7f2}
+.eyebrow,.rail-section{color:#a9c0cc;letter-spacing:.095em}
+.muted,#screen .muted{color:#afc0cb}
+.panel,.team-card,.player-row,.stat-card,.award,.game-card{background:#16232d;border-color:#304858}
+.panel,.stat-card,.team-card,.player-row,.game-card{box-shadow:0 7px 23px #03080d22}
+.spot{background:linear-gradient(145deg,#2a4352,#151f2a);border-color:#375869}
+.spot:after{background:linear-gradient(0deg,#12202b,transparent)}
+.spot .num{color:#9ae7f2}
+.spot small,.team-card small,.player-row small{font-size:11px;color:#b5c8d3}
+.spot:hover,.team-card:hover,.player-row:hover,.game-card:hover{border-color:#80c5d9}
+.stat-card b,.big-number{color:#effaff;font-variant-numeric:tabular-nums}
+.stat-card span{font-size:11px;color:#b9ccd7;line-height:1.5;letter-spacing:.025em}
+.filter{background:#1c303d;border-color:#3e5c6c;color:#b9d0db}
+.filter.active{background:#2b505b;border-color:#70b9c8;color:#c0f6fc}
+.fav{color:#a5e8f2;border-color:#4c94a7}
+.wide-btn{background:#70c7d9!important;color:#071923!important}
+.wide-btn:hover{background:#a2e5f1!important}
+.table-wrap{border-color:#355061}
+table{background:#14212c;color:#e9f3fa;font-variant-numeric:tabular-nums}
+thead{background:#203746!important;color:#bbd3df}
+th{font-size:11px!important;color:#c4d8e2}
+td{color:#e1eef5}
+th,td{border-bottom-color:#2a4250}
+tbody tr:hover{background:#203844}
+.empty{background:#192a34;border-color:#486273;color:#c2d1db}
+.warning{color:#f5cda4}
+.footer{color:#a2b7c5;border-top-color:#344b5b}
+.mobile-nav{background:rgba(13,25,34,.97)!important;border-top:1px solid #3a5968!important}
+.mobile-nav .atlas-dock-item{color:#bacfda!important}
+.mobile-nav .atlas-dock-item.active{color:#effeff!important;background:#234752!important;border-color:#5996a8!important}
+.mobile-nav .atlas-dock-item.active .nav-ico{color:#9be8f4!important}
+.rail .atlas-nav-link .atlas-lucide,.mobile-nav .atlas-lucide{stroke:currentColor}
+.toast{background:#d8f6f9;color:#10272e}
+#screen .ch-hero{background:radial-gradient(ellipse at 82% 25%,#76643c35,transparent 46%),linear-gradient(125deg,#233541,#121d26 78%)!important;border-color:#4c6470!important}
+#screen .ch-feature{background:#1d313b!important;border-color:#5d6f6d!important}
+#screen .ch-metrics>div,#screen .ch-team-metrics>div{background:#1b2c36!important;border-color:#3f5a67!important}
+#screen .ch-tabs{background:#162731!important;border-color:#405967!important}
+#screen .ch-tabs button{color:#d1e2e9}
+#screen .ch-tabs button.active{background:#e3c596!important;color:#1b252a!important}
+#screen .ch-list{background:#162630!important;border-color:#415a66!important}
+#screen .ch-season,#screen .ch-rank{border-bottom-color:#355160!important}
+#screen .ch-filters input,#screen .ch-filters select{background:#213742!important;border-color:#506f7d!important;color:#eaf5f9!important}
+#screen .ch-year,#screen .ch-ordinal,#screen .ch-number{color:#eed1a2!important}
+#screen .ch-name,#screen .ch-player-link{color:#f2f7f9!important}
+#screen .ch-caption,#screen .ch-sources{color:#b9ccd5}
+#screen .ch-sources a{color:#edcf9f}
+#screen .ti-roster-table th,#screen .standings-table th{background:#1f3542;color:#c4d6e0}
+#screen .ti-roster-table td,#screen .standings-table td{color:#deebf2}
+#screen :is(.ti-note,.ti-foot,.al-disclaimer,.market-sources small,.prime-year-label,.prime-gp,.game-insights){color:#b5cbd6}
+@media(max-width:930px){.rail{background:#111f29!important;border-color:#3f606e!important}main{padding-bottom:calc(95px + env(safe-area-inset-bottom))}.mobile-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}.mobile-nav .atlas-dock-item{font-size:10px!important}.topbar{padding:11px 12px;gap:8px}.top-left,.top-right{gap:8px}.atlas-download{min-height:36px;padding:0 10px}}
+@media(max-width:580px){.season-pill{display:none}.search-wrap{min-width:0;width:min(34vw,170px);max-width:170px}.atlas-download{gap:3px;font-size:11px;padding:0 8px}.atlas-download svg{width:13px;height:13px}.topbar{gap:5px}.page-heading h1{line-height:1.12;overflow-wrap:break-word}}
+@media(max-width:365px){.search-wrap{width:104px;padding:0 7px}.icon-btn{min-width:32px;padding:0 7px}.top-right{gap:4px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
