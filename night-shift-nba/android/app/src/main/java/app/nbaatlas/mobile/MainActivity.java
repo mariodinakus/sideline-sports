@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
  private static final String HOME="https://nba-atlas.vercel.app/";
  private static final String HOST="nba-atlas.vercel.app";
- private static final int DARK=Color.rgb(11,17,24);
+ private static final int DARK=Color.rgb(8,9,12);
  private WebView webView;
  private ProgressBar progress;
  @Override public void onCreate(Bundle saved) {
@@ -63,8 +63,8 @@ public class MainActivity extends Activity {
  }
  private void showOffline(){
   String html="<!doctype html><html lang='el'><meta name='viewport' content='width=device-width,initial-scale=1'>"
-   +"<style>body{background:#0b1118;color:#eff9fd;font:16px Arial,sans-serif;display:grid;place-items:center;min-height:95vh}"
-   +"main{text-align:center;padding:28px}p{color:#bad0dd;line-height:1.6}a{background:#79d7e7;color:#10222a;padding:14px 22px;border-radius:10px;display:inline-block;text-decoration:none}</style>"
+   +"<style>body{background:#08090c;color:#eff9fd;font:16px Arial,sans-serif;display:grid;place-items:center;min-height:95vh}"
+   +"main{text-align:center;padding:28px}p{color:#bad0dd;line-height:1.6}a{background:#ff5a1f;color:#111111;padding:14px 22px;border-radius:10px;display:inline-block;text-decoration:none}</style>"
    +"<main><h1>NBA ATLAS</h1><p>Χρειάζεται σύνδεση στο internet για τα ζωντανά δεδομένα.</p><a href='"+HOME+"'>Επανάληψη</a></main></html>";
   webView.loadDataWithBaseURL(HOME,html,"text/html","UTF-8",null);
  }
