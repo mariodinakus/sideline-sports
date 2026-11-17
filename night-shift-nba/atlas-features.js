@@ -164,7 +164,7 @@ function hook(){
 let pending=null;
 new MutationObserver(()=>{clearTimeout(pending);pending=setTimeout(()=>{const r=route();
   if(r.name==='home'||r.name==='')favHome();
-  if(r.name==='player'&&r.id&&document.querySelector('.phero')){favButton('players',r.id,()=>({name:document.querySelector('.phero h1')?.textContent||'',headshot:document.querySelector('.phero img.hs')?.src||HS(r.id)}));twins(r.id)}
+  if(r.name==='player'&&r.id&&document.querySelector('.phero')){favButton('players',r.id,()=>({name:document.querySelector('.phero h1')?.textContent||'',headshot:document.querySelector('.phero img.hs')?.src||HS(r.id)}))}
   if(r.name==='team'&&r.id&&document.querySelector('.phero'))favButton('teams',r.id,()=>({name:document.querySelector('.phero h1')?.textContent||'',logo:document.querySelector('.phero img.logo-big')?.src||''}));
   if(r.name==='game'&&r.id&&view.querySelector('section.hero')&&!document.getElementById('livesec'))liveGame(r.id);
 },120)}).observe(view,{childList:true});
