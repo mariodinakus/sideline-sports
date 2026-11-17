@@ -72,9 +72,55 @@ function jersey(img){
     const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80"><defs><radialGradient id="b" cx=".5" cy=".35" r=".9"><stop offset="0" stop-color="${E[0]}"/><stop offset="1" stop-color="${E[1]}"/></radialGradient><linearGradient id="s" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".25"/><stop offset=".5" stop-color="#fff" stop-opacity=".07"/><stop offset="1" stop-color="#000" stop-opacity=".3"/></linearGradient></defs><rect width="100" height="80" fill="url(#b)"/>${pat}<g transform="translate(50 46) scale(.86) translate(-50 -44)"><path d="M33 8 C36 16 44 20 50 20 C56 20 64 16 67 8 L77 11 C76 20 78 26 82 30 L82 80 L18 80 L18 30 C22 26 24 20 23 11 Z" fill="${c1}" stroke="${c2}" stroke-width="2.4"/><path d="M33 8 C36 16 44 20 50 20 C56 20 64 16 67 8" fill="none" stroke="${c2}" stroke-width="3.2"/><path d="M33 8 C36 16 44 20 50 20 C56 20 64 16 67 8 L77 11 C76 20 78 26 82 30 L82 80 L18 80 L18 30 C22 26 24 20 23 11 Z" fill="url(#s)"/>${leg?`<text x="50" y="35" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="${last.length>9?5:6.5}" fill="${ink}" letter-spacing="1">${esc(last)}</text>`:''}<text x="50" y="${leg?66:60}" text-anchor="middle" font-family="Anton,Impact,Arial Black,sans-serif" font-size="${num.length>2?22:28}" fill="${ink}" stroke="${c2===ink?'#000':c2}" stroke-width=".6">${esc(num)}</text></g>${eraTxt?`<rect x="${50-(eraTxt.length*3.1+6)/2}" y="70.5" width="${eraTxt.length*3.1+6}" height="7.5" rx="3.75" fill="${E[2]}"/><text x="50" y="76" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="4.8" fill="#0b0b0b">${eraTxt}</text>`:''}${lab?`<text x="96" y="76" text-anchor="end" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="5.5" fill="rgba(255,255,255,.75)" letter-spacing=".5">${esc(lab)}</text>`:''}${rg?`<text x="4" y="76" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="5" fill="#ffcf5a">${rg}× 🏆</text>`:''}</svg>`;
   img.dataset.mono='2';img.onerror=null;img.src='data:image/svg+xml,'+encodeURIComponent(svg);
 }
+/* Licensed historical photographs: try Commons before the era-jersey fallback.
+   Keep the original ESPN photograph whenever it loads successfully. */
+const LEGEND_PORTRAITS={
+ michaeljordan:['Michael Jordan.jpg','Joshua Massel','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
+ magicjohnson:['MagicJohnson.jpg','Mikejamesftw','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
+ larrybird:['Larrybird.jpg','Kurt Shimala','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
+ kareemabduljabbar:['Kareem Abdul-Jabbar 1974.jpeg','Frank Bryan / The Sporting News','Public domain (US)',''],
+ billrussell:['Bill Russell.jpg','1957 Boston Celtics / photographer unknown','Public domain (US)',''],
+ wiltchamberlain:['Wilt Chamberlain.jpg','New York World-Telegram / Library of Congress','Public domain (US)',''],
+ oscarrobertson:['Oscar Robertson.jpg',"Kahn's / photographer unknown",'Public domain (US)',''],
+ hakeemolajuwon:['Hakeem.jpg','University of Houston Digital Library','Public domain',''],
+ juliuserving:['Julius Erving.jpg','Jessica Stewart; edit JoeJohnson2','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/']
+};
+const legendCSS=document.createElement('style');
+legendCSS.textContent=`.pc img.hs.legend-photo,.pod img.legend-photo{width:94%;height:72%;max-width:none;object-fit:cover;object-position:50% 16%;border-radius:12px 12px 0 0;-webkit-mask-image:linear-gradient(#000 0%,#000 76%,transparent 100%);mask-image:linear-gradient(#000 0%,#000 76%,transparent 100%)}
+.pod img.legend-photo{bottom:90px;height:66%}.phero .art img.hs.legend-photo{height:350px;max-height:52vh;max-width:100%;object-fit:contain;object-position:center bottom;border-radius:14px;-webkit-mask-image:none;mask-image:none}
+.tcell img.hs.legend-photo,.mini-list img.legend-photo,.twin img.legend-photo,.search-pop img.legend-photo{height:100%;width:100%;border-radius:inherit;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
+.commons-credits{margin-top:12px;text-align:left}.commons-credits summary{cursor:pointer;font-weight:650}.commons-credits div{font-size:11px;line-height:1.8;padding-top:8px}.commons-credits a{text-decoration:underline;text-underline-offset:2px}`;
+document.head.appendChild(legendCSS);
+function tryLegendPortrait(img){
+  if(img.dataset.legendPhotoState)return false;
+  const name=nameFor(img),rec=LEGEND_PORTRAITS[norm(name)];
+  if(!rec)return false;
+  img.dataset.legendPhotoState='loading';
+  img.dataset.mono='';
+  img.alt=name;
+  img.referrerPolicy='no-referrer';
+  img.src='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(rec[0])+'?width=640';
+  return true;
+}
 const isHS=s=>/headshots/i.test(s||'')||(window.SILH&&s===window.SILH);
-document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&t.dataset.mono!=='2'&&isHS(t.getAttribute('src')))jersey(t)},true);
-document.addEventListener('load',e=>{const t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.mono==='2')return;if(t.dataset.mono==='1'||(window.SILH&&t.getAttribute('src')===window.SILH))jersey(t)},true);
+document.addEventListener('error',e=>{
+  const t=e.target;if(!t||t.tagName!=='IMG')return;
+  if(t.dataset.legendPhotoState==='loading'){t.dataset.legendPhotoState='failed';jersey(t);return}
+  if(t.dataset.mono!=='2'&&isHS(t.getAttribute('src'))&&!tryLegendPortrait(t))jersey(t);
+},true);
+document.addEventListener('load',e=>{
+  const t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.mono==='2')return;
+  if(t.dataset.legendPhotoState==='loading'){t.dataset.legendPhotoState='done';t.classList.add('legend-photo');return}
+  if(t.dataset.mono==='1'||(window.SILH&&t.getAttribute('src')===window.SILH)){if(!tryLegendPortrait(t))jersey(t)}
+},true);
+const creditBox=document.querySelector('.foot-note');
+if(creditBox){
+  const rows=Object.entries(LEGEND_PORTRAITS).map(([key,[file,by,license,licenseUrl]])=>{
+    const source='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(file.replace(/ /g,'_'));
+    return '<a href="'+source+'" target="_blank" rel="noopener">'+esc(key.replace(/([a-z])([A-Z])/g,'$1 $2'))+'</a> · '+esc(by)+' · '+(licenseUrl?'<a href="'+licenseUrl+'" target="_blank" rel="license noopener">'+esc(license)+'</a>':esc(license));
+  });
+  creditBox.insertAdjacentHTML('beforeend','<details class="commons-credits"><summary>Φωτογραφίες θρύλων · Πηγές και άδειες</summary><div>'+rows.join(' · ')+'</div></details>');
+}
 
 /* ---------- shared model: strength, fatigue ---------- */
 const AR={1:[33.757,-84.396,-5],2:[42.366,-71.062,-5],3:[29.949,-90.082,-6],4:[41.881,-87.674,-6],5:[41.496,-81.688,-5],6:[32.790,-96.810,-6],7:[39.749,-105.008,-7],8:[42.341,-83.055,-5],9:[37.768,-122.388,-8],10:[29.751,-95.362,-6],11:[39.764,-86.155,-5],12:[33.945,-118.341,-8],13:[34.043,-118.267,-8],14:[25.781,-80.188,-5],15:[43.045,-87.917,-6],16:[44.979,-93.276,-6],17:[40.683,-73.975,-5],18:[40.751,-73.993,-5],19:[28.539,-81.384,-5],20:[39.901,-75.172,-5],21:[33.446,-112.071,-7],22:[45.532,-122.667,-8],23:[38.580,-121.500,-8],24:[29.427,-98.437,-6],25:[35.463,-97.515,-6],26:[40.768,-111.901,-7],27:[38.898,-77.021,-5],28:[43.643,-79.379,-5],29:[35.138,-90.051,-6],30:[35.225,-80.839,-5]};
