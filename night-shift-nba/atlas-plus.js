@@ -10,7 +10,7 @@ const HS=id=>`https://a.espncdn.com/i/headshots/nba/players/full/${id}.png`;
 const LOGO=a=>`https://a.espncdn.com/i/teamlogos/nba/500/${String(a||'nba').toLowerCase()}.png`;
 const silh=`onerror="this.onerror=null;this.src=window.SILH"`,hide=`onerror="this.style.visibility='hidden'"`;
 const tz={timeZone:'Europe/Athens'};
-const tm=d=>new Date(d).toLocaleTimeString('el-GR',{...tz,hour:'2-digit',minute:'2-digit'});
+const tm=d=>new Date(d).toLocaleTimeString('el-GR',{...tz,hour:'2-digit',minute:'2-digit',hour12:false});
 const dy=d=>new Date(d).toLocaleDateString('el-GR',{...tz,weekday:'short',day:'numeric',month:'short'});
 const cache=new Map();
 const api=p=>{if(!cache.has(p))cache.set(p,fetch('/api/'+p).then(r=>r.ok?r.json():null).then(j=>j&&(j.data&&!j.players&&!j.teams&&!j.games&&!j.records?j.data:j)).catch(()=>{cache.delete(p);return null}));return cache.get(p)};
@@ -162,7 +162,7 @@ async function twins2(id){
       const near=M.E.filter(x=>x.id!==id).map(x=>({x,d:distance(M,me,x,twinW)})).sort((a,b)=>a.d-b.d).slice(0,6);
       const lnear=me.h?legRows.map(r=>({r,d:ldist(curVec(me),legVec(r))})).sort((a,b)=>a.d-b.d).slice(0,3):[];
       let sel=near[0]?.x;
-      sec.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Statistical twins 2.0</div><h2 class="h2">Με ποιον μοιάζει</h2><p class="lede" style="margin-top:8px">Σύγκριση σε 13 χαρακτηριστικά: σώμα (ύψος, βάρος), σκοράρισμα ανά 36′, TS%, πόσο σουτάρει τρίποντα και πόσες βολές κερδίζει, δημιουργία, ριμπάουντ και άμυνα. Ρύθμισε τι μετράει περισσότερο.</p></div><a class="more" href="#/compare?a=${id}${sel?'&b='+sel.id:''}" id="tw2cmp">⚔️ Πλήρης σύγκριση</a></div>
+      sec.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Statistical twins 2.0</div><h2 class="h2">Με ποιον μοιάζει</h2><p class="lede" style="margin-top:8px">Σύγκριση σε 13 χαρακτηριστικά: σώμα (ύψος, βάρος), σκοράρισμα ανά 36′, TS%, πόσο σουτάρει τρίποντα και πόσες βολές κερδίζει, δημιουργία, ριμπάουντ και άμυνα. Ρύθμισε τι μετράει περισσότερο.</p></div><a class="more" href="#/compare?a=${id}${sel?'&b='+sel.id:''}" id="tw2cmp">🆚 Πλήρης σύγκριση</a></div>
       <div class="lbl">Αρχέτυπο</div><div class="tags">${tags.map(([t,d],i)=>`<span class="tag ${i?'cool':''}" title="${esc(d)}">${esc(t)} · <span style="font-weight:600">${esc(d)}</span></span>`).join('')}</div>
       <div class="wts">${GROUPS.map(([g,l])=>`<div><label><span>${l}</span><b>${['0','×½','×1','×1½','×2','×3'][[0,.5,1,1.5,2,3].indexOf(twinW[g])]||'×'+twinW[g]}</b></label><input type="range" min="0" max="5" step="1" value="${[0,.5,1,1.5,2,3].indexOf(twinW[g])}" data-g="${g}"></div>`).join('')}</div>
       <div class="tw2-top"><div><div class="lbl">Σημερινοί παίκτες που του μοιάζουν</div><div class="tw2-list">${near.map(({x,d},i)=>`<button class="tw2 ${i===0?'on':''}" data-id="${x.id}"><img src="${x.headshot||HS(x.id)}" alt="" loading="lazy" ${silh}><span><b>${esc(x.name)}</b><small>${esc(x.team||'')} · ${archetypes(M,x)[0][0]} · ${f(x.ppg)}/${f(x.rpg)}/${f(x.apg)}</small><div class="simbar"><i style="width:${simPct(d)}%"></i></div></span><span class="sim">${simPct(d)}%</span></button>`).join('')}</div></div>
@@ -280,7 +280,7 @@ async function tonight(){
 const HIST=[['Γιάννης Αντετοκούνμπο','Bucks, Heat · δύο φορές MVP, πρωταθλητής και MVP τελικών 2021'],['Θανάσης Αντετοκούνμπο','Knicks, Bucks · πρωταθλητής 2021'],['Κώστας Αντετοκούνμπο','Mavericks, Lakers · πρωταθλητής 2020'],['Κώστας Κουφός','Jazz, Timberwolves, Nuggets, Grizzlies, Kings (2008–2019)'],['Βασίλης Σπανούλης','Houston Rockets (2006–07)'],['Νικ Καλάθης','Memphis Grizzlies (2013–15)'],['Κώστας Παπανικολάου','Rockets, Nuggets (2014–16)'],['Γιώργος Παπαγιάννης','Kings, Trail Blazers (2016–18)'],['Αντώνης Φώτσης','Memphis Grizzlies (2001–02)'],['Ευθύμιος Ρεντζιάς','Philadelphia 76ers (2002–03)'],['Ανδρέας Γλυνιαδάκης','Seattle SuperSonics (2008)']];
 async function greece(){
   document.title='Έλληνες στο NBA · NBA ATLAS';
-  view.innerHTML=`<div id="hero" hidden></div><section class="card gr-hero" style="margin-bottom:18px"><div class="eyebrow" style="color:var(--ice)">🇬🇷 Ελληνικό ενδιαφέρον</div><h1 class="h1" style="font-size:clamp(40px,6vw,76px);margin:6px 0">ΟΙ ΕΛΛΗΝΕΣ ΤΟΥ NBA</h1><p class="lede">Όλοι οι παίκτες των φετινών ρόστερ που γεννήθηκαν στην Ελλάδα, με τα νούμερά τους και τον επόμενο αγώνα σε ώρα Ελλάδας.</p></section><div id="grbody"><div class="skel" style="min-height:300px"></div></div>`;
+  view.innerHTML=`<div id="hero" hidden></div><section class="card gr-hero" style="margin-bottom:18px"><div class="eyebrow" style="color:var(--ice)">Ελληνικό ενδιαφέρον</div><h1 class="h1" style="font-size:clamp(40px,6vw,76px);margin:6px 0">ΟΙ ΕΛΛΗΝΕΣ ΤΟΥ NBA</h1><p class="lede">Όλοι οι παίκτες των φετινών ρόστερ που γεννήθηκαν στην Ελλάδα, με τα νούμερά τους και τον επόμενο αγώνα σε ώρα Ελλάδας.</p></section><div id="grbody"><div class="skel" style="min-height:300px"></div></div>`;
   const [bio,M,sc,T]=await Promise.all([api('data?type=players'),model(),api('schedule'),teamsMap()]);if(route().name!=='greece')return;
   const body=document.getElementById('grbody');
   const G=(bio?.players||[]).filter(p=>/^(greece|gre|ελλάδα)$/i.test(String(p.country||'').trim()));
@@ -318,7 +318,7 @@ function teaser(){const n=document.getElementById('hnews');if(!n||document.getEl
 /* ---------- navigation, lab tiles, routing ---------- */
 const MINE={compare,injuries,greece};
 const navAdd=()=>{const after=document.querySelector('#links [data-r="teams"]');if(after&&!document.querySelector('#links [data-r="greece"]'))after.insertAdjacentHTML('afterend','<a href="#/greece" data-r="greece">Ελλάδα</a>')};
-const TILES=[['compare','⚔️','Σύγκριση παικτών','Δύο παίκτες δίπλα-δίπλα: radar, ανά-36, αρχέτυπα και πόσο μοιάζουν.','rgba(255,90,31,.25)'],['injuries','🩹','Τραυματίες','Ποιος λείπει, από τι, πότε γυρίζει και ποια ομάδα πονάει περισσότερο.','rgba(255,77,106,.22)'],['greece','🇬🇷','Οι Έλληνες του NBA','Οι Έλληνες των ρόστερ, τα νούμερά τους και ο επόμενος αγώνας σε ώρα Ελλάδας.','rgba(70,140,255,.28)']];
+const TILES=[['compare','🆚','Σύγκριση παικτών','Δύο παίκτες δίπλα-δίπλα: radar, ανά-36, αρχέτυπα και πόσο μοιάζουν.','rgba(255,90,31,.25)'],['injuries','🩹','Τραυματίες','Ποιος λείπει, από τι, πότε γυρίζει και ποια ομάδα πονάει περισσότερο.','rgba(255,77,106,.22)'],['greece','🏛️','Οι Έλληνες του NBA','Οι Έλληνες των ρόστερ, τα νούμερά τους και ο επόμενος αγώνας σε ώρα Ελλάδας.','rgba(70,140,255,.28)']];
 function hook(){
   const r=route();navAdd();
   document.querySelectorAll('#links [data-r="greece"]').forEach(a=>a.classList.toggle('on',a.dataset.r===r.name));
@@ -328,7 +328,7 @@ let pend=null;
 new MutationObserver(()=>{clearTimeout(pend);pend=setTimeout(()=>{const r=route();navAdd();
   if(r.name==='home'){tonight();homeOut();teaser()}
   if(r.name==='lab'){const g=view.querySelector('.lab-grid');if(g&&!g.querySelector('[data-plus]'))g.insertAdjacentHTML('afterbegin',TILES.map(([k,ic,t,p,c])=>`<a class="lab-tile" data-plus href="#/${k}" style="--glow:${c}"><span class="ic">${ic}</span><b>${t}</b><p>${p}</p></a>`).join(''))}
-  if(r.name==='player'&&r.id&&document.querySelector('.phero')){twins2(r.id);const txt=document.querySelector('.phero .txt');if(txt&&!txt.querySelector('.cmp-btn')){const row=txt.querySelector('.dna-btn')?.parentElement;const html=`<a class="dna-btn cmp-btn" href="#/compare?a=${r.id}">⚔️ Σύγκρινέ τον</a>`;if(row)row.insertAdjacentHTML('beforeend',html);else txt.insertAdjacentHTML('beforeend',`<div style="display:flex;gap:8px;flex-wrap:wrap">${html}</div>`)}}
+  if(r.name==='player'&&r.id&&document.querySelector('.phero')){twins2(r.id);model().then(M=>{const p=M.byId[r.id],txt=document.querySelector('.phero .txt');if(!p||p.mpg<8||!txt||txt.querySelector('.cmp-btn')||route().id!==r.id)return;const row=txt.querySelector('.dna-btn')?.parentElement;const html=`<a class="dna-btn cmp-btn" href="#/compare?a=${r.id}">🆚 Σύγκρινέ τον</a>`;if(row)row.insertAdjacentHTML('beforeend',html);else txt.insertAdjacentHTML('beforeend',`<div style="display:flex;gap:8px;flex-wrap:wrap">${html}</div>`)})}
   if(r.name==='team'&&r.id&&document.querySelector('.phero'))teamInjuries(r.id);
   if(r.name==='model')modelTrend();
   if(r.name==='menu'&&!document.getElementById('pluscard'))view.insertAdjacentHTML('afterbegin',`<div id="pluscard" class="grid g2" style="margin-bottom:16px">${TILES.map(([k,ic,t])=>`<a class="card" href="#/${k}" style="display:block"><div class="h2" style="font-size:24px">${ic} ${t}</div></a>`).join('')}</div>`);
