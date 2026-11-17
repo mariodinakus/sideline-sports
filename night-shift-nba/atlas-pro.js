@@ -75,17 +75,25 @@ function jersey(img){
 /* Licensed historical photographs: try Commons before the era-jersey fallback.
    Keep the original ESPN photograph whenever it loads successfully. */
 const LEGEND_PORTRAITS={
- michaeljordan:['Michael Jordan.jpg','Joshua Massel','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
- magicjohnson:['MagicJohnson.jpg','Mikejamesftw','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
- larrybird:['Larrybird.jpg','Kurt Shimala','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
- kareemabduljabbar:['Kareem Abdul-Jabbar 1974.jpeg','Frank Bryan / The Sporting News','Public domain (US)',''],
- billrussell:['Bill Russell.jpg','1957 Boston Celtics / photographer unknown','Public domain (US)',''],
- wiltchamberlain:['Wilt Chamberlain.jpg','New York World-Telegram / Library of Congress','Public domain (US)',''],
- oscarrobertson:['Oscar Robertson.jpg',"Kahn's / photographer unknown",'Public domain (US)',''],
+ michaeljordan:['Michael Jordan.jpg','Joshua Massel (crop: Quadzilla99)','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
+ magicjohnson:['1987 NBA Finals Lipofsky.jpg','Steve Lipofsky / Basketballphoto.com','CC BY 3.0','https://creativecommons.org/licenses/by/3.0/'],
+ larrybird:['Larry Bird Lipofsky (high quality).jpg','Steve Lipofsky / Basketballphoto.com','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
+ kareemabduljabbar:['Kareem Abdul-Jabbar 1974.jpeg','Frank Bryan / The Sporting News','US public domain',''],
+ billrussell:['Bill Russell.jpg','1957 Boston Celtics / photographer unknown','US public domain',''],
+ wiltchamberlain:['Wilt Chamberlain.jpg','Fred Palumbo / Library of Congress','Public domain',''],
+ oscarrobertson:['Oscar Robertson.jpg',"Kahn's / photographer unknown",'US public domain',''],
  hakeemolajuwon:['Hakeem.jpg','University of Houston Digital Library','Public domain',''],
- juliuserving:['Julius Erving.jpg','Jessica Stewart; edit JoeJohnson2','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/']
+ juliuserving:['Julius Erving.jpg','Jessica Stewart; edit JoeJohnson2','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
+ charlesbarkley:['CharlesBarkley.jpg','Scott LaPierre','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
+ alleniverson:['Allen Iverson.jpg','Keith Allison','CC BY-SA 2.0','https://creativecommons.org/licenses/by-sa/2.0/'],
+ karlmalone:['Karl Malone with Louisiana Tech, January 1982.jpg','The Shreveport Journal / uncredited','US public domain',''],
+ patrickewing:['Patrick Ewing ca. 1995.jpg','Seidenstud','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
+ isiahthomas:['Isiah-thomas detroit-v-new-york 1985.jpg','RickDikeman','CC0','https://creativecommons.org/publicdomain/zero/1.0/'],
+ scottiepippen:['Lipofsky Pippen.jpg','Steve Lipofsky / Basketballphoto.com','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
+ kobebryant:['Lipofsky Kobe.jpg','Steve Lipofsky / Basketballphoto.com','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/'],
+ shaquilleoneal:["Lipofsky Shaquille O'Neal.jpg",'Steve Lipofsky / Basketballphoto.com','CC BY 3.0','https://creativecommons.org/licenses/by/3.0/']
 };
-const LEGEND_PHOTO_NAMES={michaeljordan:'Michael Jordan',magicjohnson:'Magic Johnson',larrybird:'Larry Bird',kareemabduljabbar:'Kareem Abdul-Jabbar',billrussell:'Bill Russell',wiltchamberlain:'Wilt Chamberlain',oscarrobertson:'Oscar Robertson',hakeemolajuwon:'Hakeem Olajuwon',juliuserving:'Julius Erving'};
+const LEGEND_PHOTO_NAMES={michaeljordan:'Michael Jordan',magicjohnson:'Magic Johnson',larrybird:'Larry Bird',kareemabduljabbar:'Kareem Abdul-Jabbar',billrussell:'Bill Russell',wiltchamberlain:'Wilt Chamberlain',oscarrobertson:'Oscar Robertson',hakeemolajuwon:'Hakeem Olajuwon',juliuserving:'Julius Erving',charlesbarkley:'Charles Barkley',alleniverson:'Allen Iverson',karlmalone:'Karl Malone',patrickewing:'Patrick Ewing',isiahthomas:'Isiah Thomas',scottiepippen:'Scottie Pippen',kobebryant:'Kobe Bryant',shaquilleoneal:"Shaquille O'Neal"};
 const legendCSS=document.createElement('style');
 legendCSS.textContent=`.pc img.hs.legend-photo,.pod img.legend-photo{width:94%;height:72%;max-width:none;object-fit:cover;object-position:50% 16%;border-radius:12px 12px 0 0;-webkit-mask-image:linear-gradient(#000 0%,#000 76%,transparent 100%);mask-image:linear-gradient(#000 0%,#000 76%,transparent 100%)}
 .pod img.legend-photo{bottom:90px;height:66%}.phero .art img.hs.legend-photo{height:350px;max-height:52vh;max-width:100%;object-fit:contain;object-position:center bottom;border-radius:14px;-webkit-mask-image:none;mask-image:none}
@@ -95,28 +103,69 @@ legendCSS.textContent=`.pc img.hs.legend-photo,.pod img.legend-photo{width:94%;h
 .search-pop img.legend-photo{height:36px;width:36px;border-radius:50%;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
 .commons-credits{margin-top:12px;text-align:left}.commons-credits summary{cursor:pointer;font-weight:650}.commons-credits div{font-size:11px;line-height:1.8;padding-top:8px}.commons-credits a{text-decoration:underline;text-underline-offset:2px}`;
 document.head.appendChild(legendCSS);
+/* Use real archived photographs as the first choice, including on GOAT rankings,
+   individual player pages and in search. Avoid inline ESPN error handlers overriding
+   the Commons request. Keep the existing jersey illustration only as a last resort. */
+const isHS=s=>/a\.espncdn\.com\/i\/headshots\/nba\/players\/full\//i.test(s||'')||(window.SILH&&s===window.SILH);
+function legendImageName(img){
+  const direct=nameFor(img);
+  if(LEGEND_PORTRAITS[norm(direct)])return direct;
+  const card=img.closest('.pc,.pod,.phero,.tcell,.mini-list,.twin,.search-pop,.pcard');
+  const guess=card?.querySelector('h1,.info b,b,strong')?.textContent?.trim()||'';
+  return LEGEND_PORTRAITS[norm(guess)]?guess:direct;
+}
 function tryLegendPortrait(img){
   if(img.dataset.legendPhotoState)return false;
-  const name=nameFor(img),rec=LEGEND_PORTRAITS[norm(name)];
+  const current=img.getAttribute('src')||'';
+  if(!isHS(current)&&!img.dataset.mono&&!/data:image\/svg\+xml/i.test(current))return false;
+  const name=legendImageName(img),rec=LEGEND_PORTRAITS[norm(name)];
   if(!rec)return false;
   img.dataset.legendPhotoState='loading';
   img.dataset.mono='';
-  img.alt=name;
+  img.alt=LEGEND_PHOTO_NAMES[norm(name)]||name;
   img.referrerPolicy='no-referrer';
+  // Prevent inline onerror="this.src=window.SILH" from replacing the real photograph.
+  img.onerror=null;
+  img.removeAttribute('onerror');
   img.src='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(rec[0])+'?width=640';
   return true;
 }
-const isHS=s=>/headshots/i.test(s||'')||(window.SILH&&s===window.SILH);
+function hydrateLegendPhotos(root){
+  if(!root||root.nodeType!==1)return;
+  if(root.tagName==='IMG')tryLegendPortrait(root);
+  root.querySelectorAll?.('img').forEach(tryLegendPortrait);
+}
 document.addEventListener('error',e=>{
-  const t=e.target;if(!t||t.tagName!=='IMG')return;
-  if(t.dataset.legendPhotoState==='loading'){t.dataset.legendPhotoState='failed';jersey(t);return}
-  if(t.dataset.mono!=='2'&&isHS(t.getAttribute('src'))&&!tryLegendPortrait(t))jersey(t);
+  const t=e.target;
+  if(!t||t.tagName!=='IMG')return;
+  if(t.dataset.legendPhotoState==='loading'){
+    e.stopPropagation();
+    t.dataset.legendPhotoState='failed';
+    jersey(t);
+  }else if(t.dataset.mono!=='2'&&isHS(t.getAttribute('src'))&&tryLegendPortrait(t)){
+    e.stopPropagation();
+  }
 },true);
 document.addEventListener('load',e=>{
   const t=e.target;if(!t||t.tagName!=='IMG'||t.dataset.mono==='2')return;
-  if(t.dataset.legendPhotoState==='loading'){t.dataset.legendPhotoState='done';t.classList.add('legend-photo');return}
-  if(t.dataset.mono==='1'||(window.SILH&&t.getAttribute('src')===window.SILH)){if(!tryLegendPortrait(t))jersey(t)}
+  if(t.dataset.legendPhotoState==='loading'){
+    t.dataset.legendPhotoState='done';
+    t.classList.add('legend-photo');
+  }else if(t.dataset.mono==='1'||(window.SILH&&t.getAttribute('src')===window.SILH)){
+    tryLegendPortrait(t);
+  }
 },true);
+const portraitObserver=new MutationObserver(records=>{
+  for(const record of records){
+    if(record.type==='attributes'){tryLegendPortrait(record.target);continue}
+    record.addedNodes.forEach(hydrateLegendPhotos);
+  }
+});
+portraitObserver.observe(document.getElementById('view')||document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
+const searchPopup=document.getElementById('qpop');
+if(searchPopup)portraitObserver.observe(searchPopup,{subtree:true,childList:true,attributes:true,attributeFilter:['src']});
+hydrateLegendPhotos(document.getElementById('view')||document.body);
+
 const creditBox=document.querySelector('.foot-note');
 if(creditBox){
   const rows=Object.entries(LEGEND_PORTRAITS).map(([key,[file,by,license,licenseUrl]])=>{
