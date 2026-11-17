@@ -85,10 +85,14 @@ const LEGEND_PORTRAITS={
  hakeemolajuwon:['Hakeem.jpg','University of Houston Digital Library','Public domain',''],
  juliuserving:['Julius Erving.jpg','Jessica Stewart; edit JoeJohnson2','CC BY-SA 3.0','https://creativecommons.org/licenses/by-sa/3.0/']
 };
+const LEGEND_PHOTO_NAMES={michaeljordan:'Michael Jordan',magicjohnson:'Magic Johnson',larrybird:'Larry Bird',kareemabduljabbar:'Kareem Abdul-Jabbar',billrussell:'Bill Russell',wiltchamberlain:'Wilt Chamberlain',oscarrobertson:'Oscar Robertson',hakeemolajuwon:'Hakeem Olajuwon',juliuserving:'Julius Erving'};
 const legendCSS=document.createElement('style');
 legendCSS.textContent=`.pc img.hs.legend-photo,.pod img.legend-photo{width:94%;height:72%;max-width:none;object-fit:cover;object-position:50% 16%;border-radius:12px 12px 0 0;-webkit-mask-image:linear-gradient(#000 0%,#000 76%,transparent 100%);mask-image:linear-gradient(#000 0%,#000 76%,transparent 100%)}
 .pod img.legend-photo{bottom:90px;height:66%}.phero .art img.hs.legend-photo{height:350px;max-height:52vh;max-width:100%;object-fit:contain;object-position:center bottom;border-radius:14px;-webkit-mask-image:none;mask-image:none}
-.tcell img.hs.legend-photo,.mini-list img.legend-photo,.twin img.legend-photo,.search-pop img.legend-photo{height:100%;width:100%;border-radius:inherit;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
+.tcell img.hs.legend-photo{height:34px;width:34px;border-radius:50%;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
+.mini-list img.legend-photo{height:44px;width:44px;border-radius:50%;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
+.twin img.legend-photo{height:52px;width:52px;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
+.search-pop img.legend-photo{height:36px;width:36px;border-radius:50%;object-fit:cover;object-position:center 18%;-webkit-mask-image:none;mask-image:none}
 .commons-credits{margin-top:12px;text-align:left}.commons-credits summary{cursor:pointer;font-weight:650}.commons-credits div{font-size:11px;line-height:1.8;padding-top:8px}.commons-credits a{text-decoration:underline;text-underline-offset:2px}`;
 document.head.appendChild(legendCSS);
 function tryLegendPortrait(img){
@@ -117,7 +121,7 @@ const creditBox=document.querySelector('.foot-note');
 if(creditBox){
   const rows=Object.entries(LEGEND_PORTRAITS).map(([key,[file,by,license,licenseUrl]])=>{
     const source='https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(file.replace(/ /g,'_'));
-    return '<a href="'+source+'" target="_blank" rel="noopener">'+esc(key.replace(/([a-z])([A-Z])/g,'$1 $2'))+'</a> · '+esc(by)+' · '+(licenseUrl?'<a href="'+licenseUrl+'" target="_blank" rel="license noopener">'+esc(license)+'</a>':esc(license));
+    return '<a href="'+source+'" target="_blank" rel="noopener">'+esc(LEGEND_PHOTO_NAMES[key]||key)+'</a> · '+esc(by)+' · '+(licenseUrl?'<a href="'+licenseUrl+'" target="_blank" rel="license noopener">'+esc(license)+'</a>':esc(license));
   });
   creditBox.insertAdjacentHTML('beforeend','<details class="commons-credits"><summary>Φωτογραφίες θρύλων · Πηγές και άδειες</summary><div>'+rows.join(' · ')+'</div></details>');
 }
