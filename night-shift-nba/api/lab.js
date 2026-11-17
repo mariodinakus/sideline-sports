@@ -58,11 +58,12 @@ async function season(){
 
 /* Shot diet, shot types, assisted share and clutch splits from play-by-play of recent completed games. */
 const ZONES=['rim','short','mid','c3','ab3'];
-const TYPES=[['dunk',/dunk/i],['alley',/alley oop/i],['putback',/putback|tip shot|tip dunk|tip layup/i],['layup',/layup/i],['floater',/float|hook/i],['pullup',/pullup|pull-up/i],['iso',/step ?back|fadeaway|turnaround/i],['catch',/jumper|jump shot/i]];
-function zoneOf(p){const t=String(p.text||''),three=/three point/i.test(t)||p.scoreValue===3;const fm=t.match(/(\d+)-foot/);const c=p.coordinate||{};const ok=c.x>=0&&c.x<=50&&c.y>=0&&c.y<=50;
-  const dist=fm?+fm[1]:ok?Math.hypot(c.x-25,c.y):null;
-  if(three)return ok&&c.y<=9&&Math.abs(c.x-25)>=21?'c3':'ab3';if(dist==null)return null;return dist<=4?'rim':dist<=14?'short':'mid'}
-function typeOf(p){const t=String(p.text||'');for(const [k,re] of TYPES)if(re.test(t))return k;return'other'}
+const TYPES=[['dunk',/dunk/i],['alley',/alley oop/i],['putback',/putback|tip shot|tip dunk|tip layup/i],['layup',/layup/i],['floater',/float|hook/i],['pullup',/pullup|pull-up|running jump/i],['iso',/step ?back|fadeaway|turnaround/i],['catch',/jumper|jump shot/i]];
+function zoneOf(p){const t=String(p.text||''),fm=t.match(/(\d+)-foot/);const c=p.coordinate||{};const ok=c.x>=0&&c.x<=50&&c.y>=0&&c.y<=50;
+  const dist=fm?+fm[1]:ok?Math.hypot(c.x-25,c.y):null,corner=ok&&c.y<=9&&Math.abs(c.x-25)>=21;
+  const three=/three point/i.test(t)||p.scoreValue===3||(dist!=null&&(dist>=23||(corner&&dist>=22)));
+  if(three)return corner?'c3':'ab3';if(dist==null)return null;return dist<=4?'rim':dist<=14?'short':'mid'}
+function typeOf(p){const t=String(p.type?.text||'')+' '+String(p.text||'');for(const [k,re] of TYPES)if(re.test(t))return k;return'other'}
 async function shots(){
   const now=new Date(),y=now.getUTCMonth()>=6?now.getUTCFullYear():now.getUTCFullYear()-1,start=new Date(Date.UTC(y,9,18));
   const dates=[];for(let d=new Date(now);d>=start&&dates.length<60;d=new Date(d.getTime()-864e5))dates.push(ymd(d));
