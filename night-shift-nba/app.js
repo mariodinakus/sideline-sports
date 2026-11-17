@@ -15,7 +15,7 @@ const silh=`onerror="this.onerror=null;this.src=window.SILH"`;
 const tz={timeZone:'Europe/Athens'};
 const time=d=>new Date(d).toLocaleTimeString('el-GR',{...tz,hour:'2-digit',minute:'2-digit'});
 const day=d=>new Date(d).toLocaleDateString('el-GR',{...tz,weekday:'short',day:'numeric',month:'short'});
-const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’'.]/g,'').toLowerCase().trim();
+const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’'.]/g,'').toLowerCase().trim();
 
 /* ---------- data layer ---------- */
 const cache=new Map();
@@ -262,7 +262,7 @@ V.player=async(q,id)=>{
   const series=[['avgPoints','Πόντοι','var(--hot)'],['avgRebounds','Ριμπάουντ','var(--ice)'],['avgAssists','Ασίστ','var(--violet)']].map(([k,nm,col])=>({name:nm,color:col,points:seasons.map(r=>[r.season,n(r.stats[k])]).filter(x=>x[1]!==null)}));
   const peak=seasons.reduce((m,r)=>(n(r.stats.avgPoints)||0)>(n(m?.stats.avgPoints)||0)?r:m,null);
   view.innerHTML=`<section class="phero fade" style="--tc:${c}"><div class="bg"></div><div class="art"><img class="hs" src="${ath.headshot||HS(id)}" alt="" ${silh}></div><div class="txt"><div class="eyebrow">${esc([ath.position,ath.height,ath.weight,TEAMS.byId[tid]?.name].filter(Boolean).join(' · '))}</div><h1 class="h1" style="font-size:clamp(42px,6vw,84px)">${esc(ath.name||cur?.name||'')}</h1>
-  <div class="stats-row"><div class="st"><b>${f(cur?.ppg??s('avgPoints'))}</b><small>PTS ${last?esc(last.seasonLabel):''}</small></div><div class="st"><b>${f(cur?.rpg??s('avgRebounds'))}</b><small>REB</small></div><div class="st"><b>${f(cur?.apg??s('avgAssists'))}</b><small>AST</small></div>${cur?`<div class="st"><b>${f(cur.tsPct)}</b><small>TS%</small></div><div class="st"><b>${f(cur.efgPct)}</b><small>eFG%</small></div>`:`<div class="st"><b>${f(s('fieldGoalPct'))}</b><small>FG%</small></div>`}<div class="st"><b>${f(ca.avgPoints)}</b><small>Καριέρα PTS</small></div></div>
+  <div class="stats-row"><div class="st"><b>${f(cur?.ppg??s('avgPoints'))}</b><small>PTS ${last?esc(last.seasonLabel):''}</small></div><div class="st"><b>${f(cur?.rpg??s('avgRebounds'))}</b><small>REB</small></div><div class="st"><b>${f(cur?.apg??s('avgAssists'))}</b><small>AST</small></div>${cur?`<div class="st"><b>${f(cur.tsPct)}</b><small>TS%</small></div><div class="st"><b>${f(cur.efgPct)}</b><small>eFG%</small></div>`:`<div class="st"><b>${f(s('fieldGoalPct'))}</b><small>FG%</small></div>`}<div class="st"><b>${f(ca.avgPoints)}</b><small>Καριέρα PTS</small></div>${d.playoffs?.careerAverages?.avgPoints?`<div class="st"><b>${f(d.playoffs.careerAverages.avgPoints)}</b><small>Playoffs PTS</small></div>`:''}</div>
   <div class="awards">${rings?`<span class="aw"><b>${rings}×</b> Πρωταθλητής</span>`:''}${aw.slice(0,8).map(a=>`<span class="aw"><b>${esc(String(a.count).replace('x','×'))}</b>${esc(a.name)}</span>`).join('')}</div>
   ${gp?`<a class="more" style="align-self:flex-start" href="#/goat?a=${id}">GOAT Index: δες τη θέση του →</a>`:''}</div></section>
   ${seasons.length>1?`<section class="sec card">${secH('Καριέρα','Η τροχιά',null,peak?`Κορυφαία σεζόν σε σκοράρισμα: ${esc(peak.seasonLabel)} με ${f(peak.stats.avgPoints)} πόντους.`:'')}${lineChart({series,xFmt:v=>"'"+String(v).slice(2),yFmt:v=>f(v,0)})}</section>`:''}
@@ -322,11 +322,23 @@ V.history=async()=>{
   <div class="card">${secH('Ring kings','Οι περισσότεροι τίτλοι')}<div class="mini-list">${rings.map(([p,v],i)=>`<a href="#/search?q=${encodeURIComponent(p)}"><span class="rk">${i+1}</span><span style="font-weight:700">${esc(p)}</span><span class="r"><b>${v}</b> <span class="dim">🏆</span></span></a>`).join('')}</div></div></div>
   <section class="sec card">${secH('All-time','Ηγέτες καριέρας',null,'Κανονική περίοδος NBA/BAA ως το 2025–26 (χωρίς ABA).')}<div class="seg" id="lc" style="margin-bottom:16px">${A.leaders.map((c,i)=>`<button data-c="${c.id}" class="${i?'':'on'}">${esc(c.en)}</button>`).join('')}</div><div id="ll"></div></section>
   <section class="sec">${secH('Finals','Όλοι οι τελικοί')}<div class="seg" id="dc" style="margin-bottom:16px">${['all','2020','2010','2000','1990','1980','1970','1960','1950','1940'].map((d,i)=>`<button data-d="${d}" class="${i?'':'on'}">${d==='all'?'Όλοι':d+'s'}</button>`).join('')}</div><div class="finals" id="fl"></div></section>`;
-  const lead=()=>{const c=A.leaders.find(x=>x.id===cat);fill('#ll',`<div style="display:flex;flex-direction:column;gap:10px">${c.rows.map(([p,v],i)=>`<div style="display:grid;grid-template-columns:30px 200px 1fr 90px;gap:12px;align-items:center;font-size:14px"><span class="rk">${i+1}</span><b>${esc(p)}</b>${bar(v,c.rows[0][1])}<b class="num" style="text-align:right">${v.toLocaleString('el-GR')}</b></div>`).join('')}</div>`)};
-  const fin=()=>fill('#fl',fr.filter(r=>dec==='all'||r[0].startsWith(dec.slice(0,3))).map(r=>`<div class="fn fade"><span class="yr">${r[0]}</span><img src="${LOGO(cur(r[1]))}" ${hideErr}><div><b>${esc(nm(r[1]))}</b><small>vs ${esc(nm(r[2]))} · ${esc(r[3])}${r[4]?' · MVP '+esc(r[4]):''}</small></div></div>`).join(''));
+  const lead=()=>{const c=A.leaders.find(x=>x.id===cat);fill('#ll',`<div style="display:flex;flex-direction:column;gap:10px">${c.rows.map(([p,v],i)=>`<div style="display:grid;grid-template-columns:30px 200px 1fr 90px;gap:12px;align-items:center;font-size:14px"><span class="rk">${i+1}</span><a href="#/search?q=${encodeURIComponent(p)}" style="font-weight:700">${esc(p)}</a>${bar(v,c.rows[0][1])}<b class="num" style="text-align:right">${v.toLocaleString('el-GR')}</b></div>`).join('')}</div>`)};
+  const fin=()=>fill('#fl',fr.filter(r=>dec==='all'||r[0].startsWith(dec.slice(0,3))).map(r=>`<div class="fn fade"><span class="yr">${r[0]}</span><img src="${LOGO(cur(r[1]))}" ${hideErr}><div><b>${esc(nm(r[1]))}</b><small>vs ${esc(nm(r[2]))} · ${esc(r[3])}${r[4]?` · MVP <a href="#/search?q=${encodeURIComponent(r[4].replace(/ \(.*\)/,''))}" style="color:var(--text)">${esc(r[4])}</a>`:''}</small></div></div>`).join(''));
   $('#lc').onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;$$('#lc button').forEach(x=>x.classList.toggle('on',x===b));lead()};
   $('#dc').onclick=e=>{const b=e.target.closest('button');if(!b)return;dec=b.dataset.d;$$('#dc button').forEach(x=>x.classList.toggle('on',x===b));fin()};
   lead();fin();
+};
+
+
+/* ---------- LEGENDS ---------- */
+V.legends=async(q)=>{
+  const t=token;
+  view.innerHTML=`${secH('Archive','Οι θρύλοι του NBA',null,'Κάθε παίκτης της ιστορίας του NBA: ψάξε οποιονδήποτε με το όνομα και δες όλη την καριέρα του, με γράφημα, σεζόν προς σεζόν και βραβεία.')}
+  <div class="card"><div class="lbl">Αναζήτηση στην ιστορία</div><div style="display:flex;gap:10px;flex-wrap:wrap"><label class="search" style="width:min(420px,100%)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="lq" placeholder="π.χ. Larry Bird, Hakeem, Drazen Petrovic…"></label></div><div id="lres" style="margin-top:12px"></div></div>
+  <section class="sec">${secH('Hall of legends','Οι θρύλοι',['#/goat','GOAT Index'])}<div class="pcards" id="lgal">${skel(280,5)}</div></section>`;
+  let lT;$('#lq').oninput=e=>{clearTimeout(lT);const v=e.target.value.trim();if(v.length<3){fill('#lres','');return}lT=setTimeout(async()=>{const d=await safe(api('history?type=search&query='+encodeURIComponent(v)));if(t!==token)return;const m=d?.matches||[];fill('#lres',m.length?`<div class="mini-list">${m.slice(0,12).map(p=>`<a href="#/player/${p.id}"><img src="${p.headshot||HS(p.id)}" ${silh}><span><b>${esc(p.name)}</b><br><small class="muted">${esc(p.team)}</small></span></a>`).join('')}</div>`:'<div class="muted">Κανένα αποτέλεσμα.</div>')},300)};
+  goatData().then(G=>{if(t!==token)return;const L=(G||[]).filter(p=>!p.active).sort((a,b)=>(b.rings*3+b.mvp*4+b.allNBA1)-(a.rings*3+a.mvp*4+a.allNBA1));
+    fill('#lgal',L.length?L.map((p,i)=>`<a class="pc fade" href="#/player/${p.id}" style="--tc:${['#ff5a1f','#7cc4ff','#a98bff','#22d39a'][i%4]}"><div class="bg"></div><div class="rnk" style="font-size:40px">${p.rings?p.rings+'×':''}</div><img class="hs" src="${HS(p.id)}" loading="lazy" ${silh}><div class="info"><b>${esc(p.name)}</b><div class="ln"><span><em>${p.mvp}</em> MVP</span><span><em>${f(p.careerPPG)}</em> PPG</span><span><em>${p.seasons}</em> σεζόν</span></div></div></a>`).join(''):errBox('','Legends feed'))});
 };
 
 /* ---------- MODEL ---------- */
@@ -353,7 +365,7 @@ V.search=async(q)=>{
 V.menu=()=>{view.innerHTML=`${secH('Μενού','Όλα τα εργαλεία')}<div class="grid g2">${NAV.map(([k,l,d])=>`<a class="card" href="#/${k}"><div class="eyebrow">${esc(d)}</div><div class="h2" style="font-size:30px">${l}</div></a>`).join('')}</div>`};
 
 /* ---------- router & chrome ---------- */
-const NAV=[['home','Αρχική','Live dashboard'],['games','Αγώνες','Σκορ & προβλέψεις'],['standings','Βαθμολογία','Πίνακες & team map'],['power','Power','Ισχύς & αγορές τίτλου'],['players','Players Lab','Advanced stats & γραφήματα'],['teams','Ομάδες','30 franchises'],['goat','GOAT','Ρυθμιζόμενη κατάταξη'],['history','Ιστορία','Τελικοί & ρεκόρ'],['model','Μοντέλο','Έλεγχος ακρίβειας']];
+const NAV=[['home','Αρχική','Live dashboard'],['games','Αγώνες','Σκορ & προβλέψεις'],['standings','Βαθμολογία','Πίνακες & team map'],['power','Power','Ισχύς & αγορές τίτλου'],['players','Players Lab','Advanced stats & γραφήματα'],['legends','Θρύλοι','Παλιοί παίκτες & αναζήτηση'],['teams','Ομάδες','30 franchises'],['goat','GOAT','Ρυθμιζόμενη κατάταξη'],['history','Ιστορία','Τελικοί & ρεκόρ'],['model','Μοντέλο','Έλεγχος ακρίβειας']];
 const ICON={home:'<path d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/>',games:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/>',standings:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',goat:'<path d="M7 4h10v4a5 5 0 0 1-10 0zM5 5H3v2a3 3 0 0 0 4 3M19 5h2v2a3 3 0 0 1-4 3M12 13v4M8 21h8M9 17h6"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>'};
 $('#links').innerHTML=NAV.map(([k,l])=>`<a href="#/${k}" data-r="${k}">${l}</a>`).join('');
 $('#tabbar').innerHTML=[['home','Αρχική'],['games','Αγώνες'],['standings','Πίνακας'],['goat','GOAT'],['menu','Μενού']].map(([k,l])=>`<a href="#/${k}" data-r="${k}"><svg viewBox="0 0 24 24">${ICON[k]}</svg>${l}</a>`).join('');
