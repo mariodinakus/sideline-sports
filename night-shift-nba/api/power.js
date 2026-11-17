@@ -46,7 +46,7 @@ function toPlayer(e,defs,teams){
  const games=pick('general','gamesPlayed'),ppg=pick('offensive','avgPoints'),rpg=pick('general','avgRebounds'),apg=pick('offensive','avgAssists');
  const spg=pick('defensive','avgSteals'),bpg=pick('defensive','avgBlocks'),mpg=pick('general','avgMinutes'),fg=pick('offensive','fieldGoalPct');
  const team=teams.find(x=>x.id===teamId),wp=team?.winPct??.5;
- const fgm=pick('offensive','avgFieldGoalsMade'),fga=pick('offensive','avgFieldGoalsAttempted'),three=pick('offensive','avgThreePointFieldGoalsMade'),fta=pick('offensive','avgFreeThrowsAttempted'),turnovers=pick('offensive','avgTurnovers');
+ const fgm=pick('offensive','avgFieldGoalsMade'),fga=pick('offensive','avgFieldGoalsAttempted'),three=pick('offensive','avgThreePointFieldGoalsMade'),fta=pick('offensive','avgFreeThrowsAttempted'),turnovers=pick('offensive','avgTurnovers');const fg3a=pick('offensive','avgThreePointFieldGoalsAttempted'),ftPct=pick('offensive','freeThrowPct'),orpg=pick('offensive','avgOffensiveRebounds');
  const efg=fgm!==null&&fga>0&&three!==null?100*(fgm+0.5*three)/fga:null;
  const ts=ppg!==null&&fga!==null&&fta!==null&&(fga+.44*fta)>0?100*ppg/(2*(fga+.44*fta)):null;
  const astTo=apg!==null&&turnovers>0?apg/turnovers:null;
@@ -57,7 +57,7 @@ function toPlayer(e,defs,teams){
  const context=(.45+.55*wp)*.15;
  const mvp=100*(production+context)*gpFactor;
  return {id,name,teamId,team:team?.abbr||null,teamName:team?.name||null,headshot:e.athlete?.headshot?.href||null,
-   games,mpg,ppg,rpg,apg,spg,bpg,fg,tsPct:ts===null?null:Number(ts.toFixed(1)),efgPct:efg===null?null:Number(efg.toFixed(1)),astTo:astTo===null?null:Number(astTo.toFixed(2)),turnovers,teamWinPct:team?.winPct??null,teamRank:team?teams.indexOf(team)+1:null,
+   games,mpg,ppg,rpg,apg,spg,bpg,fg,tsPct:ts===null?null:Number(ts.toFixed(1)),efgPct:efg===null?null:Number(efg.toFixed(1)),astTo:astTo===null?null:Number(astTo.toFixed(2)),turnovers,fga,fg3m:three,fg3a,fta,ftPct,orpg,teamWinPct:team?.winPct??null,teamRank:team?teams.indexOf(team)+1:null,
    index:Number(mvp.toFixed(2)),eligible,uncertainty:games<12?'high':games<40?'moderate':'lower'};
 }
 async function athletes(teams) {

@@ -28,9 +28,14 @@ async function getPlayer([id,fallback]){
      awardsAvailable:bb.status==='fulfilled',statsAvailable:true};
   return out;
 }
+/* Career regular-season averages from Basketball-Reference, used ONLY when ESPN's feed is incomplete
+   (ESPN undercounts rebounds for pre-1973 seasons and sometimes drops a player entirely). */
+const REF={'4145':{careerPPG:24.6,careerRPG:11.2,careerAPG:3.6},'4152':{careerPPG:15.1,careerRPG:22.5,careerAPG:4.3},'4142':{careerPPG:30.1,careerRPG:22.9,careerAPG:4.4},'4119':{careerPPG:25.7,careerRPG:7.5,careerAPG:9.5},'4135':{careerPPG:27.4,careerRPG:13.5,careerAPG:4.3},'4151':{careerPPG:27.0,careerRPG:5.8,careerAPG:6.7}};
+const BIRD={id:'2335',name:'Larry Bird',active:false,seasons:13,careerPPG:24.3,careerRPG:10.0,careerAPG:6.3,games:897,peakPPG:28.9,mvp:3,finalsMVP:2,allNBA1:9,allNBA2:1,dpoy:0,awardsAvailable:true,statsAvailable:true,source:'Basketball-Reference (ESPN fallback)'};
+function fix(p){const r=REF[p.id];if(!r)return p;const o={...p},c=[];for(const k in r){if(o[k]==null||Math.abs(o[k]-r[k])>0.6){o[k]=r[k];c.push(k)}}if(c.length)o.corrected=c;return o}
 module.exports=async(req,res)=>{if(req.method!=='GET')return res.status(405).json({error:'GET only'});try{
   const values=await Promise.allSettled(CANDIDATES.map(getPlayer));
-  const players=values.filter(v=>v.status==='fulfilled').map(v=>v.value);
+  const players=values.filter(v=>v.status==='fulfilled').map(v=>fix(v.value));if(!players.some(p=>p.id==='2335'))players.push(BIRD);
   res.setHeader('Cache-Control','s-maxage=7200, stale-while-revalidate=10800');
-  res.status(200).json({source:'ESPN public NBA career statistics & honors',asOf:new Date().toISOString(),players,shortlistSize:CANDIDATES.length,missing:CANDIDATES.filter((x,i)=>values[i].status==='rejected').map(x=>x[1]),note:'This is a curated, non-exhaustive player shortlist. Index weights are editorial and editable on the client. Awards may be incomplete for older eras. No fabricated championships or tracking-based stats.'});
+  res.status(200).json({source:'ESPN public NBA career statistics & honors',asOf:new Date().toISOString(),players,shortlistSize:CANDIDATES.length,missing:CANDIDATES.filter((x,i)=>values[i].status==='rejected'&&x[0]!=='2335').map(x=>x[1]),note:'This is a curated, non-exhaustive player shortlist. Index weights are editorial and editable on the client. Awards may be incomplete for older eras. No fabricated championships or tracking-based stats.'});
 }catch(e){res.status(503).json({error:String(e.message||e)})}};
