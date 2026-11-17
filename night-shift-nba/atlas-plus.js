@@ -42,7 +42,7 @@ const css=document.createElement('style');css.textContent=`
 .ctab td:nth-child(1),.ctab td:nth-child(3){width:38%;font-weight:800;font-variant-numeric:tabular-nums}.ctab td:nth-child(1){text-align:right}.ctab td:nth-child(2){text-align:center;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .ctab .w{color:var(--good)}
 .inj-k{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
-.inj-team{margin-bottom:12px}.inj-team h3{display:flex;align-items:center;gap:10px;font-family:var(--cond);font-size:20px;font-weight:900;margin:0 0 8px}.inj-team h3 img{width:28px;height:28px}
+.injcols{columns:2 440px;column-gap:16px}.inj-team{margin-bottom:16px;break-inside:avoid;display:block}.inj-team h3{display:flex;align-items:center;gap:10px;font-family:var(--cond);font-size:20px;font-weight:900;margin:0 0 8px}.inj-team h3 img{width:28px;height:28px}
 .inj{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
 .inj img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:top;background:var(--bg2)}
 .inj b{font-size:14px}.inj small{display:block;color:var(--muted);font-size:12px;line-height:1.35}
@@ -59,6 +59,9 @@ const css=document.createElement('style');css.textContent=`
 .tn .tms{display:flex;align-items:center;gap:8px;font-weight:900;font-family:var(--cond);font-size:19px}.tn .tms img{width:26px;height:26px}
 .tn .stars{color:var(--hot);letter-spacing:2px}.tn small{color:var(--muted);font-size:12px}
 .mchart text{fill:var(--dim);font-size:10px}.mchart .gr{stroke:rgba(255,255,255,.07)}
+#links{mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
+.teaser{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.hist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 18px;font-size:13.5px}.hist div{padding:8px 0;border-bottom:1px solid var(--line)}.hist small{display:block;color:var(--muted);font-size:12px}
 @media (max-width:860px){.tw2-top{grid-template-columns:1fr}.cmp-p img.hs{width:110px;height:80px}.vs{font-size:28px}}
 `;document.head.appendChild(css);
 
@@ -97,13 +100,14 @@ async function model(){
   const st={};KEYS.forEach(k=>{const a=dist[k],m=a.reduce((s,x)=>s+x,0)/(a.length||1),sd=Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/(a.length||1))||1;st[k]=[m,sd]});
   const z=(p,k)=>p[k]==null?0:(p[k]-st[k][0])/st[k][1];
   const pc=(p,k)=>pctile(dist[k],p[k]);
-  MODEL={P,E,byId:Object.fromEntries(P.map(p=>[p.id,p])),z,pc,st,ok:!!pw};
-  return MODEL;
+  const out={P,E,byId:Object.fromEntries(P.map(p=>[p.id,p])),z,pc,st,ok:!!pw};
+  if(pw&&bio?.players?.length)MODEL=out;
+  return out;
 }
 const GROUPS=[['body','Σώμα',['h','w']],['score','Σκοράρισμα',['p36','ts','r3','ftr']],['play','Δημιουργία',['a36','ato','use36']],['reb','Ριμπάουντ',['r36','or36']],['def','Άμυνα',['s36','b36']]];
 const W0={body:1,score:1,play:1,reb:1,def:1};
 function distance(M,a,b,W){let s=0,t=0;for(const [g,,ks] of GROUPS){const w=W[g]||0;if(!w)continue;let d=0;ks.forEach(k=>{d+=(M.z(a,k)-M.z(b,k))**2});s+=w*d/ks.length;t+=w}return t?Math.sqrt(s/t):9}
-const simPct=d=>Math.max(1,Math.round(100*Math.exp(-d*d*.9)));
+const simPct=d=>Math.max(1,Math.round(100*Math.exp(-d*d*.28)));
 
 function archetypes(M,p){
   const q=k=>M.pc(p,k)??.5,h=p.h||0,stocks=(q('s36')+q('b36'))/2,T=[];
@@ -150,7 +154,7 @@ async function twins2(id){
   const curVec=(p)=>[p.ppg,p.rpg,p.apg,p.h,p.spg!=null&&p.bpg!=null?p.spg+p.bpg:null];
   const LST=(()=>{const rows=[...legRows.map(legVec),...M.E.map(curVec)];return [0,1,2,3,4].map(i=>{const a=rows.map(r=>r[i]).filter(v=>v!=null),m=a.reduce((s,x)=>s+x,0)/a.length,sd=Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/a.length)||1;return[m,sd]})})();
   const ldist=(u,v)=>{let s=0,n=0;u.forEach((x,i)=>{if(x==null||v[i]==null)return;const w=i===3?.8:1;s+=w*((x-LST[i][0])/LST[i][1]-(v[i]-LST[i][0])/LST[i][1])**2;n+=w});return n?Math.sqrt(s/n):9};
-  const legSim=d=>Math.max(1,Math.round(100*Math.exp(-d*d*1.1)));
+  const legSim=d=>Math.max(1,Math.round(100*Math.exp(-d*d*.4)));
 
   if(me&&me.mpg>=8){
     const tags=archetypes(M,me);
@@ -212,8 +216,10 @@ const stCls=s=>/out/i.test(s)?'st-out':/day|quest|doubt|probable/i.test(s)?'st-d
 const stGr=s=>({'Out':'Εκτός','Day-To-Day':'Day-to-day','Questionable':'Αμφίβολος','Doubtful':'Μάλλον εκτός','Probable':'Πιθανός','Suspension':'Τιμωρία'})[s]||s;
 const partGr={Ankle:'Αστράγαλος',Knee:'Γόνατο',Hamstring:'Οπίσθιος μηριαίος',Calf:'Γάμπα',Foot:'Πέλμα',Back:'Πλάτη',Hip:'Ισχίο',Groin:'Βουβωνική',Shoulder:'Ώμος',Wrist:'Καρπός',Hand:'Χέρι',Finger:'Δάχτυλο',Thumb:'Αντίχειρας',Elbow:'Αγκώνας',Achilles:'Αχίλλειος',Illness:'Ασθένεια',Concussion:'Διάσειση',Quadriceps:'Τετρακέφαλος',Toe:'Δάχτυλο ποδιού',Abdomen:'Κοιλιακά',Rest:'Ξεκούραση',Personal:'Προσωπικοί λόγοι',Shin:'Κνήμη',Neck:'Αυχένας',Ribs:'Πλευρά',Oblique:'Πλάγιοι κοιλιακοί',Face:'Πρόσωπο',Eye:'Μάτι',Leg:'Πόδι',Lower:'Κάτω άκρο',Chest:'Θώρακας'};
 const sideGr={Left:'αριστ.',Right:'δεξ.'};
+Object.assign(partGr,{Heel:'Φτέρνα',Head:'Κεφάλι','Lower Leg':'Κνήμη',Knee:'Γόνατο',Adductor:'Προσαγωγοί',Pelvis:'Λεκάνη',Arm:'Χέρι',Forearm:'Πήχης',Jaw:'Σαγόνι',Nose:'Μύτη',Glute:'Γλουτός',Thigh:'Μηρός','Upper Leg':'Μηρός',Spine:'Σπονδυλική',Heart:'Καρδιά',Undisclosed:'Δεν ανακοινώθηκε','Not Specified':''});
+const detGr={Bruise:'μώλωπας',Contusion:'θλάση',Soreness:'ενόχληση',Sprain:'διάστρεμμα',Strain:'θλάση μυός',Inflammation:'φλεγμονή',Fracture:'κάταγμα',Tear:'ρήξη',Surgery:'χειρουργείο',Tendinitis:'τενοντίτιδα',Tendonitis:'τενοντίτιδα',Tightness:'σφίξιμο',Spasms:'σπασμοί',Dislocation:'εξάρθρωση',Discomfort:'δυσφορία',Laceration:'τραύμα',Impingement:'πρόσκρουση',Stress:'καταπόνηση','Stress Reaction':'κάταγμα κόπωσης',Rupture:'ρήξη',Injury:'τραυματισμός',Illness:'ασθένεια',Rest:'ξεκούραση','Not Specified':''};
 async function teamsMap(){const t=await api('data?type=teams');const m={};(t?.teams||[]).forEach(x=>{m[x.id]=x});return m}
-const injLine=x=>[partGr[x.part]||x.part,sideGr[x.side]||'',x.detail].filter(Boolean).join(' · ');
+const injLine=x=>[partGr[x.part]??x.part,sideGr[x.side]||'',detGr[x.detail]??x.detail].filter(Boolean).join(' · ');
 const injRow=(x,M)=>{const p=M?.byId[x.id];return`<div class="inj"><img src="${x.headshot||HS(x.id)}" alt="" loading="lazy" ${silh}><div><a href="#/player/${x.id}"><b>${esc(x.name)}</b></a> <small style="display:inline">${esc(x.pos)}${p?` · ${f(p.ppg)} π.`:''}</small><small>${esc(injLine(x))}${x.ret?` · επιστροφή ~${dy(x.ret)}`:''}</small>${x.note?`<small style="color:var(--dim)">${esc(x.note)}</small>`:''}</div><span class="pill ${stCls(x.status)}">${esc(stGr(x.status))}</span></div>`};
 async function injuries(){
   document.title='Τραυματίες · NBA ATLAS';
@@ -227,7 +233,7 @@ async function injuries(){
     const ok=p=>flt==='all'||(flt==='out'?/out/i.test(p.status):!/out/i.test(p.status));
     body.innerHTML=`<div class="inj-k"><div class="card"><div class="lbl">Εκτός</div><b style="font-family:var(--display);font-size:42px">${all.filter(p=>/out/i.test(p.status)).length}</b></div><div class="card"><div class="lbl">Day-to-day / αμφίβολοι</div><b style="font-family:var(--display);font-size:42px">${all.filter(p=>!/out/i.test(p.status)).length}</b></div>${lost.slice(0,2).map((x,i)=>`<div class="card"><div class="lbl">${i?'2η':'Πονάει'} περισσότερο</div><div style="display:flex;align-items:center;gap:10px"><img src="${T[x.t.id]?.logo||''}" width="36" height="36" alt="" ${hide}><b style="font-family:var(--cond);font-size:20px">${esc(T[x.t.id]?.short||x.t.name)}</b></div><small class="muted">χαμένη αξία ${f(x.v,0)}</small></div>`).join('')}</div>
     <div class="chips">${[['all','Όλοι'],['out','Εκτός'],['dtd','Day-to-day']].map(([k,l])=>`<button data-k="${k}" class="${flt===k?'on':''}">${l}</button>`).join('')}</div>
-    <div class="grid g2" style="align-items:start">${lost.filter(x=>x.t.players.some(ok)).map(({t,v})=>`<div class="card inj-team"><h3><img src="${T[t.id]?.logo||''}" alt="" ${hide}><a href="#/team/${t.id}">${esc(t.name)}</a>${v?`<span class="pill" style="margin-left:auto">−${f(v,0)}</span>`:''}</h3>${t.players.filter(ok).map(x=>injRow(x,M)).join('')}</div>`).join('')}</div>
+    <div class="injcols">${lost.filter(x=>x.t.players.some(ok)).map(({t,v})=>`<div class="card inj-team"><h3><img src="${T[t.id]?.logo||''}" alt="" ${hide}><a href="#/team/${t.id}">${esc(t.name)}</a>${v?`<span class="pill" style="margin-left:auto">−${f(v,0)}</span>`:''}</h3>${t.players.filter(ok).map(x=>injRow(x,M)).join('')}</div>`).join('')}</div>
     <p class="muted" style="font-size:12px;margin-top:12px">Πηγή: ESPN injury report (ανεπίσημα). Οι ημερομηνίες επιστροφής είναι εκτιμήσεις της πηγής.</p>`;
     body.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{flt=b.dataset.k;paint()});
   };paint();
@@ -242,27 +248,36 @@ async function teamInjuries(id){
 async function homeOut(){
   const g=document.getElementById('hgames');if(!g||document.getElementById('hout'))return;
   const box=document.createElement('section');box.className='sec';box.id='hout';g.closest('section').after(box);
-  const [sb,d,M,T]=await Promise.all([api('data?type=scoreboard'),api('data?type=injuries'),model(),teamsMap()]);if(route().name!=='home'||!document.body.contains(box))return;
-  const ids=new Set((sb?.games||[]).filter(x=>x.state!=='post').flatMap(x=>[x.home?.id,x.away?.id]));
+  const [{G:U},d,M,T]=await Promise.all([upcoming(),api('data?type=injuries'),model(),teamsMap()]);if(route().name!=='home'||!document.body.contains(box))return;
+  const ids=new Set(U.flatMap(x=>[x.home?.id,x.away?.id]).filter(Boolean));
   const out=(d?.teams||[]).filter(t=>ids.has(t.id)).flatMap(t=>t.players.filter(p=>/out/i.test(p.status)).map(p=>({...p,tid:t.id,v:M.byId[p.id]?.index||0}))).sort((a,b)=>b.v-a.v).slice(0,8);
   if(!out.length){box.remove();return}
-  box.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Injury report</div><h2 class="h2">Εκτός για τα σημερινά ματς</h2></div><a class="more" href="#/injuries">Όλοι οι τραυματίες →</a></div><div class="twins">${out.map(x=>`<a class="twin" href="#/player/${x.id}"><img src="${x.headshot||HS(x.id)}" alt="" loading="lazy" ${silh}><span><b>${esc(x.name)}</b><small>${esc(T[x.tid]?.abbr||'')} · ${esc(partGr[x.part]||x.part||'—')}</small></span></a>`).join('')}</div>`;
+  box.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Injury report</div><h2 class="h2">Εκτός για τα επόμενα ματς</h2></div><a class="more" href="#/injuries">Όλοι οι τραυματίες →</a></div><div class="twins">${out.map(x=>`<a class="twin" href="#/player/${x.id}"><img src="${x.headshot||HS(x.id)}" alt="" loading="lazy" ${silh}><span><b>${esc(x.name)}</b><small>${esc(T[x.tid]?.abbr||'')} · ${esc(partGr[x.part]||x.part||'—')}</small></span></a>`).join('')}</div>`;
 }
 
 /* ---------- tonight: which games are worth staying up for ---------- */
+async function upcoming(){
+  const [sb,fc,T]=await Promise.all([api('data?type=scoreboard'),api('intel?type=forecast'),teamsMap()]);
+  const byAbbr={};Object.values(T).forEach(t=>{byAbbr[t.abbr]=t});
+  const now=Date.now(),seen=new Set(),G=[];
+  (sb?.games||[]).filter(x=>x.state==='pre').forEach(x=>{seen.add(x.id);G.push({id:x.id,date:x.date,home:x.home,away:x.away})});
+  ((fc?.records)||fc?.data?.records||[]).forEach(r=>{const id=String(r.id).split(':').pop(),t=new Date(r.tip).getTime();if(seen.has(id)||r.actual||!(t>now&&t<now+30*3600e3))return;const h=byAbbr[r.homeCode]||{abbr:r.homeCode},a=byAbbr[r.awayCode]||{abbr:r.awayCode};seen.add(id);G.push({id,date:r.tip,home:h,away:a})});
+  const F={};((fc?.records)||fc?.data?.records||[]).forEach(r=>{F[String(r.id).split(':').pop()]=r});
+  return{G:G.sort((a,b)=>new Date(a.date)-new Date(b.date)),F};
+}
 async function tonight(){
   const g=document.getElementById('hgames');if(!g||document.getElementById('tonight'))return;
   const box=document.createElement('section');box.className='sec';box.id='tonight';g.closest('section').before(box);
-  const [sb,fc,pw]=await Promise.all([api('data?type=scoreboard'),api('intel?type=forecast'),api('power')]);if(route().name!=='home'||!document.body.contains(box))return;
-  const F={};((fc?.records)||fc?.data?.records||[]).forEach(r=>{F[String(r.id).split(':').pop()]=r});
+  const [{G:U,F},pw]=await Promise.all([upcoming(),api('power')]);if(route().name!=='home'||!document.body.contains(box))return;
   const pow=(pw?.teams||[]).map(t=>t.power).filter(Number.isFinite).sort((a,b)=>a-b),P={};(pw?.teams||[]).forEach(t=>{P[t.id]=pctile(pow,t.power)});
-  const G=(sb?.games||[]).filter(x=>x.state==='pre').map(x=>{const p=F[x.id]?.forecast?.homeWinProb,close=p==null?.5:1-Math.abs(p-.5)*2,q=((P[x.home.id]??.5)+(P[x.away.id]??.5))/2,s=.55*close+.45*q;return{x,p,close,q,s}}).sort((a,b)=>b.s-a.s).slice(0,3);
+  const G=U.map(x=>{const p=F[x.id]?.forecast?.homeWinProb,close=p==null?.5:1-Math.abs(p-.5)*2,q=((P[x.home.id]??.5)+(P[x.away.id]??.5))/2,s=.55*close+.45*q;return{x,p,close,q,s}}).sort((a,b)=>b.s-a.s).slice(0,3);
   if(!G.length){box.remove();return}
   const why=o=>[o.close>.8?'αμφίρροπο':'',o.q>.7?'δύο δυνατές ομάδες':o.q>.55?'καλές ομάδες':'',o.p!=null?`${Math.round(o.p*100)}–${Math.round((1-o.p)*100)} για τον γηπεδούχο`:''].filter(Boolean).join(' · ');
-  box.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Απόψε · ώρα Ελλάδας</div><h2 class="h2">Αξίζει να ξενυχτήσεις;</h2><p class="lede" style="margin-top:8px">Βαθμός από το πόσο αμφίρροπο βλέπει το μοντέλο το ματς και πόσο δυνατές είναι οι ομάδες.</p></div></div><div class="tn-grid">${G.map(o=>{const st=Math.max(1,Math.min(5,Math.round(o.s*5+.4)));return`<a class="tn" href="#/game/${o.x.id}"><div class="tms"><img src="${o.x.away.logo||LOGO(o.x.away.abbr)}" alt="" ${hide}>${esc(o.x.away.abbr)} <span class="muted" style="font-size:14px">@</span> <img src="${o.x.home.logo||LOGO(o.x.home.abbr)}" alt="" ${hide}>${esc(o.x.home.abbr)}<span class="pill hot" style="margin-left:auto">${tm(o.x.date)}</span></div><div class="stars">${'★'.repeat(st)}<span style="color:var(--dim)">${'★'.repeat(5-st)}</span></div><small>${esc(why(o))}</small></a>`}).join('')}</div>`;
+  box.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Επόμενα ματς · ώρα Ελλάδας</div><h2 class="h2">Αξίζει να ξενυχτήσεις;</h2><p class="lede" style="margin-top:8px">Τα ${G.length} πιο ενδιαφέροντα από τους ${U.length} επόμενους αγώνες, με βάση πόσο αμφίρροπα τα βλέπει το μοντέλο και πόσο δυνατές είναι οι ομάδες.</p></div></div><div class="tn-grid">${G.map(o=>{const st=Math.max(1,Math.min(5,Math.round(o.s*5+.4)));return`<a class="tn" href="#/game/${o.x.id}"><div class="tms"><img src="${o.x.away.logo||LOGO(o.x.away.abbr)}" alt="" ${hide}>${esc(o.x.away.abbr)} <span class="muted" style="font-size:14px">@</span> <img src="${o.x.home.logo||LOGO(o.x.home.abbr)}" alt="" ${hide}>${esc(o.x.home.abbr)}<span class="pill hot" style="margin-left:auto">${dy(o.x.date)} ${tm(o.x.date)}</span></div><div class="stars">${'★'.repeat(st)}<span style="color:var(--dim)">${'★'.repeat(5-st)}</span></div><small>${esc(why(o))}</small></a>`}).join('')}</div>`;
 }
 
 /* ---------- Greeks of the NBA ---------- */
+const HIST=[['Γιάννης Αντετοκούνμπο','Bucks, Heat · δύο φορές MVP, πρωταθλητής και MVP τελικών 2021'],['Θανάσης Αντετοκούνμπο','Knicks, Bucks · πρωταθλητής 2021'],['Κώστας Αντετοκούνμπο','Mavericks, Lakers · πρωταθλητής 2020'],['Κώστας Κουφός','Jazz, Timberwolves, Nuggets, Grizzlies, Kings (2008–2019)'],['Βασίλης Σπανούλης','Houston Rockets (2006–07)'],['Νικ Καλάθης','Memphis Grizzlies (2013–15)'],['Κώστας Παπανικολάου','Rockets, Nuggets (2014–16)'],['Γιώργος Παπαγιάννης','Kings, Trail Blazers (2016–18)'],['Αντώνης Φώτσης','Memphis Grizzlies (2001–02)'],['Ευθύμιος Ρεντζιάς','Philadelphia 76ers (2002–03)'],['Ανδρέας Γλυνιαδάκης','Seattle SuperSonics (2008)']];
 async function greece(){
   document.title='Έλληνες στο NBA · NBA ATLAS';
   view.innerHTML=`<div id="hero" hidden></div><section class="card gr-hero" style="margin-bottom:18px"><div class="eyebrow" style="color:var(--ice)">🇬🇷 Ελληνικό ενδιαφέρον</div><h1 class="h1" style="font-size:clamp(40px,6vw,76px);margin:6px 0">ΟΙ ΕΛΛΗΝΕΣ ΤΟΥ NBA</h1><p class="lede">Όλοι οι παίκτες των φετινών ρόστερ που γεννήθηκαν στην Ελλάδα, με τα νούμερά τους και τον επόμενο αγώνα σε ώρα Ελλάδας.</p></section><div id="grbody"><div class="skel" style="min-height:300px"></div></div>`;
@@ -274,6 +289,7 @@ async function greece(){
   body.innerHTML=`<div class="gr-grid">${G.sort((a,b)=>(M.byId[b.id]?.ppg||0)-(M.byId[a.id]?.ppg||0)).map(b=>{const p=M.byId[b.id],t=b.team||{},ng=t.id&&next(t.id),opp=ng&&T[ng.home===t.id?ng.away:ng.home];return`<div class="gr-card"><div class="top"><img class="hs" src="${b.headshot||HS(b.id)}" alt="" ${silh}><div><a href="#/player/${b.id}" style="font-family:var(--display);font-size:24px;line-height:1.05;display:block">${esc(b.name)}</a><small class="muted">${esc(t.name||'')} · ${esc(b.position||'')} · ${b.age?b.age+' ετών':''}</small><div class="muted" style="font-size:12px">${esc([b.city,'Ελλάδα'].filter(Boolean).join(', '))} · ${ftin(b.heightIn)} (${cm(b.heightIn)})</div></div></div>
   ${p?`<div class="ln"><span><em>${f(p.ppg)}</em>π.</span><span><em>${f(p.rpg)}</em>ρ.</span><span><em>${f(p.apg)}</em>α.</span><span><em>${f(p.mpg,0)}</em>λεπτά</span><span><em>${f(p.ts)}</em>TS%</span></div><div class="tags" style="margin:0">${M.E.includes(p)?archetypes(M,p).slice(0,2).map(([x])=>`<span class="tag">${esc(x)}</span>`).join(''):''}</div>`:'<div class="muted" style="font-size:13px">Χωρίς αρκετά λεπτά φέτος για στατιστικά.</div>'}
   ${ng?`<div class="nextg">Επόμενος: ${ng.home===t.id?'vs':'@'} <img src="${opp?.logo||''}" alt="" ${hide}>${esc(opp?.short||'')}<span style="margin-left:auto" class="pill hot">${dy(ng.date)} ${tm(ng.date)}</span></div>`:''}</div>`}).join('')}</div>
+  <section class="sec card"><div class="sec-h"><div><div class="eyebrow">Ιστορικά</div><h2 class="h2">Έλληνες που πέρασαν από το NBA</h2></div></div><div class="hist">${HIST.map(([n,t])=>`<div><b>${esc(n)}</b><small>${esc(t)}</small></div>`).join('')}</div><p class="muted" style="font-size:12px;margin-top:10px">Ενδεικτική επιλογή, όχι πλήρης λίστα.</p></section>
   <p class="muted" style="font-size:12px;margin-top:14px">Κριτήριο: τόπος γέννησης Ελλάδα στα στοιχεία του ESPN. Παίκτες ελληνικής καταγωγής που γεννήθηκαν αλλού δεν εμφανίζονται.</p>`;
 }
 
@@ -285,11 +301,11 @@ function modelTrend(){
     if(recs.length<10){sec.remove();return}
     let c=0,hb=0,bs=0;const acc=[],base=[],bri=[],N=20;
     recs.forEach((r,i)=>{const hw=r.actual.home>r.actual.away?1:0,p=r.forecast.homeWinProb;c+=(p>=.5)===!!hw?1:0;hb+=hw;bs+=(p-hw)**2;acc.push([i+1,c/(i+1)]);base.push([i+1,hb/(i+1)]);const w=recs.slice(Math.max(0,i-N+1),i+1);bri.push([i+1,w.reduce((s,x)=>s+(x.forecast.homeWinProb-(x.actual.home>x.actual.away?1:0))**2,0)/w.length])});
-    const W=760,H=260,P={l:44,r:14,t:12,b:28},n=recs.length,X=i=>P.l+(i-1)/(n-1||1)*(W-P.l-P.r),Y=v=>H-P.b-(v-.3)/.6*(H-P.t-P.b);
+    const W=760,H=260,P={l:44,r:14,t:12,b:28},n=recs.length,X=i=>P.l+(i-1)/(n-1||1)*(W-P.l-P.r),Y=v=>H-P.b-(Math.max(.3,Math.min(.9,v))-.3)/.6*(H-P.t-P.b);
     const line=(pts,col,dash)=>`<polyline fill="none" stroke="${col}" stroke-width="2.4" ${dash?'stroke-dasharray="5 5"':''} points="${pts.map(([x,y])=>X(x)+','+Y(y)).join(' ')}"/>`;
     let g='';[.3,.4,.5,.6,.7,.8,.9].forEach(t=>{g+=`<line class="gr" x1="${P.l}" x2="${W-P.r}" y1="${Y(t)}" y2="${Y(t)}"/><text x="${P.l-8}" y="${Y(t)+3}" text-anchor="end">${Math.round(t*100)}%</text>`});
     g+=`<text x="${W-P.r}" y="${H-8}" text-anchor="end">αγώνες →</text>`;
-    const H2=200,Yb=v=>H2-P.b-(v/.35)*(H2-P.t-P.b);let g2='';[0,.1,.2,.3].forEach(t=>{g2+=`<line class="gr" x1="${P.l}" x2="${W-P.r}" y1="${Yb(t)}" y2="${Yb(t)}"/><text x="${P.l-8}" y="${Yb(t)+3}" text-anchor="end">${t.toFixed(2)}</text>`});
+    const H2=200,Yb=v=>H2-P.b-(Math.min(.35,v)/.35)*(H2-P.t-P.b);let g2='';[0,.1,.2,.3].forEach(t=>{g2+=`<line class="gr" x1="${P.l}" x2="${W-P.r}" y1="${Yb(t)}" y2="${Yb(t)}"/><text x="${P.l-8}" y="${Yb(t)+3}" text-anchor="end">${t.toFixed(2)}</text>`});
     g2+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Yb(.25)}" y2="${Yb(.25)}" stroke="var(--bad)" stroke-dasharray="4 4" opacity=".6"/><polyline fill="none" stroke="#7cc4ff" stroke-width="2.4" points="${bri.map(([x,y])=>X(x)+','+Yb(y)).join(' ')}"/>`;
     sec.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Με τον καιρό</div><h2 class="h2">Η ακρίβεια αγώνα με τον αγώνα</h2><p class="lede" style="margin-top:8px">Αθροιστικό ποσοστό σωστού νικητή σε ${n} κλειδωμένες προβλέψεις, απέναντι στη στρατηγική «πάντα ο γηπεδούχος». Από κάτω, το Brier των τελευταίων ${N} αγώνων (χαμηλότερο = καλύτερο, η κόκκινη γραμμή είναι το κορώνα-γράμματα).</p></div></div>
     <svg class="mchart" viewBox="0 0 ${W} ${H}" style="width:100%">${g}${line(base,'var(--dim)',1)}${line(acc,'#ff5a1f')}</svg>
@@ -298,18 +314,19 @@ function modelTrend(){
   });
 }
 
+function teaser(){const n=document.getElementById('hnews');if(!n||document.getElementById('hteaser'))return;const s=document.createElement('section');s.className='sec';s.id='hteaser';s.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Εργαλεία</div><h2 class="h2">Βάλε τα νούμερα να δουλέψουν</h2></div><a class="more" href="#/lab">Atlas Lab →</a></div><div class="teaser">${TILES.map(([k,ic,t,p,c])=>`<a class="lab-tile" href="#/${k}" style="--glow:${c};min-height:140px"><span class="ic">${ic}</span><b>${t}</b><p>${p}</p></a>`).join('')}</div>`;n.closest('section').after(s)}
 /* ---------- navigation, lab tiles, routing ---------- */
 const MINE={compare,injuries,greece};
-const navAdd=()=>{const after=document.querySelector('#links [data-r="teams"]');if(after&&!document.querySelector('#links [data-r="greece"]'))after.insertAdjacentHTML('afterend','<a href="#/injuries" data-r="injuries">Τραυματίες</a><a href="#/greece" data-r="greece">🇬🇷 Ελλάδα</a>')};
+const navAdd=()=>{const after=document.querySelector('#links [data-r="teams"]');if(after&&!document.querySelector('#links [data-r="greece"]'))after.insertAdjacentHTML('afterend','<a href="#/greece" data-r="greece">Ελλάδα</a>')};
 const TILES=[['compare','⚔️','Σύγκριση παικτών','Δύο παίκτες δίπλα-δίπλα: radar, ανά-36, αρχέτυπα και πόσο μοιάζουν.','rgba(255,90,31,.25)'],['injuries','🩹','Τραυματίες','Ποιος λείπει, από τι, πότε γυρίζει και ποια ομάδα πονάει περισσότερο.','rgba(255,77,106,.22)'],['greece','🇬🇷','Οι Έλληνες του NBA','Οι Έλληνες των ρόστερ, τα νούμερά τους και ο επόμενος αγώνας σε ώρα Ελλάδας.','rgba(70,140,255,.28)']];
 function hook(){
   const r=route();navAdd();
-  document.querySelectorAll('#links [data-r="injuries"],#links [data-r="greece"]').forEach(a=>a.classList.toggle('on',a.dataset.r===r.name));
+  document.querySelectorAll('#links [data-r="greece"]').forEach(a=>a.classList.toggle('on',a.dataset.r===r.name));
   if(MINE[r.name]){document.querySelectorAll('#links [data-r]').forEach(a=>{if(a.dataset.r!==r.name)a.classList.remove('on')});setTimeout(()=>MINE[r.name](r),0);return}
 }
 let pend=null;
 new MutationObserver(()=>{clearTimeout(pend);pend=setTimeout(()=>{const r=route();navAdd();
-  if(r.name==='home'){tonight();homeOut()}
+  if(r.name==='home'){tonight();homeOut();teaser()}
   if(r.name==='lab'){const g=view.querySelector('.lab-grid');if(g&&!g.querySelector('[data-plus]'))g.insertAdjacentHTML('afterbegin',TILES.map(([k,ic,t,p,c])=>`<a class="lab-tile" data-plus href="#/${k}" style="--glow:${c}"><span class="ic">${ic}</span><b>${t}</b><p>${p}</p></a>`).join(''))}
   if(r.name==='player'&&r.id&&document.querySelector('.phero')){twins2(r.id);const txt=document.querySelector('.phero .txt');if(txt&&!txt.querySelector('.cmp-btn')){const row=txt.querySelector('.dna-btn')?.parentElement;const html=`<a class="dna-btn cmp-btn" href="#/compare?a=${r.id}">⚔️ Σύγκρινέ τον</a>`;if(row)row.insertAdjacentHTML('beforeend',html);else txt.insertAdjacentHTML('beforeend',`<div style="display:flex;gap:8px;flex-wrap:wrap">${html}</div>`)}}
   if(r.name==='team'&&r.id&&document.querySelector('.phero'))teamInjuries(r.id);
