@@ -58,6 +58,7 @@ const css=document.createElement('style');css.textContent=`
 .tn{display:flex;flex-direction:column;gap:8px;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,90,31,.08),transparent 60%),var(--card)}
 .tn .tms{display:flex;align-items:center;gap:8px;font-weight:900;font-family:var(--cond);font-size:19px}.tn .tms img{width:26px;height:26px}
 .tn .stars{color:var(--hot);letter-spacing:2px}.tn small{color:var(--muted);font-size:12px}
+.tvchip{display:inline-flex;align-items:center;font-size:11px;font-weight:800;padding:5px 9px;border-radius:999px;background:rgba(124,196,255,.12);color:var(--ice);white-space:nowrap;margin-left:6px}.tvchip.lp{background:rgba(255,255,255,.05);color:var(--dim)}.game-top .tvchip~span{display:none}
 .mchart text{fill:var(--dim);font-size:10px}.mchart .gr{stroke:rgba(255,255,255,.07)}
 #links{mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
 .teaser{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
@@ -288,9 +289,10 @@ async function greece(){
   const now=Date.now(),next=tid=>(sc?.games||[]).filter(g=>new Date(g.date)>now&&(g.home===tid||g.away===tid)).sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
   body.innerHTML=`<div class="gr-grid">${G.sort((a,b)=>(M.byId[b.id]?.ppg||0)-(M.byId[a.id]?.ppg||0)).map(b=>{const p=M.byId[b.id],t=b.team||{},ng=t.id&&next(t.id),opp=ng&&T[ng.home===t.id?ng.away:ng.home];return`<div class="gr-card"><div class="top"><img class="hs" src="${b.headshot||HS(b.id)}" alt="" ${silh}><div><a href="#/player/${b.id}" style="font-family:var(--display);font-size:24px;line-height:1.05;display:block">${esc(b.name)}</a><small class="muted">${esc(t.name||'')} · ${esc(b.position||'')} · ${b.age?b.age+' ετών':''}</small><div class="muted" style="font-size:12px">${esc([b.city,'Ελλάδα'].filter(Boolean).join(', '))} · ${ftin(b.heightIn)} (${cm(b.heightIn)})</div></div></div>
   ${p?`<div class="ln"><span><em>${f(p.ppg)}</em>π.</span><span><em>${f(p.rpg)}</em>ρ.</span><span><em>${f(p.apg)}</em>α.</span><span><em>${f(p.mpg,0)}</em>λεπτά</span><span><em>${f(p.ts)}</em>TS%</span></div><div class="tags" style="margin:0">${M.E.includes(p)?archetypes(M,p).slice(0,2).map(([x])=>`<span class="tag">${esc(x)}</span>`).join(''):''}</div>`:'<div class="muted" style="font-size:13px">Χωρίς αρκετά λεπτά φέτος για στατιστικά.</div>'}
-  ${ng?`<div class="nextg">Επόμενος: ${ng.home===t.id?'vs':'@'} <img src="${opp?.logo||''}" alt="" ${hide}>${esc(opp?.short||'')}<span style="margin-left:auto" class="pill hot">${dy(ng.date)} ${tm(ng.date)}</span></div>`:''}</div>`}).join('')}</div>
+  ${ng?`<div class="nextg">Επόμενος: ${ng.home===t.id?'vs':'@'} <img src="${opp?.logo||''}" alt="" ${hide}>${esc(opp?.short||'')}<span style="margin-left:auto" class="pill hot">${dy(ng.date)} ${tm(ng.date)}</span></div><div class="tvl muted" data-g="${ng.id}" style="font-size:12.5px;font-weight:700"></div>`:''}</div>`}).join('')}</div>
   <section class="sec card"><div class="sec-h"><div><div class="eyebrow">Ιστορικά</div><h2 class="h2">Έλληνες που πέρασαν από το NBA</h2></div></div><div class="hist">${HIST.map(([n,t])=>`<div><b>${esc(n)}</b><small>${esc(t)}</small></div>`).join('')}</div><p class="muted" style="font-size:12px;margin-top:10px">Ενδεικτική επιλογή, όχι πλήρης λίστα.</p></section>
-  <p class="muted" style="font-size:12px;margin-top:14px">Κριτήριο: τόπος γέννησης Ελλάδα στα στοιχεία του ESPN. Παίκτες ελληνικής καταγωγής που γεννήθηκαν αλλού δεν εμφανίζονται.</p>`;
+  <p class="muted" style="font-size:12px;margin-top:14px">Τηλεοπτικά: πρόγραμμα MagentaTV για τις επόμενες ~2 μέρες. Κριτήριο: τόπος γέννησης Ελλάδα στα στοιχεία του ESPN. Παίκτες ελληνικής καταγωγής που γεννήθηκαν αλλού δεν εμφανίζονται.</p>`;
+  tvMap().then(M=>{if(!M)return;body.querySelectorAll('.tvl[data-g]').forEach(e=>{const l=tvLabel(M[e.dataset.g]);if(l)e.innerHTML=l})});
 }
 
 /* ---------- model accuracy over time ---------- */
@@ -315,6 +317,26 @@ function modelTrend(){
 }
 
 function teaser(){const n=document.getElementById('hnews');if(!n||document.getElementById('hteaser'))return;const s=document.createElement('section');s.className='sec';s.id='hteaser';s.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Εργαλεία</div><h2 class="h2">Βάλε τα νούμερα να δουλέψουν</h2></div><a class="more" href="#/lab">Atlas Lab →</a></div><div class="teaser">${TILES.map(([k,ic,t,p,c])=>`<a class="lab-tile" href="#/${k}" style="--glow:${c};min-height:140px"><span class="ic">${ic}</span><b>${t}</b><p>${p}</p></a>`).join('')}</div>`;n.closest('section').after(s)}
+/* ---------- Greek TV: which games MagentaTV (ex COSMOTE TV) shows ---------- */
+let TVP=null;
+function tvMap(){if(TVP)return TVP;TVP=Promise.all([api('data?type=tvgr'),api('schedule'),teamsMap(),api('data?type=scoreboard')]).then(([tv,sc,T,sb])=>{
+  if(!tv?.broadcasts){TVP=null;return null}
+  const B=tv.broadcasts.map(b=>({...b,t:new Date(b.start).getTime()})),from=Math.min(...B.map(b=>b.t),Infinity),M={};
+  const games=[...(sc?.games||[]).map(g=>({id:String(g.id),date:g.date,h:T[g.home]?.abbr,a:T[g.away]?.abbr})),...(sb?.games||[]).map(g=>({id:String(g.id),date:g.date,h:g.home?.abbr,a:g.away?.abbr}))];
+  const lo=Date.now()-3*3600e3,hi=Date.now()+36*3600e3;
+  for(const g of games){if(!g.h||!g.a||M[g.id])continue;const t=new Date(g.date).getTime();const hit=B.filter(b=>((b.home===g.h&&b.away===g.a)||(b.home===g.a&&b.away===g.h))&&Math.abs(b.t-t)<5*3600e3);
+    const live=hit.find(b=>b.live),rep=hit.filter(b=>!b.live&&b.t>t).sort((x,y)=>x.t-y.t)[0];
+    M[g.id]={live,rep,inWindow:t>lo&&t<hi}}
+  return M}).catch(()=>{TVP=null;return null});return TVP}
+const tvLabel=(x,short)=>x?.live?`📺 ${esc(x.live.channel)}${short?'':' · ζωντανά'}`:x?.rep?`📺 ${esc(x.rep.channel)} · ${short?'':'μαγνητοσκ. '}${tm(x.rep.start)}`:x?.inWindow?'League Pass':'';
+async function tvDecorate(){
+  const cards=[...view.querySelectorAll('a.game[href^="#/game/"]')].filter(a=>!a.dataset.tv);if(!cards.length&&!document.getElementById('tonight')&&route().name!=='game')return;
+  const M=await tvMap();if(!M)return;
+  cards.forEach(a=>{a.dataset.tv='1';const x=M[a.getAttribute('href').split('/').pop()],l=tvLabel(x,true);if(!l)return;const top=a.querySelector('.game-top');if(top&&!top.querySelector('.tvchip'))top.querySelector('.pill')?.insertAdjacentHTML('afterend',`<span class="tvchip ${x.live||x.rep?'':'lp'}" title="${x.live||x.rep?'Μετάδοση στην Ελλάδα από MagentaTV':'Δεν μεταδίδεται στην ελληνική TV· διαθέσιμο στο NBA League Pass'}">${l}</span>`)});
+  document.querySelectorAll('#tonight a.tn').forEach(a=>{if(a.querySelector('.tvl'))return;const x=M[a.getAttribute('href').split('/').pop()],l=tvLabel(x);if(l)a.insertAdjacentHTML('beforeend',`<small class="tvl" style="color:${x.live?'var(--text)':'var(--dim)'};font-weight:700">${l}</small>`)});
+  const r=route();if(r.name==='game'&&r.id&&!document.getElementById('tvgame')){const h=view.querySelector('section.hero');const x=M[r.id];if(h&&x&&(x.live||x.rep||x.inWindow))h.insertAdjacentHTML('afterend',`<div id="tvgame" class="card" style="margin-top:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 18px"><b style="font-size:15px">${x.live?`📺 Ζωντανά στο ${esc(x.live.channel)}`:x.rep?`📺 Μαγνητοσκοπημένο στο ${esc(x.rep.channel)}, ${dy(x.rep.start)} ${tm(x.rep.start)}`:'Δεν μεταδίδεται στην ελληνική TV'}</b><span class="muted" style="font-size:13px">${x.live||x.rep?'MagentaTV (πρώην COSMOTE TV)':'Διαθέσιμο στο NBA League Pass'}</span>${x.live&&x.rep?`<span class="muted" style="font-size:13px">· επανάληψη ${esc(x.rep.channel)} ${dy(x.rep.start)} ${tm(x.rep.start)}</span>`:''}</div>`)}
+}
+
 /* ---------- navigation, lab tiles, routing ---------- */
 const MINE={compare,injuries,greece};
 const navAdd=()=>{const after=document.querySelector('#links [data-r="teams"]');if(after&&!document.querySelector('#links [data-r="greece"]'))after.insertAdjacentHTML('afterend','<a href="#/greece" data-r="greece">Ελλάδα</a>')};
@@ -331,6 +353,7 @@ new MutationObserver(()=>{clearTimeout(pend);pend=setTimeout(()=>{const r=route(
   if(r.name==='player'&&r.id&&document.querySelector('.phero')){twins2(r.id);model().then(M=>{const p=M.byId[r.id],txt=document.querySelector('.phero .txt');if(!p||p.mpg<8||!txt||txt.querySelector('.cmp-btn')||route().id!==r.id)return;const row=txt.querySelector('.dna-btn')?.parentElement;const html=`<a class="dna-btn cmp-btn" href="#/compare?a=${r.id}">🆚 Σύγκρινέ τον</a>`;if(row)row.insertAdjacentHTML('beforeend',html);else txt.insertAdjacentHTML('beforeend',`<div style="display:flex;gap:8px;flex-wrap:wrap">${html}</div>`)})}
   if(r.name==='team'&&r.id&&document.querySelector('.phero'))teamInjuries(r.id);
   if(r.name==='model')modelTrend();
+  if(['home','games','game','team'].includes(r.name))setTimeout(tvDecorate,600);
   if(r.name==='menu'&&!document.getElementById('pluscard'))view.insertAdjacentHTML('afterbegin',`<div id="pluscard" class="grid g2" style="margin-bottom:16px">${TILES.map(([k,ic,t])=>`<a class="card" href="#/${k}" style="display:block"><div class="h2" style="font-size:24px">${ic} ${t}</div></a>`).join('')}</div>`);
 },150)}).observe(view,{childList:true});
 addEventListener('hashchange',hook);hook();
