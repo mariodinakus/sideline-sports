@@ -1,4 +1,12 @@
-const VERSION='nba-atlas-v13';const CORE=['/','/style.css','/app.js','/atlas-data.js','/atlas-features.js','/atlas-plus.js','/atlas-stats.js','/icon.svg'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(CORE)).catch(()=>{}));self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(v=>v!==VERSION).map(v=>caches.delete(v)))).then(()=>self.clients.claim()))});
-self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==location.origin||u.pathname.startsWith('/api/'))return;e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(VERSION).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)))});
+const VERSION='nba-atlas-mobile-v14';
+const CORE=['/','/style.css','/mobile.css','/app.js','/atlas-data.js','/atlas-features.js','/atlas-labs.js','/atlas-pro.js','/atlas-plus.js','/atlas-stats.js','/mobile.js','/icon.svg','/manifest.webmanifest'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(CORE)));self.skipWaiting()});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('nba-atlas-')&&key!==VERSION).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
+self.addEventListener('fetch',event=>{
+  const request=event.request, url=new URL(request.url);
+  if(request.method!=='GET'||url.origin!==self.location.origin||url.pathname.startsWith('/api/')||url.pathname.startsWith('/downloads/'))return;
+  event.respondWith(fetch(request).then(response=>{
+    if(response.ok&&response.type==='basic'){const copy=response.clone();event.waitUntil(caches.open(VERSION).then(cache=>cache.put(request,copy)).catch(()=>{}))}
+    return response;
+  }).catch(async()=>await caches.match(request)||((request.mode==='navigate')?await caches.match('/'):Response.error())));
+});

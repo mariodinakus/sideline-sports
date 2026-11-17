@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#08090c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="application-name" content="NBA ATLAS">
 <meta name="description" content="NBA ATLAS — live NBA scores, power index, MVP race, GOAT ranking, game forecasts and history.">
 <title>NBA ATLAS</title>
 <link rel="canonical" href="https://nba-atlas.vercel.app/">
@@ -23,6 +27,7 @@
 <link rel="preconnect" href="https://a.espncdn.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans+Extra+Condensed:wght@600;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
 <header class="nav">
@@ -32,6 +37,7 @@
     <div class="nav-tools">
       <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" placeholder="Παίκτης ή ομάδα…" autocomplete="off"></label>
       <div class="search-pop" id="qpop" hidden></div>
+      <button id="install-trigger" class="install-trigger" type="button" aria-label="Εγκατάσταση NBA ATLAS" title="Εγκατάσταση NBA ATLAS" hidden><span aria-hidden="true">↓</span><span class="install-label">APP</span></button>
     </div>
   </div>
   <div class="ticker" id="ticker"></div>
@@ -41,7 +47,15 @@
   <div><b>NBA ATLAS</b> · Ανεξάρτητο project. Δεδομένα: ESPN public feeds (ανεπίσημα), Polymarket, Kalshi, NBA.com history. Δεν συνδέεται με το NBA.</div>
   <div class="foot-note">Τα μοντέλα είναι εκτιμήσεις, όχι εγγυήσεις. Κανένα στοιχείο δεν κατασκευάζεται: ό,τι λείπει από την πηγή εμφανίζεται ως —.</div>
 </footer>
-<nav class="tabbar" id="tabbar"></nav>
+<nav class="tabbar" id="tabbar" aria-label="Πλοήγηση κινητού"></nav>
+<dialog id="install-dialog" class="install-dialog" aria-labelledby="install-title">
+  <div class="install-top"><img src="/icon.svg" alt="" width="52" height="52"><div><span class="install-kicker">NBA ATLAS / MOBILE</span><h2 id="install-title">NBA ATLAS ΣΤΟ ΚΙΝΗΤΟ</h2></div><button type="button" id="install-close" class="install-close" aria-label="Κλείσιμο">×</button></div>
+  <p>Άνοιξε την εφαρμογή απευθείας από την αρχική οθόνη, χωρίς τη γραμμή του browser.</p>
+  <button type="button" id="install-pwa" class="install-primary" hidden>Εγκατάσταση εφαρμογής</button>
+  <p id="install-help" class="install-help">Σε Android Chrome: <b>⋮ → Εγκατάσταση εφαρμογής</b> ή <b>Προσθήκη στην αρχική οθόνη</b>.</p>
+  <a class="install-secondary" href="/downloads/nba-atlas.apk" download="NBA-ATLAS.apk">Λήψη Android APK <span>↗</span></a>
+  <small>Το APK είναι έκδοση προσωπικής εγκατάστασης (debug-signed), όχι εφαρμογή Play Store. Για ενημερώσεις χωρίς APK, προτίμησε την εγκατάσταση από Chrome.</small>
+</dialog>
 <script src="/atlas-data.js"></script>
 <script src="/app.js"></script>
 <script src="/atlas-features.js"></script>
@@ -49,5 +63,6 @@
 <script src="/atlas-pro.js"></script>
 <script src="/atlas-plus.js"></script>
 <script src="/atlas-stats.js"></script>
+<script src="/mobile.js"></script>
 </body>
 </html>

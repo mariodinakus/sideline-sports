@@ -1,0 +1,87 @@
+/* NBA ATLAS mobile experience — complements style.css without changing live data. */
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid #ff8a3d;outline-offset:3px}
+a,button{touch-action:manipulation}
+.install-trigger{height:38px;min-width:38px;display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:0 10px;border:1px solid rgba(255,90,31,.4);border-radius:12px;background:rgba(255,90,31,.1);color:#ff9d70;font-weight:800;font-size:12px;white-space:nowrap}
+.install-trigger span:first-child{font-size:20px;line-height:1}
+.install-dialog{background:#141820;color:#f3f1ec;border:1px solid #323845;border-radius:24px;width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 40px);overflow:auto;padding:24px;margin:auto;box-shadow:0 26px 80px rgba(0,0,0,.7)}
+.install-dialog::backdrop{background:rgba(0,0,0,.76);backdrop-filter:blur(7px)}
+.install-top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.install-top img{width:52px;height:52px;border-radius:12px;flex:0 0 52px}
+.install-top h2{font:800 24px/1 'Fira Sans Extra Condensed',sans-serif;margin-top:4px}
+.install-kicker{color:#ff804c;font-size:10px;letter-spacing:.15em;font-weight:800}
+.install-close{font-size:30px;width:40px;height:40px;border-radius:10px;align-self:flex-start;margin-left:auto;color:#acb4c1}
+.install-dialog p{font-size:14px;color:#cbd1dc;line-height:1.6;margin:0 0 14px}
+.install-primary,.install-secondary{display:flex;justify-content:center;align-items:center;gap:8px;padding:14px 18px;border-radius:12px;min-height:48px;text-align:center;font-weight:800;font-size:14px;width:100%}
+.install-primary{background:#ff5a1f;color:#17100c;margin-bottom:10px}
+.install-secondary{background:#252b35;color:#f3f1ec;border:1px solid #49505e;margin:10px 0}
+.install-dialog .install-help{font-size:13px;color:#9fa8b7}
+.install-dialog small{display:block;font-size:11px;color:#858e9e;line-height:1.5}
+@media (max-width:860px){
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:92px}
+  .nav{padding-top:env(safe-area-inset-top);background:rgba(8,9,12,.96)}
+  .nav-in{min-height:58px;height:auto;padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));gap:10px}
+  .nav-tools{display:flex;align-items:center;gap:7px;min-width:0}
+  .search{min-width:0;width:clamp(95px,25vw,155px)}
+  .search input{min-width:0}
+  .search-pop{top:44px;z-index:100}
+  .logo{font-size:clamp(17px,5vw,22px);gap:7px}
+  .logo-ball{width:23px;height:23px;flex:0 0 23px}
+  .install-trigger{min-width:38px}
+  .install-label{display:none}
+  .ticker{scroll-snap-type:x proximity}
+  .tk{min-width:143px;scroll-snap-align:start}
+  .view{padding:20px 14px calc(114px + env(safe-area-inset-bottom));min-width:0}
+  .view>*{min-width:0}
+  .sec{margin-top:32px}
+  .sec-h{gap:10px;margin-bottom:14px}
+  .h1{font-size:clamp(43px,10.5vw,74px)}
+  .h2{font-size:clamp(29px,8vw,41px)}
+  .lede{font-size:14px;line-height:1.55}
+  .grid{gap:11px}
+  .card{padding:15px;border-radius:16px}
+  .hero,.phero{border-radius:20px}
+  .hero-txt{padding:22px 18px;gap:22px}
+  .hero-art{min-height:210px}
+  .hero-art img{max-height:290px;object-fit:contain}
+  .games{grid-template-columns:minmax(0,1fr);gap:10px}
+  .game{padding:16px;border-radius:15px}
+  .side img{width:36px;height:36px}
+  .side .sc{font-size:30px}
+  .teams{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tm{min-width:0;min-height:128px;padding:15px}
+  .tm img{width:45px;height:45px}
+  .tm b{overflow-wrap:anywhere}
+  .tbl-wrap{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:thin}
+  .tbl-wrap table{min-width:520px}
+  .tbl-wrap .tcell{gap:6px}
+  .chart{max-width:100%;height:auto}
+  .datebar button,.seg button{min-height:43px}
+  .more{min-height:40px;display:inline-flex;align-items:center}
+  .tabbar{left:0;right:0;bottom:0;gap:2px;padding:7px max(5px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(5px,env(safe-area-inset-left));background:rgba(10,12,17,.97);border-top:1px solid rgba(255,255,255,.12);box-shadow:0 -8px 32px rgba(0,0,0,.45)}
+  .tabbar a{min-width:0;min-height:50px;border-radius:12px;padding:6px 2px 4px;justify-content:center;gap:3px;font-size:10px;line-height:1.1}
+  .tabbar a svg{width:22px;height:22px;flex:0 0 22px}
+  .tabbar a.on{color:#ff8a3d;background:rgba(255,90,31,.11)}
+  .foot{padding:25px 15px 115px}
+  .podium{gap:10px}
+  .pod,.pod.p1{min-height:320px}
+  .pcards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .pc{min-width:0;min-height:235px}
+  .pc img.hs{bottom:60px}
+  .pc .info{padding:12px}
+}
+@media (max-width:370px){
+  .logo{font-size:17px}
+  .logo-ball{width:20px;height:20px;flex-basis:20px}
+  .search{width:98px;padding:0 8px}
+  .install-trigger{width:36px;height:36px;padding:0}
+  .view{padding-left:10px;padding-right:10px}
+  .tabbar a{font-size:9px}
+  .hero-txt{padding:18px 14px}
+  .hero-art{min-height:170px}
+  .side .nm b{font-size:17px}
+  .side .sc{font-size:27px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}

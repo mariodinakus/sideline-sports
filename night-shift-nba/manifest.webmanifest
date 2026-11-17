@@ -1,10 +1,15 @@
 {
-  "name": "NBA ATLAS",
+  "id": "/",
+  "name": "NBA ATLAS — Basketball Intelligence",
   "short_name": "NBA ATLAS",
-  "description": "NBA scores, champions, players and advanced statistics",
-  "start_url": "/",
+  "description": "Ζωντανά αποτελέσματα NBA, ομάδες, παίκτες, προβλέψεις, ιστορικά και advanced stats.",
+  "start_url": "/#/home",
   "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#08090c",
   "theme_color": "#08090c",
   "icons": [
@@ -13,6 +18,23 @@
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Αγώνες",
+      "short_name": "Αγώνες",
+      "url": "/#/games"
+    },
+    {
+      "name": "Βαθμολογία",
+      "short_name": "Πίνακας",
+      "url": "/#/standings"
+    },
+    {
+      "name": "GOAT Ranking",
+      "short_name": "GOAT",
+      "url": "/#/goat"
     }
   ]
 }
