@@ -1,6 +1,7 @@
 /* NBA ATLAS Lab data (ESPN public endpoints, unofficial).
    type=season  -> team advanced stats (pace, ratings, four factors), luck components and each team's game log
    type=gamelog -> a player's regular-season game log (&id=athleteId)
+   type=shots   -> shot zones, shot types, assisted share and clutch splits (teams + players) from recent play-by-play
    type=replay  -> compact play-by-play with home win probability for one game (&id=eventId) */
 const B='https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 async function get(u,ms=9000){const r=await fetch(u,{signal:AbortSignal.timeout(ms),headers:{accept:'application/json'}});if(!r.ok)throw Error('ESPN HTTP '+r.status);return r.json()}
@@ -54,6 +55,43 @@ async function season(){
   return{source:'ESPN public scoreboards + summaries (unofficial)',season:`${y}-${String(y+1).slice(2)}`,games:games.length,totalCompleted:evs.length,league:{three:lg3,ppg:L.pts/Math.max(1,games.length*2)},teams:out,updatedAt:new Date().toISOString()};
 }
 
+
+/* Shot diet, shot types, assisted share and clutch splits from play-by-play of recent completed games. */
+const ZONES=['rim','short','mid','c3','ab3'];
+const TYPES=[['dunk',/dunk/i],['alley',/alley oop/i],['putback',/putback|tip shot|tip dunk|tip layup/i],['layup',/layup/i],['floater',/float|hook/i],['pullup',/pullup|pull-up/i],['iso',/step ?back|fadeaway|turnaround/i],['catch',/jumper|jump shot/i]];
+function zoneOf(p){const t=String(p.text||''),three=/three point/i.test(t)||p.scoreValue===3;const fm=t.match(/(\d+)-foot/);const c=p.coordinate||{};const ok=c.x>=0&&c.x<=50&&c.y>=0&&c.y<=50;
+  const dist=fm?+fm[1]:ok?Math.hypot(c.x-25,c.y):null;
+  if(three)return ok&&c.y<=9&&Math.abs(c.x-25)>=21?'c3':'ab3';if(dist==null)return null;return dist<=4?'rim':dist<=14?'short':'mid'}
+function typeOf(p){const t=String(p.text||'');for(const [k,re] of TYPES)if(re.test(t))return k;return'other'}
+async function shots(){
+  const now=new Date(),y=now.getUTCMonth()>=6?now.getUTCFullYear():now.getUTCFullYear()-1,start=new Date(Date.UTC(y,9,18));
+  const dates=[];for(let d=new Date(now);d>=start&&dates.length<60;d=new Date(d.getTime()-864e5))dates.push(ymd(d));
+  const evs=[],seen=new Set();for(let i=0;i<dates.length;i+=12){const r=await Promise.allSettled(dates.slice(i,i+12).map(d=>get(`${B}/scoreboard?dates=${d}&limit=40`)));for(const b of r){if(b.status!=='fulfilled')continue;for(const e of b.value.events||[]){if(seen.has(e.id)||!e.status?.type?.completed||String(e.season?.type)!=='2')continue;seen.add(e.id);evs.push(e)}}}
+  evs.sort((a,b)=>String(b.date).localeCompare(String(a.date)));const use=evs.slice(0,240);
+  const Z=()=>Object.fromEntries(ZONES.map(z=>[z,[0,0]])),TY=()=>Object.fromEntries([...TYPES.map(t=>t[0]),'other'].map(k=>[k,[0,0]]));
+  const team=()=>({g:0,off:{z:Z(),ty:TY(),ast:0,fgm:0,fta:0,fga:0},def:{z:Z(),ty:TY(),ast:0,fgm:0,fta:0,fga:0},cl:{pf:0,pa:0,g:0}});
+  const T={},Pl={},L={z:Z(),ty:TY(),ast:0,fgm:0,fta:0,fga:0};let n=0;
+  const pl=(id,tid)=>Pl[id]||(Pl[id]={t:tid,g:new Set(),z:Z(),ty:TY(),ast:0,fgm:0,cl:{pts:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,g:new Set()}});
+  for(let i=0;i<use.length;i+=16){const r=await Promise.allSettled(use.slice(i,i+16).map(e=>get(`${B}/summary?event=${e.id}`,8000).then(j=>({e,j}))));
+    for(const x of r){if(x.status!=='fulfilled')continue;const {e,j}=x.value,cs=j.header?.competitions?.[0]?.competitors||[];const h=cs.find(c=>c.homeAway==='home'),a=cs.find(c=>c.homeAway==='away');if(!h||!a)continue;
+      const hid=String(h.team?.id),aid=String(a.team?.id),plays=j.plays||[];if(plays.length<50)continue;n++;
+      for(const id of [hid,aid]){(T[id]=T[id]||team()).g++}
+      const clutchSeen=new Set();
+      for(const p of plays){const tid=String(p.team?.id||'');if(tid!==hid&&tid!==aid)continue;const opp=tid===hid?aid:hid;
+        const per=p.period?.number||0,sc=secs(p.clock?.displayValue),val=p.scoringPlay?(+p.scoreValue||0):0;
+        let hs=+p.homeScore||0,as=+p.awayScore||0;if(val){if(tid===hid)hs-=val;else as-=val}
+        const clutch=per>=4&&sc<=300&&Math.abs(hs-as)<=5;
+        const ath=String(p.participants?.[0]?.athlete?.id||''),txt=String(p.type?.text||'')+' '+String(p.text||''),ft=/free throw/i.test(txt);
+        if(clutch){if(!clutchSeen.has(tid)){clutchSeen.add(tid);T[tid].cl.g++}if(val){T[tid].cl.pf+=val;T[opp].cl.pa+=val}}
+        if(ft){if(!/technical/i.test(txt)){T[tid].off.fta++;T[opp].def.fta++;L.fta++;if(ath){const q=pl(ath,tid);if(clutch){q.cl.fta++;if(val){q.cl.ftm++;q.cl.pts+=val}q.cl.g.add(e.id)}}}continue}
+        if(!p.shootingPlay)continue;const z=zoneOf(p),ty=typeOf(p),made=!!p.scoringPlay,assisted=made&&(p.participants||[]).length>1;
+        for(const side of [T[tid].off,T[opp].def,L]){side.fga++;if(made){side.fgm++;if(assisted)side.ast++}if(z){side.z[z][1]++;if(made)side.z[z][0]++}side.ty[ty][1]++;if(made)side.ty[ty][0]++}
+        if(ath){const q=pl(ath,tid);q.g.add(e.id);if(z){q.z[z][1]++;if(made)q.z[z][0]++}q.ty[ty][1]++;if(made){q.ty[ty][0]++;q.fgm++;if(assisted)q.ast++}
+          if(clutch){q.cl.g.add(e.id);q.cl.fga++;if(made){q.cl.fgm++;q.cl.pts+=val}if(z==='c3'||z==='ab3'){q.cl.tpa++;if(made)q.cl.tpm++}}}}}}
+  const players={};for(const [id,q] of Object.entries(Pl)){const fga=ZONES.reduce((s,z)=>s+q.z[z][1],0);if(fga<10&&q.cl.fga+q.cl.fta<3)continue;players[id]={t:q.t,g:q.g.size,z:q.z,ty:q.ty,ast:q.ast,fgm:q.fgm,cl:{...q.cl,g:q.cl.g.size}}}
+  return{source:'ESPN public play-by-play (unofficial)',games:n,from:use.length?use[use.length-1].date:null,to:use.length?use[0].date:null,league:L,teams:T,players,updatedAt:new Date().toISOString()};
+}
+
 async function gamelog(id){
   const g=await get(`https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba/athletes/${id}/gamelog`);
   const N=g.names||[],ix=k=>N.indexOf(k),reg=(g.seasonTypes||[]).find(s=>/regular/i.test(s.displayName||''));
@@ -82,6 +120,7 @@ module.exports=async(req,res)=>{
   try{
     let out,cc='s-maxage=21600, stale-while-revalidate=43200';
     if(type==='season')out=await season();
+    else if(type==='shots')out=await shots();
     else if(type==='gamelog'){if(!/^\d{1,12}$/.test(id))return res.status(400).json({error:'Invalid player'});out=await gamelog(id);cc='s-maxage=3600, stale-while-revalidate=10800'}
     else if(type==='replay'){if(!/^\d{4,12}$/.test(id))return res.status(400).json({error:'Invalid game'});out=await replay(id);cc=out.state==='post'?'s-maxage=86400, stale-while-revalidate=86400':'s-maxage=20, stale-while-revalidate=40'}
     else return res.status(400).json({error:'Unknown type'});
