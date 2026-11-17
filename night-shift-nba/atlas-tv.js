@@ -1,0 +1,47 @@
+/* NBA ATLAS Greek broadcast guide. Magenta published listings + ESPN national indicators.
+   ESPN/ABC US labels do NOT themselves confirm Disney+ availability in Greece. */
+(function(){
+"use strict";
+var root=document.getElementById("view");if(!root)return;
+function e(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function fmt(s,withDay){try{return new Date(s).toLocaleString("el-GR",{timeZone:"Europe/Athens",weekday:withDay?"short":undefined,day:withDay?"numeric":undefined,month:withDay?"short":undefined,hour:"2-digit",minute:"2-digit"})}catch{return "—"}}
+function d8(t){return t.toISOString().slice(0,10).replace(/-/g,"")}
+function list(xs){return Array.isArray(xs)?xs:[]}
+function route(){return (location.hash.replace(/^#\/?/,"").split(/[/?]/)[0]||"home")}
+function shell(){return '<div class="i-wrap" id="atlas-tv-page"><div class="i-top"><a href="#/games">← Αγώνες</a><span>NBA ATLAS / GREECE TV GUIDE</span></div><div class="i-heading"><div class="i-kicker">WHERE TO WATCH</div><h1>Πού παίζει το NBA;</h1><p>Ελληνική ώρα · Magenta Sport, Disney+ / ESPN και Prime Video. Μόνο όσα παιχνίδια έχουν αναγνωρίσιμη πηγή εμφάνισης χαρακτηρίζονται επιβεβαιωμένα.</p></div><div id="atlas-tv-feed" class="i-body"><div class="i-card">Φόρτωση τηλεοπτικού οδηγού…</div></div></div>'}
+async function req(q){var r=await fetch("/api/"+q);var j=await r.json();if(!r.ok)throw Error(j.error||"HTTP "+r.status);return j.data||j}
+function htmlline(x){var meta=x.channel?'<strong class="tv-channel">'+e(x.channel)+'</strong><span class="tv-verified">Δημοσιευμένο τηλεοπτικό πρόγραμμα</span>':
+(x.disney?'<strong>ESPN → Disney+</strong><span class="tv-possible">Ελέγξτε το Disney+ Ελλάδας</span>':x.prime?'<strong>Prime Video</strong><span class="tv-possible">Ελέγξτε τη διαθεσιμότητα στην Ελλάδα</span>':'<strong>Εθνική τηλεοπτική μετάδοση ΗΠΑ</strong><span class="tv-possible">Δεν έχει επαληθευτεί ελληνικός πάροχος</span>');
+return '<div class="tv-row"><div class="tv-date">'+fmt(x.date,true)+'</div><div class="tv-game"><b>'+e(x.away||"NBA")+' <span>@</span> '+e(x.home||"NBA")+'</b>'+meta+'</div><div class="tv-open">'+(x.channel?'<a href="https://programmatv.gr/" target="_blank" rel="noopener noreferrer">Οδηγός TV</a>':x.disney?'<a href="https://www.disneyplus.com/" target="_blank" rel="noopener noreferrer">Disney+</a>':x.prime?'<a href="https://www.primevideo.com/" target="_blank" rel="noopener noreferrer">Prime Video</a>':'')+'</div></div>'}
+async function feed(){
+var tv=await req("data?type=tvgr"),days=[-1,0,1,2].map(function(k){return d8(new Date(Date.now()+k*86400000))}),score=await Promise.all(days.map(function(d){return req("data?type=scoreboard&date="+d).catch(function(){return null})}));
+var games=new Map(),gameDate=new Map();score.forEach(function(s){list(s?.games).forEach(function(g){games.set(String(g.id),g);gameDate.set([g.away?.abbr,g.home?.abbr].join("/"),g)})});
+var found=new Map();list(tv.broadcasts).forEach(function(b){if(!b.home||!b.away||!b.start||!b.channel)return;var k=b.away+"/"+b.home+"|"+b.start.slice(0,13),old=found.get(k);if(!old)found.set(k,{away:b.away,home:b.home,date:b.start,channels:[],source:"programmatv.gr",disney:false,prime:false});found.get(k).channels.push(b.channel)});
+list(tv.espn).forEach(function(b){var g=games.get(String(b.id));if(!g||!b.national?.length)return;var match=[...found.values()].find(function(x){return x.home===g.home?.abbr&&x.away===g.away?.abbr&&Math.abs(new Date(x.date)-new Date(g.date))<3*3600000});var x=match||{away:g.away?.abbr,home:g.home?.abbr,date:g.date,channels:[],source:"ESPN US national feed",disney:false,prime:false};if(b.disney)x.disney=true;if(list(b.national).some(function(n){return /^(prime video|amazon prime|amzn|amazon)$/i.test(n)}))x.prime=true;
+if(!match){found.set("espn-"+b.id,x)}});
+var data=[...found.values()].filter(function(x){return Number.isFinite(Date.parse(x.date))&&new Date(x.date).getTime()>Date.now()-4*86400000}).sort(function(a,b){return String(a.date).localeCompare(String(b.date))}).slice(0,65);
+return {rows:data,checked:tv.checked||0,source:tv.source||"programmatv.gr",updated:tv.updatedAt||new Date().toISOString(),espnCount:list(tv.espn).length,checkedAt:new Date().toISOString()}}
+var memo=null,loaded=0;
+async function load(force){if(!force&&memo&&Date.now()-loaded<12*60000)return memo;memo=await feed();loaded=Date.now();return memo}
+function render(rows,flt){var d=rows.filter(function(x){return flt==="magenta"?x.channels.length:flt==="disney"?x.disney:flt==="prime"?x.prime:true});
+if(!d.length)return '<div class="i-card"><p>Δεν βρέθηκαν προγραμματισμένες μεταδόσεις για αυτό το φίλτρο.</p><p class="i-note">Αυτό δεν σημαίνει ότι δεν μεταδίδεται κανένας αγώνας. Έλεγξε και την επίσημη εφαρμογή του παρόχου.</p></div>';
+return d.map(function(x){var tags=(x.channels.length?x.channels.map(function(c){return {away:x.away,home:x.home,date:x.date,channel:c}}):[]);
+if(x.disney)tags.push({away:x.away,home:x.home,date:x.date,disney:true});if(x.prime)tags.push({away:x.away,home:x.home,date:x.date,prime:true});if(!tags.length)tags.push(x);
+return tags.map(htmlline).join("")}).join("")}
+function explanation(){return '<div class="i-card"><h3>Τι σημαίνουν οι ενδείξεις;</h3><p class="i-note"><b>Magenta Sport:</b> πραγματική αντιστοίχιση παιχνιδιού και καναλιού από δημοσιευμένο οδηγό TV (όπου ήταν αναγνώσιμος). <b>Disney+ / ESPN:</b> η ένδειξη προέρχεται από την εθνική τηλεοπτική αναφορά ESPN των ΗΠΑ. Δεν αποτελεί ανεξάρτητη επιβεβαίωση ότι το συγκεκριμένο ματς εμφανίζεται στο ελληνικό Disney+. <b>Prime Video:</b> μόνο όταν ο αγώνας αναφέρεται ως Amazon/Prime σε εξωτερική ένδειξη, με έλεγχο της διαθεσιμότητας στην Ελλάδα. Οι πάροχοι έχουν διαφορετικά πακέτα και το πρόγραμμα μπορεί να αλλάξει.</p><div class="tv-links"><a href="https://www.disneyplus.com/" target="_blank" rel="noopener noreferrer">Disney+</a><a href="https://www.primevideo.com/" target="_blank" rel="noopener noreferrer">Prime Video</a><a href="https://programmatv.gr/" target="_blank" rel="noopener noreferrer">Ελληνικός οδηγός TV</a></div></div>'}
+async function tvpage(){var host=document.getElementById("atlas-tv-feed");if(!host)return;
+try{var data=await load(),rows=data.rows;host.innerHTML='<div class="tv-tabs" id="tv-tabs">'+[["all","Όλα"],["magenta","Magenta"],["disney","Disney+"],["prime","Prime Video"]].map(function(x,i){return '<button data-tv-filter="'+x[0]+'" class="'+(!i?"active":"")+'">'+x[1]+'</button>'}).join("")+'</div><div class="tv-result" id="tv-result"></div>'+explanation()+'<div class="i-source">Αναγνώσιμα προγράμματα Magenta: '+data.checked+' · Έλεγχος: '+fmt(data.checkedAt,true)+' · Πηγές: '+e(data.source)+', ESPN broadcast metadata.</div>';
+var buttons=document.querySelectorAll("[data-tv-filter]"),result=document.getElementById("tv-result");function paint(filter){result.innerHTML=render(rows,filter);buttons.forEach(function(b){b.classList.toggle("active",b.dataset.tvFilter===filter)})}buttons.forEach(function(b){b.onclick=function(){paint(this.dataset.tvFilter)}});paint("all");
+}catch(e){host.innerHTML='<div class="i-card"><h3>Ο τηλεοπτικός οδηγός δεν ανταποκρίθηκε</h3><p>'+e(e.message)+'</p>'+explanation()+'</div>'}}
+async function gamesWidget(){var box=document.getElementById("atlas-tv-games");if(!box)return;
+try{var x=await load(),up=x.rows.filter(function(g){return Date.parse(g.date)>Date.now()-4*3600000}).slice(0,5);
+box.innerHTML='<div class="tv-widget-head"><div><div class="i-kicker">NBA ON TV · GREECE</div><h2>Πού το βλέπω;</h2></div><a href="#/tv">Όλες οι μεταδόσεις →</a></div><div>'+ (up.length?render(up,"all"):'<p class="i-note">Δεν βρέθηκαν επιβεβαιωμένες επερχόμενες μεταδόσεις. Δες αναλυτικά τον οδηγό.</p>')+'</div>';
+}catch(e){box.innerHTML='<div class="tv-widget-head"><h2>Πού το βλέπω;</h2><a href="#/tv">TV Guide →</a></div><p class="i-note">Το πρόγραμμα δεν φορτώθηκε.</p>'}}
+function hook(){var path=route(),links=document.getElementById("links");if(links&&!links.querySelector('[data-r="tv"]'))links.insertAdjacentHTML("beforeend",'<a href="#/tv" data-r="tv">TV Guide</a>');
+if(path==="tv"){if(!document.getElementById("atlas-tv-page")){root.innerHTML=shell();tvpage()}document.querySelectorAll("#links [data-r]").forEach(function(a){a.classList.toggle("on",a.dataset.r==="tv")});return}
+if(path==="games"){if(!document.getElementById("atlas-tv-games")&&root.children.length){var s=document.createElement("section");s.id="atlas-tv-games";s.className="sec tv-widget";root.insertBefore(s,root.firstChild);s.innerHTML='<div class="i-card">Φόρτωση ελληνικού TV Guide…</div>';gamesWidget()}}
+if(path==="menu"){var grid=root.querySelector(".grid.g2");if(grid&&!grid.querySelector("[data-tvcard]"))grid.insertAdjacentHTML("afterbegin",'<a class="card" data-tvcard href="#/tv"><div class="eyebrow">ΕΛΛΑΔΑ · TV GUIDE</div><div class="h2" style="font-size:27px">Πού βλέπω NBA;</div><p class="muted">Magenta Sport · Disney+ · Prime Video</p></a>')}
+if(path==="home"){var hero=root.querySelector("#hero");if(hero&&!document.getElementById("tv-home"))hero.insertAdjacentHTML("afterend",'<div class="tv-home" id="tv-home"><a href="#/tv">NBA στην ελληνική TV <strong>Magenta · Disney+ · Prime Video</strong> →</a></div>')}}
+var pend;new MutationObserver(function(){clearTimeout(pend);pend=setTimeout(hook,110)}).observe(root,{childList:true,subtree:true});
+addEventListener("hashchange",function(){setTimeout(hook,130)});hook();
+})();
