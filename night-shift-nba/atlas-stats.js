@@ -60,7 +60,7 @@ async function base(){
     return{...p,pos:b.position||'',age:num(b.age),h:num(b.heightIn),
       p36:per(p.ppg),r36:per(p.rpg),a36:per(p.apg),stk36:per((num(p.spg)||0)+(num(p.bpg)||0)),
       use36:m>0&&fga!=null&&fta!=null&&tov!=null?(fga+.44*fta+tov)/m*36:null,
-      tp:p.fg3a>0?p.fg3m/p.fg3a:null,ft:num(p.ftPct)!=null?p.ftPct/100:null,r3:fga>0&&p.fg3a!=null?p.fg3a/fga:null,ftr:fga>0&&fta!=null?fta/fga:null,
+      tp:p.fg3a>0&&p.fg3a*(p.games||0)>=15?p.fg3m/p.fg3a:null,ft:num(p.ftPct)!=null&&(fta||0)*(p.games||0)>=10?p.ftPct/100:null,r3:fga>0&&p.fg3a!=null?p.fg3a/fga:null,ftr:fga>0&&fta!=null?fta/fga:null,
       zf,rimF:zf?z('rim')[1]/zf:null,rimP:z('rim')[1]>=8?z('rim')[0]/z('rim')[1]:null,midF:zf?z('mid')[1]/zf:null,midP:z('mid')[1]>=8?z('mid')[0]/z('mid')[1]:null,
       c3F:zf?z('c3')[1]/zf:null,c3P:z('c3')[1]>=6?z('c3')[0]/z('c3')[1]:null,astd:s?.fgm>=10?s.ast/s.fgm:null,
       clPts:s?.cl?.pts??null,clFg:s?.cl?.fga>=4?s.cl.fgm/s.cl.fga:null,clG:s?.cl?.g??null,sh:s}});
@@ -100,8 +100,8 @@ function styleTags(prof){
     if(q('orb')>.8||q('put')>.85)O.push(['Επιθετικά ριμπάουντ','Κυνηγούν τη δεύτερη ευκαιρία.']);
     if(q('ftr')>.8)O.push(['Κερδίζουν βολές','Επιτίθενται στην επαφή και πάνε συχνά στη γραμμή.']);
     if(q('tov')<.2)O.push(['Προσεγμένη μπάλα','Από τα χαμηλότερα ποσοστά λαθών.']);
-    if(q('drim')<.25||q('drimP')<.2)Df.push(['Κλειστή ρακέτα','Οι αντίπαλοι δύσκολα φτάνουν ή τελειώνουν στο καλάθι.']);
-    if(q('drim')>.78)Df.push(['Ανοιχτή ρακέτα','Επιτρέπουν πολλά σουτ στο καλάθι.']);
+    if(q('drim')>.78)Df.push([q('drimP')<.25?'Πολλά σουτ μέσα, αλλά τα «κλείνουν»':'Ανοιχτή ρακέτα',q('drimP')<.25?'Επιτρέπουν πολλές προσπάθειες στο καλάθι, αλλά οι αντίπαλοι τελειώνουν με χαμηλό ποσοστό (rim protection).':'Επιτρέπουν πολλά σουτ στο καλάθι.']);
+    else if(q('drim')<.25||q('drimP')<.2)Df.push(['Κλειστή ρακέτα','Οι αντίπαλοι δύσκολα φτάνουν ή τελειώνουν στο καλάθι.']);
     if(q('dthree')<.25)Df.push(['Βγαίνουν στο τρίποντο','Κλείνουν τη γραμμή: οι αντίπαλοι σουτάρουν λίγα τρίποντα.']);
     if(q('dthree')>.78)Df.push(['Παραχωρούν τρίποντα','Μαζεύονται μέσα και αφήνουν σουτ από έξω.']);
     if(q('dmid')>.75)Df.push(['«Drop» άμυνα','Οι αντίπαλοι παίρνουν πολλά δίποντα μέσης: ο ψηλός μένει πίσω στο pick-and-roll.']);
@@ -128,7 +128,7 @@ function court(z,L){
   <rect x="17" y="0" width="16" height="19" fill="${col('short')}" stroke="rgba(255,255,255,.35)" stroke-width=".2"/>
   <circle cx="25" cy="${H[1]}" r="4" fill="${col('rim')}" stroke="rgba(255,255,255,.4)" stroke-width=".2"/>
   <line x1="22" y1="4" x2="28" y2="4" stroke="#fff" stroke-width=".3"/><circle cx="25" cy="${H[1]}" r=".75" fill="none" stroke="#ff8a3d" stroke-width=".25"/>
-  ${lab('rim',25,7.2)}${lab('short',25,15)}${lab('mid',11,20)}${lab('c3',1.6,9)}${lab('ab3',25,33)}
+  ${lab('rim',25,7.2)}${lab('short',25,15)}${lab('mid',11,20)}${lab('c3',6,3.5)}${lab('ab3',25,33)}
   </svg><div class="legend-k" style="display:flex;gap:14px;justify-content:center;font-size:12px;color:var(--muted);margin-top:6px"><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:rgba(34,211,154,.6);margin-right:5px"></i>πάνω από τον μ.ό. της λίγκας</span><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:rgba(255,77,106,.6);margin-right:5px"></i>κάτω</span></div>`;
 }
 function zbars(z,L,labels=ZN){const fr=sum(z,1)||1;return`<div class="zbars">${Z5.map(k=>{const [m,a]=z[k]||[0,0],sh=a/fr,lf=zoneLgF(L,k);return`<div class="zb"><b>${labels[k]}</b><div class="bar"><i style="width:${Math.round(sh*100)}%;background:linear-gradient(90deg,var(--hot),var(--hot2))"></i>${lf!=null?`<em style="left:${Math.round(lf*100)}%" title="μ.ό. λίγκας"></em>`:''}</div><small>${Math.round(sh*100)}% · ${a?Math.round(100*m/a)+'%':'—'} εύστ.</small></div>`}).join('')}</div>`}
@@ -143,7 +143,7 @@ function line(series,{w=720,h=220,yfmt=v=>v.toFixed(0),ref}={}){
   return`<svg viewBox="0 0 ${w} ${h}" style="width:100%">${g}</svg>`;
 }
 function marginBars(log,w=720,h=180){if(!log?.length)return'';const n=log.length,mx=Math.max(10,...log.map(g=>Math.abs(g.m))),bw=(w-20)/n;const Y=v=>h/2-v/mx*(h/2-10);
-  return`<svg viewBox="0 0 ${w} ${h}" style="width:100%"><line x1="0" x2="${w}" y1="${h/2}" y2="${h/2}" stroke="rgba(255,255,255,.15)"/>${log.map((g,i)=>`<rect x="${10+i*bw+1}" y="${Math.min(Y(g.m),h/2)}" width="${Math.max(1,bw-2)}" height="${Math.abs(Y(g.m)-h/2)}" rx="1.5" fill="${g.m>0?'var(--good)':'var(--bad)'}"><title>${new Date(g.date).toLocaleDateString('el-GR',{...tz,day:'numeric',month:'short'})} · ${g.home?'vs':'@'} · ${g.m>0?'+':''}${g.m}</title></rect>`).join('')}</svg>`}
+  return`<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:150px"><line x1="0" x2="${w}" y1="${h/2}" y2="${h/2}" stroke="rgba(255,255,255,.15)"/>${log.map((g,i)=>`<rect x="${10+i*bw+1}" y="${Math.min(Y(g.m),h/2)}" width="${Math.max(1,bw-2)}" height="${Math.abs(Y(g.m)-h/2)}" rx="1.5" fill="${g.m>0?'var(--good)':'var(--bad)'}"><title>${new Date(g.date).toLocaleDateString('el-GR',{...tz,day:'numeric',month:'short'})} · ${g.home?'vs':'@'} · ${g.m>0?'+':''}${g.m}</title></rect>`).join('')}</svg>`}
 
 /* ---------- player page: splits, zones, types, clutch ---------- */
 async function playerStats(id){
@@ -157,7 +157,7 @@ async function playerStats(id){
     return{n,min:t('min')/n,pts:pts/n,reb:t('reb')/n,ast:t('ast')/n,stl:t('stl')/n,blk:t('blk')/n,tov:t('tov')/n,tpm:t('tpm')/n,tpa:t('tpa')/n,fg:fga?t('fgm')/fga:null,tp:t('tpa')?t('tpm')/t('tpa'):null,ft:fta?t('ftm')/fta:null,ts:(fga+.44*fta)?pts/(2*(fga+.44*fta)):null,w:rows.filter(r=>/^W/i.test(r.res)).length}};
   const rest=G.map((g,i)=>i?Math.round((new Date(g.date)-new Date(G[i-1].date))/864e5)-1:null);
   const S=[['Σεζόν',G],['Τελευταία 5',G.slice(-5)],['Τελευταία 10',G.slice(-10)],null,['Εντός',G.filter(g=>g.home)],['Εκτός',G.filter(g=>!g.home)],null,['Νίκες',G.filter(g=>/^W/i.test(g.res))],['Ήττες',G.filter(g=>/^L/i.test(g.res))],null,['Back-to-back',G.filter((g,i)=>rest[i]===0)],['1 μέρα ξεκούραση',G.filter((g,i)=>rest[i]===1)],['2+ μέρες',G.filter((g,i)=>rest[i]>=2)]];
-  const months={};G.forEach(g=>{const k=new Date(g.date).toLocaleDateString('el-GR',{...tz,month:'long'});(months[k]=months[k]||[]).push(g)});
+  const MN=['Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος'];const months={};G.forEach(g=>{const k=MN[+new Date(g.date).toLocaleDateString('en-US',{...tz,month:'numeric'})-1];(months[k]=months[k]||[]).push(g)});
   if(Object.keys(months).length>1){S.push(null);Object.entries(months).forEach(([k,v])=>S.push([k[0].toUpperCase()+k.slice(1),v]))}
   const row=(l,rows)=>{const a=agg(rows);if(!a)return'';return`<tr><td>${l}</td><td>${a.n}</td><td>${f(a.min,1)}</td><td>${f(a.pts)}</td><td>${f(a.reb)}</td><td>${f(a.ast)}</td><td>${f(a.tpm)}</td><td>${pct(a.fg)}</td><td>${pct(a.tp)}</td><td>${pct(a.ts)}</td></tr>`};
   let sep=false;const tbody=S.map(x=>{if(!x){sep=true;return''}const r=row(x[0],x[1]);if(!r)return'';const out=sep?r.replace('<tr>','<tr class="sep">'):r;sep=false;return out}).join('');
