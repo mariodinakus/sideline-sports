@@ -308,3 +308,19 @@ html{scroll-behavior:smooth}
   .kpi b{font-size:28px}.kpis{gap:14px 20px}
   .h1{font-size:44px}
 }
+
+/* ---- polish v2: balanced grids + news ---- */
+#hmvp{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:1180px){#hmvp{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
+@media (min-width:1000px){#hgames{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (min-width:1000px) and (max-width:1240px){#hgames{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.nw.noimg .im{display:none}
+.nw.noimg{background:linear-gradient(160deg,rgba(255,90,31,.10),transparent 55%),var(--card)}
+.nw.noimg .tx{padding:20px}
+.nw.noimg.big .tx{justify-content:flex-end;padding:28px}
+.nw.noimg.big .tx b{font-size:26px;line-height:1.2}
+.nw:hover{border-color:rgba(255,90,31,.45);transform:translateY(-2px)}
+.nw:hover .im img{transform:scale(1.04)}
+@media (max-width:700px){#hmvp{grid-template-columns:1fr 1fr}#hgames{grid-template-columns:1fr}}
+#hstand .mini-list a.pin{border-top:1px dashed rgba(255,255,255,.18);margin-top:4px;padding-top:8px}
+.sec.split{align-items:stretch}
