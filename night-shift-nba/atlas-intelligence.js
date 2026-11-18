@@ -12,9 +12,11 @@ var ICON={
  matchup:'<path d="M4 4l7 7M13 13l7 7M20 4l-7 7M4 20l7-7"/><circle cx="12" cy="12" r="1.5"/>',
  rotation:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
  era:'<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 9v3l2 1"/>',
- dynasty:'<path d="M5 20h14M7 20v-4h10v4M8 16l-2-9 4 3 2-5 2 5 4-3-2 9"/>'
+ dynasty:'<path d="M5 20h14M7 20v-4h10v4M8 16l-2-9 4 3 2-5 2 5 4-3-2 9"/>',
+ dna:'<path d="M7 3c0 6 10 6 10 12s-10 6-10 6M17 3c0 6-10 6-10 12"/><path d="M8.5 7h7M8.5 17h7M10 12h4"/>'
 };
 var TOOLS=[
+ {k:"dna",name:"Player DNA",gr:"Το αποτύπωμα κάθε παίκτη",acc:"#ffd23f",desc:"Οκτώ διαστάσεις του παιχνιδιού σε εκατοστημόρια λίγκας, αρχέτυπο, σύγκριση και οι πιο «συγγενικοί» παίκτες."},
  {k:"shift",name:"NBA Shift",gr:"Ποιος ανεβαίνει, ποιος πέφτει",acc:"#ff5a1f",desc:"Φόρμα τελευταίων 5 αγώνων απέναντι στον μέσο όρο της σεζόν, για ομάδες και σταρ."},
  {k:"matchup",name:"Matchup DNA",gr:"Ποιος έχει το πάνω χέρι",acc:"#7cc4ff",desc:"Σύγκριση δύο ομάδων σε επίθεση, άμυνα, ρυθμό και four factors, με κατάταξη στη λίγκα."},
  {k:"legacy",name:"Legacy Clock",gr:"Πόσο απέχει το επόμενο ορόσημο",acc:"#a98bff",desc:"Σύνολα καριέρας, θέση στη λίστα όλων των εποχών και πόσοι αγώνες μένουν για το επόμενο ορόσημο."},
@@ -23,7 +25,7 @@ var TOOLS=[
  {k:"dynasty",name:"Dynasty Tracker",gr:"80 χρόνια τίτλων",acc:"#45d6c4",desc:"Κάθε πρωτάθλημα από το 1947, συνεχόμενες σειρές και MVP τελικών ανά franchise."}
 ];
 var BY={};TOOLS.forEach(function(t){BY[t.k]=t});
-var pages={shift:shift,legacy:legacy,matchup:matchup,rotation:rotation,era:era,dynasty:dynasty};
+var pages={dna:dna,shift:shift,legacy:legacy,matchup:matchup,rotation:rotation,era:era,dynasty:dynasty};
 
 /* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]})}
@@ -62,7 +64,7 @@ function shell(k){var t=BY[k];
 /* ====================================================================
    HOME — "Discover what matters"
    ==================================================================== */
-function homeCard(t){return '<a class="ix-tile" href="#/'+t.k+'" style="--acc:'+t.acc+'" data-tile="'+t.k+'">'+
+function homeCard(t){return '<a class="ix-tile'+(t.k==="dna"?" ix-feat":"")+'" href="#/'+t.k+'" style="--acc:'+t.acc+'" data-tile="'+t.k+'">'+
  '<div class="ix-tile-top"><span class="ix-tile-ic">'+icon(t.k,18)+'</span><span class="ix-tile-name">'+esc(t.name)+'</span><span class="ix-tile-go">→</span></div>'+
  '<div class="ix-tile-live" id="ixh-'+t.k+'"><div class="ix-skel" style="height:64px"></div></div>'+
  '<div class="ix-tile-foot">'+esc(t.gr)+'</div></a>'}
@@ -77,7 +79,7 @@ function renderHome(){
 async function homeHooks(){
  dynastyHook();eraHook();
  var pw=await soft("power"),meta=teamMeta(pw);
- shiftHook(meta);matchupHook(pw,meta);legacyHook();rotationHook();
+ dnaHook(pw);shiftHook(meta);matchupHook(pw,meta);legacyHook();rotationHook();
 }
 async function shiftHook(meta){
  var se=await soft("lab?type=season");var R=teamForm(se);
@@ -248,10 +250,13 @@ async function era(){
   var W=640,H=200,pad=28,mx=Math.max.apply(null,X.map(function(x){return Math.max(x.pts,x.f?x.pts*x.f:0)}))*1.08,xs=function(i){return pad+(X.length<2?0.5:i/(X.length-1))*(W-pad*2)},ys=function(v){return H-pad-(v/mx)*(H-pad*2)};
   var path=function(fn){var d="",started=false;X.forEach(function(x,i){var v=fn(x);if(v==null){started=false;return}d+=(started?"L":"M")+xs(i).toFixed(1)+","+ys(v).toFixed(1);started=true});return d};
   var chart='<svg class="ix-chart" viewBox="0 0 '+W+' '+H+'"><g stroke="rgba(255,255,255,.07)">'+[0.25,.5,.75,1].map(function(q){return '<line x1="'+pad+'" x2="'+(W-pad)+'" y1="'+ys(mx*q/1.08)+'" y2="'+ys(mx*q/1.08)+'"/>'}).join("")+'</g>'+[0.5,1].map(function(q){return '<text x="4" y="'+(ys(mx*q/1.08)+4)+'" fill="#626a7a" font-size="10">'+val(mx*q/1.08,0)+'</text>'}).join("")+
-   '<path d="'+path(function(x){return x.pts})+'" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2" stroke-dasharray="4 4"/><path d="'+path(function(x){return x.f?x.pts*x.f:null})+'" fill="none" stroke="var(--acc)" stroke-width="2.6"/>'+X.map(function(x,i){return x.f?'<circle cx="'+xs(i).toFixed(1)+'" cy="'+ys(x.pts*x.f).toFixed(1)+'" r="3" fill="var(--acc)"/>':""}).join("")+
+   '<path d="'+path(function(x){return x.pts})+'" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2" stroke-dasharray="4 4"/><path d="'+path(function(x){return x.f?x.pts*x.f:null})+'" fill="none" stroke="var(--acc)" stroke-width="2.6"/>'+X.map(function(x,i){var top=X.slice().sort(function(a,b){return (b.pts+.7*(b.reb||0)+(b.ast||0))-(a.pts+.7*(a.reb||0)+(a.ast||0))}).slice(0,3).indexOf(x)>=0;var y=x.f?x.pts*x.f:x.pts;return (x.f?'<circle cx="'+xs(i).toFixed(1)+'" cy="'+ys(x.pts*x.f).toFixed(1)+'" r="3" fill="var(--acc)"/>':"")+(top?'<circle cx="'+xs(i).toFixed(1)+'" cy="'+ys(y).toFixed(1)+'" r="8" fill="none" stroke="#ffd23f" stroke-width="2"/>':"")}).join("")+
    X.map(function(x,i){return (i===0||i===X.length-1||i%Math.ceil(X.length/6)===0)?'<text x="'+xs(i).toFixed(1)+'" y="'+(H-8)+'" fill="#626a7a" font-size="10" text-anchor="middle">'+(x.season-1)+'–'+String(x.season).slice(-2)+'</text>':""}).join("")+'</svg><div class="ix-legend"><span><i style="background:rgba(255,255,255,.45)"></i>Πραγματικοί πόντοι/αγώνα</span><span><i style="background:var(--acc)"></i>Στον ρυθμό του '+(tgt-1)+'–'+String(tgt).slice(-2)+'</span></div>';
   var head=peak?'<div class="ix-era-peak"><div><div class="ix-kicker">Κορυφαία σεζόν</div><b>'+(peak.season-1)+'–'+String(peak.season).slice(-2)+'</b></div><div><span>Πραγματικά</span><b>'+val(peak.pts,1)+'</b></div><div class="ix-arrow">→</div><div><span>'+esc((ERAS.find(function(e){return e[0]===tgt})||[0,""])[1])+'</span><b class="acc">'+(peak.f?val(peak.pts*peak.f,1):"—")+'</b></div><div><span>Συντελεστής</span><b>'+(peak.f?"×"+val(peak.f,2):"—")+'</b></div></div>':"";
-  var table='<div class="ix-tbl"><table><thead><tr><th>Σεζόν</th><th>GP</th><th>Pace εποχής</th><th>PTS</th><th>→ PTS</th><th>→ REB</th><th>→ AST</th></tr></thead><tbody>'+X.slice().reverse().map(function(x){return '<tr><td>'+(x.season-1)+'–'+String(x.season).slice(-2)+'</td><td>'+val(x.gp,0)+'</td><td>'+(x.pace&&x.season>=1974?val(x.pace,1):"—")+'</td><td>'+val(x.pts,1)+'</td><td class="acc">'+(x.f?val(x.pts*x.f,1):"—")+'</td><td>'+(x.f&&x.reb!=null?val(x.reb*x.f,1):"—")+'</td><td>'+(x.f&&x.ast!=null?val(x.ast*x.f,1):"—")+'</td></tr>'}).join("")+'</tbody></table></div>';
+  var heatC=function(arr,v){var a=arr.filter(function(z){return z!=null}),lo=Math.min.apply(null,a),hi=Math.max.apply(null,a);if(v==null||hi===lo)return"";var z=(v-lo)/(hi-lo);return 'style="background:rgba(255,111,174,'+(z*z*.42).toFixed(3)+')"'};
+  var score=function(x){return (x.pts||0)+.7*(x.reb||0)+(x.ast||0)},ranked=X.slice().sort(function(a,b){return score(b)-score(a)}),medal={};ranked.slice(0,3).forEach(function(x,i){medal[x.season]=i});
+  var colP=X.map(function(x){return x.pts}),colR=X.map(function(x){return x.reb}),colA=X.map(function(x){return x.ast});
+  var table='<div class="ix-tbl"><table><thead><tr><th>Σεζόν</th><th>GP</th><th>Pace εποχής</th><th>PTS</th><th>REB</th><th>AST</th><th>→ PTS</th><th>→ REB</th><th>→ AST</th></tr></thead><tbody>'+X.slice().reverse().map(function(x){var m=medal[x.season];return '<tr class="'+(m!=null?"best b"+m:"")+'"><td>'+(m!=null?'<span class="ix-medal m'+m+'">'+(m+1)+'</span>':'')+(x.season-1)+'–'+String(x.season).slice(-2)+'</td><td>'+val(x.gp,0)+'</td><td>'+(x.pace&&x.season>=1974?val(x.pace,1):"—")+'</td><td '+heatC(colP,x.pts)+'>'+val(x.pts,1)+'</td><td '+heatC(colR,x.reb)+'>'+val(x.reb,1)+'</td><td '+heatC(colA,x.ast)+'>'+val(x.ast,1)+'</td><td class="acc">'+(x.f?val(x.pts*x.f,1):"—")+'</td><td>'+(x.f&&x.reb!=null?val(x.reb*x.f,1):"—")+'</td><td>'+(x.f&&x.ast!=null?val(x.ast*x.f,1):"—")+'</td></tr>'}).join("")+'</tbody></table></div><div class="ix-legend"><span><span class="ix-medal m0">1</span><span class="ix-medal m1">2</span><span class="ix-medal m2">3</span> Οι 3 καλύτερες σεζόν (PTS + AST + 0,7·REB)</span><span><i style="background:rgba(255,111,174,.42)"></i>Πιο έντονο = υψηλότερο στην καριέρα του</span></div>';
   host.innerHTML=card("",head+chart,"ix-era-card")+card("Ανά σεζόν",table)+note("Συντελεστής = ρυθμός (κατοχές ανά 48′) της εποχής-στόχου ÷ ρυθμός της λίγκας τη σεζόν που αγωνίστηκε ο παίκτης. Μετατρέπει μόνο τον όγκο κατοχών: δεν λαμβάνει υπόψη κανονισμούς, τρίποντο, άμυνες ή ρόλο. Pace ανά σεζόν κατά προσέγγιση από Basketball-Reference· πριν το 1973–74 δεν καταγραφόταν, οπότε δεν γίνεται μεταφορά.")+src("ESPN μέσοι όροι σεζόν · Basketball-Reference league pace");
  }
 }
@@ -280,9 +285,59 @@ function dynasty(){
  }
 }
 
+
+/* ====================================================================
+   0. PLAYER DNA — percentile radar, archetype, twins
+   ==================================================================== */
+var AX=[["Σκοράρισμα","PTS/36",function(p){return p.mpg?p.ppg/p.mpg*36:null}],["Δημιουργία","AST/36",function(p){return p.mpg?p.apg/p.mpg*36:null}],["Ριμπάουντ","REB/36",function(p){return p.mpg?p.rpg/p.mpg*36:null}],["Άμυνα","STL+BLK/36",function(p){return p.mpg?((p.spg||0)+(p.bpg||0))/p.mpg*36:null}],["Αποτελεσματικότητα","TS%",function(p){return num(p.tsPct)}],["Ασφάλεια μπάλας","AST/TO",function(p){return num(p.astTo)}],["Ρόλος","Λεπτά",function(p){return num(p.mpg)}],["Επιρροή","Atlas Index",function(p){return num(p.index)}]];
+var DNA_COL=["#ffd23f","#7cc4ff"];
+function dnaPool(pw){var P=asList(pw&&pw.players).filter(function(p){return p.eligible!==false&&num(p.mpg)>=15&&(num(p.games)||0)>=5});
+ var cols=AX.map(function(a){return P.map(function(p){return a[2](p)}).filter(function(x){return x!=null}).sort(function(x,y){return x-y})});
+ P.forEach(function(p){p._raw=AX.map(function(a){return a[2](p)});p._pct=p._raw.map(function(v,i){if(v==null)return null;var c=cols[i],k=0;while(k<c.length&&c[k]<=v)k++;return Math.round(k/c.length*100)})});
+ return P.sort(function(a,b){return (b.index||0)-(a.index||0)})}
+function archetype(p){var q=p._pct.map(function(x){return x||0}),sc=q[0],cr=q[1],rb=q[2],df=q[3],ef=q[4],bh=q[5];
+ if(sc>=90&&cr>=85)return["Offensive engine","Σκοράρει και δημιουργεί σε κορυφαίο επίπεδο — η επίθεση περνά από τα χέρια του."];
+ if(rb>=85&&cr>=80)return["Point center","Ψηλός που μοιράζει: ριμπάουντ και δημιουργία μαζί, σπάνιος συνδυασμός."];
+ if(sc>=88&&ef>=75)return["Ελίτ σκόρερ","Πολλοί πόντοι με υψηλή αποτελεσματικότητα."];
+ if(sc>=85)return["Volume scorer","Κουβαλά μεγάλο φορτίο πόντων."];
+ if(cr>=88&&bh>=70)return["Floor general","Οργανωτής που προσέχει την μπάλα."];
+ if(rb>=85&&df>=80)return["Rim protector","Κυριαρχεί στη ρακέτα: ριμπάουντ, τάπες, κλεψίματα."];
+ if(df>=85)return["Αμυντικός ειδικός","Αλλάζει κατοχές με κλεψίματα και τάπες."];
+ if(ef>=85&&sc<60)return["Αποτελεσματικός ρολίστας","Λίγα σουτ, σχεδόν όλα καλά."];
+ var mean=q.reduce(function(a,b){return a+b},0)/q.length;if(mean>=65&&Math.min.apply(null,q)>=40)return["Two-way all-rounder","Χωρίς αδύναμο σημείο: συνεισφέρει παντού."];
+ return["Πολυεργαλείο","Μοιράζει την παραγωγή του σε πολλές διαστάσεις."]}
+function radar(players,size){size=size||340;var c=size/2,R=c-58,n=AX.length,pt=function(i,v){var a=-Math.PI/2+i*2*Math.PI/n;return [c+Math.cos(a)*R*v/100,c+Math.sin(a)*R*v/100]};
+ var g='';[25,50,75,100].forEach(function(l){g+='<polygon points="'+AX.map(function(_,i){return pt(i,l).join(",")}).join(" ")+'" fill="'+(l===100?"rgba(255,255,255,.02)":"none")+'" stroke="rgba(255,255,255,'+(l===50?.14:.07)+')"/>'});
+ AX.forEach(function(a,i){var e=pt(i,100),t=pt(i,124);g+='<line x1="'+c+'" y1="'+c+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="rgba(255,255,255,.07)"/><text x="'+t[0].toFixed(1)+'" y="'+(t[1]+4).toFixed(1)+'" text-anchor="middle" fill="#aeb4c0" font-size="10.5" font-weight="700">'+a[0]+'</text>'});
+ players.forEach(function(p,k){var col=DNA_COL[k],pts=p._pct.map(function(v,i){return pt(i,Math.max(4,v||0)).map(function(x){return x.toFixed(1)}).join(",")}).join(" ");
+  g+='<polygon points="'+pts+'" fill="'+col+'" fill-opacity="'+(k?.14:.22)+'" stroke="'+col+'" stroke-width="2.2" stroke-linejoin="round"/>'+p._pct.map(function(v,i){var q=pt(i,Math.max(4,v||0));return '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="3.4" fill="'+col+'"/>'}).join("")});
+ return '<svg class="ix-radar" viewBox="0 0 '+size+' '+size+'">'+g+'</svg>'}
+function miniRadar(p,col){var c=34,R=28,n=AX.length,pt=function(i,v){var a=-Math.PI/2+i*2*Math.PI/n;return (c+Math.cos(a)*R*v/100).toFixed(1)+","+(c+Math.sin(a)*R*v/100).toFixed(1)};
+ return '<svg viewBox="0 0 68 68" class="ix-mini-radar"><polygon points="'+AX.map(function(_,i){return pt(i,100)}).join(" ")+'" fill="none" stroke="rgba(255,255,255,.12)"/><polygon points="'+p._pct.map(function(v,i){return pt(i,Math.max(5,v||0))}).join(" ")+'" fill="'+col+'" fill-opacity=".3" stroke="'+col+'" stroke-width="1.6"/></svg>'}
+function twins(p,P){return P.filter(function(x){return x.id!==p.id}).map(function(x){var d=0;for(var i=0;i<AX.length;i++){var a=p._pct[i],b=x._pct[i];if(a==null||b==null)continue;d+=(a-b)*(a-b)}return {x:x,s:Math.max(0,100-Math.sqrt(d/AX.length))}}).sort(function(a,b){return b.s-a.s}).slice(0,5)}
+async function dnaHook(pw){var P=dnaPool(pw);if(!P.length)return;var best=P.slice(0,60).map(function(p){return {p:p,m:Math.min.apply(null,p._pct.slice(0,6).map(function(x){return x||0}))}}).sort(function(a,b){return b.m-a.m})[0].p,lead=P[0];
+ fillTile("dna",'<div class="ix-dna-hook">'+miniRadar(lead,"#ffd23f")+'<div class="ix-hook"><b>'+esc(lead.name)+'</b><span>'+esc(archetype(lead)[0])+' · #1 στο Atlas Index · '+esc(lead.team||"")+'</span></div></div><div class="ix-tile-sub">Πιο ολοκληρωμένο προφίλ: <b>'+esc(best.name)+'</b> — κανένα εκατοστημόριο κάτω από '+Math.min.apply(null,best._pct.slice(0,6).map(function(x){return x||0}))+'</div>')}
+async function dna(){
+ var pw=await soft("power"),P=dnaPool(pw);if(!P.length){fail("Δεν φόρτωσαν οι παίκτες.");return}
+ var q=new URLSearchParams(location.hash.split("?")[1]||""),first=q.get("p")||P[0].id;
+ var opts=function(sel,none){return (none?'<option value="">— κανένας —</option>':"")+P.map(function(p){return '<option value="'+esc(p.id)+'" '+(String(p.id)===String(sel)?"selected":"")+'>'+esc(p.name)+' · '+esc(p.team||"")+'</option>'}).join("")};
+ set('<div class="ix-controls"><label>Παίκτης<select id="ix-d1">'+opts(first)+'</select></label><label>Σύγκρινε με<select id="ix-d2">'+opts("",true)+'</select></label></div><div id="ix-dna"></div>');
+ document.getElementById("ix-d1").onchange=paint;document.getElementById("ix-d2").onchange=paint;paint();
+ function paint(){var a=P.find(function(p){return String(p.id)===document.getElementById("ix-d1").value}),b=P.find(function(p){return String(p.id)===document.getElementById("ix-d2").value});if(!a)return;
+  var arc=archetype(a),L=[a].concat(b?[b]:[]),tw=twins(a,P);
+  var strong=a._pct.map(function(v,i){return [v||0,i]}).sort(function(x,y){return y[0]-x[0]});
+  var head='<div class="ix-dna-hero"><img src="'+esc(a.headshot||HS(a.id))+'" alt="" '+hideImg+'><div><div class="ix-kicker">'+esc(a.teamName||a.team||"")+'</div><h2>'+esc(a.name)+'</h2><div class="ix-arch"><b>'+esc(arc[0])+'</b><span>'+esc(arc[1])+'</span></div><div class="ix-stats"><span><b>'+val(a.ppg,1)+'</b>PPG</span><span><b>'+val(a.rpg,1)+'</b>RPG</span><span><b>'+val(a.apg,1)+'</b>APG</span><span><b>'+val(a.tsPct,1)+'</b>TS%</span><span><b>'+val(a.index,1)+'</b>Index</span></div></div></div>';
+  var bars=AX.map(function(x,i){var v=a._pct[i],w=b?b._pct[i]:null,tier=v>=90?"elite":v>=70?"good":v>=40?"mid":"low";return '<div class="ix-dbar"><div class="ix-dbar-l"><b>'+x[0]+'</b><small>'+x[1]+' '+(a._raw[i]!=null?val(a._raw[i],x[1]==="AST/TO"?2:1):"—")+(b&&b._raw[i]!=null?' · '+esc(b.name.split(" ").slice(-1)[0])+' '+val(b._raw[i],x[1]==="AST/TO"?2:1):"")+'</small></div><div class="ix-dbar-t"><i class="'+tier+'" style="width:'+Math.max(3,v||0)+'%"></i>'+(w!=null?'<em style="left:'+w+'%"></em>':"")+'</div><span class="ix-dbar-v '+tier+'">'+(v==null?"—":v)+'</span></div>'}).join("");
+  var leg=b?'<div class="ix-legend"><span><i style="background:'+DNA_COL[0]+'"></i>'+esc(a.name)+'</span><span><i style="background:'+DNA_COL[1]+'"></i>'+esc(b.name)+'</span></div>':"";
+  var twin='<div class="ix-twins">'+tw.map(function(t){return '<button class="ix-twin" data-id="'+esc(t.x.id)+'"><img src="'+esc(t.x.headshot||HS(t.x.id))+'" alt="" loading="lazy" '+hideImg+'><div><b>'+esc(t.x.name)+'</b><small>'+esc(archetype(t.x)[0])+' · '+esc(t.x.team||"")+'</small></div><span>'+Math.round(t.s)+'%</span></button>'}).join("")+'</div>';
+  document.getElementById("ix-dna").innerHTML=head+'<div class="ix-dna-grid">'+card("Αποτύπωμα",radar(L)+leg,"ix-dna-radar")+card("Εκατοστημόρια λίγκας",'<div class="ix-dbars">'+bars+'</div><p>Δυνατότερα σημεία: <b>'+AX[strong[0][1]][0]+'</b> ('+strong[0][0]+'), <b>'+AX[strong[1][1]][0]+'</b> ('+strong[1][0]+'). Πιο αδύναμο: <b>'+AX[strong[7][1]][0]+'</b> ('+strong[7][0]+').</p>')+'</div>'+card("Γενετικά πιο κοντά",twin+note("Ομοιότητα = απόσταση των οκτώ εκατοστημορίων. Πάτα έναν παίκτη για σύγκριση."))+note("Εκατοστημόριο = ποσοστό των "+P.length+" παικτών της λίγκας (≥15 λεπτά, ≥5 αγώνες) που έχουν ίση ή χαμηλότερη τιμή. Ανά 36 λεπτά για δίκαιη σύγκριση ρόλων. Το αρχέτυπο προκύπτει από κανόνες πάνω στα εκατοστημόρια, όχι από scouting.")+'<a class="ix-link" href="#/player/'+esc(a.id)+'">Καρτέλα παίκτη →</a>'+src("ESPN season averages · Atlas power · "+date(Date.now()));
+  document.querySelectorAll(".ix-twin").forEach(function(btn){btn.onclick=function(){document.getElementById("ix-d2").value=btn.dataset.id;paint();document.getElementById("ix-d2").scrollIntoView({behavior:"smooth",block:"center"})}});
+ }
+}
+
 /* ---------- router glue ---------- */
 function nav(){
- var links=document.getElementById("links");if(links&&!links.querySelector('[data-r="shift"]'))links.insertAdjacentHTML("beforeend",'<a href="#/shift" data-r="shift">Shift</a><a href="#/matchup" data-r="matchup">Matchups</a><a href="#/legacy" data-r="legacy">Legacy</a><a href="#/dynasty" data-r="dynasty">Dynasties</a>');
+ var links=document.getElementById("links");if(links&&!links.querySelector('[data-r="shift"]'))links.insertAdjacentHTML("beforeend",'<a href="#/dna" data-r="dna">DNA</a><a href="#/shift" data-r="shift">Shift</a><a href="#/matchup" data-r="matchup">Matchups</a><a href="#/legacy" data-r="legacy">Legacy</a><a href="#/dynasty" data-r="dynasty">Dynasties</a>');
  var path=(location.hash.replace(/^#\/?/,"").split(/[/?]/)[0]||"home");
  if(pages[path]){document.querySelectorAll("#links [data-r]").forEach(function(a){a.classList.toggle("on",a.dataset.r===path)});
   if(!document.getElementById("atlas-i-page-"+path)){root.innerHTML=shell(path);document.title=BY[path].name+" · NBA ATLAS";scrollTo(0,0);Promise.resolve().then(pages[path]).catch(function(e){fail(e&&e.message)})}return}

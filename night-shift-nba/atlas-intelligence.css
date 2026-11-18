@@ -130,6 +130,40 @@
 .ix-years{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}.ix-years span{font-size:11px;font-weight:800;padding:4px 7px;border-radius:6px;background:rgba(255,255,255,.06);color:#c9ced8}.ix-years span.run{background:color-mix(in srgb,var(--c) 22%,transparent);color:var(--text,#fff)}
 .ix-menu{border-top:3px solid var(--acc)}
 
+
+/* featured DNA tile */
+.ix-feat{grid-column:span 2}
+.ix-dna-hook{display:flex;align-items:center;gap:16px}.ix-mini-radar{width:84px;height:84px;flex:none}
+.ix-feat .ix-hook b{font-size:clamp(30px,3vw,42px)}
+
+/* player DNA */
+.ix-dna-hero{display:flex;gap:20px;align-items:center;padding:20px;border-radius:20px;background:radial-gradient(600px 260px at 0% 0%,rgba(255,210,63,.18),transparent 70%),#12151c;border:1px solid rgba(255,255,255,.07);margin-bottom:14px}
+.ix-dna-hero img{width:150px;height:110px;object-fit:cover;object-position:top;flex:none}
+.ix-dna-hero h2{font:400 clamp(32px,4.4vw,54px)/1 var(--display,Anton,sans-serif);text-transform:uppercase;margin:6px 0 10px}
+.ix-arch{display:flex;flex-direction:column;gap:3px;margin-bottom:12px}.ix-arch b{display:inline-block;align-self:flex-start;padding:5px 11px;border-radius:999px;background:#ffd23f;color:#111;font-size:12.5px;font-weight:900;letter-spacing:.02em}.ix-arch span{font-size:13px;color:#c5cad4}
+.ix-dna-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;margin-bottom:14px}
+.ix-radar{width:100%;max-width:420px;height:auto;display:block;margin:0 auto}
+.ix-dbars{display:flex;flex-direction:column;gap:11px}
+.ix-dbar{display:grid;grid-template-columns:150px 1fr 40px;gap:12px;align-items:center}
+.ix-dbar-l b{display:block;font-size:13px}.ix-dbar-l small{font-size:11px;color:var(--muted,#959cab)}
+.ix-dbar-t{position:relative;height:10px;border-radius:99px;background:rgba(255,255,255,.06)}
+.ix-dbar-t i{position:absolute;inset:0 auto 0 0;border-radius:99px}.ix-dbar-t em{position:absolute;top:-4px;width:3px;height:18px;border-radius:2px;background:#7cc4ff;transform:translateX(-50%)}
+.ix-dbar-v{font:400 22px/1 var(--display,Anton,sans-serif);text-align:right}
+.elite{background:#ffd23f}.good{background:#22d39a}.mid{background:#7cc4ff}.low{background:#ff4d6a}
+.ix-dbar-v.elite{background:none;color:#ffd23f}.ix-dbar-v.good{background:none;color:#22d39a}.ix-dbar-v.mid{background:none;color:#7cc4ff}.ix-dbar-v.low{background:none;color:#ff4d6a}
+.ix-twins{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.ix-twin{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);text-align:left;position:relative}
+.ix-twin:hover{border-color:#7cc4ff}.ix-twin img{width:56px;height:42px;object-fit:cover;object-position:top}
+.ix-twin b{font-size:13px;display:block}.ix-twin small{font-size:11px;color:var(--muted,#959cab)}.ix-twin>span{position:absolute;top:10px;right:12px;font:400 20px/1 var(--display,Anton,sans-serif);color:#7cc4ff}
+
+/* best seasons */
+.ix-tbl tr.best td{font-weight:800}.ix-tbl tr.b0 td:first-child{box-shadow:inset 3px 0 #ffd23f}.ix-tbl tr.b1 td:first-child{box-shadow:inset 3px 0 #cfd6e3}.ix-tbl tr.b2 td:first-child{box-shadow:inset 3px 0 #e08a4f}
+.ix-medal{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:900;color:#111;margin-right:8px;vertical-align:1px}
+.ix-medal.m0{background:#ffd23f}.ix-medal.m1{background:#cfd6e3}.ix-medal.m2{background:#e08a4f}
+.ix-legend .ix-medal{margin-right:3px}
+@media (max-width:980px){.ix-dna-grid{grid-template-columns:1fr}.ix-twins{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:680px){.ix-feat{grid-column:auto}.ix-dna-hero{flex-direction:column;align-items:flex-start;padding:16px}.ix-dna-hero img{width:110px;height:80px}.ix-dbar{grid-template-columns:110px 1fr 34px;gap:8px}.ix-twins{grid-template-columns:1fr 1fr}.ix-mini-radar{width:70px;height:70px}}
+
 /* responsive */
 @media (max-width:980px){.ix-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.ix-grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:680px){
