@@ -228,13 +228,13 @@ async function injuries(){
   const [d,M,T]=await Promise.all([api('data?type=injuries'),model(),teamsMap()]);if(route().name!=='injuries')return;
   const body=document.getElementById('ibody');if(!d?.teams){body.innerHTML='<div class="err">Η αναφορά τραυματισμών δεν είναι διαθέσιμη από το ESPN αυτή τη στιγμή.</div>';return}
   const all=d.teams.flatMap(t=>t.players.map(p=>({...p,tid:t.id})));
-  const lost=d.teams.map(t=>({t,v:t.players.filter(p=>/out/i.test(p.status)).reduce((s,p)=>s+(M.byId[p.id]?.index||0),0)})).sort((a,b)=>b.v-a.v);
+  const lost=d.teams.map(t=>{const v=t.players.filter(p=>/out/i.test(p.status)).reduce((s,p)=>s+(M.byId[p.id]?.index||0),0);const ab=T[t.id]?.abbr;const tot=ab?(M.P||[]).filter(p=>p.team===ab).reduce((s,p)=>s+(p.index||0),0):0;return{t,v,share:tot>0&&v>0?v/tot:null}}).sort((a,b)=>b.v-a.v);
   let flt='all';
   const paint=()=>{
     const ok=p=>flt==='all'||(flt==='out'?/out/i.test(p.status):!/out/i.test(p.status));
     body.innerHTML=`<div class="inj-k"><div class="card"><div class="lbl">Εκτός</div><b style="font-family:var(--display);font-size:42px">${all.filter(p=>/out/i.test(p.status)).length}</b></div><div class="card"><div class="lbl">Day-to-day / αμφίβολοι</div><b style="font-family:var(--display);font-size:42px">${all.filter(p=>!/out/i.test(p.status)).length}</b></div>${lost.slice(0,2).map((x,i)=>`<div class="card"><div class="lbl">${i?'2η':'Πονάει'} περισσότερο</div><div style="display:flex;align-items:center;gap:10px"><img src="${T[x.t.id]?.logo||''}" width="36" height="36" alt="" ${hide}><b style="font-family:var(--cond);font-size:20px">${esc(T[x.t.id]?.short||x.t.name)}</b></div><small class="muted">χαμένη αξία ${f(x.v,0)}</small></div>`).join('')}</div>
     <div class="chips">${[['all','Όλοι'],['out','Εκτός'],['dtd','Day-to-day']].map(([k,l])=>`<button data-k="${k}" class="${flt===k?'on':''}">${l}</button>`).join('')}</div>
-    <div class="injcols">${lost.filter(x=>x.t.players.some(ok)).map(({t,v})=>`<div class="card inj-team"><h3><img src="${T[t.id]?.logo||''}" alt="" ${hide}><a href="#/team/${t.id}">${esc(t.name)}</a>${v?`<span class="pill" style="margin-left:auto">−${f(v,0)}</span>`:''}</h3>${t.players.filter(ok).map(x=>injRow(x,M)).join('')}</div>`).join('')}</div>
+    <div class="injcols">${lost.filter(x=>x.t.players.some(ok)).map(({t,v,share})=>`<div class="card inj-team"><h3><img src="${T[t.id]?.logo||''}" alt="" ${hide}><a href="#/team/${t.id}">${esc(t.name)}</a>${v?`<span class="pill" style="margin-left:auto" title="Χαμένο Atlas index των εκτός παικτών· μερίδιο του συνολικού index της ομάδας">−${f(v,0)}${share!=null?` · ${Math.round(share*100)}%`:''}</span>`:''}</h3>${t.players.filter(ok).map(x=>injRow(x,M)).join('')}</div>`).join('')}</div>
     <p class="muted" style="font-size:12px;margin-top:12px">Πηγή: ESPN injury report (ανεπίσημα). Οι ημερομηνίες επιστροφής είναι εκτιμήσεις της πηγής.</p>`;
     body.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{flt=b.dataset.k;paint()});
   };paint();
