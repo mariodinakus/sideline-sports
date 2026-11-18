@@ -296,6 +296,7 @@ function dnaPool(pw){var P=asList(pw&&pw.players).filter(function(p){return p.el
  P.forEach(function(p){p._raw=AX.map(function(a){return a[2](p)});p._pct=p._raw.map(function(v,i){if(v==null)return null;var c=cols[i],k=0;while(k<c.length&&c[k]<=v)k++;return Math.round(k/c.length*100)})});
  return P.sort(function(a,b){return (b.index||0)-(a.index||0)})}
 function archetype(p){var q=p._pct.map(function(x){return x||0}),sc=q[0],cr=q[1],rb=q[2],df=q[3],ef=q[4],bh=q[5];
+ if(sc>=85&&rb>=85&&df>=85)return["Unicorn","Σκοράρει σαν σταρ, μαζεύει ριμπάουντ και προστατεύει τη ρακέτα — συνδυασμός που σχεδόν δεν υπάρχει."];
  if(sc>=90&&cr>=85)return["Offensive engine","Σκοράρει και δημιουργεί σε κορυφαίο επίπεδο — η επίθεση περνά από τα χέρια του."];
  if(rb>=85&&cr>=80)return["Point center","Ψηλός που μοιράζει: ριμπάουντ και δημιουργία μαζί, σπάνιος συνδυασμός."];
  if(sc>=88&&ef>=75)return["Ελίτ σκόρερ","Πολλοί πόντοι με υψηλή αποτελεσματικότητα."];
