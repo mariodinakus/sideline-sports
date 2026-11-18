@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 318" width="1200" height="318" role="img" aria-label="Marios Build Lab: Data, Intelligence and Products">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071018"/><stop offset=".55" stop-color="#0a1925"/><stop offset="1" stop-color="#06121b"/></linearGradient>
+ <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#62f6e0"/><stop offset="1" stop-color="#438efe"/></linearGradient>
+ <pattern id="grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0V38" stroke="#78c4d8" stroke-opacity=".065" fill="none"/></pattern>
+ <filter id="glow"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>
+<rect width="1200" height="318" rx="18" fill="url(#bg)"/><rect width="1200" height="318" fill="url(#grid)" rx="18"/>
+<g transform="translate(105 158)">
+ <circle r="183" fill="none" stroke="#36d1ce" stroke-opacity=".15" stroke-width="1"/>
+ <circle r="151" fill="none" stroke="#36d1ce" stroke-opacity=".24" stroke-width="1"/>
+ <circle r="122" fill="none" stroke="#36d1ce" stroke-opacity=".20" stroke-width="1"/>
+ <ellipse rx="122" ry="38" fill="none" stroke="#58dce8" stroke-opacity=".25" transform="rotate(-20)"/>
+ <ellipse rx="49" ry="122" fill="none" stroke="#58dce8" stroke-opacity=".22" transform="rotate(-20)"/>
+ <path d="M-98 -70L-61 -85L-27 -53L-18 -5L22 7L33 48L12 88L-34 73L-52 23L-84 7L-105 -33Z M47 -105L92 -72L80 -29L53 -20L39 -55Z" fill="#1b495d" opacity=".72"/>
+ <path d="M-102 34L-60 45L-43 98M-16 -112L28 -83L65 -58M-70 -59L-33 -22L29 -11" stroke="#42e7da" stroke-opacity=".25" fill="none"/>
+</g>
+<circle cx="105" cy="158" r="138" fill="none" stroke="#31c7c5" stroke-opacity=".22" stroke-width="7" filter="url(#glow)"/>
+<rect x="275" y="80" width="3" height="137" rx="2" fill="url(#neon)"/>
+<text x="304" y="132" fill="#f4fbff" font-family="Arial, Helvetica, sans-serif" font-weight="800" letter-spacing="3" font-size="46">MARIOS</text>
+<text x="304" y="173" fill="#8ddadd" font-family="Arial, Helvetica, sans-serif" font-weight="400" letter-spacing="6" font-size="28">BUILD LAB</text>
+<text x="306" y="209" fill="#88a7b4" font-family="Arial, Helvetica, sans-serif" letter-spacing="3" font-size="13">DATA   /   INTELLIGENCE   /   PRODUCTS</text>
+<path d="M304 229H580" stroke="#45e0d8" stroke-opacity=".48"/><circle cx="580" cy="229" r="3" fill="#56e4d8"/>
+<g transform="translate(665 46)">
+ <rect width="478" height="224" rx="14" fill="#0b1c26" stroke="#2d6471" stroke-opacity=".5"/>
+ <path d="M0 74H478M0 149H478M159 0V224M318 0V224" stroke="#2a5967" stroke-opacity=".55"/>
+ <g stroke="#5ae7dc" stroke-width="2.5" stroke-linecap="round" fill="none">
+  <path d="M18 51L43 39L67 46L87 22L106 31L131 14"/>
+  <path d="M176 60V23M189 46V13M203 55V31M217 38V12M232 52V26M248 35V9M266 24V9M284 19V6"/>
+  <path d="M340 54L363 31L385 37L407 17L435 29L457 10"/>
+  <path d="M17 126C42 103 64 110 83 124S122 141 144 105"/>
+  <path d="M177 129L195 110L219 114L237 92L261 105L287 82"/>
+  <path d="M338 102H459M338 116H420M338 130H446" stroke-width="1.7" opacity=".7"/>
+  <path d="M16 185H139M16 202H96M176 198H303M176 181H248" stroke-width="1.8" opacity=".7"/>
+  <path d="M352 180V210M338 195H367M396 211L423 175L457 211" stroke-width="2.5"/>
+ </g>
+ <g fill="#85f3ee"><circle cx="131" cy="14" r="4"/><circle cx="144" cy="105" r="4"/><circle cx="287" cy="82" r="4"/><circle cx="457" cy="10" r="4"/></g>
+</g>
+<text x="1139" y="298" text-anchor="end" fill="#567784" font-size="11" font-family="Arial, sans-serif" letter-spacing="1.5">GITHUB / PORTFOLIO 2026</text>
+</svg>
