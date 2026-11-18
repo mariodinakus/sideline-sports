@@ -324,3 +324,11 @@ html{scroll-behavior:smooth}
 @media (max-width:700px){#hmvp{grid-template-columns:1fr 1fr}#hgames{grid-template-columns:1fr}}
 #hstand .mini-list a.pin{border-top:1px dashed rgba(255,255,255,.18);margin-top:4px;padding-top:8px}
 .sec.split{align-items:stretch}
+
+.hero-team{position:absolute;left:0;top:22px;z-index:3;display:flex;align-items:center;gap:12px;background:rgba(8,9,12,.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:14px;padding:10px 14px 10px 10px;max-width:calc(100% - 16px)}
+.hero-team img{width:44px;height:44px;flex:none;filter:none}
+.hero-team>span{display:flex;flex-direction:column;min-width:0}
+.hero-team b{font-family:var(--cond);font-size:20px;text-transform:uppercase;font-weight:800;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-team .muted{font-size:12px}
+.hero-team:hover,.hero-tag:hover{border-color:var(--hot)}
+@media (max-width:680px){.hero-team{left:8px;top:8px;padding:8px 10px 8px 8px;gap:9px}.hero-team img{width:34px;height:34px}.hero-team b{font-size:16px}.hero-team .eyebrow{font-size:9px}}
