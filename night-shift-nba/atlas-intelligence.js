@@ -13,10 +13,12 @@ var ICON={
  rotation:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
  era:'<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 9v3l2 1"/>',
  dynasty:'<path d="M5 20h14M7 20v-4h10v4M8 16l-2-9 4 3 2-5 2 5 4-3-2 9"/>',
+ faces:'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 010 6M18 14c2 .7 3 2.8 3 6"/>',
  dna:'<path d="M7 3c0 6 10 6 10 12s-10 6-10 6M17 3c0 6-10 6-10 12"/><path d="M8.5 7h7M8.5 17h7M10 12h4"/>'
 };
 var TOOLS=[
  {k:"dna",name:"Player DNA",gr:"Το αποτύπωμα κάθε παίκτη",acc:"#ffd23f",desc:"Οκτώ διαστάσεις του παιχνιδιού σε εκατοστημόρια λίγκας, αρχέτυπο, σύγκριση και οι πιο «συγγενικοί» παίκτες."},
+ {k:"faces",name:"Faces of the League",gr:"Ποιους κοιτάει ο κόσμος",acc:"#ff9f43",desc:"Τα πρόσωπα της λίγκας με βάση την προσοχή του κοινού: προβολές Wikipedia ανά ημέρα, σήμερα και όλων των εποχών, και πού η φήμη ξεπερνά την απόδοση."},
  {k:"shift",name:"NBA Shift",gr:"Ποιος ανεβαίνει, ποιος πέφτει",acc:"#ff5a1f",desc:"Φόρμα τελευταίων 5 αγώνων απέναντι στον μέσο όρο της σεζόν, για ομάδες και σταρ."},
  {k:"matchup",name:"Matchup DNA",gr:"Ποιος έχει το πάνω χέρι",acc:"#7cc4ff",desc:"Σύγκριση δύο ομάδων σε επίθεση, άμυνα, ρυθμό και four factors, με κατάταξη στη λίγκα."},
  {k:"legacy",name:"Legacy Clock",gr:"Πόσο απέχει το επόμενο ορόσημο",acc:"#a98bff",desc:"Σύνολα καριέρας, θέση στη λίστα όλων των εποχών και πόσοι αγώνες μένουν για το επόμενο ορόσημο."},
@@ -25,7 +27,7 @@ var TOOLS=[
  {k:"dynasty",name:"Dynasty Tracker",gr:"80 χρόνια τίτλων",acc:"#45d6c4",desc:"Κάθε πρωτάθλημα από το 1947, συνεχόμενες σειρές και MVP τελικών ανά franchise."}
 ];
 var BY={};TOOLS.forEach(function(t){BY[t.k]=t});
-var pages={dna:dna,shift:shift,legacy:legacy,matchup:matchup,rotation:rotation,era:era,dynasty:dynasty};
+var pages={dna:dna,faces:faces,shift:shift,legacy:legacy,matchup:matchup,rotation:rotation,era:era,dynasty:dynasty};
 
 /* ---------- helpers ---------- */
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]})}
@@ -79,7 +81,7 @@ function renderHome(){
 async function homeHooks(){
  dynastyHook();eraHook();
  var pw=await soft("power"),meta=teamMeta(pw);
- dnaHook(pw);shiftHook(meta);matchupHook(pw,meta);legacyHook();rotationHook();
+ dnaHook(pw);facesHook(pw);shiftHook(meta);matchupHook(pw,meta);legacyHook();rotationHook();
 }
 async function shiftHook(meta){
  var se=await soft("lab?type=season");var R=teamForm(se);
@@ -336,9 +338,61 @@ async function dna(){
  }
 }
 
+
+/* ====================================================================
+   FACES OF THE LEAGUE — public attention via Wikipedia pageviews
+   ==================================================================== */
+var LEGENDS=["Michael Jordan","Kobe Bryant","Magic Johnson","Larry Bird","Kareem Abdul-Jabbar","Shaquille O'Neal","Tim Duncan","Wilt Chamberlain","Bill Russell","Allen Iverson","Dirk Nowitzki","Hakeem Olajuwon","Kevin Garnett","Dwyane Wade","Dennis Rodman","Scottie Pippen","Charles Barkley","Vince Carter","Tracy McGrady","Yao Ming","Steve Nash","Karl Malone","John Stockton","Julius Erving","Oscar Robertson","Jerry West","Isiah Thomas","Pau Gasol","Manu Ginóbili","Carmelo Anthony","Derrick Rose","Dwight Howard","Paul Pierce","Ray Allen","Patrick Ewing","David Robinson"];
+var WIKI_FIX={"Jalen Williams":"Jalen Williams (basketball, born 2001)","Anthony Davis":"Anthony Davis","Jaylen Brown":"Jaylen Brown","Scottie Barnes":"Scottie Barnes","Jalen Johnson":"Jalen Johnson (basketball)","Josh Hart":"Josh Hart","Mikal Bridges":"Mikal Bridges","Jalen Green":"Jalen Green (basketball)","Amen Thompson":"Amen Thompson","Chet Holmgren":"Chet Holmgren","Evan Mobley":"Evan Mobley","Tyrese Maxey":"Tyrese Maxey","Cade Cunningham":"Cade Cunningham","Alperen Sengun":"Alperen Şengün","Nikola Jokic":"Nikola Jokić","Luka Doncic":"Luka Dončić","Nikola Vucevic":"Nikola Vučević","Bogdan Bogdanovic":"Bogdan Bogdanović","Jusuf Nurkic":"Jusuf Nurkić","Kristaps Porzingis":"Kristaps Porziņģis","Dennis Schroder":"Dennis Schröder","Jonas Valanciunas":"Jonas Valančiūnas"};
+function wikiTitle(n){return WIKI_FIX[n]||n}
+var wikiCache=new Map();
+async function wikiBatch(names){var out={},need=names.filter(function(n){if(wikiCache.has(n)){out[n]=wikiCache.get(n);return false}return true});
+ for(var i=0;i<need.length;i+=45){var chunk=need.slice(i,i+45),titles=chunk.map(wikiTitle);
+  try{var u="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&origin=*&redirects=1&prop=pageviews|description&pvipdays=30&titles="+encodeURIComponent(titles.join("|"));
+   var j=await fetch(u).then(function(r){return r.json()});var q=j.query||{},map={};(q.normalized||[]).concat(q.redirects||[]).forEach(function(x){map[x.from]=x.to});
+   var pages={};asList(q.pages).forEach(function(p){pages[p.title]=p});
+   chunk.forEach(function(n){var t=wikiTitle(n);t=map[t]||t;t=map[t]||t;var p=pages[t];if(!p||p.missing)return;var pv=p.pageviews||{},days=Object.keys(pv).sort(),series=days.map(function(d){return pv[d]||0});
+    var desc=p.description||"";if(desc&&!/basketball|NBA/i.test(desc))return;
+    var total=series.reduce(function(a,b){return a+b},0),last7=series.slice(-7).reduce(function(a,b){return a+b},0),prev=series.slice(0,-7),prevAvg=prev.length?prev.reduce(function(a,b){return a+b},0)/prev.length:0;
+    var r={name:n,title:p.title,desc:desc,series:series,total:total,daily:series.length?total/series.length:0,trend:prevAvg?(last7/7)/prevAvg-1:null,url:"https://en.wikipedia.org/wiki/"+encodeURIComponent(p.title.replace(/ /g,"_"))};wikiCache.set(n,r);out[n]=r})}catch(e){}}
+ return out}
+function kfmt(v){v=num(v);if(v==null)return"—";return v>=1e6?val(v/1e6,1)+"M":v>=1e3?val(v/1e3,v>=1e5?0:1)+"K":val(v,0)}
+function line(series,w,h,col){if(!series.length)return"";var mx=Math.max.apply(null,series)||1,step=w/(series.length-1||1);var d=series.map(function(v,i){return (i?"L":"M")+(i*step).toFixed(1)+","+(h-2-v/mx*(h-4)).toFixed(1)}).join("");return '<svg class="ix-line" viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><path d="'+d+'L'+w+','+h+'L0,'+h+'Z" fill="'+col+'" fill-opacity=".12"/><path d="'+d+'" fill="none" stroke="'+col+'" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>'}
+async function facesHook(pw){var P=asList(pw&&pw.players).filter(function(p){return p.eligible!==false}).sort(function(a,b){return (b.index||0)-(a.index||0)}).slice(0,40);
+ var W=await wikiBatch(P.map(function(p){return p.name}));var R=P.map(function(p){return W[p.name]&&{p:p,w:W[p.name]}}).filter(Boolean).sort(function(a,b){return b.w.total-a.w.total});
+ if(!R.length){fillTile("faces",hook("—","Η προσοχή του κοινού δεν φόρτωσε"));return}var t=R[0];
+ fillTile("faces",'<div class="ix-hook-row"><img class="ix-face" src="'+esc(t.p.headshot||HS(t.p.id))+'" alt="" '+hideImg+'><div class="ix-hook"><b>'+kfmt(t.w.total)+'</b><span>προβολές σε 30 ημέρες · '+esc(t.p.name)+', το πιο «ψαγμένο» πρόσωπο της λίγκας</span></div></div>'+line(t.w.series,240,30,"#ff9f43"))}
+async function faces(){
+ var pw=await soft("power"),P=asList(pw&&pw.players).filter(function(p){return p.eligible!==false&&p.teamId}).sort(function(a,b){return (b.index||0)-(a.index||0)}).slice(0,60);
+ var tab=(new URLSearchParams(location.hash.split("?")[1]||"")).get("t")||"now";
+ set('<div class="ix-tabs"><a href="#/faces?t=now" class="'+(tab==="now"?"on":"")+'">Σήμερα</a><a href="#/faces?t=legends" class="'+(tab==="legends"?"on":"")+'">Όλων των εποχών</a><a href="#/faces?t=gap" class="'+(tab==="gap"?"on":"")+'">Φήμη vs απόδοση</a></div><div id="ix-faces">'+skel(360)+'</div>');
+ document.querySelectorAll(".ix-tabs a").forEach(function(a){a.onclick=function(e){e.preventDefault();history.replaceState(null,"",a.getAttribute("href"));var r=document.getElementById("atlas-i-page-faces");if(r)r.remove();nav()}});
+ var host=function(){return document.getElementById("ix-faces")};
+ if(tab==="legends"){var W=await wikiBatch(LEGENDS),L=LEGENDS.map(function(n){return W[n]}).filter(Boolean).sort(function(a,b){return b.total-a.total});if(!host())return;
+  if(!L.length){host().innerHTML=card("Δεν απάντησε η Wikipedia",'<p class="ix-muted">Δοκίμασε ξανά σε λίγο.</p>');return}
+  var mx=L[0].total;
+  host().innerHTML='<div class="ix-podium">'+L.slice(0,3).map(function(w,i){return '<a class="ix-pod p'+i+'" href="'+esc(w.url)+'" target="_blank" rel="noopener"><span class="ix-pod-n">'+(i+1)+'</span><b>'+esc(w.name)+'</b><strong>'+kfmt(w.total)+'</strong><small>προβολές / 30 ημ.</small>'+line(w.series,200,34,"#ff9f43")+'</a>'}).join("")+'</div>'+card("Οι θρύλοι που ψάχνει ακόμα ο κόσμος",'<div class="ix-fame">'+L.map(function(w,i){return famRow(w,i,mx,null)}).join("")+'</div>')+note("Προβολές της αγγλικής Wikipedia τις τελευταίες 30 ημέρες, ως δείκτης δημόσιου ενδιαφέροντος. Τα Google Trends δεν έχουν δημόσιο API, οπότε η Wikipedia είναι η πιο αξιόπιστη ανοιχτή πηγή «buzz». Μια επέτειος, ένα ντοκιμαντέρ ή μια είδηση μπορεί να εκτοξεύσει έναν θρύλο για λίγες μέρες.")+src("Wikimedia Pageviews API · "+date(Date.now()));return}
+ var W2=await wikiBatch(P.map(function(p){return p.name})),R=P.map(function(p,i){return W2[p.name]&&{p:p,w:W2[p.name],perf:i+1}}).filter(Boolean);if(!host())return;
+ if(!R.length){host().innerHTML=card("Δεν απάντησε η Wikipedia",'<p class="ix-muted">Δοκίμασε ξανά σε λίγο.</p>');return}
+ R.sort(function(a,b){return b.w.total-a.w.total});R.forEach(function(r,i){r.fame=i+1});
+ if(tab==="gap"){var gap=R.map(function(r){return Object.assign(r,{g:r.fame-r.perf})});
+  var under=gap.slice().sort(function(a,b){return b.g-a.g}).slice(0,6),over=gap.slice().sort(function(a,b){return a.g-b.g}).slice(0,6);
+  var W=620,H=330,pad=36,lmx=Math.log10(Math.max.apply(null,R.map(function(r){return r.w.total}))),lmn=Math.log10(Math.max(1,Math.min.apply(null,R.map(function(r){return r.w.total})))),ix=R.map(function(r){return r.p.index||0}),imx=Math.max.apply(null,ix),imn=Math.min.apply(null,ix);
+  var X=function(v){return pad+(v-imn)/(imx-imn||1)*(W-pad*2)},Y=function(v){return H-pad-(Math.log10(Math.max(1,v))-lmn)/(lmx-lmn||1)*(H-pad*2)};
+  var tag=new Set(under.slice(0,3).concat(over.slice(0,3)).concat(R.slice(0,3)).map(function(r){return r.p.id}));
+  var sc='<svg class="ix-chart" viewBox="0 0 '+W+' '+H+'"><line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-pad)+'" y2="'+(H-pad)+'" stroke="rgba(255,255,255,.12)"/><line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(H-pad)+'" stroke="rgba(255,255,255,.12)"/><text x="'+(W-pad)+'" y="'+(H-10)+'" text-anchor="end" fill="#626a7a" font-size="11">Απόδοση (Atlas Index) →</text><text x="'+(pad+4)+'" y="'+(pad-12)+'" fill="#626a7a" font-size="11">↑ Προβολές Wikipedia (λογαριθμικά)</text>'+R.map(function(r){var c=r.g>=12?"#22d39a":r.g<=-12?"#ff4d6a":"#ff9f43";return '<circle cx="'+X(r.p.index||0).toFixed(1)+'" cy="'+Y(r.w.total).toFixed(1)+'" r="'+(tag.has(r.p.id)?5.5:4)+'" fill="'+c+'" fill-opacity=".85"><title>'+esc(r.p.name)+' · '+kfmt(r.w.total)+'</title></circle>'+(tag.has(r.p.id)?'<text x="'+(X(r.p.index||0)+8).toFixed(1)+'" y="'+(Y(r.w.total)+4).toFixed(1)+'" fill="#dfe3ea" font-size="10.5" font-weight="700">'+esc(r.p.name.split(" ").slice(-1)[0])+'</text>':"")}).join("")+'</svg><div class="ix-legend"><span><i style="background:#22d39a"></i>Υποτιμημένοι: παίζουν καλύτερα απ’ όσο τους ψάχνουν</span><span><i style="background:#ff4d6a"></i>Φήμη μεγαλύτερη από τη φετινή απόδοση</span></div>';
+  var lst=function(A,good){return A.map(function(r){return '<a class="ix-prow" href="#/player/'+r.p.id+'"><img src="'+esc(r.p.headshot||HS(r.p.id))+'" alt="" loading="lazy" '+hideImg+'><div class="ix-trow-n"><b>'+esc(r.p.name)+'</b><small>#'+r.perf+' σε απόδοση · #'+r.fame+' σε προβολές</small></div><span></span><span class="ix-delta '+(good?"up":"down")+'">'+(good?"+":"−")+Math.abs(r.g)+'</span></a>'}).join("")};
+  host().innerHTML=card("Φήμη απέναντι σε απόδοση",sc)+'<div class="ix-grid2">'+card('<span class="up">●</span> Οι πιο υποτιμημένοι',lst(under,true))+card('<span class="down">●</span> Η φήμη προηγείται',lst(over,false))+'</div>'+note("Σύγκριση της θέσης κάθε παίκτη στο Atlas Index (απόδοση φέτος) με τη θέση του στις προβολές Wikipedia 30 ημερών, για τους "+R.length+" κορυφαίους. Η διαφορά θέσεων δεν κρίνει την αξία του παίκτη· δείχνει πού η προσοχή του κοινού δεν ακολουθεί τα νούμερα.")+src("Wikimedia Pageviews API · ESPN / Atlas power");return}
+ var mx2=R[0].w.total,rising=R.filter(function(r){return r.w.trend!=null&&r.w.total>20000}).sort(function(a,b){return b.w.trend-a.w.trend}).slice(0,4);
+ host().innerHTML='<div class="ix-podium">'+R.slice(0,3).map(function(r,i){return '<a class="ix-pod p'+i+'" href="#/player/'+r.p.id+'"><span class="ix-pod-n">'+(i+1)+'</span><img src="'+esc(r.p.headshot||HS(r.p.id))+'" alt="" '+hideImg+'><b>'+esc(r.p.name)+'</b><strong>'+kfmt(r.w.total)+'</strong><small>προβολές / 30 ημ. · '+esc(r.p.team||"")+'</small>'+line(r.w.series,200,34,"#ff9f43")+'</a>'}).join("")+'</div>'+
+  (rising.length?card("📈 Ανεβαίνουν στην επικαιρότητα",'<div class="ix-rise">'+rising.map(function(r){return '<a href="#/player/'+r.p.id+'"><img src="'+esc(r.p.headshot||HS(r.p.id))+'" alt="" '+hideImg+'><div><b>'+esc(r.p.name)+'</b><small>τελευταία 7 ημέρες σε σχέση με το προηγούμενο διάστημα</small></div><span class="up">'+(r.w.trend>=0?"+":"")+Math.round(r.w.trend*100)+'%</span></a>'}).join("")+'</div>'):"")+
+  card("Τα πρόσωπα της λίγκας τώρα",'<div class="ix-fame">'+R.map(function(r,i){return famRow(r.w,i,mx2,r.p)}).join("")+'</div>')+note("Ενδιαφέρον κοινού = προβολές της σελίδας του παίκτη στην αγγλική Wikipedia τις τελευταίες 30 ημέρες (Wikimedia). Περιγραφή = η σύντομη περιγραφή της ίδιας της Wikipedia. Τα Google Trends δεν έχουν δημόσιο API, γι’ αυτό δεν χρησιμοποιούνται.")+src("Wikimedia Pageviews API · "+date(Date.now()));
+}
+function famRow(w,i,mx,p){return '<div class="ix-frow"><span class="ix-frank">'+(i+1)+'</span>'+(p?'<img src="'+esc(p.headshot||HS(p.id))+'" alt="" loading="lazy" '+hideImg+'>':'<span class="ix-fini">'+esc(w.name.split(" ").map(function(x){return x[0]}).join("").slice(0,2))+'</span>')+'<div class="ix-trow-n"><b>'+(p?'<a href="#/player/'+p.id+'">'+esc(w.name)+'</a>':esc(w.name))+'</b><small>'+esc(w.desc||"")+(w.trend!=null?' · <span class="'+(w.trend>=0?"up":"down")+'">'+(w.trend>=0?"▲":"▼")+Math.abs(Math.round(w.trend*100))+'% εβδ.</span>':"")+'</small></div><div class="ix-fbar"><i style="width:'+(w.total/mx*100).toFixed(1)+'%"></i></div>'+line(w.series,110,26,"#ff9f43")+'<a class="ix-fv" href="'+esc(w.url)+'" target="_blank" rel="noopener">'+kfmt(w.total)+'</a></div>'}
+
 /* ---------- router glue ---------- */
 function nav(){
- var links=document.getElementById("links");if(links&&!links.querySelector('[data-r="shift"]'))links.insertAdjacentHTML("beforeend",'<a href="#/dna" data-r="dna">DNA</a><a href="#/shift" data-r="shift">Shift</a><a href="#/matchup" data-r="matchup">Matchups</a><a href="#/legacy" data-r="legacy">Legacy</a><a href="#/dynasty" data-r="dynasty">Dynasties</a>');
+ var links=document.getElementById("links");if(links&&!links.querySelector('[data-r="shift"]'))links.insertAdjacentHTML("beforeend",'<a href="#/dna" data-r="dna">DNA</a><a href="#/faces" data-r="faces">Faces</a><a href="#/shift" data-r="shift">Shift</a><a href="#/matchup" data-r="matchup">Matchups</a><a href="#/legacy" data-r="legacy">Legacy</a><a href="#/dynasty" data-r="dynasty">Dynasties</a>');
  var path=(location.hash.replace(/^#\/?/,"").split(/[/?]/)[0]||"home");
  if(pages[path]){document.querySelectorAll("#links [data-r]").forEach(function(a){a.classList.toggle("on",a.dataset.r===path)});
   if(!document.getElementById("atlas-i-page-"+path)){root.innerHTML=shell(path);document.title=BY[path].name+" · NBA ATLAS";scrollTo(0,0);Promise.resolve().then(pages[path]).catch(function(e){fail(e&&e.message)})}return}
