@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 188" width="560" height="188" role="img" aria-label="PAX project card">
+<defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08141e"/><stop offset="1" stop-color="#102634"/></linearGradient><pattern id="g" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#9bbec8" stroke-opacity=".06"/></pattern></defs>
+<rect width="558" height="186" x="1" y="1" rx="15" fill="url(#b)" stroke="#b2a3ff" stroke-opacity=".3" stroke-width="2"/><rect width="558" height="186" x="1" y="1" rx="15" fill="url(#g)"/>
+<rect x="22" y="28" width="37" height="4" rx="2" fill="#b2a3ff"/><circle cx="79" cy="30" r="3" fill="#b2a3ff" opacity=".6"/><circle cx="92" cy="30" r="3" fill="#b2a3ff" opacity=".25"/>
+<text x="24" y="94" fill="#f3f8fb" font-family="Arial, sans-serif" font-size="32" font-weight="800" letter-spacing="1.2">PAX</text>
+<text x="24" y="121" fill="#819eaa" font-family="Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="1.6">GLOBAL CONFLICT / PEACE RADAR</text>
+<text x="24" y="164" fill="#b2a3ff" font-family="Arial, sans-serif" font-size="11" letter-spacing="1.8">EXPLORE PROJECT  /</text>
+<g transform="translate(312 23)"><rect width="226" height="145" rx="10" fill="#07121a" stroke="#b2a3ff" stroke-opacity=".25"/><g transform="translate(2 2)"><g stroke="#b2a3ff" fill="none" stroke-width="2"><path d="M34 30L109 57L174 26L201 103L125 120L55 103Z"/><path d="M109 57L125 120M109 57L201 103M34 30L55 103M174 26L125 120"/></g><g fill="#b2a3ff"><circle cx="34" cy="30" r="6"/><circle cx="109" cy="57" r="8"/><circle cx="174" cy="26" r="6"/><circle cx="201" cy="103" r="7"/><circle cx="125" cy="120" r="6"/><circle cx="55" cy="103" r="5"/></g></g></g>
+</svg>
