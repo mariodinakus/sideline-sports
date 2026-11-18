@@ -1,5 +1,9 @@
 # SIDELINE — Sports Intelligence v4
 
+> **Workspace status:** Core development — NBA Atlas.
+>
+> **Active projects:** [NBA Atlas](https://github.com/mariodinakus/sideline-sports) · [AXON](https://github.com/mariodinakus/axon) · [MONO](https://github.com/mariodinakus/monokairos) · [PAX](https://github.com/mariodinakus/world-faultline/tree/main/pax) · [EFIMERIA ONE](https://github.com/mariodinakus/efimeria-one) · [AOTH](https://github.com/mariodinakus/aoth).
+
 **News is not just a feed. It's a network of sources.**
 
 ## v4: BASKETBALL DATA LAB
