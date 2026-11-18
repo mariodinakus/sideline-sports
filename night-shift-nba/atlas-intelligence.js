@@ -85,14 +85,16 @@ async function shiftHook(meta){
  var top=R[0],m=meta[top.id]||{};
  fillTile("shift",'<div class="ix-hook-row"><img src="'+esc(m.logo||"")+'" alt="" '+hideImg+'><div class="ix-hook"><b class="up">'+sgn(top.delta,1)+'</b><span>'+esc(m.name||top.id)+' · διαφορά πόντων τελ. 5 σε σχέση με τη σεζόν</span></div></div>'+spark(top.last10,240,30));
 }
+async function upcoming(){var sb=await soft("data?type=scoreboard"),G=asList(sb&&sb.games).filter(function(g){return g.state!=="post"});
+ for(var i=1;i<=3&&!G.length;i++){var d=new Date(Date.now()-5*3600000+i*86400000).toISOString().slice(0,10).replace(/-/g,"");var x=await soft("data?type=scoreboard&date="+d);G=asList(x&&x.games).filter(function(g){return g.state!=="post"})}
+ return G}
 async function matchupHook(pw,meta){
- var sb=await soft("data?type=scoreboard");var G=asList(sb&&sb.games).filter(function(g){return g.state!=="post"});
- if(!G.length)G=asList(sb&&sb.games);
+ var G=await upcoming();
  if(!G.length){fillTile("matchup",hook("VS","Διάλεξε δύο ομάδες και σύγκρινέ τες"));return}
  var pow=function(id){return num((meta[String(id)]||{}).power)};
  G.sort(function(a,b){var da=Math.abs((pow(a.home.id)||0)-(pow(a.away.id)||0)),db=Math.abs((pow(b.home.id)||0)-(pow(b.away.id)||0));return da-db});
  var g=G[0];
- fillTile("matchup",'<div class="ix-vs"><span><img src="'+esc(g.away.logo||LOGO(g.away.abbr))+'" alt="" '+hideImg+'><b>'+esc(g.away.abbr)+'</b></span><i>VS</i><span><img src="'+esc(g.home.logo||LOGO(g.home.abbr))+'" alt="" '+hideImg+'><b>'+esc(g.home.abbr)+'</b></span></div><div class="ix-tile-sub">'+(g.state==="in"?"Live τώρα":g.state==="post"?"Τελικό":"Πιο ισορροπημένο ματς · "+esc(date(g.date)))+'</div>');
+ fillTile("matchup",'<div class="ix-vs"><span><img src="'+esc(g.away.logo||LOGO(g.away.abbr))+'" alt="" '+hideImg+'><b>'+esc(g.away.abbr)+'</b></span><i>VS</i><span><img src="'+esc(g.home.logo||LOGO(g.home.abbr))+'" alt="" '+hideImg+'><b>'+esc(g.home.abbr)+'</b></span></div><div class="ix-tile-sub">'+(g.state==="in"?"Live τώρα":"Το πιο ισορροπημένο επόμενο ματς · "+esc(date(g.date)))+'</div>');
 }
 async function legacyHook(){
  var d=await soft("history?type=player&id=1966");var tot=d&&d.regular&&d.regular.careerTotals||{};var pts=num(tot.points);
@@ -154,7 +156,7 @@ async function legacy(){
   var tot=r.careerTotals||{},av=r.careerAverages||{},who=(FAV.find(function(x){return x[0]===id})||["","Παίκτης"])[1],cur=asList(pw&&pw.players).find(function(x){return String(x.id)===id});
   var pick=function(ks){for(var i=0;i<ks.length;i++)if(num(tot[ks[i]])!=null)return num(tot[ks[i]]);return null};
   var M=[["Πόντοι","pts",pick(["points","totalPoints"]),1000,cur&&cur.ppg],["Ασίστ","ast",pick(["assists","totalAssists"]),500,cur&&cur.apg],["Ριμπάουντ","trb",pick(["rebounds","totalRebounds"]),500,cur&&cur.rpg]];
-  var gp=pick(["gamesPlayed","games"]);
+  var gp=pick(["gamesPlayed","games"]);if(gp==null){var bs={};asList(r.seasonRows).forEach(function(x){var g=num(x.stats&&x.stats.gamesPlayed)||0;if(!bs[x.season]||g>bs[x.season])bs[x.season]=g});var sum=Object.keys(bs).reduce(function(a,k){return a+bs[k]},0);gp=sum||null}
   var L=asList((window.ATLAS_DATA||{}).leaders);
   var html='<div class="ix-legacy-hero"><img src="'+HS(id)+'" alt="" '+hideImg+'><div><div class="ix-kicker">Καριέρα κανονικής περιόδου</div><h2>'+esc(who)+'</h2><div class="ix-stats"><span><b>'+val(r.yearCount,0)+'</b>σεζόν</span><span><b>'+val(gp,0)+'</b>αγώνες</span><span><b>'+val(av.avgPoints,1)+'</b>PPG</span><span><b>'+val(av.avgRebounds,1)+'</b>RPG</span><span><b>'+val(av.avgAssists,1)+'</b>APG</span></div></div></div>';
   html+='<div class="ix-grid3">'+M.map(function(m){var n=m[2];if(n==null)return card(m[0],'<p class="ix-muted">Δεν υπάρχει σύνολο στο feed.</p>');
@@ -170,12 +172,12 @@ async function legacy(){
    3. MATCHUP DNA — mirrored bars with league rank
    ==================================================================== */
 async function matchup(){
- var all=await Promise.all([soft("power"),soft("lab?type=season"),soft("data?type=scoreboard")]),pw=all[0],se=all[1],sb=all[2];
+ var all=await Promise.all([soft("power"),soft("lab?type=season"),upcoming()]),pw=all[0],se=all[1];
  if(!pw||!asList(pw.teams).length){fail("Δεν φόρτωσαν οι ομάδες.");return}
  var T=pw.teams.slice().sort(function(a,b){return a.name.localeCompare(b.name)}),meta=teamMeta(pw),LS={};asList(se&&se.teams).forEach(function(x){LS[String(x.id)]=x});
- var games=asList(sb&&sb.games),first=games[0],qa=new URLSearchParams((location.hash.split("?")[1]||"")),A=qa.get("a")||(first?String(first.away.id):String(T[0].id)),H=qa.get("h")||(first?String(first.home.id):String(T[1].id));
+ var games=all[2],first=games[0],qa=new URLSearchParams((location.hash.split("?")[1]||"")),A=qa.get("a")||(first?String(first.away.id):String(T[0].id)),H=qa.get("h")||(first?String(first.home.id):String(T[1].id));
  var sel=function(id,v){return '<select id="'+id+'">'+T.map(function(t){return '<option value="'+esc(t.id)+'" '+(String(t.id)===v?"selected":"")+'>'+esc(t.name)+'</option>'}).join("")+'</select>'};
- var chips=games.length?'<div class="ix-chips"><span>Σήμερα:</span>'+games.map(function(g){return '<button data-a="'+esc(g.away.id)+'" data-h="'+esc(g.home.id)+'">'+esc(g.away.abbr)+' @ '+esc(g.home.abbr)+'</button>'}).join("")+'</div>':"";
+ var chips=games.length?'<div class="ix-chips"><span>Επόμενοι αγώνες:</span>'+games.map(function(g){return '<button data-a="'+esc(g.away.id)+'" data-h="'+esc(g.home.id)+'">'+esc(g.away.abbr)+' @ '+esc(g.home.abbr)+'</button>'}).join("")+'</div>':"";
  set(chips+'<div class="ix-controls"><label>Ομάδα Α'+sel("ix-a",A)+'</label><span class="ix-vs-sep">VS</span><label>Ομάδα Β'+sel("ix-h",H)+'</label></div><div id="ix-mu"></div>');
  document.querySelectorAll(".ix-chips button").forEach(function(b){b.onclick=function(){document.getElementById("ix-a").value=b.dataset.a;document.getElementById("ix-h").value=b.dataset.h;paint()}});
  document.getElementById("ix-a").onchange=paint;document.getElementById("ix-h").onchange=paint;paint();
