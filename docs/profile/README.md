@@ -15,9 +15,9 @@
 <p align="center">
   <a href="https://github.com/mariodinakus?tab=repositories">Repositories</a>
   ·
-  <a href="https://github.com/mariodinakus/marios-os">Workspace (private)</a>
+  <a href="https://github.com/mariodinakus/sideline-sports">NBA Atlas</a>
   ·
-  <a href="https://github.com/mariodinakus?tab=projects">Projects</a>
+  <a href="https://github.com/mariodinakus/monokairos">MONO Weather</a>
 </p>
 
 ---
