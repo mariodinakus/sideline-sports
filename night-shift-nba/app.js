@@ -121,7 +121,7 @@ async function ticker(){
 const V={};
 V.home=async()=>{
   const t=token;
-  view.innerHTML=`<section class="hero" id="hero"><div class="hero-bg"></div><div class="hero-txt"><div><div class="eyebrow">NBA ATLAS · ΣΕΖΟΝ 2026–27</div><h1 class="h1" style="margin-top:14px">The league,<br><span>decoded.</span></h1><p class="lede" style="margin-top:16px">Live σκορ, power index, MVP race, προβλέψεις αγώνων με έλεγχο ακρίβειας και GOAT ranking που ρυθμίζεις εσύ.</p></div><div class="kpis" id="kpis">${skel(50)}</div></div><div class="hero-art" id="heroart"></div></section>
+  view.innerHTML=`<section class="hero" id="hero"><div class="hero-bg"></div><div class="hero-txt"><div><div class="eyebrow">NBA ATLAS · ΣΕΖΟΝ 2026–27</div><h1 class="h1" style="margin-top:14px">The league,<br><span>decoded.</span></h1><p class="lede" style="margin-top:16px">Live σκορ, power index, MVP race, προβλέψεις αγώνων με έλεγχο ακρίβειας και GOAT ranking που ρυθμίζεις εσύ.</p></div><div class="kpis" id="kpis">${skel(50)}</div></div><div class="hero-art" id="heroart"></div><div class="hero-teams" id="heroteams"></div></section>
   <section class="sec">${secH('Σήμερα','Το πρόγραμμα',['#/games','Όλοι οι αγώνες'],'Ώρες Ελλάδας. Η μπάρα δείχνει την πιθανότητα νίκης του μοντέλου, κλειδωμένη πριν το τζάμπολ.')}<div class="games" id="hgames">${skel(170,3)}</div></section>
   <section class="sec">${secH('MVP Race','Οι κορυφαίοι της σεζόν',['#/players','Players Lab'],'Ταξινόμηση με τον Atlas Index: παραγωγή, αποδοτικότητα (TS%) και επιτυχία ομάδας.')}<div class="pcards" id="hmvp">${skel(300,4)}</div></section>
   <section class="sec split"><div class="card">${secH('Βαθμολογία','Κορυφή ανά περιφέρεια',['#/standings','Πλήρης πίνακας'])}<div class="grid g2" id="hstand">${skel(200,2)}</div></div><div class="card">${secH('Τίτλος 2027','Ποιος παίρνει το δαχτυλίδι',['#/power','Power'])}<div id="hodds">${skel(220)}</div></div></section>
@@ -134,8 +134,23 @@ V.home=async()=>{
     const sm=F.data?.summary;fill('#kpis',`<div class="kpi"><b>${g.length}</b><small>Αγώνες σήμερα</small></div><div class="kpi"><b class="${g.some(x=>x.state==='in')?'bad':''}">${g.filter(x=>x.state==='in').length}</b><small>Live τώρα</small></div>${sm?`<div class="kpi"><b>${pc(sm.winnerAccuracy,0)}</b><small>Ακρίβεια μοντέλου · ${sm.n} αγ.</small></div><div class="kpi"><b>${f(sm.brier,3)}</b><small>Brier score</small></div>`:''}`)});
   pw.then(p=>{if(t!==token)return;if(!p){fill('#hmvp',errBox('','Power feed'));fill('#hodds','');fill('#heroart','');return}
     const top=(p.players||[]).filter(x=>x.eligible!==false).sort((a,b)=>b.index-a.index);const lead=top[0];
-    if(lead){const c=tColor(lead.teamId,lead.team);$('#hero').style.setProperty('--tc',c);fill('#heroart',`<div class="bignum">#1</div><img src="${lead.headshot||HS(lead.id)}" alt="${esc(lead.name)}" ${silh}><a class="hero-tag" href="#/player/${lead.id}"><span class="eyebrow">MVP ladder · #1</span><b>${esc(lead.name)}</b><span class="muted">${f(lead.ppg)} PTS · ${f(lead.rpg)} REB · ${f(lead.apg)} AST · TS ${f(lead.tsPct)}%</span></a>${(()=>{const bt=(p.teams||[]).slice().sort((a,b)=>(+b.titleShare||0)-(+a.titleShare||0)||(+b.power||0)-(+a.power||0))[0];return bt?`<a class="hero-team" href="#/team/${bt.id}"><img src="${esc(bt.logo||'')}" alt="" onerror="this.style.visibility='hidden'"><span><span class="eyebrow">Καλύτερη ομάδα · φαβορί τίτλου</span><b>${esc(bt.name)}</b><span class="muted">${bt.wins??''}-${bt.losses??''} · Τίτλος ${bt.titleShare!=null?f(bt.titleShare)+'%':'—'} · Power ${f(bt.power)}</span></span></a>`:''})()}`)}
+    if(lead){const c=tColor(lead.teamId,lead.team);$('#hero').style.setProperty('--tc',c);fill('#heroart',`<div class="bignum">#1</div><img src="${lead.headshot||HS(lead.id)}" alt="${esc(lead.name)}" ${silh}><a class="hero-tag" href="#/player/${lead.id}"><span class="eyebrow">MVP ladder · #1</span><b>${esc(lead.name)}</b><span class="muted">${f(lead.ppg)} PTS · ${f(lead.rpg)} REB · ${f(lead.apg)} AST · TS ${f(lead.tsPct)}%</span></a>`)}
     fill('#hmvp',top.slice(0,10).map(playerCard).join(''));
+    (async()=>{const T=(p.teams||[]).filter(x=>x.id);if(!T.length)return;
+      const fav=T.slice().sort((a,b)=>(+b.titleShare||0)-(+a.titleShare||0)||(+b.power||0)-(+a.power||0))[0];
+      const wp=x=>{const g=(+x.wins||0)+(+x.losses||0);return g?(+x.wins||0)/g:0};
+      const first=T.slice().sort((a,b)=>wp(b)-wp(a)||(+b.wins||0)-(+a.wins||0)||(+b.margin||0)-(+a.margin||0))[0];
+      const card=(k,tm,big,sub,col)=>`<a class="ht-card" href="#/team/${tm.id}" style="--htc:${col}"><span class="ht-k">${k}</span><div class="ht-row"><img src="${esc(tm.logo||'')}" alt="" onerror="this.style.visibility='hidden'"><div class="ht-n"><b>${esc(tm.name)}</b><small>${sub}</small></div><span class="ht-big">${big}</span></div></a>`;
+      const paint=(stat)=>{if(t!==token)return;fill('#heroteams',
+        card('🏆 Μεγάλο φαβορί για τον τίτλο',fav,fav.titleShare!=null?f(fav.titleShare)+'%':'—',`${fav.wins??''}-${fav.losses??''} · Power ${f(fav.power)}`,'#ffd23f')+
+        card('🥇 Πρώτη ομάδα της λίγκας',first,`${first.wins??0}-${first.losses??0}`,`${(wp(first)*100).toFixed(1)}% νίκες · διαφορά ${(+first.margin>0?'+':'')}${f(first.margin)}`,'#ff5a1f')+
+        (stat?card('📊 Καλύτερη με βάση τα stats',stat.tm,(stat.net>0?'+':'')+stat.net.toFixed(1),`Net Rating · Επίθεση #${stat.or} · Άμυνα #${stat.dr}`,'#22d39a'):'<div class="ht-card ht-skel"></div>'))};
+      paint(null);
+      const se=await safe(api('lab?type=season'));const L=(se?.teams||[]).filter(x=>Number.isFinite(x.ortg)&&Number.isFinite(x.drtg));
+      if(!L.length){fill('#heroteams',document.getElementById('heroteams').innerHTML.replace('<div class="ht-card ht-skel"></div>',''));return}
+      const b=L.slice().sort((a,c)=>(c.ortg-c.drtg)-(a.ortg-a.drtg))[0],tm=T.find(x=>String(x.id)===String(b.id))||{id:b.id,name:b.id};
+      paint({tm,net:b.ortg-b.drtg,or:1+L.filter(x=>x.ortg>b.ortg).length,dr:1+L.filter(x=>x.drtg<b.drtg).length});
+    })();
     fill('#hodds',oddsBars(p,null,7));
     safe(api('markets?type=title')).then(m=>{if(t===token&&m)fill('#hodds',oddsBars(p,m,7))})});
   safe(api('data?type=standings')).then(s=>{if(t!==token)return;fill('#hstand',(s?.groups||[]).map(g=>`<div><div class="lbl">${confName(g.name)}</div><div class="mini-list">${standingsRows(g).slice(0,10).map((e,i)=>`<a href="#/team/${e.team.id}" class="${i===6?'pin':''}"><span class="rk">${i+1}</span><img src="${e.team.logo||LOGO(e.team.abbr)}" style="border-radius:0;background:none;width:30px;height:30px" ${hideErr}><span style="font-weight:700">${esc(e.team.short||e.team.abbr)}</span><span class="r"><b>${e.s.wins}-${e.s.losses}</b></span></a>`).join('')}</div></div>`).join('')||errBox('','Standings'))});
