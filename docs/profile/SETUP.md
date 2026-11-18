@@ -2,22 +2,19 @@
 
 ## Status
 
-The profile graphics and README are ready, but the GitHub account currently has **no public special repository named `mariodinakus/mariodinakus`**. A GitHub profile README appears only when that repository exists and contains a root `README.md`.
+The profile is **published**: the public repository `mariodinakus/mariodinakus` exists and its root `README.md` is live on https://github.com/mariodinakus. The graphics in this folder are served from this repository's `main` branch, so keep them in place.
 
-## One-time publishing steps
+## Publishing steps (completed)
 
-1. Open https://github.com/new
-2. Repository name: **mariodinakus** (owner: **mariodinakus**).
-3. Visibility: **Public**. Check **Add a README file**, then create the repository.
-4. Open [this ready-made README](./README.md), select **Raw**, copy its full content.
-5. Edit `README.md` in `mariodinakus/mariodinakus`, paste and commit.
-6. Open https://github.com/mariodinakus to verify that the header and project images render.
+1. Created public repository `mariodinakus/mariodinakus`.
+2. Committed [this README](./README.md) as its root `README.md`, with the setup comment removed.
+3. Verified that the header and project images render on the profile page.
 
-The image URLs in the template point to this repository's published `main` branch; no additional image upload is needed.
+To update the profile later, edit `README.md` in `mariodinakus/mariodinakus` and commit.
 
-## Suggested pinned repositories
+## Pinned repositories
 
-From the profile page, use **Customize your pins**. Suggested publicly visible choices:
+Pinned on the profile page via **Customize your pins**:
 
 - `sideline-sports` (NBA Atlas)
 - `monokairos` (MONO Weather)
