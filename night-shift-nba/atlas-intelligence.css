@@ -149,7 +149,7 @@
 .ix-dbar-t{position:relative;height:10px;border-radius:99px;background:rgba(255,255,255,.06)}
 .ix-dbar-t i{position:absolute;inset:0 auto 0 0;border-radius:99px}.ix-dbar-t em{position:absolute;top:-4px;width:3px;height:18px;border-radius:2px;background:#7cc4ff;transform:translateX(-50%)}
 .ix-dbar-v{font:400 22px/1 var(--display,Anton,sans-serif);text-align:right}
-.elite{background:#ffd23f}.good{background:#22d39a}.mid{background:#7cc4ff}.low{background:#ff4d6a}
+.ix-dbar-t i.elite{background:#ffd23f}.ix-dbar-t i.good{background:#22d39a}.ix-dbar-t i.mid{background:#7cc4ff}.ix-dbar-t i.low{background:#ff4d6a}
 .ix-dbar-v.elite{background:none;color:#ffd23f}.ix-dbar-v.good{background:none;color:#22d39a}.ix-dbar-v.mid{background:none;color:#7cc4ff}.ix-dbar-v.low{background:none;color:#ff4d6a}
 .ix-twins{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .ix-twin{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);text-align:left;position:relative}
@@ -229,3 +229,17 @@
 .ix-sw-style b{color:#fff}
 #ix-sw-host .ix-card{margin-top:14px}#ix-sw-host .ix-card:first-child{margin-top:0}
 @media(max-width:760px){.ix-sw{grid-template-columns:1fr}}
+
+/* ---- compact nav: "More" dropdown ---- */
+.ix-more-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;font:600 13.5px var(--body,Inter,sans-serif);color:var(--muted,#959cab);background:none;border:0;cursor:pointer;white-space:nowrap;transition:.2s}
+.ix-more-btn:hover,.ix-more-btn.open{color:var(--text,#fff);background:rgba(255,255,255,.07)}
+.ix-more-btn.has{color:#111;background:var(--text,#fff)}
+.ix-more-btn svg{width:12px;height:12px;transition:transform .25s}
+.ix-more-btn.open svg{transform:rotate(180deg)}
+.ix-more{position:fixed;top:64px;left:0;width:min(440px,calc(100vw - 32px));z-index:80;background:rgba(14,16,22,.97);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:12px;box-shadow:0 24px 60px rgba(0,0,0,.55);display:grid;grid-template-columns:repeat(2,1fr);gap:6px;opacity:0;transform:translateY(-8px) scale(.98);transform-origin:top right;pointer-events:none;visibility:hidden;transition:opacity .2s,transform .24s cubic-bezier(.2,.9,.3,1),visibility 0s .24s}
+.ix-more.open{opacity:1;transform:none;pointer-events:auto;visibility:visible;transition:opacity .2s,transform .24s cubic-bezier(.2,.9,.3,1)}
+.ix-more a{padding:11px 14px;border-radius:12px;font-weight:600;font-size:14px;color:#c9ced8;background:rgba(255,255,255,.03);opacity:0;transform:translateY(5px);transition:background .15s,color .15s}
+.ix-more.open a{opacity:1;transform:none;transition:opacity .22s calc(var(--i)*22ms),transform .22s calc(var(--i)*22ms),background .15s,color .15s}
+.ix-more a:hover{background:rgba(255,255,255,.1);color:#fff}
+.ix-more a.on{background:var(--hot,#ff5a1f);color:#fff}
+@media(max-width:900px){.ix-more,.ix-more-btn{display:none!important}}

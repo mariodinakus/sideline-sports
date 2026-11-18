@@ -493,9 +493,25 @@ async function injectSW(kind,id){if(!id||document.getElementById("ix-sw-host"))r
  if(!html)return;var h=root.querySelector(".phero");if(!h||document.getElementById("ix-sw-host")||location.hash.indexOf("/"+id)<0)return;
  h.insertAdjacentHTML("afterend",'<section class="sec" id="ix-sw-host">'+html+'</section>')}
 
+
+function compactNav(){var L=document.getElementById("links");if(!L||L.dataset.compact||!L.querySelector('[data-r="dna"]'))return;L.dataset.compact="1";
+ var keep=["home","games","standings","power","players"],rest=[].slice.call(L.querySelectorAll("a[data-r]")).filter(function(a){return keep.indexOf(a.dataset.r)<0});
+ var panel=document.createElement("div");panel.id="ix-more";panel.className="ix-more";rest.forEach(function(a,i){a.style.setProperty("--i",i);panel.appendChild(a)});
+ document.body.appendChild(panel);
+ var btn=document.createElement("button");btn.type="button";btn.className="ix-more-btn";btn.setAttribute("aria-haspopup","true");btn.setAttribute("aria-expanded","false");btn.innerHTML='Περισσότερα <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4.5l4 4 4-4"/></svg>';L.appendChild(btn);
+ function place(){var r=btn.getBoundingClientRect(),w=panel.offsetWidth||440;panel.style.top=(r.bottom+8)+"px";panel.style.left=Math.max(16,Math.min(innerWidth-w-16,r.right-w))+"px"}
+ function close(){panel.classList.remove("open");btn.classList.remove("open");btn.setAttribute("aria-expanded","false")}
+ function mark(){btn.classList.toggle("has",!!panel.querySelector("a.on"))}
+ btn.onclick=function(e){e.stopPropagation();if(panel.classList.contains("open")){close();return}place();panel.classList.add("open");btn.classList.add("open");btn.setAttribute("aria-expanded","true")};
+ panel.addEventListener("click",function(e){if(e.target.closest("a"))close()});
+ document.addEventListener("click",function(e){if(!panel.contains(e.target)&&e.target!==btn)close()});
+ document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
+ addEventListener("resize",function(){close()});addEventListener("scroll",function(){if(panel.classList.contains("open"))place()},{passive:true});
+ new MutationObserver(mark).observe(panel,{subtree:true,attributes:true,attributeFilter:["class"]});mark()}
 /* ---------- router glue ---------- */
 function nav(){
- var links=document.getElementById("links");if(links&&!links.querySelector('[data-r="shift"]'))links.insertAdjacentHTML("beforeend",'<a href="#/dna" data-r="dna">DNA</a><a href="#/faces" data-r="faces">Faces</a><a href="#/shift" data-r="shift">Shift</a><a href="#/matchup" data-r="matchup">Matchups</a><a href="#/legacy" data-r="legacy">Legacy</a><a href="#/dynasty" data-r="dynasty">Dynasties</a>');
+ var links=document.getElementById("links");if(links&&!document.querySelector('[data-r="shift"]'))links.insertAdjacentHTML("beforeend",'<a href="#/dna" data-r="dna">DNA</a><a href="#/faces" data-r="faces">Faces</a><a href="#/shift" data-r="shift">Shift</a><a href="#/matchup" data-r="matchup">Matchups</a><a href="#/legacy" data-r="legacy">Legacy</a><a href="#/dynasty" data-r="dynasty">Dynasties</a>');
+ compactNav();
  var path=(location.hash.replace(/^#\/?/,"").split(/[/?]/)[0]||"home");
  if(pages[path]){document.querySelectorAll("#links [data-r]").forEach(function(a){a.classList.toggle("on",a.dataset.r===path)});
   if(!document.getElementById("atlas-i-page-"+path)){root.innerHTML=shell(path);document.title=BY[path].name+" · NBA ATLAS";scrollTo(0,0);Promise.resolve().then(pages[path]).catch(function(e){fail(e&&e.message)})}return}
