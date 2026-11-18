@@ -342,9 +342,32 @@ async function tvDecorate(){
 }
 
 /* ---------- navigation, lab tiles, routing ---------- */
-const MINE={compare,injuries,greece};
+/* ---------- roster what-if: remove players, see the team index change ---------- */
+async function whatif(r){
+  document.title='Roster what-if · NBA ATLAS';
+  view.innerHTML=`<div class="sec-h"><div><div class="eyebrow">Roster what-if</div><h2 class="h2">Αφαίρεσε παίκτες, δες πώς αλλάζει η ομάδα</h2><p class="lede" style="margin-top:8px">Το Atlas index της ομάδας είναι το άθροισμα των παικτών της. Τσέκαρε όσους λείπουν και δες το νέο σύνολο. Τίποτα δεν αποθηκεύεται.</p></div></div><div id="wbody"><div class="skel" style="min-height:400px"></div></div>`;
+  const [M,T]=await Promise.all([model(),teamsMap()]);if(route().name!=='whatif')return;
+  const teams=Object.values(T).filter(t=>t.abbr).sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+  const body=document.getElementById('wbody');if(!body||!teams.length){if(body)body.innerHTML='<div class="err">Δεν φόρτωσαν οι ομάδες.</div>';return}
+  const cur=String(r.id||'')||teams[0].id;
+  const team=T[cur]||teams[0];const ab=team.abbr;
+  const roster=(M.P||[]).filter(p=>p.team===ab&&p.index!=null).sort((a,b)=>b.index-a.index);
+  const total=roster.reduce((s,p)=>s+p.index,0);
+  const out=new Set();
+  const paint=()=>{
+    const left=roster.filter(p=>!out.has(p.id)),nt=left.reduce((s,p)=>s+p.index,0),d=total?((nt-total)/total*100):0;
+    body.innerHTML=`<div class="inj-k"><div class="card"><div class="lbl">Αρχικό index</div><b style="font-family:var(--display);font-size:42px">${f(total,1)}</b></div><div class="card"><div class="lbl">Νέο index</div><b style="font-family:var(--display);font-size:42px">${f(nt,1)}</b></div><div class="card"><div class="lbl">Αλλαγή</div><b style="font-family:var(--display);font-size:42px">${d>=0?'+':''}${f(d,1)}%</b></div></div>
+    <div class="chips" style="margin:16px 0"><select id="wsel" aria-label="Ομάδα">${teams.map(t=>`<option value="${esc(t.id)}" ${String(t.id)===String(team.id)?'selected':''}>${esc(t.name)}</option>`).join('')}</select> <button type="button" id="wreset">Επαναφορά</button></div>
+    <div class="card">${roster.map(p=>`<label class="inj" style="cursor:pointer"><input type="checkbox" data-id="${esc(p.id)}" ${out.has(p.id)?'checked':''} style="width:18px;height:18px"><img src="${p.headshot||HS(p.id)}" alt="" loading="lazy" ${silh}><div><b>${esc(p.name)}</b><small>${esc(p.pos||'')} · ${f(p.ppg,1)} π.</small></div><span class="pill">${f(p.index,1)} · ${total?Math.round(p.index/total*100):0}%</span></label>`).join('')||'<p class="muted">Δεν βρέθηκαν παίκτες για αυτή την ομάδα.</p>'}</div>
+    <p class="muted" style="font-size:12px;margin-top:12px">Το index είναι άθροισμα του Atlas index των παικτών της ομάδας από τα τρέχοντα δεδομένα. Δεν μοντελοποιεί ούτε συντονισμό ούτε λεπτά, οπότε είναι εξήγηση του μεγέθους και όχι πρόβλεψη νικών.</p>`;
+    document.getElementById('wsel').onchange=e=>{location.hash='#/whatif/'+e.target.value};
+    document.getElementById('wreset').onclick=()=>{out.clear();paint()};
+    body.querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{c.checked?out.add(c.dataset.id):out.delete(c.dataset.id);paint()});
+  };paint();
+}
+const MINE={compare,injuries,greece,whatif};
 const navAdd=()=>{const after=document.querySelector('#links [data-r="teams"]');if(after&&!document.querySelector('#links [data-r="greece"]'))after.insertAdjacentHTML('afterend','<a href="#/greece" data-r="greece">Ελλάδα</a>')};
-const TILES=[['compare','🆚','Σύγκριση παικτών','Δύο παίκτες δίπλα-δίπλα: radar, ανά-36, αρχέτυπα και πόσο μοιάζουν.','rgba(255,90,31,.25)'],['injuries','🩹','Τραυματίες','Ποιος λείπει, από τι, πότε γυρίζει και ποια ομάδα πονάει περισσότερο.','rgba(255,77,106,.22)'],['greece','🏛️','Οι Έλληνες του NBA','Οι Έλληνες των ρόστερ, τα νούμερά τους και ο επόμενος αγώνας σε ώρα Ελλάδας.','rgba(70,140,255,.28)']];
+const TILES=[['whatif','🧩','Roster what-if','Αφαίρεσε παίκτες από ρόστερ και δες πώς αλλάζει το index της ομάδας.','rgba(70,220,160,.2)'],['compare','🆚','Σύγκριση παικτών','Δύο παίκτες δίπλα-δίπλα: radar, ανά-36, αρχέτυπα και πόσο μοιάζουν.','rgba(255,90,31,.25)'],['injuries','🩹','Τραυματίες','Ποιος λείπει, από τι, πότε γυρίζει και ποια ομάδα πονάει περισσότερο.','rgba(255,77,106,.22)'],['greece','🏛️','Οι Έλληνες του NBA','Οι Έλληνες των ρόστερ, τα νούμερά τους και ο επόμενος αγώνας σε ώρα Ελλάδας.','rgba(70,140,255,.28)']];
 function hook(){
   const r=route();navAdd();
   document.querySelectorAll('#links [data-r="greece"]').forEach(a=>a.classList.toggle('on',a.dataset.r===r.name));
