@@ -31028,7 +31028,7 @@
       }
     }
   ],
-  "updatedAt": "2026-11-18T14:29:34.083Z",
+  "updatedAt": "2026-11-18T22:16:54.921Z",
   "model": {
     "status": "baseline-holdout-rejected",
     "sample": 196,
@@ -31058,7 +31058,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-18T14:29:34.083Z",
+    "updatedAt": "2026-11-18T22:16:54.921Z",
     "homeGames": {
       "CLE": [
         {
@@ -48469,6 +48469,10 @@
             "name": "Jarrett Allen"
           },
           {
+            "id": "4702099",
+            "name": "Zack Austin"
+          },
+          {
             "id": "3934723",
             "name": "Thomas Bryant"
           },
@@ -50949,7 +50953,7 @@
         },
         {
           "name": "Jaylon Tyson",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "Peyton Watson",
@@ -51006,31 +51010,23 @@
           "status": "Out"
         },
         {
-          "name": "Julian Phillips",
-          "status": "Day-To-Day"
-        },
-        {
           "name": "Amen Thompson",
           "status": "Day-To-Day"
         }
       ],
       "MIA": [
         {
-          "name": "Bam Adebayo",
-          "status": "Day-To-Day"
-        },
-        {
           "name": "Myron Gardner",
-          "status": "Day-To-Day"
-        },
-        {
-          "name": "Nikola Jovic",
-          "status": "Day-To-Day"
+          "status": "Out"
         }
       ],
       "MIL": [
         {
           "name": "Ousmane Dieng",
+          "status": "Out"
+        },
+        {
+          "name": "Ryan Rollins",
           "status": "Out"
         }
       ],
@@ -51068,6 +51064,10 @@
         {
           "name": "Ariel Hukporti",
           "status": "Out"
+        },
+        {
+          "name": "Dean Wade",
+          "status": "Day-To-Day"
         }
       ],
       "CHI": [
@@ -51086,16 +51086,20 @@
       ],
       "TOR": [
         {
+          "name": "Scottie Barnes",
+          "status": "Out"
+        },
+        {
+          "name": "RJ Barrett",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Nate Bittle",
           "status": "Out"
         },
         {
           "name": "Kawhi Leonard",
           "status": "Out"
-        },
-        {
-          "name": "Kevin McCullar Jr.",
-          "status": "Day-To-Day"
         }
       ],
       "WAS": [
@@ -51143,6 +51147,10 @@
         }
       ],
       "DET": [
+        {
+          "name": "Cade Cunningham",
+          "status": "Day-To-Day"
+        },
         {
           "name": "Jalen Duren",
           "status": "Out"
@@ -51280,10 +51288,6 @@
       ],
       "LAL": [
         {
-          "name": "Walker Kessler",
-          "status": "Out"
-        },
-        {
           "name": "Austin Reaves",
           "status": "Out"
         }
@@ -51291,7 +51295,7 @@
       "UTAH": [
         {
           "name": "Jaxson Hayes",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Jaren Jackson Jr.",
@@ -51307,14 +51311,6 @@
         }
       ],
       "SAC": [
-        {
-          "name": "Precious Achiuwa",
-          "status": "Day-To-Day"
-        },
-        {
-          "name": "De'Andre Hunter",
-          "status": "Day-To-Day"
-        },
         {
           "name": "Maxime Raynaud",
           "status": "Out"
@@ -51333,7 +51329,7 @@
       "POR": [
         {
           "name": "Deni Avdija",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Vit Krejci",
@@ -51367,11 +51363,11 @@
         },
         {
           "name": "Jonathan Kuminga",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Zyon Pullin",
-          "status": "Out"
+          "status": "Day-To-Day"
         }
       ],
       "SAS": [
@@ -51409,7 +51405,7 @@
       "CHA": [
         {
           "name": "Grayson Allen",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Kon Knueppel",
