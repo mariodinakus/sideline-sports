@@ -86,7 +86,7 @@ async function shiftHook(meta){
  fillTile("shift",'<div class="ix-hook-row"><img src="'+esc(m.logo||"")+'" alt="" '+hideImg+'><div class="ix-hook"><b class="up">'+sgn(top.delta,1)+'</b><span>'+esc(m.name||top.id)+' · διαφορά πόντων τελ. 5 σε σχέση με τη σεζόν</span></div></div>'+spark(top.last10,240,30));
 }
 async function upcoming(){var sb=await soft("data?type=scoreboard"),G=asList(sb&&sb.games).filter(function(g){return g.state!=="post"});
- for(var i=1;i<=3&&!G.length;i++){var d=new Date(Date.now()-5*3600000+i*86400000).toISOString().slice(0,10).replace(/-/g,"");var x=await soft("data?type=scoreboard&date="+d);G=asList(x&&x.games).filter(function(g){return g.state!=="post"})}
+ for(var i=0;i<=3&&!G.length;i++){var d=new Date(Date.now()-5*3600000+i*86400000).toISOString().slice(0,10).replace(/-/g,"");var x=await soft("data?type=scoreboard&date="+d);G=asList(x&&x.games).filter(function(g){return g.state!=="post"})}
  return G}
 async function matchupHook(pw,meta){
  var G=await upcoming();
