@@ -243,3 +243,4 @@
 .ix-more a:hover{background:rgba(255,255,255,.1);color:#fff}
 .ix-more a.on{background:var(--hot,#ff5a1f);color:#fff}
 @media(max-width:900px){.ix-more,.ix-more-btn{display:none!important}}
+.ix-controls input[type=search]{background:#161a22;border:1px solid rgba(255,255,255,.13);border-radius:12px;padding:12px 14px;color:var(--text,#fff);font:600 14px var(--body,Inter);width:100%;box-sizing:border-box}

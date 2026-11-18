@@ -340,9 +340,17 @@ async function dnaHook(pw){var P=dnaPool(pw);if(!P.length)return;var best=P.slic
 async function dna(){
  var pw=await soft("power"),P=dnaPool(pw);if(!P.length){fail("Δεν φόρτωσαν οι παίκτες.");return}
  var q=new URLSearchParams(location.hash.split("?")[1]||""),first=q.get("p")||P[0].id;
- var opts=function(sel,none){return (none?'<option value="">— κανένας —</option>':"")+P.map(function(p){return '<option value="'+esc(p.id)+'" '+(String(p.id)===String(sel)?"selected":"")+'>'+esc(p.name)+' · '+esc(p.team||"")+'</option>'}).join("")};
- set('<div class="ix-controls"><label>Παίκτης<select id="ix-d1">'+opts(first)+'</select></label><label>Σύγκρινε με<select id="ix-d2">'+opts("",true)+'</select></label></div><div id="ix-dna"></div>');
- document.getElementById("ix-d1").onchange=paint;document.getElementById("ix-d2").onchange=paint;paint();
+ var opts=function(sel,none,list){return (none?'<option value="">— κανένας —</option>':"")+(list||P).map(function(p){return '<option value="'+esc(p.id)+'" '+(String(p.id)===String(sel)?"selected":"")+'>'+esc(p.name)+' · '+esc(p.team||"")+'</option>'}).join("")};
+ set('<div class="ix-controls"><label>Αναζήτηση<input type="search" id="ix-dq" placeholder="Όνομα ή ομάδα" autocomplete="off"></label><label>Παίκτης<select id="ix-d1">'+opts(first)+'</select></label><label>Σύγκρινε με<select id="ix-d2">'+opts("",true)+'</select></label></div><div id="ix-dna"></div>');
+ document.getElementById("ix-d1").onchange=paint;document.getElementById("ix-d2").onchange=paint;
+ document.getElementById("ix-dq").oninput=function(){
+  var s=this.value.trim().toLowerCase(),keep=document.getElementById("ix-d1").value;
+  var list=P.filter(function(p){return !s||(p.name+" "+(p.team||"")).toLowerCase().indexOf(s)>-1});
+  if(!list.length)return;
+  var sel=list.some(function(p){return String(p.id)===String(keep)})?keep:list[0].id;
+  document.getElementById("ix-d1").innerHTML=opts(sel,false,list);paint();
+ };
+ paint();
  function paint(){var a=P.find(function(p){return String(p.id)===document.getElementById("ix-d1").value}),b=P.find(function(p){return String(p.id)===document.getElementById("ix-d2").value});if(!a)return;
   var arc=archetype(a),L=[a].concat(b?[b]:[]),tw=twins(a,P);
   var strong=a._pct.map(function(v,i){return [v||0,i]}).sort(function(x,y){return y[0]-x[0]});
