@@ -1,5 +1,5 @@
-const VERSION='nba-atlas-mobile-v25';
-const CORE=['/','/style.css?v=7','/mobile.css','/app.js?v=7','/atlas-data.js','/atlas-features.js','/atlas-labs.js','/atlas-pro.js','/atlas-plus.js','/atlas-stats.js','/mobile.js','/atlas-intelligence.js?v=7','/atlas-intelligence.css?v=7','/atlas-tv.js','/atlas-tv.css','/icon.svg','/icon-192.png','/icon-512.png','/manifest.webmanifest'];
+const VERSION='nba-atlas-mobile-v26';
+const CORE=['/','/style.css?v=8','/mobile.css','/app.js?v=8','/atlas-data.js','/atlas-features.js','/atlas-labs.js','/atlas-pro.js','/atlas-plus.js','/atlas-stats.js','/mobile.js','/atlas-intelligence.js?v=8','/atlas-intelligence.css?v=8','/atlas-tv.js','/atlas-tv.css','/icon.svg','/icon-192.png','/icon-512.png','/manifest.webmanifest'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(CORE)));self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('nba-atlas-')&&key!==VERSION).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{
