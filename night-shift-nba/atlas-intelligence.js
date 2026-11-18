@@ -447,7 +447,7 @@ function legendSW(g,G){var rg=function(n){return ringsOf(n)||0};
   ["Finals MVP","×",function(x){return num(x.finalsMVP)||0},0,"Έκρινε τελικούς","",""],
   ["All-NBA 1st","×",function(x){return num(x.allNBA1)||0},0,"Σταθερά στην κορυφαία πεντάδα","",""],
   ["Πρωταθλήματα","×",function(x){return rg(x.name)},0,"Νικητής — έφερε τίτλους","",""],
-  ["Μακροζωία","σεζόν",function(x){return num(x.seasons)},0,"Κορυφαίος για πολλά χρόνια","Σχετικά σύντομη καριέρα","yrs"],
+  ["Μακροζωία","σεζόν",function(x){return num(x.seasons)},0,"Κορυφαίος για πολλά χρόνια","","yrs"],
   ["Αμυντικός (DPOY)","×",function(x){return num(x.dpoy)||0},0,"Αναγνωρισμένος αμυντικός","",""]];
  var cols=M.map(function(m){return G.map(function(x){return m[2](x)}).filter(function(v){return v!=null}).sort(function(a,b){return a-b})});
  var it=M.map(function(m,i){var v=m[2](g);if(v==null)return null;var c=cols[i],k=0;while(k<c.length&&c[k]<v)k++;var eq=0;while(k+eq<c.length&&c[k+eq]===v)eq++;var q=Math.round((k+eq/2)/c.length*100);return {l:m[0],u:m[1],v:v,q:q,d:m[3],st:m[4],wk:m[5],tag:m[6]}}).filter(Boolean);
