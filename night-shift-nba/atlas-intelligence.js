@@ -182,6 +182,15 @@ async function legacy(){
 /* ====================================================================
    3. MATCHUP DNA — mirrored bars with league rank
    ==================================================================== */
+
+var BATT=[["ortg","drtg","επίθεση απέναντι στην άμυνα",1,-1,1],["efg","oefg","ποιότητα σουτ απέναντι στην άμυνα σουτ",1,-1,100],["tpPct","opp3Pct","τρίποντο απέναντι στην άμυνα τριπόντου",1,-1,100],["orbPct","drbPct","επιθετικά ριμπάουντ απέναντι στα αμυντικά",1,1,100],["ftr","oftr","βολές απέναντι σε φάουλ που δίνει",1,-1,100],["tovPct","otovPct","λάθη της (TOV%) απέναντι στην πίεση",-1,1,100]];
+function rankIn(pool,k,v,dir){return 1+pool.filter(function(l){var x=num(l[k]);return x!=null&&(dir>0?x>v:x<v)}).length}
+function keyBattles(off,def,pool){var n=pool.length,out=[];BATT.forEach(function(b){var vo=num(off[b[0]]),vd=num(def[b[1]]);if(vo==null||vd==null)return;
+ var ro=rankIn(pool,b[0],vo,b[3]),rd=rankIn(pool,b[1],vd,b[4]);var sc=(n+1-ro)+rd;out.push({t:b[2],ro:ro,rd:rd,sc:sc,vo:vo*b[5],vd:vd*b[5]})});
+ return out.sort(function(a,b){return b.sc-a.sc}).slice(0,3)}
+function keyCard(a,h,la,lh,pool){if(pool.length<20)return "";
+ var side=function(x,y,lx,ly){var B=keyBattles(lx,ly,pool);return '<div class="ix-sw-c '+(B.length?"good":"")+'"><h4>'+esc(x.abbr)+' επιτίθεται στην '+esc(y.abbr)+'</h4>'+B.map(function(b){var edge=b.ro<=10&&b.rd>=pool.length-9?"Πλεονέκτημα":(b.ro<=15&&b.rd>=pool.length-14?"Ελαφρύ προβάδισμα":"Ισορροπία");return '<div class="ix-sw-r g"><div class="ix-sw-t"><b>'+esc(b.t)+'</b><small>'+edge+'</small></div><div class="ix-sw-v"><em>#'+b.ro+' vs #'+b.rd+'</em><small>θέση '+esc(x.abbr)+' · θέση άμυνας '+esc(y.abbr)+'</small></div></div>'}).join("")+'</div>'};
+ return card("Πού κρίνεται το ματς",'<div class="ix-sw">'+side(a,h,la,lh)+side(h,a,lh,la)+'</div>'+note("Συγκρίνουμε τις δυνατότητες της μιας ομάδας στην επίθεση με τις αδυναμίες της άλλης στην άμυνα (θέσεις 1–"+pool.length+"). Είναι ανάλυση τάσεων σεζόν, όχι πρόβλεψη σκορ."),"ix-sw-card")}
 async function matchup(){
  var all=await Promise.all([soft("power"),soft("lab?type=season"),upcoming()]),pw=all[0],se=all[1];
  if(!pw||!asList(pw.teams).length){fail("Δεν φόρτωσαν οι ομάδες.");return}
@@ -207,7 +216,7 @@ async function matchup(){
    return '<div class="ix-mrow"><div class="ix-mside l'+(better==="a"?" w":"")+'"><span class="ix-mv '+(better==="a"?"win":"")+'">'+fmt(va)+'<small>'+rk(va)+'</small></span><span class="ix-mbar"><i style="width:'+sc(va).toFixed(0)+'%"></i></span></div><div class="ix-mlabel">'+m[0]+'</div><div class="ix-mside r'+(better==="h"?" w":"")+'"><span class="ix-mbar"><i style="width:'+sc(vh).toFixed(0)+'%"></i></span><span class="ix-mv '+(better==="h"?"win":"")+'">'+fmt(vh)+'<small>'+rk(vh)+'</small></span></div></div>'}).join("");
   var head='<div class="ix-mhead"><a href="#/team/'+a.id+'"><img src="'+esc(a.logo||LOGO(a.abbr))+'" alt="" '+hideImg+'><b>'+esc(a.name)+'</b><small>'+esc((a.wins??"")+"-"+(a.losses??""))+'</small></a><div class="ix-score"><b>'+winsA+'</b><span>πλεονεκτήματα</span><b>'+winsH+'</b></div><a href="#/team/'+h.id+'"><img src="'+esc(h.logo||LOGO(h.abbr))+'" alt="" '+hideImg+'><b>'+esc(h.name)+'</b><small>'+esc((h.wins??"")+"-"+(h.losses??""))+'</small></a></div>';
   var story=lines.length?'<ul class="ix-story">'+lines.slice(0,4).map(function(x){return '<li><b>'+esc(x.w.abbr)+'</b> καλύτερη σε '+esc(x.m)+' ('+x.ra+' στη λίγκα έναντι '+x.rl+')</li>'}).join("")+'</ul>':"";
-  document.getElementById("ix-mu").innerHTML=card("",head+'<div class="ix-mtable">'+rows+'</div>',"ix-mcard")+(story?card("Τι ξεχωρίζει",story):"")+(se?"":note("Δεν φόρτωσαν τα advanced stats: εμφανίζονται μόνο power και διαφορά πόντων."))+note("Το μήκος της μπάρας δείχνει πού βρίσκεται η ομάδα σε σχέση με όλη τη λίγκα (πάντα «προς τα δεξιά = καλύτερα»). #N = κατάταξη στη λίγκα. Πρόκειται για σύγκριση προφίλ, όχι για πρόβλεψη αποτελέσματος.")+src("ESPN box scores · Atlas power · "+date(Date.now()));
+  document.getElementById("ix-mu").innerHTML=card("",head+'<div class="ix-mtable">'+rows+'</div>',"ix-mcard")+(story?card("Τι ξεχωρίζει",story):"")+keyCard(a,h,la,lh,pool)+(se?"":note("Δεν φόρτωσαν τα advanced stats: εμφανίζονται μόνο power και διαφορά πόντων."))+note("Το μήκος της μπάρας δείχνει πού βρίσκεται η ομάδα σε σχέση με όλη τη λίγκα (πάντα «προς τα δεξιά = καλύτερα»). #N = κατάταξη στη λίγκα. Πρόκειται για σύγκριση προφίλ, όχι για πρόβλεψη αποτελέσματος.")+src("ESPN box scores · Atlas power · "+date(Date.now()));
  }
 }
 
