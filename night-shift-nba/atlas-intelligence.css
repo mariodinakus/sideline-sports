@@ -205,3 +205,27 @@
  .ix-strip{grid-template-columns:repeat(40,1fr)}.ix-strip i{height:22px}
 }
 @media (prefers-reduced-motion:reduce){.ix-skel{animation:none}.ix-tile,.ix-tile-go{transition:none}}
+
+/* ---- strengths & weaknesses ---- */
+.ix-sw-card{margin-top:14px}
+.ix-sw{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ix-sw-c{border-radius:14px;padding:14px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);min-width:0}
+.ix-sw-c.good{border-color:rgba(34,211,154,.28);background:linear-gradient(180deg,rgba(34,211,154,.07),rgba(34,211,154,.015))}
+.ix-sw-c.bad{border-color:rgba(255,77,106,.28);background:linear-gradient(180deg,rgba(255,77,106,.07),rgba(255,77,106,.015))}
+.ix-sw-c h4{display:flex;align-items:center;gap:8px;font:800 12px/1 var(--body,Inter);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.ix-sw-c.good h4{color:var(--good,#22d39a)}.ix-sw-c.bad h4{color:var(--bad,#ff4d6a)}
+.ix-sw-r{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:10px 0;border-top:1px solid rgba(255,255,255,.06)}
+.ix-sw-r:first-of-type{border-top:0;padding-top:0}
+.ix-sw-t b{display:block;font-size:14px;color:#f1f3f7}
+.ix-sw-t small{display:block;font-size:12px;line-height:1.4;color:var(--muted,#959cab);margin-top:2px}
+.ix-sw-v{text-align:right;white-space:nowrap}
+.ix-sw-v em{font:800 18px/1 var(--display,Inter);font-style:normal;color:#fff}
+.ix-sw-v small{display:block;font-size:11px;color:var(--dim,#7d8494);margin-top:3px}
+.ix-sw-bar{grid-column:1/-1;height:4px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:6px}
+.ix-sw-bar i{display:block;height:100%;border-radius:4px}
+.ix-sw-r.g .ix-sw-bar i{background:var(--good,#22d39a)}.ix-sw-r.b .ix-sw-bar i{background:var(--bad,#ff4d6a)}
+.ix-sw-style{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ix-sw-style span{font-size:12.5px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#c5cad4}
+.ix-sw-style b{color:#fff}
+#ix-sw-host .ix-card{margin-top:14px}#ix-sw-host .ix-card:first-child{margin-top:0}
+@media(max-width:760px){.ix-sw{grid-template-columns:1fr}}
