@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 188" width="560" height="188" role="img" aria-label="COSMOS LAB mathematical universe and physics research project">
+<defs>
+<linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08141e"/><stop offset="1" stop-color="#18203b"/></linearGradient>
+<pattern id="g" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0H0V25" fill="none" stroke="#9bbec8" stroke-opacity=".06"/></pattern>
+<linearGradient id="o" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a7a6ff"/><stop offset="1" stop-color="#5ce7e5"/></linearGradient>
+</defs>
+<rect x="1" y="1" width="558" height="186" rx="15" fill="url(#b)" stroke="#b2a3ff" stroke-opacity=".5" stroke-width="2"/>
+<rect x="1" y="1" width="558" height="186" rx="15" fill="url(#g)"/>
+<rect x="22" y="28" width="37" height="4" rx="2" fill="#b2a3ff"/><circle cx="79" cy="30" r="3" fill="#b2a3ff" opacity=".6"/>
+<text x="24" y="94" fill="#f3f8fb" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="800" letter-spacing="1.1">COSMOS LAB</text>
+<text x="24" y="121" fill="#a6a2c7" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="600" letter-spacing="1.5">MATHEMATICS / UNIVERSE / RESEARCH</text>
+<text x="24" y="164" fill="#b2a3ff" font-family="Arial, Helvetica, sans-serif" font-size="11" letter-spacing="1.8">EXPLORE LABS  /</text>
+<g transform="translate(312 23)">
+<rect width="226" height="145" rx="10" fill="#07121a" stroke="#b2a3ff" stroke-opacity=".3"/>
+<g transform="translate(113 73)" fill="none" stroke-width="1.7">
+<ellipse rx="84" ry="35" stroke="url(#o)" transform="rotate(-35)"/>
+<ellipse rx="84" ry="35" stroke="url(#o)" transform="rotate(35)"/>
+<ellipse rx="78" ry="34" stroke="#8fcbff" stroke-opacity=".8" transform="rotate(90)"/>
+<circle cx="0" cy="0" r="11" fill="#aeb2ff" stroke="#d0e2ff" stroke-width="2"/>
+<circle cx="-65" cy="36" r="5" fill="#76efe8" stroke="none"/>
+<circle cx="46" cy="-54" r="5" fill="#b2a3ff" stroke="none"/>
+<circle cx="70" cy="26" r="4" fill="#8fcbff" stroke="none"/>
+</g>
+<g fill="#9e9aff"><circle cx="21" cy="20" r="1.4"/><circle cx="197" cy="26" r="1.4"/><circle cx="187" cy="113" r="1.4"/><circle cx="38" cy="122" r="1.4"/></g>
+<path d="M11 134H48M179 11H215" stroke="#76efe8" stroke-opacity=".5"/>
+</g></svg>
