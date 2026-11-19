@@ -1,35 +1,33 @@
-# Publish Marios GitHub profile
+# GitHub profile — current publishing and pinning guide
 
-## Status
+## Current status (20 November 2026)
 
-The profile graphics and README are ready, but the GitHub account currently has **no public special repository named `mariodinakus/mariodinakus`**. A GitHub profile README appears only when that repository exists and contains a root `README.md`.
+The public special repository **[mariodinakus/mariodinakus](https://github.com/mariodinakus/mariodinakus)** exists and has a live root README. The updated README now displays **five core projects** and **two active supporting projects** with original SVG cards. The graphics are hosted in the public `sideline-sports` repository.
 
-## One-time publishing steps
+- [Live GitHub profile](https://github.com/mariodinakus)
+- [Live profile README source](https://github.com/mariodinakus/mariodinakus/blob/main/README.md)
+- [Reusable profile template](./README.md)
+- [Original banner + seven project graphics](./assets)
 
-1. Open https://github.com/new
-2. Repository name: **mariodinakus** (owner: **mariodinakus**).
-3. Visibility: **Public**. Check **Add a README file**, then create the repository.
-4. Open [this ready-made README](./README.md), select **Raw**, copy its full content.
-5. Edit `README.md` in `mariodinakus/mariodinakus`, paste and commit.
-6. Open https://github.com/mariodinakus to verify that the header and project images render.
+**No new repository needs to be created.** The profile README is already published, and the reusable template is kept in sync.
 
-The image URLs in the template point to this repository's published `main` branch; no additional image upload is needed.
+## Public pinned repositories — recommended six
 
-## Suggested pinned repositories
+GitHub's public profile offers six pinned repository positions. Choose these:
 
-From the profile page, use **Customize your pins**. Suggested publicly visible choices:
+1. [sideline-sports](https://github.com/mariodinakus/sideline-sports) — NBA Atlas
+2. [monokairos](https://github.com/mariodinakus/monokairos) — MONO Weather
+3. [world-faultline](https://github.com/mariodinakus/world-faultline) — PAX module
+4. [cosmos-lab](https://github.com/mariodinakus/cosmos-lab) — COSMOS LAB
+5. [efimeria-one](https://github.com/mariodinakus/efimeria-one) — EFIMERIA ONE
+6. [aoth](https://github.com/mariodinakus/aoth) — AOTH
 
-- `sideline-sports` (NBA Atlas)
-- `monokairos` (MONO Weather)
-- `world-faultline` (PAX)
-- `efimeria-one` (EFIMERIA ONE)
-- `aoth` (AOTH)
-- `blackout-global-monitor` (BLACKOUT)
+The **AXON** repository is private, so it remains featured in the README as private research without a public code link. Do not make it public simply to pin it.
 
-AXON is currently **private**; the profile readme highlights it as private R&D but does not link visitors to an inaccessible private repository. Do not change its visibility just to pin it.
+To set pins, open https://github.com/mariodinakus → **Customize your pins**, check these six and save. The GitHub connector used for this work can edit repository files but does not expose account-level pin controls.
 
-## Notes
+## Maintenance notes
 
-- The GitHub connector can write repository files but cannot create repositories, change profile pins, update avatar/bio, or edit account-level settings.
-- Keep `sideline-sports/docs/profile/assets/` public and intact, otherwise the profile images will stop displaying.
-- The README does not include live GitHub stats widgets or third-party badge endpoints that could be misleading or unavailable.
+- The public profile links to SVGs under `sideline-sports/docs/profile/assets/`. Keep these files publicly accessible.
+- Profile changes should update the root README of `mariodinakus/mariodinakus`; mirror the changes in this template so they do not drift.
+- This documentation does not modify profile picture, account bio, pinned repositories, repository visibility, deployments or account security settings.
