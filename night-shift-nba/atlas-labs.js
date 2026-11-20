@@ -324,7 +324,7 @@ function hook(){
   document.querySelectorAll('#links [data-r="lab"]').forEach(a=>a.classList.toggle('on',LAB.includes(r.name)));
   if(LAB.includes(r.name)){document.querySelectorAll('#links [data-r]').forEach(a=>{if(a.dataset.r!=='lab')a.classList.remove('on')});
     setTimeout(()=>({lab:hub,watch,shock,whatif,edge,dna:()=>dna(r.id)})[r.name](),0);return}
-  if(r.name==='menu')setTimeout(()=>{if(!document.getElementById('labcard'))view.insertAdjacentHTML('afterbegin','<a id="labcard" class="card" href="#/lab" style="display:block;margin-bottom:16px;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(255,90,31,.12))"><div class="eyebrow">Νέο · πειράματα</div><div class="h2" style="font-size:30px">NBA ATLAS Lab</div><div class="muted" style="margin-top:4px">Replay χωρίς spoilers · ανατροπές · what-if · αγορές · Player DNA</div></a>')},30);
+  if(r.name==='menu')setTimeout(()=>{if(!document.getElementById('atlas-menu-page')&&!document.getElementById('labcard'))view.insertAdjacentHTML('afterbegin','<a id="labcard" class="card" href="#/lab" style="display:block;margin-bottom:16px;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(255,90,31,.12))"><div class="eyebrow">Νέο · πειράματα</div><div class="h2" style="font-size:30px">NBA ATLAS Lab</div><div class="muted" style="margin-top:4px">Replay χωρίς spoilers · ανατροπές · what-if · αγορές · Player DNA</div></a>')},30);
 }
 let pend=null;
 new MutationObserver(()=>{clearTimeout(pend);pend=setTimeout(()=>{const r=route();navAdd();

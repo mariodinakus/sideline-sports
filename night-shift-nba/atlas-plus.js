@@ -381,7 +381,7 @@ new MutationObserver(()=>{clearTimeout(pend);pend=setTimeout(()=>{const r=route(
   if(r.name==='team'&&r.id&&document.querySelector('.phero'))teamInjuries(r.id);
   if(r.name==='model')modelTrend();
   if(['home','games','game','team'].includes(r.name))setTimeout(tvDecorate,600);
-  if(r.name==='menu'&&!document.getElementById('pluscard'))view.insertAdjacentHTML('afterbegin',`<div id="pluscard" class="grid g2" style="margin-bottom:16px">${TILES.map(([k,ic,t])=>`<a class="card" href="#/${k}" style="display:block"><div class="h2" style="font-size:24px">${ic} ${t}</div></a>`).join('')}</div>`);
+  if(r.name==='menu'&&!document.getElementById('atlas-menu-page')&&!document.getElementById('pluscard'))view.insertAdjacentHTML('afterbegin',`<div id="pluscard" class="grid g2" style="margin-bottom:16px">${TILES.map(([k,ic,t])=>`<a class="card" href="#/${k}" style="display:block"><div class="h2" style="font-size:24px">${ic} ${t}</div></a>`).join('')}</div>`);
 },150)}).observe(view,{childList:true});
 addEventListener('hashchange',hook);hook();
 })();

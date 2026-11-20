@@ -159,7 +159,7 @@ function hook(){
   document.querySelectorAll('#links [data-r="odds"]').forEach(a=>a.classList.toggle('on',r.name==='odds'));
   if(r.name!=='game')clearInterval(liveTimer);
   if(r.name==='odds'){document.querySelectorAll('[data-r]').forEach(a=>{if(a.dataset.r!=='odds')a.classList.remove('on')});setTimeout(odds,0);return}
-  if(r.name==='menu')setTimeout(()=>{if(!document.getElementById('oddscard'))view.insertAdjacentHTML('afterbegin','<a id="oddscard" class="card" href="#/odds" style="display:block;margin-bottom:16px"><div class="eyebrow">Monte Carlo · προσομοίωση σεζόν</div><div class="h2" style="font-size:30px">Playoff odds</div></a>')},0);
+  if(r.name==='menu')setTimeout(()=>{if(!document.getElementById('atlas-menu-page')&&!document.getElementById('oddscard'))view.insertAdjacentHTML('afterbegin','<a id="oddscard" class="card" href="#/odds" style="display:block;margin-bottom:16px"><div class="eyebrow">Monte Carlo · προσομοίωση σεζόν</div><div class="h2" style="font-size:30px">Playoff odds</div></a>')},0);
 }
 let pending=null;
 new MutationObserver(()=>{clearTimeout(pending);pending=setTimeout(()=>{const r=route();
