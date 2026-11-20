@@ -33161,9 +33161,156 @@
         "totalLow": 211.00414008361344,
         "totalHigh": 259.43432484701987
       }
+    },
+    {
+      "id": "2026:401910028",
+      "season": 2026,
+      "tip": "2026-11-22T03:00:00.000Z",
+      "lockedAt": "2026-11-20T21:28:58.409Z",
+      "home": "Sacramento Kings",
+      "away": "Boston Celtics",
+      "homeCode": "SAC",
+      "awayCode": "BOS",
+      "model": "multi-model-ensemble",
+      "features": [
+        1,
+        -1.4249315175972086,
+        -0.32906404047782417,
+        -0.3416859783913558,
+        1.1247415906362548
+      ],
+      "pick": "AWAY",
+      "modelVotes": [
+        {
+          "id": "scoring",
+          "label": "Attack / defence",
+          "margin": -18.64,
+          "total": 221.77,
+          "homeWinProb": 0.0601,
+          "why": "Blended points for and against",
+          "weight": 0.113
+        },
+        {
+          "id": "net",
+          "label": "Net-rating strength",
+          "margin": -9,
+          "total": 221.77,
+          "homeWinProb": 0.2267,
+          "why": "Smoothed net points per game",
+          "weight": 0.112
+        },
+        {
+          "id": "pyth",
+          "label": "Pythagorean expectation",
+          "margin": -16.46,
+          "total": 221.77,
+          "homeWinProb": 0.0851,
+          "why": "Pythagorean expectation",
+          "weight": 0.114
+        },
+        {
+          "id": "bayes",
+          "label": "Bayesian win rates",
+          "margin": -7.48,
+          "total": 221.77,
+          "homeWinProb": 0.2666,
+          "why": "Beta(6,6) prior and Log5",
+          "weight": 0.107
+        },
+        {
+          "id": "form",
+          "label": "Last-10 form",
+          "margin": -10.24,
+          "total": 221.77,
+          "homeWinProb": 0.1966,
+          "why": "Past ten real results",
+          "weight": 0.111
+        },
+        {
+          "id": "momentum",
+          "label": "Recency-weighted form",
+          "margin": -9.82,
+          "total": 220.89,
+          "homeWinProb": 0.2065,
+          "why": "Exponentially weighted real match form",
+          "weight": 0.11
+        },
+        {
+          "id": "elo",
+          "label": "Historical Elo",
+          "margin": -8.9,
+          "total": 221.77,
+          "homeWinProb": 0.2291,
+          "why": "Chronological completed-game Elo",
+          "weight": 0.11
+        },
+        {
+          "id": "conditions",
+          "label": "Rest / roster / availability",
+          "margin": -18.65,
+          "total": 221.77,
+          "homeWinProb": 0.0601,
+          "why": "Rest days / verified OUT counts / roster overlap",
+          "weight": 0.114
+        },
+        {
+          "id": "ridge",
+          "label": "Online / validated ridge",
+          "margin": -13.7,
+          "total": 221.77,
+          "homeWinProb": 0.1268,
+          "why": "Online ridge trained and prequentially tested on prior final games",
+          "weight": 0.11
+        }
+      ],
+      "conditions": {
+        "formH": {
+          "games": 96,
+          "last10": -12.5,
+          "last5": -13.8,
+          "ewma": -15.243307155843146,
+          "avgPoints": 107.7,
+          "avgAgainst": 120.2,
+          "restDays": 3
+        },
+        "formA": {
+          "games": 97,
+          "last10": 11.1,
+          "last5": 10,
+          "ewma": 8.008109935352952,
+          "avgPoints": 110.4,
+          "avgAgainst": 99.3,
+          "restDays": 3.0208333333333335
+        },
+        "rosterH": null,
+        "rosterA": null,
+        "restGapDays": -0.02083333333333348,
+        "outH": 3,
+        "outA": null,
+        "sourceCoverage": {
+          "roster": true,
+          "previousRoster": false,
+          "injuries": false,
+          "rest": true,
+          "form": true,
+          "elo": true,
+          "note": "Context proxies are conservative; player minutes, opponent-adjusted strength and verified starting lineups may be unavailable."
+        }
+      },
+      "forecast": {
+        "homePts": 104.53453406226478,
+        "awayPts": 117.1387638952803,
+        "margin": -12.604229833015536,
+        "total": 221.6732979575451,
+        "homeWinProb": 0.19788109670868947,
+        "marginLow": -31.625292699048693,
+        "marginHigh": 6.416833033017619,
+        "totalLow": 197.45820557584187,
+        "totalHigh": 245.8883903392483
+      }
     }
   ],
-  "updatedAt": "2026-11-20T13:30:49.100Z",
+  "updatedAt": "2026-11-20T21:28:58.409Z",
   "model": {
     "status": "validated-learning",
     "sample": 212,
@@ -33199,7 +33346,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-20T13:30:49.100Z",
+    "updatedAt": "2026-11-20T21:28:58.409Z",
     "homeGames": {
       "ATL": [
         {
@@ -53394,7 +53541,7 @@
         },
         {
           "name": "Ronald Holland II",
-          "status": "Out"
+          "status": "Day-To-Day"
         },
         {
           "name": "Ebuka Okorie",
@@ -53441,6 +53588,10 @@
           "status": "Day-To-Day"
         },
         {
+          "name": "Jalen Smith",
+          "status": "Day-To-Day"
+        },
+        {
           "name": "Caleb Wilson",
           "status": "Out"
         }
@@ -53478,6 +53629,10 @@
         },
         {
           "name": "Thomas Sorber",
+          "status": "Out"
+        },
+        {
+          "name": "Nikola Topic",
           "status": "Out"
         },
         {
@@ -53560,7 +53715,7 @@
       "SAC": [
         {
           "name": "Precious Achiuwa",
-          "status": "Day-To-Day"
+          "status": "Out"
         },
         {
           "name": "De'Andre Hunter",
@@ -53595,24 +53750,12 @@
         {
           "name": "Tyrese Maxey",
           "status": "Day-To-Day"
-        },
-        {
-          "name": "Dean Wade",
-          "status": "Day-To-Day"
         }
       ],
       "MIL": [
         {
           "name": "Ousmane Dieng",
           "status": "Out"
-        },
-        {
-          "name": "Kyle Kuzma",
-          "status": "Day-To-Day"
-        },
-        {
-          "name": "Myles Turner",
-          "status": "Day-To-Day"
         }
       ],
       "POR": [
