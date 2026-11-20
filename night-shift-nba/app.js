@@ -216,8 +216,40 @@ V.teams=async()=>{
   fill('#tg',Object.keys(conf).length?['Ανατολή','Δύση'].map(c=>`<div class="lbl" style="margin-top:22px">${c}</div><div class="teams">${by(c).map(card).join('')}</div>`).join(''):`<div class="teams">${T.list.map(card).join('')}</div>`);
 };
 
+function estimateTeamGame(g,stats,league,archive){
+ const fc=archive?.forecast;
+ if(fc&&[fc.homePts,fc.awayPts,fc.homeWinProb].every(x=>Number.isFinite(x))&&fc.homePts>0&&fc.awayPts>0&&fc.homeWinProb>=0&&fc.homeWinProb<=1)return{...fc,source:'COURTSIDE IQ'};
+ const h=stats[g.home.id],a=stats[g.away.id];
+ if(!h||!a||!Number.isFinite(league))return null;
+ const adjust=(x,v)=>league+(v-league)*x.games/(x.games+12);
+ const homePts=(adjust(h,h.pf)+adjust(a,a.pa))/2+1.5;
+ const awayPts=(adjust(a,a.pf)+adjust(h,h.pa))/2-1.5;
+ const homeWinProb=1/(1+Math.exp(-(homePts-awayPts)/7.5));
+ return {homePts,awayPts,homeWinProb,source:'ATLAS · εκτίμηση'};
+}
+function renderTeamSchedule(data,id,standings,archive){
+ if(!data)return errBox('','Πρόγραμμα ομάδας');
+ const stats={};for(const group of standings?.groups||[])for(const e of standingsRows(group)){
+   const pf=n(e.s.avgPointsFor),pa=n(e.s.avgPointsAgainst),w=n(e.s.wins),l=n(e.s.losses);
+   if(pf>0&&pa>0&&w!==null&&l!==null&&w+l>=3)stats[e.team.id]={pf,pa,games:w+l};
+ }
+ const valid=Object.values(stats),league=valid.length>=20?valid.reduce((sum,x)=>sum+x.pf,0)/valid.length:NaN;
+ const row=(g,forecast=false)=>{
+   const home=g.home.id===id,own=home?g.home:g.away,opp=home?g.away:g.home;
+   const result=g.state==='post',live=g.state==='in';
+   const win=result&&own.score>opp.score;
+   const p=forecast?estimateTeamGame(g,stats,league,archive?.map?.[g.id]):null;
+   const pct=p?Math.round((home?p.homeWinProb:1-p.homeWinProb)*100):0;
+   const predicted=p?(home?Math.round(p.homePts)+' – '+Math.round(p.awayPts):Math.round(p.awayPts)+' – '+Math.round(p.homePts)):'—';
+   const actual=own.score!==null&&opp.score!==null?own.score+' – '+opp.score:'—';
+   return `<a class="team-fixture" href="#/game/${esc(g.id)}"><div class="tf-date">${esc(day(g.date))}<small>${forecast?esc(time(g.date))+' · GR':live?'LIVE':'Τελικό'}</small></div><div class="tf-opponent"><img src="${esc(opp.logo||LOGO(opp.abbr))}" alt="" loading="lazy" ${hideErr}><div><b>${esc(opp.short||opp.name)}</b><small>${home?'Εντός':'Εκτός'} έδρας</small></div></div><div class="tf-outcome">${forecast?`<b>${predicted}</b><small>${p?esc(p.source):'Χωρίς πρόβλεψη'}</small>${p?`<div class="tf-prob"><i style="width:${pct}%"></i></div><small>${pct}% νίκη · ${100-pct}% ήττα</small>`:''}`:`<b>${actual}</b>${result?`<span class="tf-result ${win?'good':'bad'}">${win?'ΝΙΚΗ':'ΗΤΤΑ'}</span>`:'<small>Σε εξέλιξη</small>'}`}</div></a>`;
+ };
+ const list=(games,forecast,empty)=>games?.length?games.map(g=>row(g,forecast)).join(''):`<div class="empty">${empty}</div>`;
+ return `${data.live?.length?`<div class="card" style="margin-bottom:16px">${secH('LIVE','Σε εξέλιξη')}${list(data.live,false,'')}</div>`:''}<div class="grid g2 team-fixture-grid"><div class="card"><div class="eyebrow">LAST ${data.recent?.length||0}</div><h3 class="h3">Πρόσφατοι αγώνες</h3>${list(data.recent,false,'Δεν βρέθηκαν ολοκληρωμένοι αγώνες.')}</div><div class="card"><div class="eyebrow">NEXT ${data.upcoming?.length||0}</div><h3 class="h3">Επόμενοι αγώνες</h3>${list(data.upcoming,true,'Δεν υπάρχει ανακοινωμένο πρόγραμμα.')}</div></div><p class="note">Πηγή προγράμματος: ESPN (ανεπίσημο feed). Σκορ: επιλεγμένη ομάδα – αντίπαλος. Οι προβλέψεις COURTSIDE IQ χρησιμοποιούνται όπου υπάρχουν· διαφορετικά, ATLAS: μέσοι πόντοι επίθεσης/άμυνας, συρρίκνωση προς τον μέσο όρο λίγκας (12 αγώνες), πλεονέκτημα έδρας 3 πόντων και λογιστική πιθανότητα (κλίμακα 7,5). Το ATLAS δεν είναι βαθμονομημένο μοντέλο και δεν λαμβάνει υπόψη τραυματισμούς.</p>`;
+}
 V.team=async(q,id)=>{
   const t=token;view.innerHTML=skel(340)+'<div style="height:16px"></div>'+skel(400);
+  const schedulePromise=safe(api('data?type=teamSchedule&id='+encodeURIComponent(id))),archivePromise=forecasts();
   const T=await teams();const [r,p,s]=await Promise.all([safe(api('data?type=roster&id='+id)),safe(api('power')),safe(api('data?type=standings'))]);if(t!==token)return;
   const tm=T.byId[id]||r?.team;if(!tm){view.innerHTML=errBox('','Η ομάδα δεν βρέθηκε');return}
   const c=tColor(id,tm.abbr),pt=(p?.teams||[]).find(x=>x.id===id),pr=(p?.teams||[]).slice().sort((a,b)=>b.power-a.power).findIndex(x=>x.id===id)+1;
@@ -226,8 +258,10 @@ V.team=async(q,id)=>{
   const roster=(r?.players||[]).map(x=>({...x,st:ps[x.id]})).sort((a,b)=>(b.st?.ppg||0)-(a.st?.ppg||0));
   const tot=roster.reduce((a,x)=>a+(x.st?.ppg||0),0);
   view.innerHTML=`<section class="phero fade" style="--tc:${c}"><div class="bg"></div><div class="art" style="align-items:center"><img class="logo-big" src="${tm.logo||LOGO(tm.abbr)}" ${hideErr}></div><div class="txt"><div class="eyebrow">${esc(srow?.conf||'NBA')} · ${srow?'#'+srow.playoffSeed+' seed':''}</div><h1 class="h1" style="font-size:clamp(42px,6vw,80px)">${esc(tm.name)}</h1><div class="stats-row"><div class="st"><b>${srow?srow.wins+'-'+srow.losses:'—'}</b><small>Ρεκόρ</small></div><div class="st"><b class="${n(srow?.differential)>0?'good':'bad'}">${srow?.differential??'—'}</b><small>Net / αγώνα</small></div><div class="st"><b>${pr||'—'}</b><small>Power rank</small></div><div class="st"><b>${pt?f(pt.titleShare)+'%':'—'}</b><small>Τίτλος (Atlas)</small></div><div class="st"><b>${esc(srow?.['Last Ten Games']||'—')}</b><small>Τελ. 10</small></div><div class="st"><b>${esc(srow?.streak||'—')}</b><small>Σερί</small></div></div></div></section>
+  <section class="sec">${secH('GAME LOG','Πρόγραμμα & αποτελέσματα',null,'Οι 10 τελευταίοι και οι 10 επόμενοι αγώνες, με εκτιμώμενο σκορ και πιθανότητα νίκης.')}<div id="team-schedule">${skel(260)}</div></section>
   <section class="sec">${secH('Ρόστερ','Οι παίκτες')}<div class="pcards">${roster.map((x,i)=>`<a class="pc fade" href="#/player/${x.id}" style="--tc:${c};min-height:270px"><div class="bg"></div><div class="rnk" style="font-size:44px">${esc(x.jersey||'')}</div><img class="hs" src="${x.headshot||HS(x.id)}" loading="lazy" ${silh}><div class="info"><b>${esc(x.name)}</b><div class="ln"><span>${esc(x.position)}</span>${x.st?`<span><em>${f(x.st.ppg)}</em> PTS</span><span><em>${f(x.st.rpg)}</em> REB</span><span><em>${f(x.st.apg)}</em> AST</span>`:`<span>${esc(x.height)}</span>`}</div></div></a>`).join('')||'<div class="empty">Το ρόστερ δεν είναι διαθέσιμο.</div>'}</div></section>
   ${tot?`<section class="sec card">${secH('Usage','Ποιος κουβαλάει το σκοράρισμα',null,'Μερίδιο του κάθε παίκτη στους πόντους της ομάδας (ανά αγώνα, σε όσους έχουν επαρκή δείγμα).')}<div style="display:flex;flex-direction:column;gap:10px">${roster.filter(x=>x.st?.ppg).map(x=>`<div style="display:grid;grid-template-columns:170px 1fr 70px;gap:12px;align-items:center;font-size:13.5px"><b>${esc(x.name)}</b>${bar(x.st.ppg,roster[0].st.ppg,c)}<span class="muted" style="text-align:right">${f(x.st.ppg/tot*100,0)}%</span></div>`).join('')}</div></section>`:''}`;
+  Promise.all([schedulePromise,archivePromise]).then(([schedule,archive])=>{if(t===token)fill('#team-schedule',renderTeamSchedule(schedule,id,s,archive))});
 };
 
 V.power=async()=>{
