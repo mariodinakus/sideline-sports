@@ -335,3 +335,30 @@ html{scroll-behavior:smooth}
 .ht-big{font-family:var(--display);font-size:34px;line-height:1;color:var(--text);flex:none}
 .ht-skel{min-height:96px;background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.07),rgba(255,255,255,.03));border-top-color:transparent}
 @media (max-width:900px){.hero-teams{grid-template-columns:1fr;padding:0 14px 16px;gap:10px}.ht-card{padding:12px 14px}.ht-row img{width:38px;height:38px}.ht-n b{font-size:17px}.ht-big{font-size:28px}}
+
+/* Standings: keep rank, logo and team name aligned across every row. */
+#st .tcell {
+  display: grid;
+  grid-template-columns: 28px 26px minmax(0, 1fr);
+  align-items: center;
+  justify-content: start;
+  column-gap: 10px;
+  min-width: max-content;
+  text-align: left;
+  white-space: nowrap;
+  min-height: 28px;
+}
+#st .tcell .rk {
+  width: 28px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+#st .tcell img {
+  width: 26px;
+  height: 26px;
+  max-width: none;
+  object-fit: contain;
+}
+@media (max-width: 760px) {
+  #st .tcell { column-gap: 6px; }
+}
