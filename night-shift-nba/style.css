@@ -362,3 +362,51 @@ html{scroll-behavior:smooth}
 @media (max-width: 760px) {
   #st .tcell { column-gap: 6px; }
 }
+
+/* NBA ATLAS — understated, accessible native scrollbars. */
+html, .tbl-wrap, .ix-tbl {
+  scrollbar-width: thin;
+  scrollbar-color: #626b7c #181c25;
+}
+@supports selector(::-webkit-scrollbar) {
+  html, .tbl-wrap, .ix-tbl {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-track {
+    background: #181c25;
+    border-radius: 999px;
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-thumb {
+    background: #626b7c;
+    border: 2px solid #181c25;
+    border-radius: 999px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-thumb:hover {
+    background: var(--hot2, #ff8a3d);
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-thumb:active {
+    background: var(--hot, #ff5a1f);
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-corner {
+    background: #181c25;
+  }
+}
+@media (forced-colors: active) {
+  html, .tbl-wrap, .ix-tbl {
+    scrollbar-color: auto;
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-thumb {
+    background: ButtonText;
+    border-color: Canvas;
+  }
+  :is(html, .tbl-wrap, .ix-tbl)::-webkit-scrollbar-track {
+    background: Canvas;
+  }
+}
