@@ -30644,7 +30644,12 @@
         "marginHigh": 22.616069980056796,
         "totalLow": 209.78217351016588,
         "totalHigh": 258.5401312688492
-      }
+      },
+      "actual": {
+        "home": 126,
+        "away": 98
+      },
+      "settledAt": "2026-11-20T03:41:17.054Z"
     },
     {
       "id": "2026:401910020",
@@ -30791,7 +30796,12 @@
         "marginHigh": 12.31997114515831,
         "totalLow": 202.5317525670178,
         "totalHigh": 251.28971032570115
-      }
+      },
+      "actual": {
+        "home": 114,
+        "away": 124
+      },
+      "settledAt": "2026-11-20T03:41:17.054Z"
     },
     {
       "id": "2026:401910021",
@@ -30938,7 +30948,12 @@
         "marginHigh": 21.993597540699923,
         "totalLow": 195.80123159223234,
         "totalHigh": 244.5591893509157
-      }
+      },
+      "actual": {
+        "home": 99,
+        "away": 102
+      },
+      "settledAt": "2026-11-20T03:41:17.054Z"
     },
     {
       "id": "2026:401910022",
@@ -31085,7 +31100,12 @@
         "marginHigh": 31.416535171290406,
         "totalLow": 201.58018386027294,
         "totalHigh": 250.33814161895629
-      }
+      },
+      "actual": {
+        "home": 124,
+        "away": 112
+      },
+      "settledAt": "2026-11-20T03:41:17.054Z"
     },
     {
       "id": "2026:401909305",
@@ -32408,33 +32428,39 @@
       }
     }
   ],
-  "updatedAt": "2026-11-19T22:24:03.117Z",
+  "updatedAt": "2026-11-20T03:41:17.054Z",
   "model": {
-    "status": "baseline-holdout-rejected",
-    "sample": 208,
+    "status": "validated-learning",
+    "sample": 212,
     "minimum": 50,
-    "holdout": 52,
-    "marginWeights": null,
+    "holdout": 53,
+    "marginWeights": [
+      -1.6764462494598489,
+      0.15173205083112407,
+      -0.09886063496685056,
+      0.6447950282423702,
+      0.476617814177304
+    ],
     "totalWeights": null,
-    "marginValidated": false,
+    "marginValidated": true,
     "totalValidated": false,
-    "marginHoldoutMAE": 12.398299996788733,
-    "marginModelHoldoutMAE": 12.210534540950452,
-    "totalHoldoutMAE": 14.972470067081614,
-    "totalModelHoldoutMAE": 15.379127025784,
-    "sigmaMargin": 14.99234107115468,
-    "sigmaTotal": 18.98820735806184
+    "marginHoldoutMAE": 11.920034659701319,
+    "marginModelHoldoutMAE": 11.637157496962542,
+    "totalHoldoutMAE": 14.29534975362584,
+    "totalModelHoldoutMAE": 14.498759631264754,
+    "sigmaMargin": 14.842232348354067,
+    "sigmaTotal": 18.89516006531404
   },
   "summary": {
-    "n": 208,
-    "winnerAccuracy": 0.6875,
-    "decisiveAccuracy": 0.717948717948718,
-    "decisiveN": 156,
-    "scoreMAE": 9.843259621126725,
-    "marginMAE": 11.542465089865031,
-    "totalMAE": 15.059165806400252,
-    "brier": 0.20930102020286132,
-    "margin80Coverage": 0.7692307692307693
+    "n": 212,
+    "winnerAccuracy": 0.6886792452830188,
+    "decisiveAccuracy": 0.7232704402515723,
+    "decisiveN": 159,
+    "scoreMAE": 9.810416803153247,
+    "marginMAE": 11.484404815488618,
+    "totalMAE": 15.013103567954525,
+    "brier": 0.20839553978117353,
+    "margin80Coverage": 0.7688679245283019
   },
   "contextCache": {
     "schema": 4,
