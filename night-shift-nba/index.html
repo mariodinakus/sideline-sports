@@ -20,15 +20,14 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="manifest" href="/manifest.webmanifest?v=3">
+<link rel="icon" href="/icon.svg?v=3" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://a.espncdn.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fira+Sans+Extra+Condensed:wght@600;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css?v=14">
+<link rel="stylesheet" href="/style.css?v=15">
 <link rel="stylesheet" href="/mobile.css">
 <link rel="stylesheet" href="/atlas-intelligence.css?v=15">
 <link rel="stylesheet" href="/atlas-tv.css?v=2">
@@ -36,7 +35,7 @@
 <body>
 <header class="nav">
   <div class="nav-in">
-    <a class="logo" href="#/home" aria-label="NBA ATLAS home"><span class="logo-ball"></span><span>NBA<b>ATLAS</b></span></a>
+    <a class="logo" href="#/home" aria-label="NBA ATLAS home"><img class="logo-mark" src="/icon.svg?v=3" alt="" width="38" height="38"><span class="logo-wordmark">NBA<b>ATLAS</b><small>BASKETBALL INTELLIGENCE</small></span></a>
     <nav class="links" id="links"></nav>
     <div class="nav-tools">
       <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" placeholder="Παίκτης ή ομάδα…" autocomplete="off"></label>
@@ -53,7 +52,7 @@
 </footer>
 <nav class="tabbar" id="tabbar" aria-label="Πλοήγηση κινητού"></nav>
 <dialog id="install-dialog" class="install-dialog" aria-labelledby="install-title">
-  <div class="install-top"><img src="/icon.svg" alt="" width="52" height="52"><div><span class="install-kicker">NBA ATLAS / MOBILE</span><h2 id="install-title">NBA ATLAS ΣΤΟ ΚΙΝΗΤΟ</h2></div><button type="button" id="install-close" class="install-close" aria-label="Κλείσιμο">×</button></div>
+  <div class="install-top"><img src="/icon.svg?v=3" alt="" width="52" height="52"><div><span class="install-kicker">NBA ATLAS / MOBILE</span><h2 id="install-title">NBA ATLAS ΣΤΟ ΚΙΝΗΤΟ</h2></div><button type="button" id="install-close" class="install-close" aria-label="Κλείσιμο">×</button></div>
   <p>Άνοιξε την εφαρμογή απευθείας από την αρχική οθόνη, χωρίς τη γραμμή του browser.</p>
   <button type="button" id="install-pwa" class="install-primary" hidden>Εγκατάσταση εφαρμογής</button>
   <p id="install-help" class="install-help">Σε Android Chrome: <b>⋮ → Εγκατάσταση εφαρμογής</b> ή <b>Προσθήκη στην αρχική οθόνη</b>.</p>
