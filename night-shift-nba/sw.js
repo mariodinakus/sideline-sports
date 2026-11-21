@@ -1,5 +1,5 @@
-const VERSION='nba-atlas-mobile-v39';
-const CORE=['/','/style.css?v=16','/mobile.css','/app.js?v=15','/atlas-season.js?v=1','/atlas-personal.js?v=2','/atlas-data.js','/atlas-features.js?v=2','/atlas-labs.js?v=2','/atlas-pro.js','/atlas-plus.js?v=2','/atlas-stats.js','/mobile.js','/atlas-intelligence.js?v=16','/atlas-intelligence.css?v=15','/atlas-tv.js?v=2','/atlas-tv.css?v=2','/icon.svg?v=3','/icon-192.png','/icon-512.png','/manifest.webmanifest?v=3'];
+const VERSION='nba-atlas-mobile-v40';
+const CORE=['/','/style.css?v=16','/mobile.css','/app.js?v=15','/atlas-season.js?v=2','/atlas-personal.js?v=2','/atlas-data.js','/atlas-features.js?v=2','/atlas-labs.js?v=2','/atlas-pro.js','/atlas-plus.js?v=2','/atlas-stats.js','/mobile.js','/atlas-intelligence.js?v=16','/atlas-intelligence.css?v=15','/atlas-tv.js?v=2','/atlas-tv.css?v=2','/icon.svg?v=3','/icon-192.png','/icon-512.png','/manifest.webmanifest?v=3'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(CORE)));self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('nba-atlas-')&&key!==VERSION).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{

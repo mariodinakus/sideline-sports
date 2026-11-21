@@ -1445,6 +1445,3961 @@
       },
       "notes": "Point differential and win rate, shrinkage, rating uncertainty, 2.2 home advantage, 82 games, random tiebreaks, simulated unassigned games. Play-in and best-of-seven bracket. Not calibrated; no injury or trade adjustments.",
       "standingsAsOf": "2026-11-21T22:23:42.845Z"
+    },
+    {
+      "model": "atlas-season-v2",
+      "weights": {
+        "performance": 0.35,
+        "form": 0.1,
+        "roster": 0.25,
+        "history": 0.15,
+        "market": 0.15
+      },
+      "coverage": {
+        "performance": 30,
+        "form": 30,
+        "roster": 30,
+        "history": 30,
+        "market": 30,
+        "injuries": 30,
+        "marketSources": [
+          "polymarket",
+          "kalshi"
+        ],
+        "historicalSeasons": [
+          2026,
+          2025
+        ],
+        "playerCount": 229
+      },
+      "season": 2027,
+      "asOf": "2026-11-21T22:30:49.280Z",
+      "simulations": 10000,
+      "knownGames": 964,
+      "unassignedGames": 30,
+      "scheduleAsOf": "2026-11-21T22:30:29.544Z",
+      "rows": [
+        {
+          "id": "15",
+          "name": "Milwaukee Bucks",
+          "short": "Bucks",
+          "abbr": "MIL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mil.png",
+          "color": "",
+          "conference": "East",
+          "wins": 1,
+          "losses": 16,
+          "currentSeed": 15,
+          "form": -7,
+          "rating": -4.6,
+          "factors": {
+            "performance": {
+              "score": -5.9,
+              "weight": 35
+            },
+            "form": {
+              "score": -7,
+              "weight": 10
+            },
+            "roster": {
+              "score": -3.4,
+              "weight": 25
+            },
+            "history": {
+              "score": -3,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "4395725",
+              "name": "Tyler Herro",
+              "mpg": 30.1,
+              "value": 27.6
+            },
+            {
+              "id": "5214640",
+              "name": "Kasparas Jakucionis",
+              "mpg": 19.1,
+              "value": 26.6
+            },
+            {
+              "id": "4432848",
+              "name": "Jaime Jaquez Jr.",
+              "mpg": 27.3,
+              "value": 25
+            },
+            {
+              "id": "5105623",
+              "name": "Kel'el Ware",
+              "mpg": 18.6,
+              "value": 24.7
+            },
+            {
+              "id": "5082206",
+              "name": "Brayden Burries",
+              "mpg": 22.6,
+              "value": 23.2
+            },
+            {
+              "id": "4591725",
+              "name": "Ryan Rollins",
+              "mpg": 23.6,
+              "value": 23
+            },
+            {
+              "id": "3134907",
+              "name": "Kyle Kuzma",
+              "mpg": 27.1,
+              "value": 21.9
+            },
+            {
+              "id": "5164559",
+              "name": "Nate Ament",
+              "mpg": 18.8,
+              "value": 18.7
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.2,
+          "remainingGames": 63,
+          "projectedWins": 24.4,
+          "projectedSeed": 13.4,
+          "modeSeed": 15,
+          "seedLow": 11,
+          "seedHigh": 15,
+          "winsLow": 17,
+          "winsHigh": 32,
+          "seedProb": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0.2,
+            0.5,
+            1.1,
+            2.4,
+            4.4,
+            7.6,
+            11.2,
+            14.7,
+            21.9,
+            36.1
+          ],
+          "direct": 0.3,
+          "playin": 8.3,
+          "playoffs": 2.6,
+          "semi": 0.4,
+          "conferenceFinal": 0.1,
+          "finals": 0,
+          "champion": 0
+        },
+        {
+          "id": "17",
+          "name": "Brooklyn Nets",
+          "short": "Nets",
+          "abbr": "BKN",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bkn.png",
+          "color": "",
+          "conference": "East",
+          "wins": 3,
+          "losses": 12,
+          "currentSeed": 14,
+          "form": -2.8000000000000003,
+          "rating": -3.4,
+          "factors": {
+            "performance": {
+              "score": -3.6,
+              "weight": 35
+            },
+            "form": {
+              "score": -2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -0.5,
+              "weight": 25
+            },
+            "history": {
+              "score": -8,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "3150844",
+              "name": "Moritz Wagner",
+              "mpg": 18.1,
+              "value": 28.9
+            },
+            {
+              "id": "3064514",
+              "name": "Julius Randle",
+              "mpg": 33.1,
+              "value": 28.7
+            },
+            {
+              "id": "4432194",
+              "name": "Day'Ron Sharpe",
+              "mpg": 23.9,
+              "value": 27.4
+            },
+            {
+              "id": "4278104",
+              "name": "Michael Porter Jr.",
+              "mpg": 32.9,
+              "value": 27.1
+            },
+            {
+              "id": "5279130",
+              "name": "Nolan Traore",
+              "mpg": 22.3,
+              "value": 26.9
+            },
+            {
+              "id": "5107173",
+              "name": "Danny Wolf",
+              "mpg": 23,
+              "value": 22.5
+            },
+            {
+              "id": "5101761",
+              "name": "Mikel Brown Jr.",
+              "mpg": 22.9,
+              "value": 20.5
+            },
+            {
+              "id": "5175643",
+              "name": "Egor Demin",
+              "mpg": 24,
+              "value": 18.5
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Nolan Traore",
+              "status": "GTD",
+              "until": 1795392000000,
+              "cost": 0.6
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 0.6,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.2,
+          "remainingGames": 65,
+          "projectedWins": 28.5,
+          "projectedSeed": 12.1,
+          "modeSeed": 13,
+          "seedLow": 9,
+          "seedHigh": 15,
+          "winsLow": 20,
+          "winsHigh": 37,
+          "seedProb": [
+            0,
+            0,
+            0.1,
+            0.2,
+            0.4,
+            1,
+            2.2,
+            4,
+            6.5,
+            9.6,
+            12.1,
+            14,
+            17.4,
+            17.2,
+            15.3
+          ],
+          "direct": 1.8,
+          "playin": 22.2,
+          "playoffs": 9.8,
+          "semi": 2,
+          "conferenceFinal": 0.8,
+          "finals": 0.2,
+          "champion": 0.1
+        },
+        {
+          "id": "30",
+          "name": "Charlotte Hornets",
+          "short": "Hornets",
+          "abbr": "CHA",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
+          "color": "",
+          "conference": "East",
+          "wins": 4,
+          "losses": 11,
+          "currentSeed": 12,
+          "form": -5.6000000000000005,
+          "rating": -5.1,
+          "factors": {
+            "performance": {
+              "score": -4.6,
+              "weight": 35
+            },
+            "form": {
+              "score": -5.6,
+              "weight": 10
+            },
+            "roster": {
+              "score": -10,
+              "weight": 25
+            },
+            "history": {
+              "score": 0.3,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.3,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "3135045",
+              "name": "Grayson Allen",
+              "mpg": 27.1,
+              "value": 26.4
+            },
+            {
+              "id": "4433287",
+              "name": "Brandon Miller",
+              "mpg": 30.8,
+              "value": 24.3
+            },
+            {
+              "id": "4433249",
+              "name": "Moussa Diabate",
+              "mpg": 29.6,
+              "value": 23.8
+            },
+            {
+              "id": "4396971",
+              "name": "Naz Reid",
+              "mpg": 31.1,
+              "value": 23.6
+            },
+            {
+              "id": "4576060",
+              "name": "Ryan Kalkbrenner",
+              "mpg": 18.1,
+              "value": 23.5
+            },
+            {
+              "id": "3032979",
+              "name": "Dennis Schroder",
+              "mpg": 29.9,
+              "value": 14.5
+            },
+            {
+              "id": "2583632",
+              "name": "Royce O'Neale",
+              "mpg": 20.5,
+              "value": 14.3
+            },
+            {
+              "id": "4602025",
+              "name": "Sion James",
+              "mpg": 27.3,
+              "value": 10.2
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Grayson Allen",
+              "status": "GTD",
+              "until": 1795392000000,
+              "cost": 0.7
+            },
+            {
+              "name": "Dennis Schroder",
+              "status": "OUT",
+              "until": 1795564800000,
+              "cost": 0.3
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 65,
+          "projectedWins": 26.3,
+          "projectedSeed": 12.8,
+          "modeSeed": 15,
+          "seedLow": 10,
+          "seedHigh": 15,
+          "winsLow": 19,
+          "winsHigh": 35,
+          "seedProb": [
+            0,
+            0,
+            0,
+            0.1,
+            0.1,
+            0.5,
+            1.1,
+            2.3,
+            3.9,
+            6.5,
+            9.3,
+            12.7,
+            17.5,
+            21.8,
+            24.2
+          ],
+          "direct": 0.8,
+          "playin": 13.8,
+          "playoffs": 4.9,
+          "semi": 0.8,
+          "conferenceFinal": 0.2,
+          "finals": 0,
+          "champion": 0
+        },
+        {
+          "id": "4",
+          "name": "Chicago Bulls",
+          "short": "Bulls",
+          "abbr": "CHI",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/chi.png",
+          "color": "",
+          "conference": "East",
+          "wins": 4,
+          "losses": 11,
+          "currentSeed": 13,
+          "form": -2.8000000000000003,
+          "rating": -2.5,
+          "factors": {
+            "performance": {
+              "score": -3.6,
+              "weight": 35
+            },
+            "form": {
+              "score": -2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": 0.3,
+              "weight": 25
+            },
+            "history": {
+              "score": -3.6,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "4397189",
+              "name": "Jalen Smith",
+              "mpg": 24.6,
+              "value": 31
+            },
+            {
+              "id": "4395626",
+              "name": "Tre Jones",
+              "mpg": 19.5,
+              "value": 28.8
+            },
+            {
+              "id": "2595516",
+              "name": "Norman Powell",
+              "mpg": 29.5,
+              "value": 28.2
+            },
+            {
+              "id": "5095151",
+              "name": "Caleb Wilson",
+              "mpg": 30.8,
+              "value": 25.8
+            },
+            {
+              "id": "4711294",
+              "name": "Matas Buzelis",
+              "mpg": 27.2,
+              "value": 24.4
+            },
+            {
+              "id": "4871145",
+              "name": "Josh Giddey",
+              "mpg": 27.7,
+              "value": 23.4
+            },
+            {
+              "id": "4432822",
+              "name": "Isaac Okoro",
+              "mpg": 23.3,
+              "value": 16.3
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Jalen Smith",
+              "status": "GTD",
+              "until": 1795305600000,
+              "cost": 0.8
+            },
+            {
+              "name": "Caleb Wilson",
+              "status": "OUT",
+              "until": 1797120000000,
+              "cost": 1.5
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 2.3,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.2,
+          "remainingGames": 65,
+          "projectedWins": 31.9,
+          "projectedSeed": 10.9,
+          "modeSeed": 11,
+          "seedLow": 8,
+          "seedHigh": 14,
+          "winsLow": 24,
+          "winsHigh": 40,
+          "seedProb": [
+            0,
+            0.1,
+            0.3,
+            0.7,
+            1.2,
+            2.7,
+            4.7,
+            7.3,
+            10.9,
+            13.8,
+            15.5,
+            14.5,
+            12.3,
+            9.8,
+            6.2
+          ],
+          "direct": 5,
+          "playin": 36.7,
+          "playoffs": 19.4,
+          "semi": 4.5,
+          "conferenceFinal": 1.5,
+          "finals": 0.5,
+          "champion": 0.1
+        },
+        {
+          "id": "11",
+          "name": "Indiana Pacers",
+          "short": "Pacers",
+          "abbr": "IND",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
+          "color": "",
+          "conference": "East",
+          "wins": 5,
+          "losses": 11,
+          "currentSeed": 11,
+          "form": -2.8000000000000003,
+          "rating": -2.4,
+          "factors": {
+            "performance": {
+              "score": -1.8,
+              "weight": 35
+            },
+            "form": {
+              "score": -2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -3.4,
+              "weight": 25
+            },
+            "history": {
+              "score": -4.4,
+              "weight": 15
+            },
+            "market": {
+              "score": -0.2,
+              "weight": 15
+            }
+          },
+          "marketTitle": 1.3,
+          "rotationPlayers": [
+            {
+              "id": "3149673",
+              "name": "Pascal Siakam",
+              "mpg": 32.1,
+              "value": 32
+            },
+            {
+              "id": "4278355",
+              "name": "Obi Toppin",
+              "mpg": 20.4,
+              "value": 25.5
+            },
+            {
+              "id": "4017837",
+              "name": "Ivica Zubac",
+              "mpg": 23.6,
+              "value": 25.2
+            },
+            {
+              "id": "4395712",
+              "name": "Andrew Nembhard",
+              "mpg": 32.8,
+              "value": 24.7
+            },
+            {
+              "id": "4592829",
+              "name": "Quenton Jackson",
+              "mpg": 21.9,
+              "value": 24.6
+            },
+            {
+              "id": "3133603",
+              "name": "Kelly Oubre Jr.",
+              "mpg": 24.2,
+              "value": 21.8
+            },
+            {
+              "id": "4396909",
+              "name": "Aaron Nesmith",
+              "mpg": 27,
+              "value": 16.9
+            },
+            {
+              "id": "5106060",
+              "name": "Jarace Walker",
+              "mpg": 19.5,
+              "value": 15.9
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Pascal Siakam",
+              "status": "GTD",
+              "until": 1795305600000,
+              "cost": 1.2
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.2,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.1,
+          "remainingGames": 64,
+          "projectedWins": 32.8,
+          "projectedSeed": 10.6,
+          "modeSeed": 10,
+          "seedLow": 7,
+          "seedHigh": 14,
+          "winsLow": 24,
+          "winsHigh": 41,
+          "seedProb": [
+            0,
+            0.2,
+            0.4,
+            0.9,
+            1.9,
+            3.4,
+            5.1,
+            8.4,
+            12.2,
+            14.9,
+            14.7,
+            13.8,
+            10.8,
+            8.4,
+            5
+          ],
+          "direct": 6.7,
+          "playin": 40.7,
+          "playoffs": 22.2,
+          "semi": 5.2,
+          "conferenceFinal": 1.8,
+          "finals": 0.6,
+          "champion": 0.1
+        },
+        {
+          "id": "27",
+          "name": "Washington Wizards",
+          "short": "Wizards",
+          "abbr": "WSH",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/wsh.png",
+          "color": "",
+          "conference": "East",
+          "wins": 6,
+          "losses": 11,
+          "currentSeed": 10,
+          "form": -4.2,
+          "rating": -4.3,
+          "factors": {
+            "performance": {
+              "score": -3,
+              "weight": 35
+            },
+            "form": {
+              "score": -4.2,
+              "weight": 10
+            },
+            "roster": {
+              "score": -3,
+              "weight": 25
+            },
+            "history": {
+              "score": -10.5,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.3,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "6583",
+              "name": "Anthony Davis",
+              "mpg": 33.9,
+              "value": 34.6
+            },
+            {
+              "id": "4277905",
+              "name": "Trae Young",
+              "mpg": 35.1,
+              "value": 25.9
+            },
+            {
+              "id": "5174563",
+              "name": "Kyshawn George",
+              "mpg": 33.7,
+              "value": 25.1
+            },
+            {
+              "id": "5160992",
+              "name": "Alex Sarr",
+              "mpg": 26.6,
+              "value": 24.9
+            },
+            {
+              "id": "5142718",
+              "name": "AJ Dybantsa",
+              "mpg": 34.1,
+              "value": 20.8
+            },
+            {
+              "id": "5104155",
+              "name": "Bilal Coulibaly",
+              "mpg": 24.9,
+              "value": 15.6
+            },
+            {
+              "id": "5238230",
+              "name": "Tre Johnson",
+              "mpg": 21.1,
+              "value": 13.9
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 63,
+          "projectedWins": 29.4,
+          "projectedSeed": 11.8,
+          "modeSeed": 12,
+          "seedLow": 9,
+          "seedHigh": 15,
+          "winsLow": 22,
+          "winsHigh": 38,
+          "seedProb": [
+            0,
+            0,
+            0.1,
+            0.2,
+            0.5,
+            1.2,
+            2.3,
+            4.7,
+            7.4,
+            10.6,
+            13.6,
+            16.7,
+            16.6,
+            15.4,
+            10.9
+          ],
+          "direct": 2,
+          "playin": 24.9,
+          "playoffs": 10.2,
+          "semi": 1.6,
+          "conferenceFinal": 0.4,
+          "finals": 0.1,
+          "champion": 0
+        },
+        {
+          "id": "28",
+          "name": "Toronto Raptors",
+          "short": "Raptors",
+          "abbr": "TOR",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
+          "color": "",
+          "conference": "East",
+          "wins": 6,
+          "losses": 10,
+          "currentSeed": 9,
+          "form": -2.8000000000000003,
+          "rating": -0.5,
+          "factors": {
+            "performance": {
+              "score": -0.1,
+              "weight": 35
+            },
+            "form": {
+              "score": -2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -2.4,
+              "weight": 25
+            },
+            "history": {
+              "score": 0.5,
+              "weight": 15
+            },
+            "market": {
+              "score": 1.8,
+              "weight": 15
+            }
+          },
+          "marketTitle": 3.2,
+          "rotationPlayers": [
+            {
+              "id": "4433134",
+              "name": "Scottie Barnes",
+              "mpg": 34,
+              "value": 31.9
+            },
+            {
+              "id": "4395724",
+              "name": "Immanuel Quickley",
+              "mpg": 32,
+              "value": 26.9
+            },
+            {
+              "id": "4395625",
+              "name": "RJ Barrett",
+              "mpg": 34.1,
+              "value": 26.8
+            },
+            {
+              "id": "3134908",
+              "name": "Jakob Poeltl",
+              "mpg": 23.9,
+              "value": 22.6
+            },
+            {
+              "id": "4431893",
+              "name": "Jamison Battle",
+              "mpg": 18.8,
+              "value": 21.3
+            },
+            {
+              "id": "5093267",
+              "name": "Collin Murray-Boyles",
+              "mpg": 23.5,
+              "value": 21.2
+            },
+            {
+              "id": "4432241",
+              "name": "Jamal Shead",
+              "mpg": 23.3,
+              "value": 20.2
+            },
+            {
+              "id": "4684272",
+              "name": "Ja'Kobe Walter",
+              "mpg": 31.4,
+              "value": 17.9
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Collin Murray-Boyles",
+              "status": "GTD",
+              "until": 1795392000000,
+              "cost": 0.4
+            },
+            {
+              "name": "RJ Barrett",
+              "status": "OUT",
+              "until": 1797120000000,
+              "cost": 1.8
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 2.2,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.1,
+          "remainingGames": 64,
+          "projectedWins": 37.8,
+          "projectedSeed": 8.6,
+          "modeSeed": 9,
+          "seedLow": 5,
+          "seedHigh": 12,
+          "winsLow": 29,
+          "winsHigh": 46,
+          "seedProb": [
+            0.4,
+            1.2,
+            2.2,
+            3.7,
+            5.5,
+            8.9,
+            11.5,
+            14.9,
+            15,
+            12.1,
+            10.1,
+            6.5,
+            4.4,
+            2.5,
+            1
+          ],
+          "direct": 21.9,
+          "playin": 53.6,
+          "playoffs": 49.1,
+          "semi": 16,
+          "conferenceFinal": 6.3,
+          "finals": 2.2,
+          "champion": 0.5
+        },
+        {
+          "id": "19",
+          "name": "Orlando Magic",
+          "short": "Magic",
+          "abbr": "ORL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
+          "color": "",
+          "conference": "East",
+          "wins": 7,
+          "losses": 8,
+          "currentSeed": 8,
+          "form": 0,
+          "rating": -1.4,
+          "factors": {
+            "performance": {
+              "score": -1.3,
+              "weight": 35
+            },
+            "form": {
+              "score": 0,
+              "weight": 10
+            },
+            "roster": {
+              "score": -2.8,
+              "weight": 25
+            },
+            "history": {
+              "score": 0.4,
+              "weight": 15
+            },
+            "market": {
+              "score": -2.1,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.5,
+          "rotationPlayers": [
+            {
+              "id": "4566434",
+              "name": "Franz Wagner",
+              "mpg": 36.7,
+              "value": 32.8
+            },
+            {
+              "id": "4712849",
+              "name": "Anthony Black",
+              "mpg": 32.9,
+              "value": 26.2
+            },
+            {
+              "id": "4066320",
+              "name": "Desmond Bane",
+              "mpg": 34.9,
+              "value": 23.9
+            },
+            {
+              "id": "4277847",
+              "name": "Wendell Carter Jr.",
+              "mpg": 32.5,
+              "value": 23.6
+            },
+            {
+              "id": "4702382",
+              "name": "Tristan da Silva",
+              "mpg": 29.8,
+              "value": 20.2
+            },
+            {
+              "id": "5239561",
+              "name": "Jase Richardson",
+              "mpg": 21.7,
+              "value": 12.3
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.1,
+          "remainingGames": 65,
+          "projectedWins": 37.6,
+          "projectedSeed": 8.7,
+          "modeSeed": 9,
+          "seedLow": 5,
+          "seedHigh": 12,
+          "winsLow": 29,
+          "winsHigh": 46,
+          "seedProb": [
+            0.3,
+            1.1,
+            2.3,
+            3.2,
+            6,
+            7.8,
+            12.1,
+            14.4,
+            15.1,
+            13,
+            9.7,
+            6.9,
+            4.6,
+            2.5,
+            1.2
+          ],
+          "direct": 20.6,
+          "playin": 54.6,
+          "playoffs": 46.6,
+          "semi": 12.6,
+          "conferenceFinal": 4.2,
+          "finals": 1.3,
+          "champion": 0.4
+        },
+        {
+          "id": "5",
+          "name": "Cleveland Cavaliers",
+          "short": "Cavaliers",
+          "abbr": "CLE",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
+          "color": "",
+          "conference": "East",
+          "wins": 9,
+          "losses": 8,
+          "currentSeed": 7,
+          "form": 0,
+          "rating": 2,
+          "factors": {
+            "performance": {
+              "score": 1,
+              "weight": 35
+            },
+            "form": {
+              "score": 0,
+              "weight": 10
+            },
+            "roster": {
+              "score": 3.4,
+              "weight": 25
+            },
+            "history": {
+              "score": 5.1,
+              "weight": 15
+            },
+            "market": {
+              "score": 0.3,
+              "weight": 15
+            }
+          },
+          "marketTitle": 1.6,
+          "rotationPlayers": [
+            {
+              "id": "3908809",
+              "name": "Donovan Mitchell",
+              "mpg": 33.1,
+              "value": 33.3
+            },
+            {
+              "id": "4432158",
+              "name": "Evan Mobley",
+              "mpg": 32,
+              "value": 28.6
+            },
+            {
+              "id": "4066328",
+              "name": "Jarrett Allen",
+              "mpg": 26.9,
+              "value": 28.4
+            },
+            {
+              "id": "3992",
+              "name": "James Harden",
+              "mpg": 33.6,
+              "value": 28
+            },
+            {
+              "id": "5023693",
+              "name": "Tyrese Proctor",
+              "mpg": 20.4,
+              "value": 25.5
+            },
+            {
+              "id": "2995706",
+              "name": "Mario Hezonja",
+              "mpg": 19.5,
+              "value": 25.2
+            },
+            {
+              "id": "5041951",
+              "name": "Meleek Thomas",
+              "mpg": 23.6,
+              "value": 24.3
+            },
+            {
+              "id": "4576087",
+              "name": "Peyton Watson",
+              "mpg": 27.8,
+              "value": 18.5
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Evan Mobley",
+              "status": "OUT",
+              "until": 1795910400000,
+              "cost": 1.9
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.9,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.4,
+          "remainingGames": 63,
+          "projectedWins": 46.4,
+          "projectedSeed": 5.2,
+          "modeSeed": 5,
+          "seedLow": 2,
+          "seedHigh": 9,
+          "winsLow": 38,
+          "winsHigh": 55,
+          "seedProb": [
+            5.6,
+            9.9,
+            12.2,
+            14.1,
+            14.6,
+            13.5,
+            11.3,
+            8.3,
+            5.1,
+            2.9,
+            1.4,
+            0.6,
+            0.3,
+            0.1,
+            0
+          ],
+          "direct": 70,
+          "playin": 27.6,
+          "playoffs": 88.4,
+          "semi": 46.5,
+          "conferenceFinal": 22.2,
+          "finals": 10.7,
+          "champion": 4.1
+        },
+        {
+          "id": "14",
+          "name": "Miami Heat",
+          "short": "Heat",
+          "abbr": "MIA",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
+          "color": "",
+          "conference": "East",
+          "wins": 9,
+          "losses": 6,
+          "currentSeed": 5,
+          "form": 4.200000000000001,
+          "rating": 2.9,
+          "factors": {
+            "performance": {
+              "score": 0.4,
+              "weight": 35
+            },
+            "form": {
+              "score": 4.2,
+              "weight": 10
+            },
+            "roster": {
+              "score": 7.2,
+              "weight": 25
+            },
+            "history": {
+              "score": 1.5,
+              "weight": 15
+            },
+            "market": {
+              "score": 1.9,
+              "weight": 15
+            }
+          },
+          "marketTitle": 3.4,
+          "rotationPlayers": [
+            {
+              "id": "3032977",
+              "name": "Giannis Antetokounmpo",
+              "mpg": 32.1,
+              "value": 44.8
+            },
+            {
+              "id": "4066261",
+              "name": "Bam Adebayo",
+              "mpg": 32.3,
+              "value": 31.1
+            },
+            {
+              "id": "4278053",
+              "name": "Davion Mitchell",
+              "mpg": 35.6,
+              "value": 28.7
+            },
+            {
+              "id": "6475",
+              "name": "Klay Thompson",
+              "mpg": 24.2,
+              "value": 26.8
+            },
+            {
+              "id": "4601025",
+              "name": "Pelle Larsson",
+              "mpg": 28.3,
+              "value": 21.2
+            },
+            {
+              "id": "3064482",
+              "name": "Bobby Portis",
+              "mpg": 19.8,
+              "value": 19.5
+            },
+            {
+              "id": "3059319",
+              "name": "Andrew Wiggins",
+              "mpg": 26.5,
+              "value": 17.1
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Giannis Antetokounmpo",
+              "status": "GTD",
+              "until": 1795305600000,
+              "cost": 1.9
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.9,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.4,
+          "remainingGames": 65,
+          "projectedWins": 49.7,
+          "projectedSeed": 4,
+          "modeSeed": 2,
+          "seedLow": 1,
+          "seedHigh": 7,
+          "winsLow": 41,
+          "winsHigh": 58,
+          "seedProb": [
+            14.3,
+            17.3,
+            16,
+            14.6,
+            12.8,
+            9.5,
+            6.7,
+            4.1,
+            2.7,
+            1.2,
+            0.5,
+            0.2,
+            0.1,
+            0,
+            0
+          ],
+          "direct": 84.5,
+          "playin": 14.7,
+          "playoffs": 94.3,
+          "semi": 58.3,
+          "conferenceFinal": 31.8,
+          "finals": 16.2,
+          "champion": 6.9
+        },
+        {
+          "id": "18",
+          "name": "New York Knicks",
+          "short": "Knicks",
+          "abbr": "NY",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
+          "color": "",
+          "conference": "East",
+          "wins": 9,
+          "losses": 6,
+          "currentSeed": 6,
+          "form": 2.7999999999999994,
+          "rating": 1.8,
+          "factors": {
+            "performance": {
+              "score": 2.5,
+              "weight": 35
+            },
+            "form": {
+              "score": 2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -2.6,
+              "weight": 25
+            },
+            "history": {
+              "score": 5,
+              "weight": 15
+            },
+            "market": {
+              "score": 3.4,
+              "weight": 15
+            }
+          },
+          "marketTitle": 6.6,
+          "rotationPlayers": [
+            {
+              "id": "3136195",
+              "name": "Karl-Anthony Towns",
+              "mpg": 32.8,
+              "value": 35.3
+            },
+            {
+              "id": "3934672",
+              "name": "Jalen Brunson",
+              "mpg": 34.4,
+              "value": 32.5
+            },
+            {
+              "id": "3934719",
+              "name": "OG Anunoby",
+              "mpg": 33.9,
+              "value": 21.9
+            },
+            {
+              "id": "3914044",
+              "name": "Landry Shamet",
+              "mpg": 26,
+              "value": 19.3
+            },
+            {
+              "id": "3147657",
+              "name": "Mikal Bridges",
+              "mpg": 26,
+              "value": 14.5
+            },
+            {
+              "id": "3062679",
+              "name": "Josh Hart",
+              "mpg": 29.8,
+              "value": 14
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "OG Anunoby",
+              "status": "OUT",
+              "until": 1795305600000,
+              "cost": 1.2
+            },
+            {
+              "name": "Karl-Anthony Towns",
+              "status": "GTD",
+              "until": 1795905040067,
+              "cost": 1.4
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 2.6,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.1,
+          "remainingGames": 65,
+          "projectedWins": 46.9,
+          "projectedSeed": 5.1,
+          "modeSeed": 5,
+          "seedLow": 2,
+          "seedHigh": 8,
+          "winsLow": 38,
+          "winsHigh": 56,
+          "seedProb": [
+            7.1,
+            11.1,
+            12.3,
+            13.5,
+            14.2,
+            13.6,
+            10.7,
+            8,
+            4.8,
+            2.7,
+            1.2,
+            0.6,
+            0.2,
+            0.1,
+            0
+          ],
+          "direct": 71.7,
+          "playin": 26.2,
+          "playoffs": 89,
+          "semi": 45.6,
+          "conferenceFinal": 21.1,
+          "finals": 10,
+          "champion": 3.9
+        },
+        {
+          "id": "1",
+          "name": "Atlanta Hawks",
+          "short": "Hawks",
+          "abbr": "ATL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+          "color": "",
+          "conference": "East",
+          "wins": 10,
+          "losses": 6,
+          "currentSeed": 4,
+          "form": 2.7999999999999994,
+          "rating": 0.3,
+          "factors": {
+            "performance": {
+              "score": 1.3,
+              "weight": 35
+            },
+            "form": {
+              "score": 2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -1.4,
+              "weight": 25
+            },
+            "history": {
+              "score": 1.2,
+              "weight": 15
+            },
+            "market": {
+              "score": -1.6,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.7,
+          "rotationPlayers": [
+            {
+              "id": "4701230",
+              "name": "Jalen Johnson",
+              "mpg": 34.5,
+              "value": 29.8
+            },
+            {
+              "id": "4278039",
+              "name": "Nickeil Alexander-Walker",
+              "mpg": 31.9,
+              "value": 27.4
+            },
+            {
+              "id": "4431680",
+              "name": "Onyeka Okongwu",
+              "mpg": 31,
+              "value": 26.3
+            },
+            {
+              "id": "2490149",
+              "name": "CJ McCollum",
+              "mpg": 26.4,
+              "value": 25.6
+            },
+            {
+              "id": "4397183",
+              "name": "Aaron Wiggins",
+              "mpg": 26.1,
+              "value": 24.7
+            },
+            {
+              "id": "4869342",
+              "name": "Dyson Daniels",
+              "mpg": 31.2,
+              "value": 23.8
+            },
+            {
+              "id": "5149077",
+              "name": "Kingston Flemings",
+              "mpg": 21.5,
+              "value": 20.5
+            },
+            {
+              "id": "4397020",
+              "name": "Luguentz Dort",
+              "mpg": 24.4,
+              "value": 16.4
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Kingston Flemings",
+              "status": "GTD",
+              "until": 1795305600000,
+              "cost": 0.3
+            },
+            {
+              "name": "CJ McCollum",
+              "status": "OUT",
+              "until": 1797638400000,
+              "cost": 1.3
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.6,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0,
+          "remainingGames": 64,
+          "projectedWins": 43.6,
+          "projectedSeed": 6.3,
+          "modeSeed": 7,
+          "seedLow": 3,
+          "seedHigh": 10,
+          "winsLow": 35,
+          "winsHigh": 52,
+          "seedProb": [
+            2.8,
+            5.5,
+            8.1,
+            10.5,
+            12.3,
+            13.6,
+            14.7,
+            12.3,
+            8.6,
+            5.5,
+            3.2,
+            1.8,
+            0.9,
+            0.3,
+            0.1
+          ],
+          "direct": 52.8,
+          "playin": 41,
+          "playoffs": 77.4,
+          "semi": 30.7,
+          "conferenceFinal": 12.1,
+          "finals": 4.9,
+          "champion": 1.5
+        },
+        {
+          "id": "8",
+          "name": "Detroit Pistons",
+          "short": "Pistons",
+          "abbr": "DET",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
+          "color": "",
+          "conference": "East",
+          "wins": 10,
+          "losses": 5,
+          "currentSeed": 3,
+          "form": 1.3999999999999997,
+          "rating": 2.1,
+          "factors": {
+            "performance": {
+              "score": 2.6,
+              "weight": 35
+            },
+            "form": {
+              "score": 1.4,
+              "weight": 10
+            },
+            "roster": {
+              "score": -0.2,
+              "weight": 25
+            },
+            "history": {
+              "score": 5.5,
+              "weight": 15
+            },
+            "market": {
+              "score": 1.9,
+              "weight": 15
+            }
+          },
+          "marketTitle": 3.4,
+          "rotationPlayers": [
+            {
+              "id": "4432166",
+              "name": "Cade Cunningham",
+              "mpg": 34.9,
+              "value": 35.5
+            },
+            {
+              "id": "4278562",
+              "name": "Paul Reed",
+              "mpg": 26.1,
+              "value": 26.4
+            },
+            {
+              "id": "4684742",
+              "name": "Ausar Thompson",
+              "mpg": 28.7,
+              "value": 25.7
+            },
+            {
+              "id": "3157465",
+              "name": "Duncan Robinson",
+              "mpg": 30.5,
+              "value": 25.5
+            },
+            {
+              "id": "5107199",
+              "name": "Daniss Jenkins",
+              "mpg": 30.1,
+              "value": 23.8
+            },
+            {
+              "id": "4066372",
+              "name": "Kevin Huerter",
+              "mpg": 26.7,
+              "value": 20.2
+            },
+            {
+              "id": "3908845",
+              "name": "John Collins",
+              "mpg": 25.9,
+              "value": 20.1
+            },
+            {
+              "id": "2596112",
+              "name": "Javonte Green",
+              "mpg": 18.9,
+              "value": 19.9
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Duncan Robinson",
+              "status": "OUT",
+              "until": 1795737600000,
+              "cost": 1.5
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.5,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.3,
+          "remainingGames": 65,
+          "projectedWins": 49.2,
+          "projectedSeed": 4.2,
+          "modeSeed": 3,
+          "seedLow": 1,
+          "seedHigh": 8,
+          "winsLow": 41,
+          "winsHigh": 58,
+          "seedProb": [
+            11.9,
+            15.8,
+            16.6,
+            14.8,
+            12.3,
+            10.2,
+            8.1,
+            4.9,
+            2.9,
+            1.5,
+            0.6,
+            0.3,
+            0.1,
+            0.1,
+            0
+          ],
+          "direct": 81.6,
+          "playin": 17.3,
+          "playoffs": 93.2,
+          "semi": 52.2,
+          "conferenceFinal": 25.7,
+          "finals": 12.3,
+          "champion": 4.9
+        },
+        {
+          "id": "2",
+          "name": "Boston Celtics",
+          "short": "Celtics",
+          "abbr": "BOS",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
+          "color": "",
+          "conference": "East",
+          "wins": 11,
+          "losses": 4,
+          "currentSeed": 2,
+          "form": 2.7999999999999994,
+          "rating": 4.4,
+          "factors": {
+            "performance": {
+              "score": 4.5,
+              "weight": 35
+            },
+            "form": {
+              "score": 2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": 3.4,
+              "weight": 25
+            },
+            "history": {
+              "score": 7.1,
+              "weight": 15
+            },
+            "market": {
+              "score": 4.2,
+              "weight": 15
+            }
+          },
+          "marketTitle": 9.5,
+          "rotationPlayers": [
+            {
+              "id": "4065648",
+              "name": "Jayson Tatum",
+              "mpg": 34.1,
+              "value": 35.3
+            },
+            {
+              "id": "4251",
+              "name": "Paul George",
+              "mpg": 29.6,
+              "value": 31.9
+            },
+            {
+              "id": "4397424",
+              "name": "Neemias Queta",
+              "mpg": 22.4,
+              "value": 26.3
+            },
+            {
+              "id": "4066354",
+              "name": "Payton Pritchard",
+              "mpg": 27.3,
+              "value": 23.5
+            },
+            {
+              "id": "4065804",
+              "name": "Sam Hauser",
+              "mpg": 20.3,
+              "value": 22.9
+            },
+            {
+              "id": "3078576",
+              "name": "Derrick White",
+              "mpg": 29.9,
+              "value": 22.1
+            },
+            {
+              "id": "4593841",
+              "name": "Baylor Scheierman",
+              "mpg": 19.4,
+              "value": 18.3
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Derrick White",
+              "status": "OUT",
+              "until": 1795305600000,
+              "cost": 1.1
+            },
+            {
+              "name": "Jayson Tatum",
+              "status": "OUT",
+              "until": 1795305600000,
+              "cost": 2.9
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 4,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.3,
+          "remainingGames": 65,
+          "projectedWins": 55.1,
+          "projectedSeed": 2.4,
+          "modeSeed": 1,
+          "seedLow": 1,
+          "seedHigh": 5,
+          "winsLow": 47,
+          "winsHigh": 63,
+          "seedProb": [
+            44,
+            21.8,
+            13.4,
+            8.7,
+            5.3,
+            3.5,
+            1.9,
+            0.9,
+            0.5,
+            0.1,
+            0.1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "direct": 96.5,
+          "playin": 3.4,
+          "playoffs": 99,
+          "semi": 75.4,
+          "conferenceFinal": 50.4,
+          "finals": 31.8,
+          "champion": 15.8
+        },
+        {
+          "id": "20",
+          "name": "Philadelphia 76ers",
+          "short": "76ers",
+          "abbr": "PHI",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
+          "color": "",
+          "conference": "East",
+          "wins": 14,
+          "losses": 3,
+          "currentSeed": 1,
+          "form": 4.200000000000001,
+          "rating": 1.3,
+          "factors": {
+            "performance": {
+              "score": 1.7,
+              "weight": 35
+            },
+            "form": {
+              "score": 4.2,
+              "weight": 10
+            },
+            "roster": {
+              "score": -0.4,
+              "weight": 25
+            },
+            "history": {
+              "score": -1.7,
+              "weight": 15
+            },
+            "market": {
+              "score": 4.4,
+              "weight": 15
+            }
+          },
+          "marketTitle": 10.1,
+          "rotationPlayers": [
+            {
+              "id": "4431678",
+              "name": "Tyrese Maxey",
+              "mpg": 36.1,
+              "value": 33.9
+            },
+            {
+              "id": "3917376",
+              "name": "Jaylen Brown",
+              "mpg": 34.6,
+              "value": 29.1
+            },
+            {
+              "id": "3059318",
+              "name": "Joel Embiid",
+              "mpg": 31.9,
+              "value": 28.4
+            },
+            {
+              "id": "1966",
+              "name": "LeBron James",
+              "mpg": 32.5,
+              "value": 26.3
+            },
+            {
+              "id": "5124612",
+              "name": "VJ Edgecombe",
+              "mpg": 34.1,
+              "value": 22.4
+            },
+            {
+              "id": "4351851",
+              "name": "Anfernee Simons",
+              "mpg": 22.6,
+              "value": 20.6
+            },
+            {
+              "id": "2581018",
+              "name": "Kentavious Caldwell-Pope",
+              "mpg": 23.1,
+              "value": 17
+            },
+            {
+              "id": "3912848",
+              "name": "Dean Wade",
+              "mpg": 26.5,
+              "value": 15.5
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Dean Wade",
+              "status": "OUT",
+              "until": 1795392000000,
+              "cost": 0.3
+            },
+            {
+              "name": "Jaylen Brown",
+              "status": "OUT",
+              "until": 1795392000000,
+              "cost": 2.1
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 2.4,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.1,
+          "remainingGames": 63,
+          "projectedWins": 49.5,
+          "projectedSeed": 4.1,
+          "modeSeed": 3,
+          "seedLow": 1,
+          "seedHigh": 7,
+          "winsLow": 41,
+          "winsHigh": 58,
+          "seedProb": [
+            13.5,
+            16,
+            16.2,
+            14.8,
+            13,
+            10.5,
+            7.1,
+            4.7,
+            2.3,
+            1.1,
+            0.5,
+            0.2,
+            0.1,
+            0,
+            0
+          ],
+          "direct": 84,
+          "playin": 15.2,
+          "playoffs": 94,
+          "semi": 48.4,
+          "conferenceFinal": 21.6,
+          "finals": 9.1,
+          "champion": 3.1
+        },
+        {
+          "id": "23",
+          "name": "Sacramento Kings",
+          "short": "Kings",
+          "abbr": "SAC",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
+          "color": "",
+          "conference": "West",
+          "wins": 1,
+          "losses": 14,
+          "currentSeed": 15,
+          "form": -5.6000000000000005,
+          "rating": -4.5,
+          "factors": {
+            "performance": {
+              "score": -5.9,
+              "weight": 35
+            },
+            "form": {
+              "score": -5.6,
+              "weight": 10
+            },
+            "roster": {
+              "score": -1.6,
+              "weight": 25
+            },
+            "history": {
+              "score": -6,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "3155942",
+              "name": "Domantas Sabonis",
+              "mpg": 33.6,
+              "value": 28.8
+            },
+            {
+              "id": "5142620",
+              "name": "Darius Acuff Jr.",
+              "mpg": 36.7,
+              "value": 28.6
+            },
+            {
+              "id": "3064440",
+              "name": "Zach LaVine",
+              "mpg": 33.4,
+              "value": 27.3
+            },
+            {
+              "id": "4431679",
+              "name": "Precious Achiuwa",
+              "mpg": 24.7,
+              "value": 20.7
+            },
+            {
+              "id": "4065732",
+              "name": "De'Andre Hunter",
+              "mpg": 33,
+              "value": 19.2
+            },
+            {
+              "id": "4395650",
+              "name": "Leaky Black",
+              "mpg": 19.1,
+              "value": 18.2
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Precious Achiuwa",
+              "status": "GTD",
+              "until": 1795905040067,
+              "cost": 0.4
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 0.4,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 65,
+          "projectedWins": 24.5,
+          "projectedSeed": 13.9,
+          "modeSeed": 15,
+          "seedLow": 12,
+          "seedHigh": 15,
+          "winsLow": 17,
+          "winsHigh": 33,
+          "seedProb": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0.1,
+            0.2,
+            0.7,
+            1.5,
+            3.8,
+            7.8,
+            15.3,
+            26.7,
+            43.9
+          ],
+          "direct": 0.1,
+          "playin": 2.5,
+          "playoffs": 0.6,
+          "semi": 0.1,
+          "conferenceFinal": 0.1,
+          "finals": 0,
+          "champion": 0
+        },
+        {
+          "id": "26",
+          "name": "Utah Jazz",
+          "short": "Jazz",
+          "abbr": "UTAH",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
+          "color": "",
+          "conference": "West",
+          "wins": 3,
+          "losses": 14,
+          "currentSeed": 14,
+          "form": -4.2,
+          "rating": -4.3,
+          "factors": {
+            "performance": {
+              "score": -3.6,
+              "weight": 35
+            },
+            "form": {
+              "score": -4.2,
+              "weight": 10
+            },
+            "roster": {
+              "score": -4.3,
+              "weight": 25
+            },
+            "history": {
+              "score": -7.6,
+              "weight": 15
+            },
+            "market": {
+              "score": -2.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.4,
+          "rotationPlayers": [
+            {
+              "id": "4277919",
+              "name": "Mo Bamba",
+              "mpg": 20.6,
+              "value": 30
+            },
+            {
+              "id": "4433627",
+              "name": "Keyonte George",
+              "mpg": 33.5,
+              "value": 28.8
+            },
+            {
+              "id": "5105839",
+              "name": "Brice Sensabaugh",
+              "mpg": 18.2,
+              "value": 26.4
+            },
+            {
+              "id": "4397077",
+              "name": "Jaxson Hayes",
+              "mpg": 24.6,
+              "value": 25.3
+            },
+            {
+              "id": "5041955",
+              "name": "Darryn Peterson",
+              "mpg": 30.6,
+              "value": 25.3
+            },
+            {
+              "id": "4873138",
+              "name": "Ace Bailey",
+              "mpg": 30.1,
+              "value": 20.6
+            },
+            {
+              "id": "4065663",
+              "name": "Josh Okogie",
+              "mpg": 19.1,
+              "value": 12.6
+            },
+            {
+              "id": "4432811",
+              "name": "Josh Green",
+              "mpg": 20,
+              "value": 12.6
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0,
+          "remainingGames": 63,
+          "projectedWins": 26.2,
+          "projectedSeed": 13.6,
+          "modeSeed": 15,
+          "seedLow": 12,
+          "seedHigh": 15,
+          "winsLow": 18,
+          "winsHigh": 34,
+          "seedProb": [
+            0,
+            0,
+            0,
+            0,
+            0.1,
+            0.1,
+            0.1,
+            0.5,
+            1.1,
+            2.4,
+            4.9,
+            10.5,
+            19.1,
+            29.3,
+            31.9
+          ],
+          "direct": 0.2,
+          "playin": 4.1,
+          "playoffs": 1.2,
+          "semi": 0.1,
+          "conferenceFinal": 0,
+          "finals": 0,
+          "champion": 0
+        },
+        {
+          "id": "3",
+          "name": "New Orleans Pelicans",
+          "short": "Pelicans",
+          "abbr": "NO",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
+          "color": "",
+          "conference": "West",
+          "wins": 5,
+          "losses": 12,
+          "currentSeed": 12,
+          "form": -4.2,
+          "rating": -3,
+          "factors": {
+            "performance": {
+              "score": -3.4,
+              "weight": 35
+            },
+            "form": {
+              "score": -4.2,
+              "weight": 10
+            },
+            "roster": {
+              "score": 0,
+              "weight": 25
+            },
+            "history": {
+              "score": -5.4,
+              "weight": 15
+            },
+            "market": {
+              "score": -3.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.3,
+          "rotationPlayers": [
+            {
+              "id": "4395628",
+              "name": "Zion Williamson",
+              "mpg": 32.4,
+              "value": 32.4
+            },
+            {
+              "id": "4869780",
+              "name": "Derik Queen",
+              "mpg": 21.4,
+              "value": 29.7
+            },
+            {
+              "id": "4397136",
+              "name": "Saddiq Bey",
+              "mpg": 30,
+              "value": 25.9
+            },
+            {
+              "id": "5144091",
+              "name": "Jeremiah Fears",
+              "mpg": 30.1,
+              "value": 25.5
+            },
+            {
+              "id": "4277956",
+              "name": "Jordan Poole",
+              "mpg": 21.5,
+              "value": 23.3
+            },
+            {
+              "id": "4277813",
+              "name": "Herbert Jones",
+              "mpg": 24.9,
+              "value": 11.8
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.5,
+          "remainingGames": 63,
+          "projectedWins": 29.6,
+          "projectedSeed": 12.8,
+          "modeSeed": 13,
+          "seedLow": 11,
+          "seedHigh": 15,
+          "winsLow": 22,
+          "winsHigh": 38,
+          "seedProb": [
+            0,
+            0,
+            0,
+            0.1,
+            0.1,
+            0.3,
+            0.7,
+            1.2,
+            2.6,
+            5.1,
+            10,
+            17.8,
+            25.5,
+            22.1,
+            14.7
+          ],
+          "direct": 0.4,
+          "playin": 9.4,
+          "playoffs": 3.4,
+          "semi": 0.7,
+          "conferenceFinal": 0.3,
+          "finals": 0.1,
+          "champion": 0.1
+        },
+        {
+          "id": "12",
+          "name": "LA Clippers",
+          "short": "Clippers",
+          "abbr": "LAC",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
+          "color": "",
+          "conference": "West",
+          "wins": 4,
+          "losses": 10,
+          "currentSeed": 13,
+          "form": -2.8000000000000003,
+          "rating": -2.1,
+          "factors": {
+            "performance": {
+              "score": -2.7,
+              "weight": 35
+            },
+            "form": {
+              "score": -2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -3.2,
+              "weight": 25
+            },
+            "history": {
+              "score": 1.9,
+              "weight": 15
+            },
+            "market": {
+              "score": -2.4,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.5,
+          "rotationPlayers": [
+            {
+              "id": "3448",
+              "name": "Brook Lopez",
+              "mpg": 24.6,
+              "value": 30.8
+            },
+            {
+              "id": "4432170",
+              "name": "Isaiah Jackson",
+              "mpg": 18.8,
+              "value": 27.8
+            },
+            {
+              "id": "4396907",
+              "name": "Darius Garland",
+              "mpg": 33.1,
+              "value": 27.7
+            },
+            {
+              "id": "5254165",
+              "name": "Keaton Wagler",
+              "mpg": 22.4,
+              "value": 24.8
+            },
+            {
+              "id": "3936099",
+              "name": "Derrick Jones Jr.",
+              "mpg": 28.5,
+              "value": 21.3
+            },
+            {
+              "id": "2991139",
+              "name": "Kris Dunn",
+              "mpg": 26.4,
+              "value": 20.5
+            },
+            {
+              "id": "4066648",
+              "name": "Rui Hachimura",
+              "mpg": 29.2,
+              "value": 19.7
+            },
+            {
+              "id": "4702352",
+              "name": "Kobe Sanders",
+              "mpg": 22.1,
+              "value": 18
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.2,
+          "remainingGames": 66,
+          "projectedWins": 32.8,
+          "projectedSeed": 11.8,
+          "modeSeed": 12,
+          "seedLow": 9,
+          "seedHigh": 14,
+          "winsLow": 24,
+          "winsHigh": 42,
+          "seedProb": [
+            0,
+            0,
+            0.1,
+            0.4,
+            0.5,
+            1.2,
+            2,
+            3,
+            5.9,
+            9.4,
+            14.5,
+            22.2,
+            20,
+            13.6,
+            7.2
+          ],
+          "direct": 2.2,
+          "playin": 20.3,
+          "playoffs": 9,
+          "semi": 2,
+          "conferenceFinal": 0.7,
+          "finals": 0.2,
+          "champion": 0.1
+        },
+        {
+          "id": "9",
+          "name": "Golden State Warriors",
+          "short": "Warriors",
+          "abbr": "GS",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
+          "color": "",
+          "conference": "West",
+          "wins": 8,
+          "losses": 8,
+          "currentSeed": 11,
+          "form": 0,
+          "rating": -0.2,
+          "factors": {
+            "performance": {
+              "score": -0.4,
+              "weight": 35
+            },
+            "form": {
+              "score": 0,
+              "weight": 10
+            },
+            "roster": {
+              "score": -0.5,
+              "weight": 25
+            },
+            "history": {
+              "score": 0.4,
+              "weight": 15
+            },
+            "market": {
+              "score": 0.2,
+              "weight": 15
+            }
+          },
+          "marketTitle": 1.5,
+          "rotationPlayers": [
+            {
+              "id": "3975",
+              "name": "Stephen Curry",
+              "mpg": 26.3,
+              "value": 44.8
+            },
+            {
+              "id": "5175737",
+              "name": "Yaxel Lendeborg",
+              "mpg": 31.6,
+              "value": 29.3
+            },
+            {
+              "id": "4709138",
+              "name": "Brandin Podziemski",
+              "mpg": 31.9,
+              "value": 24.2
+            },
+            {
+              "id": "4066436",
+              "name": "De'Anthony Melton",
+              "mpg": 22,
+              "value": 22.5
+            },
+            {
+              "id": "4897262",
+              "name": "Will Richard",
+              "mpg": 19.9,
+              "value": 19.1
+            },
+            {
+              "id": "2990969",
+              "name": "Georges Niang",
+              "mpg": 18.9,
+              "value": 16.9
+            },
+            {
+              "id": "4997536",
+              "name": "Gui Santos",
+              "mpg": 18.9,
+              "value": 16.3
+            },
+            {
+              "id": "6589",
+              "name": "Draymond Green",
+              "mpg": 25.5,
+              "value": 15.1
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Draymond Green",
+              "status": "GTD",
+              "until": 1795305600000,
+              "cost": 0.1
+            },
+            {
+              "name": "Stephen Curry",
+              "status": "OUT",
+              "until": 1797033600000,
+              "cost": 3.1
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 3.2,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0,
+          "remainingGames": 64,
+          "projectedWins": 40.3,
+          "projectedSeed": 9.3,
+          "modeSeed": 10,
+          "seedLow": 6,
+          "seedHigh": 12,
+          "winsLow": 32,
+          "winsHigh": 49,
+          "seedProb": [
+            0.4,
+            0.8,
+            1.6,
+            2.3,
+            4.2,
+            5.9,
+            8.5,
+            10.9,
+            14,
+            16.1,
+            15.4,
+            11.5,
+            5.3,
+            2.3,
+            0.8
+          ],
+          "direct": 15.2,
+          "playin": 49.5,
+          "playoffs": 36.7,
+          "semi": 10.4,
+          "conferenceFinal": 3.7,
+          "finals": 1.4,
+          "champion": 0.7
+        },
+        {
+          "id": "21",
+          "name": "Phoenix Suns",
+          "short": "Suns",
+          "abbr": "PHX",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
+          "color": "",
+          "conference": "West",
+          "wins": 8,
+          "losses": 7,
+          "currentSeed": 9,
+          "form": 2.7999999999999994,
+          "rating": -0.7,
+          "factors": {
+            "performance": {
+              "score": -0.3,
+              "weight": 35
+            },
+            "form": {
+              "score": 2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -2.2,
+              "weight": 25
+            },
+            "history": {
+              "score": 0.2,
+              "weight": 15
+            },
+            "market": {
+              "score": -2.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.4,
+          "rotationPlayers": [
+            {
+              "id": "3136193",
+              "name": "Devin Booker",
+              "mpg": 34,
+              "value": 31.3
+            },
+            {
+              "id": "4066383",
+              "name": "Miles Bridges",
+              "mpg": 28.9,
+              "value": 28.1
+            },
+            {
+              "id": "5203685",
+              "name": "Khaman Maluach",
+              "mpg": 18.5,
+              "value": 25.7
+            },
+            {
+              "id": "4278402",
+              "name": "Jordan Goodwin",
+              "mpg": 20.6,
+              "value": 25.2
+            },
+            {
+              "id": "3155526",
+              "name": "Dillon Brooks",
+              "mpg": 28.9,
+              "value": 21.6
+            },
+            {
+              "id": "4278585",
+              "name": "Collin Gillespie",
+              "mpg": 24.4,
+              "value": 21.4
+            },
+            {
+              "id": "4437244",
+              "name": "Jalen Green",
+              "mpg": 26.8,
+              "value": 20.2
+            },
+            {
+              "id": "4601023",
+              "name": "Oso Ighodaro",
+              "mpg": 23,
+              "value": 18.2
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 65,
+          "projectedWins": 39.5,
+          "projectedSeed": 9.5,
+          "modeSeed": 10,
+          "seedLow": 6,
+          "seedHigh": 13,
+          "winsLow": 31,
+          "winsHigh": 48,
+          "seedProb": [
+            0.3,
+            0.6,
+            1.2,
+            2.5,
+            3.7,
+            4.9,
+            7.6,
+            10,
+            13.2,
+            16.8,
+            16.4,
+            11.9,
+            7,
+            3.2,
+            0.9
+          ],
+          "direct": 13,
+          "playin": 47.6,
+          "playoffs": 31.6,
+          "semi": 7.8,
+          "conferenceFinal": 2.7,
+          "finals": 0.9,
+          "champion": 0.4
+        },
+        {
+          "id": "6",
+          "name": "Dallas Mavericks",
+          "short": "Mavericks",
+          "abbr": "DAL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
+          "color": "",
+          "conference": "West",
+          "wins": 8,
+          "losses": 7,
+          "currentSeed": 10,
+          "form": 0,
+          "rating": 0.2,
+          "factors": {
+            "performance": {
+              "score": -0.3,
+              "weight": 35
+            },
+            "form": {
+              "score": 0,
+              "weight": 10
+            },
+            "roster": {
+              "score": 3.8,
+              "weight": 25
+            },
+            "history": {
+              "score": -3.8,
+              "weight": 15
+            },
+            "market": {
+              "score": -0.7,
+              "weight": 15
+            }
+          },
+          "marketTitle": 1,
+          "rotationPlayers": [
+            {
+              "id": "5041939",
+              "name": "Cooper Flagg",
+              "mpg": 33.4,
+              "value": 36.4
+            },
+            {
+              "id": "6442",
+              "name": "Kyrie Irving",
+              "mpg": 30.7,
+              "value": 32.5
+            },
+            {
+              "id": "4278049",
+              "name": "Daniel Gafford",
+              "mpg": 21.2,
+              "value": 28.3
+            },
+            {
+              "id": "4278594",
+              "name": "Naji Marshall",
+              "mpg": 25,
+              "value": 22.6
+            },
+            {
+              "id": "4278078",
+              "name": "P.J. Washington",
+              "mpg": 30.8,
+              "value": 21.6
+            },
+            {
+              "id": "3138160",
+              "name": "Caleb Martin",
+              "mpg": 21.5,
+              "value": 20
+            },
+            {
+              "id": "5211175",
+              "name": "Zaccharie Risacher",
+              "mpg": 23.3,
+              "value": 19.4
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "P.J. Washington",
+              "status": "GTD",
+              "until": 1795905040067,
+              "cost": 0.5
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 0.5,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 65,
+          "projectedWins": 41.5,
+          "projectedSeed": 8.8,
+          "modeSeed": 10,
+          "seedLow": 5,
+          "seedHigh": 12,
+          "winsLow": 33,
+          "winsHigh": 50,
+          "seedProb": [
+            0.4,
+            1.3,
+            2.4,
+            3.9,
+            5.3,
+            7.1,
+            9.6,
+            12,
+            13.9,
+            15.3,
+            13.5,
+            8.6,
+            4.4,
+            1.9,
+            0.4
+          ],
+          "direct": 20.4,
+          "playin": 50.8,
+          "playoffs": 43.6,
+          "semi": 13.3,
+          "conferenceFinal": 4.9,
+          "finals": 1.8,
+          "champion": 0.8
+        },
+        {
+          "id": "7",
+          "name": "Denver Nuggets",
+          "short": "Nuggets",
+          "abbr": "DEN",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
+          "color": "",
+          "conference": "West",
+          "wins": 9,
+          "losses": 5,
+          "currentSeed": 7,
+          "form": 2.7999999999999994,
+          "rating": 1.5,
+          "factors": {
+            "performance": {
+              "score": 0.8,
+              "weight": 35
+            },
+            "form": {
+              "score": 2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": 0.3,
+              "weight": 25
+            },
+            "history": {
+              "score": 4.2,
+              "weight": 15
+            },
+            "market": {
+              "score": 1.4,
+              "weight": 15
+            }
+          },
+          "marketTitle": 2.6,
+          "rotationPlayers": [
+            {
+              "id": "3112335",
+              "name": "Nikola Jokic",
+              "mpg": 36.8,
+              "value": 37.6
+            },
+            {
+              "id": "3936299",
+              "name": "Jamal Murray",
+              "mpg": 36.4,
+              "value": 33.2
+            },
+            {
+              "id": "4431767",
+              "name": "Christian Braun",
+              "mpg": 33.6,
+              "value": 21.1
+            },
+            {
+              "id": "4698719",
+              "name": "Trevon Brazile",
+              "mpg": 18.4,
+              "value": 20.8
+            },
+            {
+              "id": "3138196",
+              "name": "Cameron Johnson",
+              "mpg": 28.2,
+              "value": 19.5
+            },
+            {
+              "id": "3064290",
+              "name": "Aaron Gordon",
+              "mpg": 29.3,
+              "value": 18.9
+            },
+            {
+              "id": "3978",
+              "name": "DeMar DeRozan",
+              "mpg": 22.8,
+              "value": 18.6
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0,
+          "remainingGames": 66,
+          "projectedWins": 46.5,
+          "projectedSeed": 6.8,
+          "modeSeed": 7,
+          "seedLow": 3,
+          "seedHigh": 11,
+          "winsLow": 38,
+          "winsHigh": 55,
+          "seedProb": [
+            2.9,
+            5,
+            7.4,
+            8.7,
+            10.2,
+            11.1,
+            12.5,
+            12.5,
+            11.4,
+            8.3,
+            5.7,
+            2.8,
+            1.1,
+            0.4,
+            0.1
+          ],
+          "direct": 45.2,
+          "playin": 44.7,
+          "playoffs": 69.2,
+          "semi": 27.7,
+          "conferenceFinal": 11,
+          "finals": 4.4,
+          "champion": 2
+        },
+        {
+          "id": "25",
+          "name": "Oklahoma City Thunder",
+          "short": "Thunder",
+          "abbr": "OKC",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
+          "color": "",
+          "conference": "West",
+          "wins": 10,
+          "losses": 6,
+          "currentSeed": 8,
+          "form": 1.3999999999999997,
+          "rating": 4.1,
+          "factors": {
+            "performance": {
+              "score": 2,
+              "weight": 35
+            },
+            "form": {
+              "score": 1.4,
+              "weight": 10
+            },
+            "roster": {
+              "score": 4,
+              "weight": 25
+            },
+            "history": {
+              "score": 10.1,
+              "weight": 15
+            },
+            "market": {
+              "score": 5,
+              "weight": 15
+            }
+          },
+          "marketTitle": 13.3,
+          "rotationPlayers": [
+            {
+              "id": "4278073",
+              "name": "Shai Gilgeous-Alexander",
+              "mpg": 33.4,
+              "value": 39.1
+            },
+            {
+              "id": "5174983",
+              "name": "Aday Mara",
+              "mpg": 22.4,
+              "value": 27.9
+            },
+            {
+              "id": "4900671",
+              "name": "Ajay Mitchell",
+              "mpg": 28,
+              "value": 27.7
+            },
+            {
+              "id": "4222252",
+              "name": "Isaiah Hartenstein",
+              "mpg": 25.2,
+              "value": 26.2
+            },
+            {
+              "id": "2991350",
+              "name": "Alex Caruso",
+              "mpg": 19.3,
+              "value": 25.3
+            },
+            {
+              "id": "5241364",
+              "name": "Bennett Stirtz",
+              "mpg": 18.4,
+              "value": 21.1
+            },
+            {
+              "id": "4683778",
+              "name": "Jared McCain",
+              "mpg": 27.3,
+              "value": 20.8
+            },
+            {
+              "id": "3133626",
+              "name": "Kenrich Williams",
+              "mpg": 20.8,
+              "value": 19.7
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Alex Caruso",
+              "status": "GTD",
+              "until": 1795305600000,
+              "cost": 0.5
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 0.5,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": -0.1,
+          "remainingGames": 64,
+          "projectedWins": 52.5,
+          "projectedSeed": 4.3,
+          "modeSeed": 2,
+          "seedLow": 1,
+          "seedHigh": 8,
+          "winsLow": 44,
+          "winsHigh": 60,
+          "seedProb": [
+            12.9,
+            16.8,
+            14.8,
+            14.1,
+            11.5,
+            10,
+            7.2,
+            5.5,
+            3.5,
+            2.1,
+            1.2,
+            0.4,
+            0.1,
+            0,
+            0
+          ],
+          "direct": 80.1,
+          "playin": 18.2,
+          "playoffs": 91.6,
+          "semi": 56.3,
+          "conferenceFinal": 31.5,
+          "finals": 16.4,
+          "champion": 9.9
+        },
+        {
+          "id": "22",
+          "name": "Portland Trail Blazers",
+          "short": "Trail Blazers",
+          "abbr": "POR",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
+          "color": "",
+          "conference": "West",
+          "wins": 10,
+          "losses": 5,
+          "currentSeed": 6,
+          "form": 1.3999999999999997,
+          "rating": 1.5,
+          "factors": {
+            "performance": {
+              "score": 2.8,
+              "weight": 35
+            },
+            "form": {
+              "score": 1.4,
+              "weight": 10
+            },
+            "roster": {
+              "score": 1.5,
+              "weight": 25
+            },
+            "history": {
+              "score": -0.9,
+              "weight": 15
+            },
+            "market": {
+              "score": 1,
+              "weight": 15
+            }
+          },
+          "marketTitle": 2.2,
+          "rotationPlayers": [
+            {
+              "id": "4683021",
+              "name": "Deni Avdija",
+              "mpg": 32.5,
+              "value": 34.8
+            },
+            {
+              "id": "6606",
+              "name": "Damian Lillard",
+              "mpg": 29.5,
+              "value": 29.8
+            },
+            {
+              "id": "5105565",
+              "name": "Donovan Clingan",
+              "mpg": 25.7,
+              "value": 29.4
+            },
+            {
+              "id": "3995",
+              "name": "Jrue Holiday",
+              "mpg": 26.8,
+              "value": 27.6
+            },
+            {
+              "id": "4431736",
+              "name": "Toumani Camara",
+              "mpg": 29.6,
+              "value": 20.5
+            },
+            {
+              "id": "5081727",
+              "name": "Sidy Cissoko",
+              "mpg": 24.7,
+              "value": 18.7
+            },
+            {
+              "id": "4683678",
+              "name": "Scoot Henderson",
+              "mpg": 23,
+              "value": 14.6
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 65,
+          "projectedWins": 47.3,
+          "projectedSeed": 6.4,
+          "modeSeed": 7,
+          "seedLow": 3,
+          "seedHigh": 10,
+          "winsLow": 39,
+          "winsHigh": 56,
+          "seedProb": [
+            3.3,
+            5.9,
+            8.3,
+            10.6,
+            11.7,
+            11.8,
+            12,
+            11.5,
+            9.4,
+            7.2,
+            4.8,
+            2.4,
+            1,
+            0.3,
+            0
+          ],
+          "direct": 51.5,
+          "playin": 40,
+          "playoffs": 73.2,
+          "semi": 29.5,
+          "conferenceFinal": 11.4,
+          "finals": 4.7,
+          "champion": 2.5
+        },
+        {
+          "id": "16",
+          "name": "Minnesota Timberwolves",
+          "short": "Timberwolves",
+          "abbr": "MIN",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/min.png",
+          "color": "",
+          "conference": "West",
+          "wins": 11,
+          "losses": 5,
+          "currentSeed": 5,
+          "form": 2.7999999999999994,
+          "rating": 2,
+          "factors": {
+            "performance": {
+              "score": 4.3,
+              "weight": 35
+            },
+            "form": {
+              "score": 2.8,
+              "weight": 10
+            },
+            "roster": {
+              "score": -3.2,
+              "weight": 25
+            },
+            "history": {
+              "score": 3.4,
+              "weight": 15
+            },
+            "market": {
+              "score": 3.3,
+              "weight": 15
+            }
+          },
+          "marketTitle": 6.3,
+          "rotationPlayers": [
+            {
+              "id": "4432816",
+              "name": "LaMelo Ball",
+              "mpg": 28.1,
+              "value": 29.5
+            },
+            {
+              "id": "4397002",
+              "name": "Ayo Dosunmu",
+              "mpg": 31.6,
+              "value": 26.9
+            },
+            {
+              "id": "4431671",
+              "name": "Jaden McDaniels",
+              "mpg": 33.8,
+              "value": 26.2
+            },
+            {
+              "id": "4432847",
+              "name": "Terrence Shannon Jr.",
+              "mpg": 22.8,
+              "value": 25.5
+            },
+            {
+              "id": "4433247",
+              "name": "Jonathan Kuminga",
+              "mpg": 30.8,
+              "value": 21.5
+            },
+            {
+              "id": "3136196",
+              "name": "Trey Lyles",
+              "mpg": 18.9,
+              "value": 19.5
+            },
+            {
+              "id": "3032976",
+              "name": "Rudy Gobert",
+              "mpg": 29.3,
+              "value": 16.4
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.3,
+          "remainingGames": 64,
+          "projectedWins": 47.7,
+          "projectedSeed": 6.2,
+          "modeSeed": 6,
+          "seedLow": 2,
+          "seedHigh": 10,
+          "winsLow": 39,
+          "winsHigh": 56,
+          "seedProb": [
+            3.8,
+            6.9,
+            8.6,
+            10.4,
+            11.7,
+            12.1,
+            12,
+            11.1,
+            9.5,
+            6.6,
+            4.6,
+            2.1,
+            0.7,
+            0.1,
+            0
+          ],
+          "direct": 53.4,
+          "playin": 39.2,
+          "playoffs": 75.5,
+          "semi": 32.7,
+          "conferenceFinal": 13.5,
+          "finals": 5.4,
+          "champion": 2.9
+        },
+        {
+          "id": "10",
+          "name": "Houston Rockets",
+          "short": "Rockets",
+          "abbr": "HOU",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
+          "color": "",
+          "conference": "West",
+          "wins": 12,
+          "losses": 5,
+          "currentSeed": 4,
+          "form": 1.3999999999999997,
+          "rating": 2.9,
+          "factors": {
+            "performance": {
+              "score": 3.5,
+              "weight": 35
+            },
+            "form": {
+              "score": 1.4,
+              "weight": 10
+            },
+            "roster": {
+              "score": 2,
+              "weight": 25
+            },
+            "history": {
+              "score": 4.4,
+              "weight": 15
+            },
+            "market": {
+              "score": 2.6,
+              "weight": 15
+            }
+          },
+          "marketTitle": 4.6,
+          "rotationPlayers": [
+            {
+              "id": "4871144",
+              "name": "Alperen Sengun",
+              "mpg": 33,
+              "value": 36.9
+            },
+            {
+              "id": "3202",
+              "name": "Kevin Durant",
+              "mpg": 33.5,
+              "value": 29.3
+            },
+            {
+              "id": "2991230",
+              "name": "Fred VanVleet",
+              "mpg": 29.9,
+              "value": 25.8
+            },
+            {
+              "id": "4684740",
+              "name": "Amen Thompson",
+              "mpg": 32.8,
+              "value": 25.8
+            },
+            {
+              "id": "4432639",
+              "name": "Jabari Smith Jr.",
+              "mpg": 33.3,
+              "value": 24.1
+            },
+            {
+              "id": "4433192",
+              "name": "Tari Eason",
+              "mpg": 24.9,
+              "value": 21.4
+            },
+            {
+              "id": "4711272",
+              "name": "Reed Sheppard",
+              "mpg": 20.2,
+              "value": 21.3
+            },
+            {
+              "id": "2990992",
+              "name": "Marcus Smart",
+              "mpg": 21.3,
+              "value": 17.7
+            }
+          ],
+          "injuryAdjustments": [],
+          "injuryCoverage": true,
+          "injuryPenalty": 0,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0,
+          "remainingGames": 63,
+          "projectedWins": 50.8,
+          "projectedSeed": 5,
+          "modeSeed": 3,
+          "seedLow": 2,
+          "seedHigh": 9,
+          "winsLow": 42,
+          "winsHigh": 59,
+          "seedProb": [
+            8.7,
+            11.7,
+            13.6,
+            13.5,
+            12.4,
+            11.5,
+            9.9,
+            7.1,
+            5.4,
+            3.3,
+            2,
+            0.7,
+            0.2,
+            0,
+            0
+          ],
+          "direct": 71.4,
+          "playin": 25.7,
+          "playoffs": 87.5,
+          "semi": 45.6,
+          "conferenceFinal": 21.4,
+          "finals": 9.7,
+          "champion": 4.9
+        },
+        {
+          "id": "29",
+          "name": "Memphis Grizzlies",
+          "short": "Grizzlies",
+          "abbr": "MEM",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mem.png",
+          "color": "",
+          "conference": "West",
+          "wins": 12,
+          "losses": 4,
+          "currentSeed": 3,
+          "form": 1.3999999999999997,
+          "rating": 2.7,
+          "factors": {
+            "performance": {
+              "score": 4.6,
+              "weight": 35
+            },
+            "form": {
+              "score": 1.4,
+              "weight": 10
+            },
+            "roster": {
+              "score": 6.7,
+              "weight": 25
+            },
+            "history": {
+              "score": -2.5,
+              "weight": 15
+            },
+            "market": {
+              "score": -2.1,
+              "weight": 15
+            }
+          },
+          "marketTitle": 0.5,
+          "rotationPlayers": [
+            {
+              "id": "4065733",
+              "name": "Ty Jerome",
+              "mpg": 30.5,
+              "value": 34.7
+            },
+            {
+              "id": "4433083",
+              "name": "Cam Spencer",
+              "mpg": 22.5,
+              "value": 32.3
+            },
+            {
+              "id": "4903027",
+              "name": "Cedric Coward",
+              "mpg": 28.7,
+              "value": 29.8
+            },
+            {
+              "id": "5041935",
+              "name": "Cameron Boozer",
+              "mpg": 30.9,
+              "value": 28.9
+            },
+            {
+              "id": "4432810",
+              "name": "Isaiah Stewart",
+              "mpg": 18.1,
+              "value": 28.1
+            },
+            {
+              "id": "4600663",
+              "name": "Zach Edey",
+              "mpg": 20.8,
+              "value": 25.9
+            },
+            {
+              "id": "2991070",
+              "name": "Jerami Grant",
+              "mpg": 22.3,
+              "value": 22.2
+            },
+            {
+              "id": "5112087",
+              "name": "Jaylen Wells",
+              "mpg": 26.8,
+              "value": 21.7
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Jerami Grant",
+              "status": "OUT",
+              "until": 1795392000000,
+              "cost": 0.8
+            },
+            {
+              "name": "Cameron Boozer",
+              "status": "OUT",
+              "until": 1795392000000,
+              "cost": 1.9
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 2.7,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.5,
+          "remainingGames": 64,
+          "projectedWins": 49.8,
+          "projectedSeed": 5.4,
+          "modeSeed": 5,
+          "seedLow": 2,
+          "seedHigh": 9,
+          "winsLow": 41,
+          "winsHigh": 58,
+          "seedProb": [
+            6.9,
+            10.5,
+            11.6,
+            12.3,
+            12.7,
+            11.9,
+            10.3,
+            9.1,
+            6.3,
+            4.3,
+            2.7,
+            1.1,
+            0.4,
+            0,
+            0
+          ],
+          "direct": 65.9,
+          "playin": 30,
+          "playoffs": 84,
+          "semi": 41.5,
+          "conferenceFinal": 18.8,
+          "finals": 8.4,
+          "champion": 4.7
+        },
+        {
+          "id": "24",
+          "name": "San Antonio Spurs",
+          "short": "Spurs",
+          "abbr": "SA",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
+          "color": "",
+          "conference": "West",
+          "wins": 13,
+          "losses": 3,
+          "currentSeed": 2,
+          "form": 5.6000000000000005,
+          "rating": 5.6,
+          "factors": {
+            "performance": {
+              "score": 5.1,
+              "weight": 35
+            },
+            "form": {
+              "score": 5.6,
+              "weight": 10
+            },
+            "roster": {
+              "score": 6.7,
+              "weight": 25
+            },
+            "history": {
+              "score": 4.4,
+              "weight": 15
+            },
+            "market": {
+              "score": 5.9,
+              "weight": 15
+            }
+          },
+          "marketTitle": 20.9,
+          "rotationPlayers": [
+            {
+              "id": "5104157",
+              "name": "Victor Wembanyama",
+              "mpg": 30.2,
+              "value": 50
+            },
+            {
+              "id": "5037871",
+              "name": "Dylan Harper",
+              "mpg": 31.7,
+              "value": 28.2
+            },
+            {
+              "id": "4845367",
+              "name": "Stephon Castle",
+              "mpg": 29.6,
+              "value": 27
+            },
+            {
+              "id": "4066259",
+              "name": "De'Aaron Fox",
+              "mpg": 29.1,
+              "value": 25.2
+            },
+            {
+              "id": "4592479",
+              "name": "Julian Champagnie",
+              "mpg": 26.5,
+              "value": 21.5
+            },
+            {
+              "id": "4395630",
+              "name": "Devin Vassell",
+              "mpg": 30.1,
+              "value": 19.7
+            },
+            {
+              "id": "4395723",
+              "name": "Keldon Johnson",
+              "mpg": 24.1,
+              "value": 19.5
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Dylan Harper",
+              "status": "OUT",
+              "until": 1797120000000,
+              "cost": 1.9
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.9,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.1,
+          "remainingGames": 64,
+          "projectedWins": 57.3,
+          "projectedSeed": 2.6,
+          "modeSeed": 1,
+          "seedLow": 1,
+          "seedHigh": 6,
+          "winsLow": 49,
+          "winsHigh": 65,
+          "seedProb": [
+            39.1,
+            21.4,
+            14,
+            9.2,
+            6.2,
+            4.3,
+            2.6,
+            1.8,
+            0.8,
+            0.5,
+            0.1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "direct": 94.2,
+          "playin": 5.6,
+          "playoffs": 98.3,
+          "semi": 73.2,
+          "conferenceFinal": 48.3,
+          "finals": 29.9,
+          "champion": 20
+        },
+        {
+          "id": "13",
+          "name": "Los Angeles Lakers",
+          "short": "Lakers",
+          "abbr": "LAL",
+          "logo": "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
+          "color": "",
+          "conference": "West",
+          "wins": 14,
+          "losses": 3,
+          "currentSeed": 1,
+          "form": 5.6000000000000005,
+          "rating": 4,
+          "factors": {
+            "performance": {
+              "score": 3.1,
+              "weight": 35
+            },
+            "form": {
+              "score": 5.6,
+              "weight": 10
+            },
+            "roster": {
+              "score": 7.2,
+              "weight": 25
+            },
+            "history": {
+              "score": 1.6,
+              "weight": 15
+            },
+            "market": {
+              "score": 2,
+              "weight": 15
+            }
+          },
+          "marketTitle": 3.5,
+          "rotationPlayers": [
+            {
+              "id": "3945274",
+              "name": "Luka Doncic",
+              "mpg": 36.4,
+              "value": 45.1
+            },
+            {
+              "id": "4433136",
+              "name": "Walker Kessler",
+              "mpg": 30.9,
+              "value": 30.4
+            },
+            {
+              "id": "4066457",
+              "name": "Austin Reaves",
+              "mpg": 35.3,
+              "value": 30.3
+            },
+            {
+              "id": "4277811",
+              "name": "Collin Sexton",
+              "mpg": 18.8,
+              "value": 24.4
+            },
+            {
+              "id": "4433137",
+              "name": "Ziaire Williams",
+              "mpg": 23.6,
+              "value": 22.6
+            },
+            {
+              "id": "4397014",
+              "name": "Quentin Grimes",
+              "mpg": 29.1,
+              "value": 21.8
+            },
+            {
+              "id": "4278580",
+              "name": "Sandro Mamukelashvili",
+              "mpg": 23.1,
+              "value": 20.9
+            },
+            {
+              "id": "3907498",
+              "name": "Matisse Thybulle",
+              "mpg": 24.9,
+              "value": 19.2
+            }
+          ],
+          "injuryAdjustments": [
+            {
+              "name": "Austin Reaves",
+              "status": "GTD",
+              "until": 1795392000000,
+              "cost": 1.2
+            }
+          ],
+          "injuryCoverage": true,
+          "injuryPenalty": 1.2,
+          "uncertainty": 2.4,
+          "scheduleDifficulty": 0.4,
+          "remainingGames": 63,
+          "projectedWins": 54.4,
+          "projectedSeed": 3.6,
+          "modeSeed": 1,
+          "seedLow": 1,
+          "seedHigh": 7,
+          "winsLow": 46,
+          "winsHigh": 62,
+          "seedProb": [
+            21.4,
+            19.3,
+            16.3,
+            12.1,
+            9.9,
+            7.8,
+            5.1,
+            3.7,
+            2.5,
+            1.2,
+            0.5,
+            0.2,
+            0,
+            0,
+            0
+          ],
+          "direct": 86.8,
+          "playin": 12.5,
+          "playoffs": 94.8,
+          "semi": 59.2,
+          "conferenceFinal": 31.8,
+          "finals": 16.7,
+          "champion": 9.8
+        }
+      ],
+      "matchups": {
+        "East": [
+          {
+            "teams": [
+              "14",
+              "2"
+            ],
+            "prob": 11.2
+          },
+          {
+            "teams": [
+              "8",
+              "2"
+            ],
+            "prob": 9.2
+          },
+          {
+            "teams": [
+              "2",
+              "20"
+            ],
+            "prob": 7.5
+          },
+          {
+            "teams": [
+              "5",
+              "2"
+            ],
+            "prob": 7.5
+          },
+          {
+            "teams": [
+              "18",
+              "2"
+            ],
+            "prob": 6.8
+          }
+        ],
+        "West": [
+          {
+            "teams": [
+              "24",
+              "13"
+            ],
+            "prob": 11.1
+          },
+          {
+            "teams": [
+              "25",
+              "24"
+            ],
+            "prob": 10.9
+          },
+          {
+            "teams": [
+              "10",
+              "24"
+            ],
+            "prob": 7
+          },
+          {
+            "teams": [
+              "25",
+              "13"
+            ],
+            "prob": 5.8
+          },
+          {
+            "teams": [
+              "29",
+              "24"
+            ],
+            "prob": 5.8
+          }
+        ],
+        "NBA": [
+          {
+            "teams": [
+              "2",
+              "24"
+            ],
+            "prob": 9.9
+          },
+          {
+            "teams": [
+              "2",
+              "13"
+            ],
+            "prob": 5.3
+          },
+          {
+            "teams": [
+              "2",
+              "25"
+            ],
+            "prob": 5.1
+          },
+          {
+            "teams": [
+              "14",
+              "24"
+            ],
+            "prob": 4.9
+          },
+          {
+            "teams": [
+              "8",
+              "24"
+            ],
+            "prob": 3.5
+          }
+        ]
+      },
+      "notes": "Multi-factor heuristic: current margin and wins, recent form, observed rotation talent, previous two seasons, normalized championship-market prices. Injury and rest adjustments per known game, estimated longer-term availability for playoffs. Missing components reweighted. Random tiebreaks and unknown schedule pairings. Not calibrated.",
+      "standingsAsOf": "2026-11-21T22:30:26.376Z"
     }
   ]
 }
