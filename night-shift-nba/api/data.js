@@ -11,7 +11,7 @@ function teamSchedule(j,id,now=Date.now()){
  const score=x=>{const v=typeof x==='object'&&x!==null?(x.value??x.displayValue):x;return v===null||v===undefined||v===''||!Number.isFinite(Number(v))?null:Number(v)};
  for(const e of j.events||[]){
   const c=e.competitions?.[0]||{},st=c.status?.type||e.status?.type||{},sortDate=e.date||c.date,when=Date.parse(sortDate);
-  if(!/^\d+$/.test(String(e.id||''))||!Number.isFinite(when)||seen.has(String(e.id))||/cancel|postpon|suspend/i.test([st.name,st.description,st.detail].join(' '))||String(e.season?.type??c.type?.id)==='1')continue;
+  if(!/^\d+$/.test(String(e.id||''))||!Number.isFinite(when)||seen.has(String(e.id))||/cancel|postpon|suspend/i.test([st.name,st.description,st.detail].join(' '))||String(e.seasonType?.id??e.season?.type??'')==='1')continue;
   const sides=c.competitors||[],side=k=>{const x=sides.find(y=>y.homeAway===k);if(!x)return null;const t=team(x.team);return t?.id?{...t,score:score(x.score)}:null};
   const home=side('home'),away=side('away');if(!home||!away||![home.id,away.id].includes(String(id)))continue;
   const state=st.state||(st.completed?'post':null);
@@ -22,7 +22,22 @@ function teamSchedule(j,id,now=Date.now()){
  }
  return {recent:result.filter(g=>g.state==='post').sort((a,b)=>Date.parse(b.date)-Date.parse(a.date)).slice(0,10),upcoming:result.filter(g=>g.state==='pre').sort((a,b)=>Date.parse(a.date)-Date.parse(b.date)).slice(0,10),live:result.filter(g=>g.state==='in')};
 }
-async function run(type,q){if(type==='teamSchedule'){if(!/^\d{1,6}$/.test(q.id||''))throw Error('Invalid team');const now=new Date(),season=now.getUTCFullYear()+(now.getUTCMonth()>=6?1:0);const j=await get(ROOT+'/teams/'+q.id+'/schedule?season='+season,10000);if(!Array.isArray(j.events))throw Error('Schedule unavailable');return teamSchedule(j,q.id,now.getTime())}if(type==='scoreboard'){const d=/^\d{8}$/.test(q.date||'')?q.date:null;const j=await get(ROOT+'/scoreboard?limit=100'+(d?'&dates='+d:''));return{games:games(j),date:d,league:j.leagues&&j.leagues[0]&&j.leagues[0].name||'NBA'}}
+async function run(type,q){if(type==='teamSchedule'){if(!/^\d{1,6}$/.test(q.id||''))throw Error('Invalid team');const now=new Date(),season=now.getUTCFullYear()+(now.getUTCMonth()>=6?1:0);const base=ROOT+'/teams/'+q.id+'/schedule',stamp=now.getTime(),all=new Map();
+const add=j=>{for(const e of j?.events||[]){if(e.id)all.set(String(e.id),e)}};
+const read=()=>teamSchedule({events:[...all.values()]},q.id,stamp);
+const first=await Promise.allSettled([get(base,8000),get(base+'?season='+season+'&seasontype=2',8000)]);
+first.forEach(r=>{if(r.status==='fulfilled')add(r.value)});
+let data=read();
+if(data.recent.length<10||data.upcoming.length<10){
+ const ymd=t=>new Date(t).toISOString().slice(0,10).replace(/-/g,'');
+ const dates=[];
+ if(data.recent.length<10)dates.push(ymd(stamp-32*86400000)+'-'+ymd(stamp));
+ if(data.upcoming.length<10)dates.push(ymd(stamp)+'-'+ymd(stamp+35*86400000));
+ const fallback=await Promise.allSettled(dates.map(d=>get(ROOT+'/scoreboard?limit=500&dates='+d,8000)));
+ fallback.forEach(r=>{if(r.status==='fulfilled')add(r.value)});data=read();
+}
+if(!all.size)throw Error('Schedule feed unavailable');
+return data}if(type==='scoreboard'){const d=/^\d{8}$/.test(q.date||'')?q.date:null;const j=await get(ROOT+'/scoreboard?limit=100'+(d?'&dates='+d:''));return{games:games(j),date:d,league:j.leagues&&j.leagues[0]&&j.leagues[0].name||'NBA'}}
 if(type==='teams'){const j=await get(ROOT+'/teams');return{teams:(j.sports?.[0]?.leagues?.[0]?.teams||[]).map(x=>team(x.team)).filter(x=>x?.id)}}
 if(type==='standings'){const j=await get('https://site.api.espn.com/apis/v2/sports/basketball/nba/standings');const groups=j.children||[j];return{groups:groups.map(g=>({name:g.name||g.abbreviation||'NBA',entries:(g.standings?.entries||[]).map(e=>({team:team(e.team),stats:statsOf(e.stats)})).filter(e=>e.team?.id)})).filter(g=>g.entries.length)}}
 if(type==='roster'){if(!/^[a-z0-9]{1,6}$/i.test(q.id||''))throw Error('Invalid team');const j=await get(ROOT+'/teams/'+q.id+'/roster');const list=(j.athletes||[]).flatMap(a=>Array.isArray(a.items)?a.items:[a]);return{team:team(j.team),players:list.map(a=>athlete(a,j.team)).filter(a=>a?.id)}}
