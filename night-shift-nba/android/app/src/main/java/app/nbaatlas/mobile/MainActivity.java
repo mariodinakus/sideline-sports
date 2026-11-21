@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
   root.addView(progress,new FrameLayout.LayoutParams(-1,Math.round(3*getResources().getDisplayMetrics().density)));
   setContentView(root);
   WebSettings s=webView.getSettings();
-  s.setUserAgentString(s.getUserAgentString()+" NBAAtlasAndroid/3.0");
+  s.setUserAgentString(s.getUserAgentString()+" NBAAtlasAndroid/3.1");
   s.setJavaScriptEnabled(true);s.setDomStorageEnabled(true);
   s.setAllowFileAccess(false);s.setAllowContentAccess(false);
   s.setAllowFileAccessFromFileURLs(false);s.setAllowUniversalAccessFromFileURLs(false);
@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
    @Override public boolean shouldOverrideUrlLoading(WebView w,WebResourceRequest r){
     Uri u=r.getUrl();String scheme=u.getScheme();
     if("https".equalsIgnoreCase(scheme)&&HOST.equalsIgnoreCase(u.getHost())){
-     if(r.isForMainFrame()&&"/__atlas_notifications".equals(u.getPath())){showAlertSettings(u.getQueryParameter("teams"));return true;}
+     if(r.isForMainFrame()&&"/__atlas_notifications".equals(u.getPath())){showAlertSettings(u.getQueryParameter("teams"),u.getQueryParameter("players"));return true;}
      return false;
     }
     if("https".equalsIgnoreCase(scheme)||"http".equalsIgnoreCase(scheme)||"mailto".equalsIgnoreCase(scheme)||"tel".equalsIgnoreCase(scheme)){
@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
  }
  private String startUrl(Intent i){String id=i==null?null:i.getStringExtra("gameId");return id!=null&&id.matches("[0-9]{4,12}")?HOME+"#/game/"+id:HOME;}
  @Override protected void onNewIntent(Intent i){super.onNewIntent(i);setIntent(i);if(webView!=null)webView.loadUrl(startUrl(i));}
- private void showAlertSettings(String suggested){
+ private void showAlertSettings(String suggested,String playerIds){
   android.content.SharedPreferences p=getSharedPreferences("atlas_alerts",MODE_PRIVATE);
   android.widget.LinearLayout l=new android.widget.LinearLayout(this);l.setOrientation(1);int pad=(int)(20*getResources().getDisplayMetrics().density);l.setPadding(pad,0,pad,0);
   android.widget.Switch en=new android.widget.Switch(this);en.setText("Ειδοποιήσεις αγώνων");en.setChecked(p.getBoolean("enabled",false));l.addView(en);
@@ -77,9 +77,15 @@ public class MainActivity extends Activity {
   android.widget.CheckBox pre=new android.widget.CheckBox(this);pre.setText("30 λεπτά πριν τον αγώνα");pre.setChecked(p.getBoolean("pre",true));l.addView(pre);
   android.widget.CheckBox live=new android.widget.CheckBox(this);live.setText("Έναρξη αγώνα");live.setChecked(p.getBoolean("live",true));l.addView(live);
   android.widget.CheckBox fin=new android.widget.CheckBox(this);fin.setText("Τελικό αποτέλεσμα");fin.setChecked(p.getBoolean("final",true));l.addView(fin);
-  new android.app.AlertDialog.Builder(this).setTitle("NBA ATLAS / Alerts").setView(l).setNegativeButton("Άκυρο",null).setPositiveButton("Αποθήκευση",(d,w)->{
+  android.widget.CheckBox periods=new android.widget.CheckBox(this);periods.setText("Σκορ περιόδων / ημίχρονο");periods.setChecked(p.getBoolean("periods",true));l.addView(periods);
+  android.widget.CheckBox stars=new android.widget.CheckBox(this);stars.setText("Αγαπημένοι παίκτες · στατιστικά");stars.setChecked(p.getBoolean("stars",true));l.addView(stars);
+  android.widget.CheckBox leaders=new android.widget.CheckBox(this);leaders.setText("Κορυφαίοι και μεγάλες επιδόσεις");leaders.setChecked(p.getBoolean("leaders",true));l.addView(leaders);
+  String selected=playerIds!=null&&playerIds.matches("[0-9,]{0,420}")?playerIds:p.getString("players","");
+  android.widget.TextView hint=new android.widget.TextView(this);hint.setText("Αγαπημένοι παίκτες: "+(selected.isEmpty()?0:selected.split(",").length)+". Ο περιοδικός έλεγχος μπορεί να καθυστερήσει.");l.addView(hint);
+  android.widget.ScrollView scroll=new android.widget.ScrollView(this);scroll.addView(l);
+  new android.app.AlertDialog.Builder(this).setTitle("NBA ATLAS / Alerts").setView(scroll).setNegativeButton("Άκυρο",null).setPositiveButton("Αποθήκευση",(d,w)->{
    String filter=teams.getText().toString().toUpperCase(java.util.Locale.ROOT).replaceAll("[^A-Z,; ]","").trim();if(filter.isEmpty())filter="ALL";
-   p.edit().putBoolean("enabled",en.isChecked()).putString("teams",filter).putBoolean("pre",pre.isChecked()).putBoolean("live",live.isChecked()).putBoolean("final",fin.isChecked()).apply();
+   p.edit().putBoolean("enabled",en.isChecked()).putString("teams",filter).putBoolean("pre",pre.isChecked()).putBoolean("live",live.isChecked()).putBoolean("final",fin.isChecked()).putBoolean("periods",periods.isChecked()).putBoolean("stars",stars.isChecked()).putBoolean("leaders",leaders.isChecked()).putString("players",selected).apply();
    if(!en.isChecked()){GameAlertService.cancel(this);return;}
    if(Build.VERSION.SDK_INT>=33&&checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED){requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS},44);return;}
    if(getSystemService(android.app.NotificationManager.class).areNotificationsEnabled()){GameAlertService.schedule(this);Toast.makeText(this,"Οι ειδοποιήσεις ενεργοποιήθηκαν",Toast.LENGTH_SHORT).show();}
