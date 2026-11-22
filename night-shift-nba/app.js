@@ -268,6 +268,7 @@ V.team=async(q,id)=>{
   const teamSeason=safe(api('lab?type=season'));
   window.AtlasCourt?.team(id,teamSeason,()=>t===token);
   window.AtlasGM?.install({id,roster,players:p?.players||[],season:teamSeason,valid:()=>t===token});
+  window.AtlasTalent?.install({id,roster,players:p?.players||[],valid:()=>t===token,getLog:pid=>safe(api('lab?type=gamelog&id='+encodeURIComponent(pid)))});
   window.AtlasPersonal?.favorite('team',{id,name:tm.name,abbr:tm.abbr,logo:tm.logo||LOGO(tm.abbr)});
   Promise.all([schedulePromise,archivePromise]).then(([schedule,archive])=>{if(t===token)fill('#team-schedule',renderTeamSchedule(schedule,id,s,archive))});
 };
