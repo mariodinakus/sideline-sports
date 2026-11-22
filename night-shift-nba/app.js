@@ -197,6 +197,7 @@ V.game=async(q,id)=>{
   <section class="sec grid g2">${ls?`<div class="card"><div class="lbl">Σκορ ανά περίοδο</div>${ls}</div>`:''}${fcHtml}</section>
   ${wpc?`<section class="sec card"><div class="lbl">Win probability (ESPN) · ${esc(h.abbr)}</div>${wpc}</section>`:''}
   <section class="sec">${secH('Box score','Οι παίκτες')}<div class="grid" style="gap:16px">${box||'<div class="empty">Το box score θα εμφανιστεί όταν ξεκινήσει ο αγώνας.</div>'}</div></section>`;
+  window.AtlasCourt?.game({id,d,a,h,state:st.state||'pre',token:()=>t===token});
   window.AtlasPersonal?.game({id,d,a,h,fc,state:st.state||'pre',token:()=>t===token});
 };
 
@@ -264,6 +265,7 @@ V.team=async(q,id)=>{
   <section class="sec">${secH('Ρόστερ','Οι παίκτες')}<div class="pcards">${roster.map((x,i)=>`<a class="pc fade" href="#/player/${x.id}" style="--tc:${c};min-height:270px"><div class="bg"></div><div class="rnk" style="font-size:44px">${esc(x.jersey||'')}</div><img class="hs" src="${x.headshot||HS(x.id)}" loading="lazy" ${silh}><div class="info"><b>${esc(x.name)}</b><div class="ln"><span>${esc(x.position)}</span>${x.st?`<span><em>${f(x.st.ppg)}</em> PTS</span><span><em>${f(x.st.rpg)}</em> REB</span><span><em>${f(x.st.apg)}</em> AST</span>`:`<span>${esc(x.height)}</span>`}</div></div></a>`).join('')||'<div class="empty">Το ρόστερ δεν είναι διαθέσιμο.</div>'}</div></section>
   ${tot?`<section class="sec card">${secH('Usage','Ποιος κουβαλάει το σκοράρισμα',null,'Μερίδιο του κάθε παίκτη στους πόντους της ομάδας (ανά αγώνα, σε όσους έχουν επαρκή δείγμα).')}<div style="display:flex;flex-direction:column;gap:10px">${roster.filter(x=>x.st?.ppg).map(x=>`<div style="display:grid;grid-template-columns:170px 1fr 70px;gap:12px;align-items:center;font-size:13.5px"><b>${esc(x.name)}</b>${bar(x.st.ppg,roster[0].st.ppg,c)}<span class="muted" style="text-align:right">${f(x.st.ppg/tot*100,0)}%</span></div>`).join('')}</div></section>`:''}`;
   document.querySelector('.phero')?.insertAdjacentHTML('afterend','<section class="sec card" id="sf-team-embed"></section>');window.AtlasSeason?.embed(id);
+  window.AtlasCourt?.team(id,safe(api('lab?type=season')),()=>t===token);
   window.AtlasPersonal?.favorite('team',{id,name:tm.name,abbr:tm.abbr,logo:tm.logo||LOGO(tm.abbr)});
   Promise.all([schedulePromise,archivePromise]).then(([schedule,archive])=>{if(t===token)fill('#team-schedule',renderTeamSchedule(schedule,id,s,archive))});
 };
@@ -320,6 +322,7 @@ V.player=async(q,id)=>{
   ${gp?`<a class="more" style="align-self:flex-start" href="#/goat?a=${id}">GOAT Index: δες τη θέση του →</a>`:''}</div></section>
   ${seasons.length>1?`<section class="sec card">${secH('Καριέρα','Η τροχιά',null,peak?`Κορυφαία σεζόν σε σκοράρισμα: ${esc(peak.seasonLabel)} με ${f(peak.stats.avgPoints)} πόντους.`:'')}${lineChart({series,xFmt:v=>"'"+String(v).slice(2),yFmt:v=>f(v,0)})}</section>`:''}
   <section class="sec card flat"><div style="padding:18px 18px 0" class="lbl">Σεζόν προς σεζόν · κανονική περίοδος</div><div class="tbl-wrap"><table><thead><tr><th>Σεζόν</th><th>Ομάδα</th><th>GP</th><th>MIN</th><th>PTS</th><th>REB</th><th>AST</th><th>STL</th><th>BLK</th><th>FG%</th><th>3P%</th><th>FT%</th></tr></thead><tbody>${rows.map(r=>{const tm=TEAMS.byId[r.teamId];return`<tr><td>${esc(r.seasonLabel)}</td><td class="l"><div class="tcell">${tm?`<img src="${tm.logo}" ${hideErr}>${esc(tm.abbr)}`:esc(r.teamSlug||'—')}</div></td>${['gamesPlayed','avgMinutes','avgPoints','avgRebounds','avgAssists','avgSteals','avgBlocks','fieldGoalPct','threePointFieldGoalPct','freeThrowPct'].map(k=>`<td ${k==='avgPoints'?'style="font-weight:700;color:var(--text)"':''}>${esc(r.stats[k]??'—')}</td>`).join('')}</tr>`}).join('')}</tbody></table></div></section>`;
+  window.AtlasCourt?.career(d,peak,rings);
   window.AtlasPersonal?.favorite('player',{id,name:ath.name||cur?.name,logo:ath.headshot||HS(id),abbr:TEAMS.byId[tid]?.abbr||'',teamId:tid||''});
 };
 
