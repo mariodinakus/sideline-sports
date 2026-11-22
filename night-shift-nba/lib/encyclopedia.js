@@ -20,7 +20,7 @@ function collapse(rows){
 }
 function row(x){return {id:x.player_id,name:x.player,season:N(x.season),league:x.lg,team:x.team,pos:x.pos,age:N(x.age),...st(x),fgPct:N(x.fg_percent),threePct:N(x.x3p_percent),ftPct:N(x.ft_percent)}}
 function career(x,rs){const seasons=collapse(rs);return {id:x.player_id,name:x.player,pos:x.pos,from:N(x.from),to:N(x.to),hof:x.hof==='TRUE',seasons:new Set(seasons.map(r=>r.season)).size,...Object.fromEntries(klist.map(k=>[k,total(seasons,k)])),teams:[...new Set(rs.filter(r=>!agg(r)).map(r=>r.team))]}}
-function team(x){return {season:N(x.season),league:x.lg,name:x.team,code:x.abbreviation,w:N(x.w),l:N(x.l),mov:N(x.mov),srs:N(x.srs),ortg:N(x.o_rtg),drtg:N(x.d_rtg),net:N(x.n_rtg),pace:N(x.pace),playoffs:x.playoffs==='TRUE',arena:x.arena==='NA'?null:x.arena}}
+function team(x){return {season:N(x.season),league:x.lg,name:x.team,code:x.abbreviation,w:N(x.w),l:N(x.l),mov:N(x.mov),srs:N(x.srs),ortg:N(x.o_rtg),drtg:N(x.d_rtg),net:N(x.n_rtg),pace:N(x.pace),ts:N(x.ts_percent),three:N(x.x3p_ar),tov:N(x.tov_percent),playoffs:x.playoffs==='TRUE',arena:x.arena==='NA'?null:x.arena}}
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function page(rows,q){const p=Math.max(0,Math.min(1000,Math.floor(N(q.page)||0))),limit=40;return {rows:rows.slice(p*limit,(p+1)*limit),total:rows.length,page:p,limit}}
 let dbPromise;function database(){if(!dbPromise)dbPromise=Promise.all([load('Player Career Info.csv'),load('Player Totals.csv'),load('Team Summaries.csv')]).then(([bios,stats,ts])=>{
@@ -31,9 +31,11 @@ let dbPromise;function database(){if(!dbPromise)dbPromise=Promise.all([load('Pla
  const bioMap=new Map(bios.map(x=>[x.player_id,x]));const people=Array.from(groups,([id,rs])=>career(bioMap.get(id)||{player_id:id,player:rs[0].player,pos:rs[0].pos,from:Math.min(...rs.map(r=>N(r.season))),to:Math.max(...rs.map(r=>N(r.season)))},rs));
  return {all,teams,groups,people,seasons:[...new Set(teams.map(x=>x.season))].sort((a,b)=>b-a)};
  }).catch(e=>{dbPromise=null;throw e});return dbPromise}
+let eraDb;
 async function query(q){
  const d=await database(),mode=String(q.mode||'meta'),y=N(q.year),search=norm(q.q).slice(0,90),code=String(q.code||'').slice(0,8),league=String(q.lg||'').slice(0,6),id=String(q.id||'').slice(0,30);
  const meta={source,snapshot:'2026-11-01',players:d.people.length,playerSeasonRows:collapse(d.all).length,teamSeasonRows:d.teams.length,teamIdentities:new Set(d.teams.map(t=>t.league+'|'+t.name)).size,seasons:d.seasons,first:d.seasons.at(-1),last:d.seasons[0]};
+ if(mode==='eraRank'){const r=require('./era-rank');if(!eraDb)eraDb=r.build(collapse(d.all).map(row),d.teams);return {...r.query(eraDb,q),source,snapshot:meta.snapshot};}
  if(mode==='meta')return meta;
  if(mode==='players'){let a=d.people.filter(p=>!search||norm(p.name).includes(search));const sort=['pts','g','ast','trb','stl','blk','x3p','name'].includes(q.sort)?q.sort:'pts';a.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):(N(b[sort])??-1)-(N(a[sort])??-1)||a.name.localeCompare(b.name));return {...page(a,q),source}}
  if(mode==='player'){const rs=d.groups.get(id),p=d.people.find(x=>x.id===id);if(!rs||!p)return {notFound:true};return {player:p,seasons:collapse(rs).map(row).sort((a,b)=>b.season-a.season),stints:rs.filter(x=>!agg(x)).map(row).sort((a,b)=>b.season-a.season),source}}
