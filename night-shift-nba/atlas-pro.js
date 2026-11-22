@@ -394,6 +394,7 @@ async function playerPanel(id){
    <p class="note">Game Score (Hollinger, με συνολικά ριμπάουντ). Usage/36 = (FGA + 0,44·FTA + TOV) ανά 36 λεπτά.</p>`;
 }
 async function teamPanel(id){
+  if(window.AtlasCourt)return; // integrated into the team dashboard
   if(document.getElementById('advtm'))return;const hero=document.querySelector('.phero');if(!hero)return;
   const se=await api('lab?type=season');if(route().id!==id||document.getElementById('advtm'))return;const T=se?.teams||[],x=T.find(t=>t.id===id);if(!x)return;
   const rk=(k,hi=true)=>{const v=x[k];if(!Number.isFinite(v))return'—';return 1+T.filter(t=>Number.isFinite(t[k])&&(hi?t[k]>v:t[k]<v)).length};

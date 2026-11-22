@@ -9,7 +9,7 @@ const ratio=(a,b,k=1)=>a!==null&&b!==null&&b>0?k*a/b:null;
 const calc=(fn,...v)=>v.every(x=>x!==null&&Number.isFinite(x))?fn(...v):null;
 const pct=(v)=>v===null?null:v*100;
 const tile=(label,v,d=1,s='',sub='')=>'<div class="ac-tile"><small>'+E(label)+'</small><strong>'+F(v,d,s)+'</strong>'+(sub?'<span>'+E(sub)+'</span>':'')+'</div>';
-const head=(k,t,sub)=>'<header class="ac-head"><div><div class="ac-kicker">'+E(k)+'</div><h2>'+E(t)+'</h2></div><span>'+E(sub||'')+'</span></header>';
+const head=(k,t,sub)=>'<div class="sec-h ac-head"><div><div class="eyebrow">'+E(k)+'</div><h2 class="h2">'+E(t)+'</h2></div><small class="muted">'+E(sub||'')+'</small></div>';
 const sum=(a,b)=>calc((x,y)=>x+y,a,b);
 const shooting=(a,t)=>{let fg=pick(t,'fieldGoalsMade','totalFieldGoalsMade'),fa=pick(t,'fieldGoalsAttempted','totalFieldGoalsAttempted'),three=pick(t,'threePointFieldGoalsMade','threePointFieldGoalsMadeTotal'),fta=pick(t,'freeThrowsAttempted','totalFreeThrowsAttempted'),pts=pick(t,'points','totalPoints');
 return {ts:ratio(pts,calc((x,y)=>2*(x+.44*y),fa,fta),100),efg:ratio(calc((x,y)=>x+.5*y,fg,three),fa,100),astTo:ratio(pick(t,'assists','totalAssists'),pick(t,'turnovers','totalTurnovers'))}};
@@ -19,13 +19,14 @@ function career(d,peak,rings){
  let mode='regular';
  function render(){
   const r=d[mode]||{},a=r.careerAverages||{},t=r.careerTotals||{},s=shooting(a,t),gp=pick(t,'gamesPlayed','games')??pick(a,'gamesPlayed','games');
-  panel.innerHTML='<div class="ac-career-head"><b>CAREER OVERVIEW</b><div class="ac-tabs"><button type="button" data-mode="regular" aria-pressed="'+(mode==='regular')+'">Regular season</button><button type="button" data-mode="playoffs" aria-pressed="'+(mode==='playoffs')+'">Playoffs</button></div></div>'+
-  '<div class="ac-grid ac-core">'+[['PPG',pick(a,'avgPoints')],['RPG',pick(a,'avgRebounds')],['APG',pick(a,'avgAssists')],['SPG',pick(a,'avgSteals')],['BPG',pick(a,'avgBlocks')],['MPG',pick(a,'avgMinutes')]].map(x=>tile(...x)).join('')+'</div>'+
-  '<div class="ac-grid ac-extra">'+tile('Games',gp,0)+tile('Seasons',pick(r,'yearCount'),0)+tile('Total points',pick(t,'points','totalPoints'),0)+tile('Total rebounds',pick(t,'rebounds','totalRebounds'),0)+tile('Total assists',pick(t,'assists','totalAssists'),0)+tile('FG%',pick(a,'fieldGoalPct'),1,'%')+tile('3P%',pick(a,'threePointFieldGoalPct'),1,'%')+tile('FT%',pick(a,'freeThrowPct'),1,'%')+tile('TS%',s.ts,1,'%')+tile('eFG%',s.efg,1,'%')+tile('AST/TO',s.astTo,2)+'</div>'+
+  panel.innerHTML='<div class="ac-career-head"><div class="eyebrow">CAREER OVERVIEW</div><div class="ac-tabs"><button type="button" data-mode="regular" aria-pressed="'+(mode==='regular')+'">Κανονική περίοδος</button><button type="button" data-mode="playoffs" aria-pressed="'+(mode==='playoffs')+'">Playoffs</button></div></div>'+
+  '<div class="stats-row ac-core">'+[['PTS / αγ.',pick(a,'avgPoints'),1],['REB / αγ.',pick(a,'avgRebounds'),1],['AST / αγ.',pick(a,'avgAssists'),1],['Αγώνες',gp,0]].map(([l,v,z])=>'<div class="st"><b>'+F(v,z)+'</b><small>'+E(l)+'</small></div>').join('')+'</div>'+
+  '<div class="ac-career-line"><span><b>'+F(pick(t,'points','totalPoints'),0)+'</b> πόντοι</span><span><b>'+F(pick(t,'rebounds','totalRebounds'),0)+'</b> ριμπάουντ</span><span><b>'+F(pick(t,'assists','totalAssists'),0)+'</b> ασίστ</span></div>'+
+  '<details class="ac-more"><summary>Όλα τα στατιστικά καριέρας</summary><div class="ac-grid ac-extra">'+tile('Σεζόν',pick(r,'yearCount'),0)+tile('SPG',pick(a,'avgSteals'))+tile('BPG',pick(a,'avgBlocks'))+tile('MPG',pick(a,'avgMinutes'))+tile('FG%',pick(a,'fieldGoalPct'),1,'%')+tile('3P%',pick(a,'threePointFieldGoalPct'),1,'%')+tile('FT%',pick(a,'freeThrowPct'),1,'%')+tile('TS%',s.ts,1,'%')+tile('eFG%',s.efg,1,'%')+tile('AST/TO',s.astTo,2)+'</div></details>'+
   '<div class="ac-note">'+(mode==='regular'&&peak?'Peak scoring: '+E(peak.seasonLabel)+' · '+F(pick(peak.stats,'avgPoints'))+' PPG · ':'')+'ESPN career totals · — = unavailable</div>';
   panel.querySelectorAll('button').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;render()});
  }
- render();anchor.insertAdjacentHTML('beforebegin','<div class="ac-kicker ac-current">CURRENT / LAST SEASON</div>');
+ render();anchor.insertAdjacentHTML('beforebegin','<div class="eyebrow ac-current">ΤΡΕΧΟΥΣΑ / ΤΕΛΕΥΤΑΙΑ ΣΕΖΟΝ</div>');
 }
 const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
 function box(d,id){
@@ -47,6 +48,7 @@ function gameMetrics(x,y,p,opp){
  return {pts:p,ortg:o,drtg:def,net:calc((a,b)=>a-b,o,def),ts:ratio(p,calc((a,b)=>2*(a+.44*b),x.fga,x.fta),100),efg:ratio(calc((a,b)=>a+.5*b,x.fgm,x.tpm),x.fga,100),fg:ratio(x.fgm,x.fga,100),three:ratio(x.tpm,x.tpa,100),ft:ratio(x.ftm,x.fta,100),tov:ratio(x.to,calc((a,b,c)=>a+.44*b+c,x.fga,x.fta,x.to),100),orb:ratio(x.orb,sum(x.orb,y.drb),100),drb:ratio(x.drb,sum(y.orb,x.drb),100),ftr:ratio(x.ftm,x.fga),astTo:ratio(x.ast,x.to),poss:pos,...Object.fromEntries(['reb','ast','stl','blk','paint','fast','offto','second','bench','fouls','lead','to','fga','tpa','fta'].map(k=>[k,x[k]]))};
 }
 const groups=[
+ ['Βασικά',[['pts','Πόντοι',1,'',0],['fg','FG%',1,'%'],['three','3P%',1,'%'],['ft','FT%',1,'%'],['reb','Ριμπάουντ',1,'',0],['ast','Ασίστ',1,'',0],['to','Λάθη',-1,'',0],['stl','Κλεψίματα',1,'',0],['blk','Τάπες',1,'',0],['paint','Πόντοι ρακέτας',1,'',0],['bench','Πόντοι πάγκου',1,'',0]]],
  ['Efficiency',[['ortg','Offensive rating',1],['drtg','Defensive rating',-1],['net','Net rating',1],['ts','True shooting %',1,'%'],['efg','Effective FG %',1,'%'],['poss','Estimated possessions',0]]],
  ['Four factors',[['efg','eFG%',1,'%'],['tov','Turnover %',-1,'%'],['orb','Off. rebound %',1,'%'],['ftr','FT made / FGA',1,'',3]]],
  ['Shooting & control',[['fg','FG%',1,'%'],['three','3P%',1,'%'],['ft','FT%',1,'%'],['fga','FGA',0],['tpa','3PA',0],['fta','FTA',0],['astTo','AST / TO',1,'',2],['drb','Def. rebound %',1,'%'],['reb','Rebounds',1],['ast','Assists',1],['to','Turnovers',-1],['stl','Steals',1],['blk','Blocks',1],['fouls','Fouls',-1]]],
@@ -75,20 +77,26 @@ function impact(d){
 }
 function game(c){
  const anchor=document.getElementById('game-insight');if(!anchor||document.getElementById('ac-game'))return;
- const el=document.createElement('section');el.id='ac-game';el.className='sec card ac-panel';anchor.before(el);
+ const old=document.getElementById('ac-existing-compare');
+ const el=document.createElement('section');el.id='ac-game';el.className='card ac-panel ac-game-panel';
+ if(old)old.replaceWith(el);else {const feed=document.getElementById('atlas-play-feed')?.closest('section');if(feed)feed.before(el);else anchor.append(el)}
  let timer=null,active=c.state,mode=0,last=c.d,stamp=null,failed=false;
  const on=()=>el.isConnected&&c.token();
  function paint(){if(!on())return;
   const a=c.a,h=c.h,d=last,pa=score(d,a.id),ph=score(d,h.id),x=gameMetrics(box(d,a.id),box(d,h.id),pa,ph),y=gameMetrics(box(d,h.id),box(d,a.id),ph,pa);
-  const rows=groups[mode][1].map(k=>compare(k,x,y)).join(''),best=groups[0][1].filter(k=>['ortg','ts','efg'].includes(k[0])).map(k=>({k,x:x[k[0]],y:y[k[0]]})).filter(k=>k.x!==null&&k.y!==null&&k.x!==k.y).sort((a,b)=>Math.abs(b.x-b.y)-Math.abs(a.x-a.y))[0];
-  el.innerHTML=head('MATCH DNA / COURTSIDE','Game center',(active==='in'?'LIVE · 30s refresh':active==='post'?'FINAL':'PREGAME')+(failed?' · feed unavailable':''))+
-  '<div class="ac-score"><div><img src="'+E(a.logo)+'" alt=""><b>'+E(a.abbr)+'</b></div><strong>'+F(pa,0)+' <small>–</small> '+F(ph,0)+'</strong><div><img src="'+E(h.logo)+'" alt=""><b>'+E(h.abbr)+'</b></div></div>'+
-  probability(d,h,a)+periods(d,a,h)+(best?'<div class="ac-observation"><b>'+E(best.x>best.y?a.abbr:h.abbr)+'</b> leads in '+E(best.k[1])+' · '+F(Math.abs(best.x-best.y),1)+(best.k[3]?' pp':'')+' difference</div>':'')+
+  const rows=groups[mode][1].map(k=>compare(k,x,y)).join(''),best=groups[1][1].filter(k=>['ortg','ts','efg'].includes(k[0])).map(k=>({k,x:x[k[0]],y:y[k[0]]})).filter(k=>k.x!==null&&k.y!==null&&k.x!==k.y).sort((a,b)=>Math.abs(b.x-b.y)-Math.abs(a.x-a.y))[0];
+  el.innerHTML='<div class="sec-h ac-head"><div><div class="eyebrow">MATCH DNA</div><h3 class="h3">Σύγκριση ομάδων</h3></div><small class="muted">'+(active==='in'?'LIVE · ενημέρωση 30″':active==='post'?'Τελικό':'Πριν τον αγώνα')+(failed?' · παλιότερα δεδομένα':'')+'</small></div>'+
+  '<div class="ix-mhead ac-match-head"><a href="#/team/'+E(a.id)+'"><img src="'+E(a.logo)+'" alt=""><b>'+E(a.abbr)+'</b></a><span class="lbl">VS</span><a href="#/team/'+E(h.id)+'"><img src="'+E(h.logo)+'" alt=""><b>'+E(h.abbr)+'</b></a></div>'+
+  (best?'<div class="ac-observation"><b>'+E(best.x>best.y?a.abbr:h.abbr)+'</b> υπερέχει σε '+E(best.k[1])+' · '+F(Math.abs(best.x-best.y),1)+(best.k[3]?' π.μ.':'')+'</div>':'')+
   '<div class="ac-tabs ac-game-tabs">'+groups.map((g,i)=>'<button type="button" data-i="'+i+'" aria-pressed="'+(mode===i)+'">'+E(g[0])+'</button>').join('')+'</div><div class="ac-comphead"><b>'+E(a.abbr)+'</b><span>TEAM COMPARISON</span><b>'+E(h.abbr)+'</b></div>'+
   (rows||'<p class="ac-note">No team box-score data yet.</p>')+
-  (impact(d)?'<h3 class="ac-subtitle">Players to watch · PRA</h3>'+impact(d):'')+
+  (mode===0&&impact(d)?'<details class="ac-more"><summary>Οι κορυφαίοι · PRA</summary>'+impact(d)+'</details>':'')+
   '<p class="ac-note">ESPN team box score (unofficial). Ratings use estimated shared possessions; FT rate = FTM/FGA. Missing fields stay blank. PRA = points + rebounds + assists; not an impact model. '+(stamp?'Updated '+E(stamp.toLocaleTimeString('el-GR')):'')+'</p>';
   el.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{mode=+b.dataset.i;paint()});
+  const wp=(d.winProbability||[]).filter(p=>N(p.homeWinPercentage)!==null&&p.homeWinPercentage>=0&&p.homeWinPercentage<=1);
+  if(wp.length>5&&c.chart){let host=document.getElementById('ac-native-wp');if(!host){host=document.createElement('section');host.id='ac-native-wp';host.className='sec card';anchor.after(host)}host.innerHTML='<div class="lbl">Win probability (ESPN) · '+E(h.abbr)+'</div>'+c.chart(wp);}
+  if(stamp){const hero=document.querySelector('.hero .h1');if(hero&&pa!==null&&ph!==null)hero.innerHTML=F(pa,0)+'<span class="dim"> : </span>'+F(ph,0);const pill=document.querySelector('.hero .pill');if(pill){const st=d.header?.competitions?.[0]?.status?.type||{};pill.textContent=st.detail||st.shortDetail||'';pill.classList.toggle('live',active==='in')}}
+
  }
  async function refresh(){if(!on())return;if(document.hidden){timer=setTimeout(refresh,30000);return}try{const r=await fetch('/api/data?type=game&id='+encodeURIComponent(c.id),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();if(!j.data)throw Error('Missing data');if(!on())return;last=j.data;active=last.header?.competitions?.[0]?.status?.type?.state||active;stamp=new Date(j.updatedAt||Date.now());failed=false}catch{failed=true}if(!on())return;paint();if(active==='in'||active==='pre')timer=setTimeout(refresh,30000)}
  paint();if(active==='in'||active==='pre')timer=setTimeout(refresh,30000);
@@ -104,7 +112,7 @@ async function team(id,promise,valid){
  const form=(x.log||[]).slice(-10),max=Math.max(1,...form.map(g=>Math.abs(N(g.m)||0)));
  el.innerHTML=head('TEAM ANALYTICS','Advanced dashboard',E(s.season||'')+' · '+(x.boxGames??'—')+'/'+(x.g??'—')+' box scores')+'<div class="ac-grid ac-team-grid">'+rows+'</div>'+
  (form.length?'<h3 class="ac-subtitle">Last '+form.length+' games · point differential</h3><div class="ac-form">'+form.map(g=>'<a href="#/game/'+E(g.id)+'" title="'+E(g.date)+'"><b class="'+(g.m>0?'ac-win':'')+'">'+(g.m>0?'+':'')+F(N(g.m),0)+'</b><i style="height:'+Math.max(4,Math.abs(g.m)/max*45)+'px;background:'+(g.m>0?'var(--good)':'var(--bad)')+'"></i><small>'+E(g.opp)+'</small></a>').join('')+'</div>':'')+
- '<p class="ac-note">ESPN box-score sample. Rankings among teams with observations; NBA avg = unweighted team mean. Net rating = ORtg − DRtg. Close games are as defined by the season feed. Tracking / lineup statistics are not inferred from box scores.</p>';
+ '<div class="ac-team-meta"><b>Ρεκόρ '+E(x.w??'—')+'–'+E(x.l??'—')+'</b><span>Αναμενόμενες νίκες '+F(N(x.pythW))+' · Luck index '+F(N(x.luckWins))+' · Κλειστοί αγώνες '+E(x.closeW??'—')+'–'+E(x.closeL??'—')+'</span><a class="more" href="#/adv">Όλες οι ομάδες →</a></div><p class="ac-note">ESPN box-score sample. Rankings among teams with observations; NBA avg = unweighted team mean. Net rating = ORtg − DRtg. Close games are as defined by the season feed. Tracking / lineup statistics are not inferred from box scores.</p>';
 }
 window.AtlasCourt={career,game,team};
 })();

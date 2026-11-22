@@ -195,10 +195,10 @@ V.game=async(q,id)=>{
   view.innerHTML=`<section class="hero fade" style="grid-template-columns:1fr;min-height:0;--tc:${ch}"><div class="hero-bg" style="background:radial-gradient(500px 340px at 15% 50%,${ca}55,transparent 70%),radial-gradient(500px 340px at 85% 50%,${ch}55,transparent 70%)"></div><div class="hero-txt" style="padding:36px"><div style="text-align:center"><span class="pill ${st.state==='in'?'live':''}">${esc(st.detail||st.shortDetail||'')}</span></div><div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px">${big(a,ca)}<div class="h1" style="text-align:center;font-size:clamp(44px,8vw,96px)">${a.score??'–'}<span class="dim"> : </span>${h.score??'–'}</div>${big(h,ch)}</div></div></section>
   <section class="sec" id="game-insight"></section>
   <section class="sec grid g2">${ls?`<div class="card"><div class="lbl">Σκορ ανά περίοδο</div>${ls}</div>`:''}${fcHtml}</section>
-  ${wpc?`<section class="sec card"><div class="lbl">Win probability (ESPN) · ${esc(h.abbr)}</div>${wpc}</section>`:''}
+  ${wpc?`<section class="sec card" id="ac-native-wp"><div class="lbl">Win probability (ESPN) · ${esc(h.abbr)}</div>${wpc}</section>`:''}
   <section class="sec">${secH('Box score','Οι παίκτες')}<div class="grid" style="gap:16px">${box||'<div class="empty">Το box score θα εμφανιστεί όταν ξεκινήσει ο αγώνας.</div>'}</div></section>`;
-  window.AtlasCourt?.game({id,d,a,h,state:st.state||'pre',token:()=>t===token});
   window.AtlasPersonal?.game({id,d,a,h,fc,state:st.state||'pre',token:()=>t===token});
+  window.AtlasCourt?.game({id,d,a,h,state:st.state||'pre',token:()=>t===token,chart:wp=>lineChart({series:[{name:h.abbr+' πιθανότητα νίκης',color:ch,points:wp.map((p,i)=>[i,p.homeWinPercentage*100]),area:true,noDots:true}],yMin:0,yMax:100,band:50,xFmt:i=>wp[i]?.period?'Q'+wp[i].period:'',yFmt:v=>Math.round(v)+'%'})});
 };
 
 V.standings=async()=>{
