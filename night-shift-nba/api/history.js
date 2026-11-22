@@ -93,7 +93,9 @@ module.exports=async function handler(req,res) {
   const q=req.query||{},type=q.type,year=Number(q.year||2027);
   try {
     let data;
-    if(type==='search') {
+    if(type==='encyclopedia') {
+      data=await require('../lib/encyclopedia').query(q);
+    } else if(type==='search') {
       const query=String(q.query||'').trim().slice(0,90);
       if(query.length<2) return res.status(200).json({data:{matches:[],total:0}});
       data=await searchPlayers(query);
@@ -108,6 +110,6 @@ module.exports=async function handler(req,res) {
       data=await historicalRoster(String(q.id),year);
     } else return res.status(400).json({error:'Unknown archive type'});
     res.setHeader('Cache-Control',type==='search'?'s-maxage=120, stale-while-revalidate=240':'s-maxage=1800, stale-while-revalidate=3600');
-    res.status(200).json({source:'ESPN public/unofficial',data,updatedAt:new Date().toISOString()});
+    res.status(200).json({source:type==='encyclopedia'?'Basketball-Reference / sumitrodatta historical snapshot':'ESPN public/unofficial',data,updatedAt:new Date().toISOString()});
   }catch(err){res.setHeader('Cache-Control','no-store');res.status(503).json({source:'ESPN public/unofficial',error:err?.message||'ESPN service unavailable'});}
 }
