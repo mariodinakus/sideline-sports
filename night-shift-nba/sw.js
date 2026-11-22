@@ -1,5 +1,5 @@
-const VERSION='nba-atlas-mobile-v42';
-const CORE=['/','/style.css?v=16','/mobile.css','/app.js?v=17','/atlas-court.js?v=2','/atlas-court.css?v=2','/atlas-season.js?v=2','/atlas-personal.js?v=3','/atlas-data.js','/atlas-features.js?v=2','/atlas-labs.js?v=2','/atlas-pro.js?v=2','/atlas-plus.js?v=2','/atlas-stats.js','/mobile.js','/atlas-intelligence.js?v=16','/atlas-intelligence.css?v=15','/atlas-tv.js?v=2','/atlas-tv.css?v=2','/icon.svg?v=3','/icon-192.png','/icon-512.png','/manifest.webmanifest?v=3'];
+const VERSION='nba-atlas-mobile-v43';
+const CORE=['/','/style.css?v=17','/mobile.css','/app.js?v=18','/atlas-court.js?v=2','/atlas-court.css?v=2','/atlas-season.js?v=2','/atlas-personal.js?v=3','/atlas-data.js','/atlas-features.js?v=2','/atlas-labs.js?v=2','/atlas-pro.js?v=2','/atlas-plus.js?v=2','/atlas-stats.js','/mobile.js','/atlas-intelligence.js?v=16','/atlas-intelligence.css?v=15','/atlas-tv.js?v=2','/atlas-tv.css?v=2','/icon.svg?v=3','/icon-192.png','/icon-512.png','/manifest.webmanifest?v=3'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(CORE)));self.skipWaiting()});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('nba-atlas-')&&key!==VERSION).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{

@@ -270,13 +270,24 @@ V.team=async(q,id)=>{
   Promise.all([schedulePromise,archivePromise]).then(([schedule,archive])=>{if(t===token)fill('#team-schedule',renderTeamSchedule(schedule,id,s,archive))});
 };
 
+function powerTable(ts,method,asOf){
+  const val=(x,d=1)=>f(x,d),signed=x=>n(x)===null?'—':(x>0?'+':'')+val(x),pct=x=>n(x)===null?'—':val(x)+'%';
+  const cell=(label,html,cls='')=>`<div role="cell" class="pw-metric ${cls}"><span class="pw-label" aria-hidden="true">${label}</span>${html}</div>`;
+  const date=asOf?new Date(asOf):null;const stamp=date&&!isNaN(date.getTime())?date.toLocaleString('el-GR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:'Europe/Athens'}):'';
+  return `<div class="pw-topline"><div class="eyebrow">NBA POWER RANKINGS</div><span>${ts.length} ομάδες${stamp?' · '+esc(stamp):''}</span></div><div class="pw-table" role="table" aria-label="Κατάταξη ισχύος NBA"><div class="pw-heading pw-row" role="row"><div role="columnheader" class="pw-team-heading">Ομάδα</div><div role="columnheader">W–L</div><div role="columnheader" title="Διαφορά πόντων ανά αγώνα">+/−</div><div role="columnheader">L10</div><div role="columnheader">Power</div><div role="columnheader">Τίτλος*</div></div>${ts.map((x,i)=>{
+    const color=tColor(x.id,x.abbr),m=n(x.margin),p=n(x.power),r=String(x.recent||'').match(/^(\d+)\s*[-–]\s*(\d+)$/);
+    const record=n(x.wins)===null||n(x.losses)===null?'—':x.wins+'–'+x.losses;
+    const form=r?r[1]+'–'+r[2]:'—';const wins=r?Number(r[1]):null,losses=r?Number(r[2]):null;
+    return `<div class="pw-row ${i<3?'pw-top-three':''}" role="row"><a role="cell" class="pw-team" href="#/team/${encodeURIComponent(x.id)}"><span class="pw-rank">${i+1}</span><img src="${esc(x.logo||LOGO(x.abbr))}" alt="" ${hideErr}><span class="pw-name">${esc(x.name)}</span></a>${cell('W–L','<b>'+record+'</b>','pw-record')}${cell('+/−','<b class="'+(m===null?'muted':m>0?'good':m<0?'bad':'')+'">'+signed(m)+'</b>','pw-margin')}${cell('L10','<b>'+form+'</b>'+(wins!==null&&wins+losses>0?'<span class="pw-form-bar" aria-hidden="true"><i style="width:'+(100*wins/(wins+losses))+'%"></i></span>':''),'pw-form')}${cell('Power','<b>'+val(p)+'</b>'+(p!==null?'<span class="pw-power-bar" aria-hidden="true"><i style="background:'+esc(color)+';width:'+Math.max(0,Math.min(100,p))+'%"></i></span>':''),'pw-strength')}${cell('Τίτλος*','<b>'+pct(x.titleShare)+'</b>','pw-title')}</div>`;
+  }).join('')}</div><p class="note pw-note">W–L: νίκες–ήττες · +/−: διαφορά πόντων ανά αγώνα · L10: τελευταία 10 · Power: δείκτης 0–100. *Τίτλος: μερίδιο του ευρετικού δείκτη, όχι πιθανότητα κατάκτησης ή τιμή αγοράς.</p>`;
+}
 V.power=async()=>{
-  const t=token;view.innerHTML=`${secH('Power index','Η ιεραρχία της λίγκας',null,'Συνδυασμός ρεκόρ, διαφοράς πόντων και πρόσφατης φόρμας. Δίπλα, οι αγορές για τον τίτλο.')}<div class="split"><div class="card flat" id="pw">${skel(600)}</div><div class="card" id="pwodds">${skel(600)}</div></div><section class="sec card">${secH('Δυναμική','Ισχύς vs φόρμα',null,'Οριζόντια: ποσοστό νικών σεζόν. Κάθετα: διαφορά πόντων ανά αγώνα.')}<div id="pwmap">${skel(400)}</div></section>`;
+  const t=token;view.innerHTML=`${secH('Power index','Η ιεραρχία της λίγκας',null,'Ρεκόρ, διαφορά πόντων και πρόσφατη φόρμα.')}<div class="pw-layout"><div class="card flat" id="pw">${skel(600)}</div><aside class="card pw-odds"><div class="eyebrow">TITLE WATCH</div><h3 class="h3">Αγορές τίτλου</h3><div id="pwodds">${skel(600)}</div></aside></div><section class="sec card">${secH('Δυναμική','Ισχύς vs φόρμα',null,'Οριζόντια: ποσοστό νικών σεζόν. Κάθετα: διαφορά πόντων ανά αγώνα.')}<div id="pwmap">${skel(400)}</div></section>`;
   await teams();const p=await safe(api('power'));if(t!==token)return;if(!p){fill('#pw',errBox('','Power feed'));fill('#pwodds','');return}
-  const ts=p.teams.slice().sort((a,b)=>b.power-a.power),mx=Math.max(...ts.map(x=>x.power));
-  fill('#pw',`<div class="tbl-wrap"><table><thead><tr><th>Ομάδα</th><th>W-L</th><th>NET</th><th>Φόρμα</th><th class="l">Power</th><th>Τίτλος</th></tr></thead><tbody>${ts.map((x,i)=>`<tr><td><a class="tcell" href="#/team/${x.id}"><span class="rk">${i+1}</span><img src="${x.logo||LOGO(x.abbr)}" ${hideErr}>${esc(x.name)}</a></td><td>${x.wins}-${x.losses}</td><td class="${x.margin>0?'good':'bad'}">${x.margin>0?'+':''}${f(x.margin)}</td><td>${esc(x.recent||'—')}</td><td class="l">${bar(x.power,mx,tColor(x.id,x.abbr))}</td><td><b>${f(x.titleShare)}%</b></td></tr>`).join('')}</tbody></table></div><p class="note" style="padding:0 18px 18px">${esc(p.method||'')}</p>`);
+  const ts=(p.teams||[]).slice().sort((a,b)=>b.power-a.power);
+  fill('#pw',powerTable(ts,p.method,p.asOf));
   fill('#pwodds',oddsBars(p,null,12));safe(api('markets?type=title')).then(m=>{if(t===token&&m)fill('#pwodds',oddsBars(p,m,12))});
-  fill('#pwmap',scatter({pts:ts.map(x=>({x:x.winPct*(x.winPct<=1?100:1),y:x.margin,img:x.logo||LOGO(x.abbr),s:32,href:'#/team/'+x.id,tip:`<b>${esc(x.name)}</b>${x.wins}-${x.losses} · Net ${f(x.margin)}`})),xl:'Ποσοστό νικών %',yl:'Διαφορά πόντων',xf:v=>f(v,0)}));
+  fill('#pwmap',scatter({pts:ts.filter(x=>n(x.winPct)!==null&&n(x.margin)!==null).map(x=>({x:x.winPct*(x.winPct<=1?100:1),y:x.margin,img:x.logo||LOGO(x.abbr),s:32,href:'#/team/'+x.id,tip:`<b>${esc(x.name)}</b>${x.wins}-${x.losses} · +/− ${f(x.margin)}`})),xl:'Ποσοστό νικών %',yl:'Διαφορά πόντων',xf:v=>f(v,0)}));
 };
 
 const PSTATS=[['ppg','PTS'],['rpg','REB'],['apg','AST'],['spg','STL'],['bpg','BLK'],['tsPct','TS%'],['efgPct','eFG%'],['fg','FG%'],['astTo','AST/TO'],['mpg','MIN'],['index','INDEX']];
