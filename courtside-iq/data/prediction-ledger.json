@@ -32617,7 +32617,12 @@
         "marginHigh": 30.341885892628802,
         "totalLow": 203.72633785730562,
         "totalHigh": 252.15652262071205
-      }
+      },
+      "actual": {
+        "home": 132,
+        "away": 129
+      },
+      "settledAt": "2026-11-22T00:37:25.786Z"
     },
     {
       "id": "2026:401910024",
@@ -34380,39 +34385,39 @@
       }
     }
   ],
-  "updatedAt": "2026-11-21T19:43:10.761Z",
+  "updatedAt": "2026-11-22T00:37:25.786Z",
   "model": {
     "status": "validated-learning",
-    "sample": 221,
+    "sample": 222,
     "minimum": 50,
     "holdout": 56,
     "marginWeights": [
-      -1.7234473814874085,
-      0.044175362429663106,
-      -0.16452092367193455,
-      0.6284940367224063,
-      0.5469413469421697
+      -1.7480115192738712,
+      0.01914681184542741,
+      -0.1583657785882768,
+      0.6111646961657624,
+      0.5511595870939541
     ],
     "totalWeights": null,
     "marginValidated": true,
     "totalValidated": false,
-    "marginHoldoutMAE": 11.303076721664619,
-    "marginModelHoldoutMAE": 10.974908583569785,
-    "totalHoldoutMAE": 15.364920982465268,
-    "totalModelHoldoutMAE": 15.555919340688579,
-    "sigmaMargin": 14.621271616180161,
-    "sigmaTotal": 19.125032745046152
+    "marginHoldoutMAE": 11.303820278910027,
+    "marginModelHoldoutMAE": 10.955466239550939,
+    "totalHoldoutMAE": 15.735184283062692,
+    "totalModelHoldoutMAE": 15.906595846078757,
+    "sigmaMargin": 14.595480960311969,
+    "sigmaTotal": 19.210468824085844
   },
   "summary": {
-    "n": 221,
-    "winnerAccuracy": 0.6923076923076923,
-    "decisiveAccuracy": 0.7245508982035929,
-    "decisiveN": 167,
-    "scoreMAE": 9.823088876414243,
-    "marginMAE": 11.317791436774748,
-    "totalMAE": 15.221768199887043,
-    "brier": 0.20786076266076947,
-    "margin80Coverage": 0.7782805429864253
+    "n": 222,
+    "winnerAccuracy": 0.6936936936936937,
+    "decisiveAccuracy": 0.7261904761904762,
+    "decisiveN": 168,
+    "scoreMAE": 9.853296966522718,
+    "marginMAE": 11.304291579071238,
+    "totalMAE": 15.30211415286499,
+    "brier": 0.20714807183693842,
+    "margin80Coverage": 0.7792792792792793
   },
   "contextCache": {
     "schema": 4,
