@@ -21,6 +21,9 @@
     },
     "api/season.js": {
       "maxDuration": 60
+    },
+    "api/pregame.js": {
+      "maxDuration": 30
     }
   },
   "headers": [
