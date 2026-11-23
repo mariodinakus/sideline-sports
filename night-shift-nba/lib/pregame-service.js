@@ -1,5 +1,5 @@
 'use strict';
-const {predict}=require('../lib/pregame-engine');
+const {predict}=require('./pregame-engine');
 const BASE='https://nba-atlas.vercel.app';
 const ESPN='https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
 const ymd=t=>new Date(t).toISOString().slice(0,10).replace(/-/g,'');

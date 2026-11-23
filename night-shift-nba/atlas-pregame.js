@@ -4,7 +4,7 @@ const p=x=>x==null?'—':Math.round(100*x)+'%';
 const n=x=>x==null||!Number.isFinite(Number(x))?'—':Number(x).toFixed(1);
 const date=x=>new Date(x).toLocaleString('el-GR',{timeZone:'Europe/Athens',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 let cache,at=0,timer;
-async function load(force=false){if(!force&&cache&&Date.now()-at<90000)return cache;const r=await fetch('/api/pregame',{cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'Feed unavailable');at=Date.now();return cache={data:d,map:Object.fromEntries((d.games||[]).map(x=>[x.id,x]))}}
+async function load(force=false){if(!force&&cache&&Date.now()-at<90000)return cache;const r=await fetch('/api/intel?type=pregame',{cache:'no-store'}),d=await r.json();if(!r.ok)throw Error(d.error||'Feed unavailable');at=Date.now();return cache={data:d,map:Object.fromEntries((d.games||[]).map(x=>[x.id,x]))}}
 function block(x){
  const a=x.away||{},h=x.home||{},v=x.live||x.original,live=x.state==='live',signals=x.live?.signals||[];
  return '<article class="card pg-card"><div class="pg-top"><span class="eyebrow">'+(live?'LIVE · 2 MIN':x.state==='archive-only'?'ORIGINAL LOCKED':'INCOMPLETE')+'</span><small>'+e(date(x.date))+'</small></div><div class="pg-teams"><div><img src="'+e(a.logo||'')+'" alt=""><b>'+e(a.abbr)+'</b></div><span>VS</span><div><img src="'+e(h.logo||'')+'" alt=""><b>'+e(h.abbr)+'</b></div></div>'+

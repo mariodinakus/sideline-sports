@@ -22,7 +22,7 @@
     "api/season.js": {
       "maxDuration": 60
     },
-    "api/pregame.js": {
+    "api/intel.js": {
       "maxDuration": 30
     }
   },
