@@ -31,11 +31,12 @@ let dbPromise;function database(){if(!dbPromise)dbPromise=Promise.all([load('Pla
  const bioMap=new Map(bios.map(x=>[x.player_id,x]));const people=Array.from(groups,([id,rs])=>career(bioMap.get(id)||{player_id:id,player:rs[0].player,pos:rs[0].pos,from:Math.min(...rs.map(r=>N(r.season))),to:Math.max(...rs.map(r=>N(r.season)))},rs));
  return {all,teams,groups,people,seasons:[...new Set(teams.map(x=>x.season))].sort((a,b)=>b-a)};
  }).catch(e=>{dbPromise=null;throw e});return dbPromise}
-let eraDb;
+let eraDb,longevityDb;
 async function query(q){
  const d=await database(),mode=String(q.mode||'meta'),y=N(q.year),search=norm(q.q).slice(0,90),code=String(q.code||'').slice(0,8),league=String(q.lg||'').slice(0,6),id=String(q.id||'').slice(0,30);
  const meta={source,snapshot:'2026-11-01',players:d.people.length,playerSeasonRows:collapse(d.all).length,teamSeasonRows:d.teams.length,teamIdentities:new Set(d.teams.map(t=>t.league+'|'+t.name)).size,seasons:d.seasons,first:d.seasons.at(-1),last:d.seasons[0]};
  if(mode==='eraRank'){const r=require('./era-rank');if(!eraDb)eraDb=r.build(collapse(d.all).map(row),d.teams);return {...r.query(eraDb,q),source,snapshot:meta.snapshot};}
+ if(mode==='longevity'){const l=require('./longevity');if(!longevityDb)longevityDb=l.calc(collapse(d.all),d.people,d.teams);return l.query(longevityDb,q);}
  if(mode==='meta')return meta;
  if(mode==='players'){let a=d.people.filter(p=>!search||norm(p.name).includes(search));const sort=['pts','g','ast','trb','stl','blk','x3p','name'].includes(q.sort)?q.sort:'pts';a.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):(N(b[sort])??-1)-(N(a[sort])??-1)||a.name.localeCompare(b.name));return {...page(a,q),source}}
  if(mode==='player'){const rs=d.groups.get(id),p=d.people.find(x=>x.id===id);if(!rs||!p)return {notFound:true};return {player:p,seasons:collapse(rs).map(row).sort((a,b)=>b.season-a.season),stints:rs.filter(x=>!agg(x)).map(row).sort((a,b)=>b.season-a.season),source}}

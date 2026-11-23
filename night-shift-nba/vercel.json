@@ -24,6 +24,9 @@
     },
     "api/intel.js": {
       "maxDuration": 30
+    },
+    "api/pregame.js": {
+      "maxDuration": 30
     }
   },
   "headers": [
