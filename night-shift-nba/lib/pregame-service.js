@@ -13,15 +13,22 @@ function game(e){
 function past(e){const x=game(e);return{...x,ids:[x.home.id,x.away.id]}}
 module.exports=async(req,res)=>{
  if(req.method!=='GET')return res.status(405).json({error:'GET only'});
- const now=Date.now(),from=ymd(now-4*86400000),to=ymd(now+3*86400000);
+ const now=Date.now(),dates=Array.from({length:8},(_,i)=>ymd(now+(i-4)*86400000));
  try{
-  const f=await Promise.allSettled([get(ESPN+'?dates='+from+'-'+to+'&limit=500',11500),get(BASE+'/api/power',13000),get(BASE+'/api/data?type=injuries',11000),get(BASE+'/api/intel?type=forecast',11000)]);
+  // ESPN often returns zero events for a date-range query. Fetch each NBA game day separately.
+  const f=await Promise.allSettled([
+   Promise.allSettled(dates.map(d=>get(ESPN+'?dates='+d+'&limit=100',11500))),
+   get(BASE+'/api/power',13000),get(BASE+'/api/data?type=injuries',11000),get(BASE+'/api/intel?type=forecast',11000)
+  ]);
   const val=i=>f[i].status==='fulfilled'?f[i].value:null;
-  const b=val(0);if(!b?.events?.length)throw Error('Scoreboard unavailable');
+  const boards=val(0)||[],all=new Map();
+  boards.forEach(z=>{if(z.status==='fulfilled')(z.value.events||[]).forEach(e=>{if(e.id)all.set(String(e.id),e)})});
+  if(!all.size)throw Error('Scoreboard daily feeds unavailable');
   const power=val(1),injuries=val(2)?.data,arch=val(3)?.data;
-  const history=b.events.map(past).filter(g=>g.state==='post');
+  const raw=[...all.values()];
+  const history=raw.map(past).filter(g=>g.state==='post');
   const ledger=new Map((arch?.records||[]).map(r=>[String(r.id).split(':').pop(),r]));
-  const events=b.events.map(game).filter(e=>e.state==='pre'&&Date.parse(e.date)>=now-300000&&Date.parse(e.date)<=now+72*3600000);
+  const events=raw.map(game).filter(e=>e.state==='pre'&&Date.parse(e.date)>=now-300000&&Date.parse(e.date)<=now+72*3600000);
   const games=events.map(e=>predict(e,{power,injuries,ledger:ledger.get(e.id),history,ml:arch?.learning,now})).filter(Boolean).sort((a,b)=>a.date.localeCompare(b.date));
   const refreshed={asOf:new Date(now).toISOString(),nextRefreshSeconds:120,freezeMinutes:5,source:'ESPN public scoreboard/power/injuries + Courtside IQ archived forecast',coverage:{
    scoreboard:true,power:!!power?.teams?.length,injuries:!!injuries?.teams?.length,lockedLedger:!!arch?.records?.length,ml:!!arch?.learning,
