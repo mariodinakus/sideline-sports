@@ -37751,7 +37751,7 @@
       }
     }
   ],
-  "updatedAt": "2026-11-25T05:38:33.778Z",
+  "updatedAt": "2026-11-25T17:33:53.203Z",
   "model": {
     "status": "baseline-holdout-rejected",
     "sample": 247,
@@ -37781,7 +37781,7 @@
   },
   "contextCache": {
     "schema": 4,
-    "updatedAt": "2026-11-25T05:38:33.778Z",
+    "updatedAt": "2026-11-25T17:33:53.203Z",
     "homeGames": {
       "PHI": [
         {
@@ -57309,6 +57309,10 @@
         {
           "name": "Dejounte Murray",
           "status": "Out"
+        },
+        {
+          "name": "Julian Reese",
+          "status": "Day-To-Day"
         },
         {
           "name": "Trendon Watford",
