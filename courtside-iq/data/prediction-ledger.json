@@ -37940,7 +37940,12 @@
         "marginHigh": 23.94978342309222,
         "totalLow": 201.11027486356954,
         "totalHigh": 250.7147134612344
-      }
+      },
+      "actual": {
+        "home": 105,
+        "away": 108
+      },
+      "settledAt": "2026-11-28T04:10:06.609Z"
     },
     {
       "id": "2026:401909327",
@@ -38087,7 +38092,12 @@
         "marginHigh": 31.527132493946052,
         "totalLow": 195.78600687285757,
         "totalHigh": 245.39044547052242
-      }
+      },
+      "actual": {
+        "home": 113,
+        "away": 98
+      },
+      "settledAt": "2026-11-28T04:10:06.609Z"
     },
     {
       "id": "2026:401909328",
@@ -38234,7 +38244,12 @@
         "marginHigh": 15.439092136858317,
         "totalLow": 203.68187827888553,
         "totalHigh": 253.2863168765504
-      }
+      },
+      "actual": {
+        "home": 87,
+        "away": 111
+      },
+      "settledAt": "2026-11-28T04:10:06.609Z"
     },
     {
       "id": "2026:401909329",
@@ -38386,7 +38401,12 @@
         "marginHigh": 26.869483225821597,
         "totalLow": 193.94692863619758,
         "totalHigh": 243.55136723386244
-      }
+      },
+      "actual": {
+        "home": 124,
+        "away": 100
+      },
+      "settledAt": "2026-11-28T04:10:06.609Z"
     },
     {
       "id": "2026:401909330",
@@ -38533,7 +38553,12 @@
         "marginHigh": 24.360076341326003,
         "totalLow": 194.31150643664353,
         "totalHigh": 243.91594503430838
-      }
+      },
+      "actual": {
+        "home": 86,
+        "away": 87
+      },
+      "settledAt": "2026-11-28T04:10:06.609Z"
     },
     {
       "id": "2026:401909331",
@@ -38680,7 +38705,12 @@
         "marginHigh": 23.873060131343447,
         "totalLow": 203.35638638096148,
         "totalHigh": 252.96082497862633
-      }
+      },
+      "actual": {
+        "home": 109,
+        "away": 114
+      },
+      "settledAt": "2026-11-28T04:10:06.609Z"
     },
     {
       "id": "2026:401909332",
@@ -40150,39 +40180,39 @@
       }
     }
   ],
-  "updatedAt": "2026-11-27T22:17:33.612Z",
+  "updatedAt": "2026-11-28T04:10:06.609Z",
   "model": {
     "status": "validated-learning",
-    "sample": 256,
+    "sample": 262,
     "minimum": 50,
-    "holdout": 64,
+    "holdout": 66,
     "marginWeights": null,
     "totalWeights": [
-      -3.192898325111801,
-      -0.09245012610437356,
-      -1.550631378174581,
-      0.4465385791850677,
-      0.4566003596476305
+      -3.496694936323939,
+      -0.10589484306858099,
+      -1.4407245972774558,
+      0.6913114022067787,
+      0.7004721256525689
     ],
     "marginValidated": false,
     "totalValidated": true,
-    "marginHoldoutMAE": 10.125203953350503,
-    "marginModelHoldoutMAE": 10.016187050874242,
-    "totalHoldoutMAE": 17.378132183594467,
-    "totalModelHoldoutMAE": 17.02200180461583,
-    "sigmaMargin": 14.29823249121708,
-    "sigmaTotal": 19.35329819268263
+    "marginHoldoutMAE": 9.86989824319773,
+    "marginModelHoldoutMAE": 9.729948951948185,
+    "totalHoldoutMAE": 17.565298733078702,
+    "totalModelHoldoutMAE": 17.048380103040174,
+    "sigmaMargin": 14.257663929267867,
+    "sigmaTotal": 19.399212641131633
   },
   "summary": {
-    "n": 256,
-    "winnerAccuracy": 0.6796875,
-    "decisiveAccuracy": 0.7098445595854922,
-    "decisiveN": 193,
-    "scoreMAE": 9.8960242142304,
-    "marginMAE": 11.037750578755258,
-    "totalMAE": 15.650629090438088,
-    "brier": 0.2104133110972116,
-    "margin80Coverage": 0.796875
+    "n": 262,
+    "winnerAccuracy": 0.6755725190839694,
+    "decisiveAccuracy": 0.702020202020202,
+    "decisiveN": 198,
+    "scoreMAE": 9.908142210379335,
+    "marginMAE": 11.03145704112962,
+    "totalMAE": 15.710187208183969,
+    "brier": 0.21160343226831685,
+    "margin80Coverage": 0.7977099236641222
   },
   "contextCache": {
     "schema": 4,
